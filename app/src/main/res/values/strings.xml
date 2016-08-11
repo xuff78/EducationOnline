@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">EducationOnline</string>
+    
+    <!-- Strings related to login -->
+    <string name="prompt_email">手机号</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">登  录</string>
+    <string name="error_invalid_email">请输入用户名</string>
+    <string name="error_invalid_password">请正确填写密码</string>
+    <string name="error_field_required">请填写该项</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+</resources>

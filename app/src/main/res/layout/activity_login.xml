@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@mipmap/bg_firstpage2"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+                <ImageView
+                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/icon_temp_logo"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp" />
+                <LinearLayout
+                    android:layout_marginTop="45dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:padding="8dp"
+                        android:src="@mipmap/icon_phone"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <EditText
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/userName"
+                        android:background="@null"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="@string/prompt_email"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
+            <View
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:padding="10dp"
+                    android:src="@mipmap/icon_lock"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <EditText
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/userPsd"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="@string/prompt_password"
+                    android:background="@null"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </LinearLayout>
+            <View
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <Button
+                android:id="@+id/email_sign_in_button"
+                android:background="@color/dark_orange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                style="@style/txt_white_16"
+                android:text="@string/action_sign_in"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:text="注   册"
+        android:id="@+id/registerBtn"
+        android:gravity="center"
+        style="@style/txt_white_16"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+</RelativeLayout>
