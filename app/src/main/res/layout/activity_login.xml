@@ -71,7 +71,7 @@
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeActionLabel="登  录"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
@@ -84,12 +84,12 @@
                 android:layout_height="1dp" />
             <Button
                 android:id="@+id/email_sign_in_button"
-                android:background="@color/dark_orange"
+                android:background="@drawable/shape_oranged_with_corner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45dp"
                 style="@style/txt_white_16"
-                android:text="@string/action_sign_in"
+                android:text="登  录"
                 android:textStyle="bold" />
 
         </LinearLayout>
