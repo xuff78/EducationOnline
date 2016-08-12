@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 
-import com.sichuan.geologenvi.utils.ActUtil;
-import com.sichuan.geologenvi.utils.LogUtil;
+import com.education.online.util.ActUtil;
+import com.education.online.util.LogUtil;
 
 
 /**
@@ -83,13 +83,13 @@ public class HttpAsyncTask extends AsyncTask<Object, String, String> {
 	protected String doInBackground(Object... params) {
 		mReqMethod = (String) params[1];
 		
-		switch ((int)params[4]){
+		switch ((int)params[3]){
 			case 0:
 				return GlbsNet.doGet((String)params[0]);
 			case 1:
-				return GlbsNet.doDelete((String)params[0]);
-			case 2:
 				return GlbsNet.doPostNew((String)params[0],(String)params[2]);
+			case 2:
+				return GlbsNet.doDelete((String)params[0]);
 			default:
 				return null;
 		}

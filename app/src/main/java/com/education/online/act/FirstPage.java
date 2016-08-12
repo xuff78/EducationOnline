@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
+import com.education.online.util.ActUtil;
 import com.education.online.util.StatusBarCompat;
 
 /**
@@ -25,6 +26,8 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
 
         _setHeaderGone();
         initView();
+
+        ActUtil.initData(this);
     }
 
     private void initView() {
