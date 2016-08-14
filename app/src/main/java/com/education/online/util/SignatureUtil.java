@@ -35,9 +35,9 @@ public final class SignatureUtil {
 
         encode(params);
         Map sortedParams = MapUtil.sort(params);
+        String paramString = URLUtil.map2string(sortedParams);
 
         try {
-            String paramString = URLUtil.map2string(sortedParams);
             LogUtil.i("TestDemo", "param1---->" + paramString);
             String e = URLEncoder.encode(url.toLowerCase(), "utf-8") + URLEncoder.encode(paramString, "utf-8");
             e = e.replaceAll("\\+", "%20");

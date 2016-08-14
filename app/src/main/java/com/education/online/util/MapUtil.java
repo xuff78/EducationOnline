@@ -15,19 +15,15 @@ public class MapUtil {
     }
 
     public static final Map<String, String> sort(Map<String, String> map) {
-        LinkedHashMap sorted = new LinkedHashMap();
-        Iterator var3 = getSortedKeys(map).iterator();
-
-        while(var3.hasNext()) {
-            String key = (String)var3.next();
-            sorted.put(key, (String)map.get(key));
+        Map<String, String> sorted = new LinkedHashMap<String, String>();
+        for (String key : getSortedKeys(map)) {
+            sorted.put(key, map.get(key));
         }
-
         return sorted;
     }
 
     private static List<String> getSortedKeys(Map<String, String> map) {
-        ArrayList keys = new ArrayList(map.keySet());
+        List<String> keys = new ArrayList<String>(map.keySet());
         Collections.sort(keys);
         return keys;
     }

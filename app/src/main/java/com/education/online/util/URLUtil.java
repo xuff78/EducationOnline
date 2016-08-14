@@ -64,12 +64,12 @@ public class URLUtil {
 	 * @param params 請求参数集
 	 * @return 浏览器对应的参数字符串
 	 */
-	public static String map2string(final Map<String, String> params) throws UnsupportedEncodingException {
+	public static String map2string(final Map<String, String> params) {
 		final StringBuilder buf = new StringBuilder();
 
 		for (Iterator<Map.Entry<String, String>> it = params.entrySet().iterator(); it.hasNext();) {
 			Map.Entry<String, String> me = it.next();
-			buf.append(me.getKey()).append('=').append(URLEncoder.encode(me.getValue(), "utf-8")).append('&');
+			buf.append(me.getKey()).append('=').append(me.getValue()).append('&');
 		}
 
 		if (buf.length() > 0) {
