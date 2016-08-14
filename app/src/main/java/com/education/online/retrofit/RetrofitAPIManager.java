@@ -1,5 +1,9 @@
 package com.education.online.retrofit;
 
+import android.content.Context;
+
+import com.education.online.util.SharedPreferencesUtil;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -13,12 +17,13 @@ import retrofit2.Retrofit;
  */
 public class RetrofitAPIManager {
 
-    public static IHandler getRetrofit(String url) {
+    public static Retrofit getRetrofit(Context con) {
+        String url=SharedPreferencesUtil.getString(con, "");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(genericClient())
                 .build();
-        return retrofit.create(IHandler.class);
+        return retrofit;
     }
 
     private static OkHttpClient mOkHttpClient =null;

@@ -21,10 +21,10 @@ public class JsonUtil {
         JsonMessage jsonMsg=new JsonMessage();
         try {
             JSONObject json=new JSONObject(jsonStr);
-            if(!json.isNull("code"))
-                jsonMsg.setCode(json.getString("code"));
-            if(!json.isNull("error"))
-                jsonMsg.setMsg(json.getString("error"));
+            if(!json.isNull("return_code"))
+                jsonMsg.setCode(json.getString("return_code"));
+            if(!json.isNull("return_message"))
+                jsonMsg.setMsg(json.getString("return_message"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import com.education.online.util.ActUtil;
 import com.education.online.util.LogUtil;
 
+import java.util.HashMap;
+
 
 /**
  * 要使用AsyncTask工作我们要提供三个泛型参数，并重载四个方法(至少重载一个)。<br>
@@ -87,9 +89,7 @@ public class HttpAsyncTask extends AsyncTask<Object, String, String> {
 			case 0:
 				return GlbsNet.doGet((String)params[0]);
 			case 1:
-				return GlbsNet.doPostNew((String)params[0],(String)params[2]);
-			case 2:
-				return GlbsNet.doDelete((String)params[0]);
+				return GlbsNet.doPost((String)params[0],(HashMap)params[2]);
 			default:
 				return null;
 		}

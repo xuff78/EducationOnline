@@ -10,5 +10,5 @@ import retrofit2.http.GET;
  */
 public interface IHandler {
     @GET("users")
-    Call<String> getUsers();
+    Call<String> initData();
 }

@@ -14,28 +14,20 @@ public class ActUtil {
     }
 
     public static void initData(Context con) {
-        SharedPreferencesUtil.setString(con, "url_api",
+        SharedPreferencesUtil.setString(con, Constant.Url_API,
 //					"https://cafe.smallpay.com/platform/api");
                 "http://182.48.115.38:8088/platform/api");
-        SharedPreferencesUtil.setString(con, "Produce_code",
+        SharedPreferencesUtil.setString(con, Constant.Product_code,
                 "1100");
-        SharedPreferencesUtil.setString(con, "Produce_code_order",
-                "1075");
-        SharedPreferencesUtil.setString(con, "Produce_code_cbsticket",
-                "1006");
-        SharedPreferencesUtil.setString(con, "app_channel",
+        SharedPreferencesUtil.setString(con, Constant.App_Channel,
                 "10002");
-        SharedPreferencesUtil.setString(con, "Produce_code_phone",
-                "3071");
-        SharedPreferencesUtil.setString(con, "phone_channel_code",
-                "1008");
-        SharedPreferencesUtil.setString(con, "app_key",
-                "610163");
-        SharedPreferencesUtil.setString(con, "WXAppId",
+        SharedPreferencesUtil.setString(con, Constant.App_Key,
+                "600025");
+        SharedPreferencesUtil.setString(con, Constant.WXAppId,
                 "wxc1fdc3e0a84ff533");
-        SharedPreferencesUtil.setString(con, "WXAppSecret",
+        SharedPreferencesUtil.setString(con, Constant.WXAppSecret,
                 "94a1f4de4f5011e6b0ee525400b263eb");
-        SharedPreferencesUtil.setString(con, "app_secret",
-                "vxGNKUiPyj1mcA8fg0bt6ZnLFCp4Y9zB");
+        SharedPreferencesUtil.setString(con, Constant.App_Secret,
+                "9af39ddG3jfld3B5J0mE8jd6hHi3k8al");
     }
 }

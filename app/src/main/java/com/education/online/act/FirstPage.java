@@ -9,13 +9,18 @@ import android.widget.EditText;
 import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;
+import com.education.online.util.ScreenUtil;
 import com.education.online.util.StatusBarCompat;
 
 /**
  * Created by Administrator on 2016/8/11.
  */
 public class FirstPage extends BaseFrameAct implements View.OnClickListener{
+
+    HttpHandler handler;
 
 
     @Override
@@ -25,9 +30,21 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
         setContentView(R.layout.first_page);
 
         _setHeaderGone();
+        initHandler();
         initView();
 
         ActUtil.initData(this);
+        ScreenUtil.logScreenSize(this);
+        handler.init(ScreenUtil.getWidth(this)+"x"+ScreenUtil.getHeight(this));
+    }
+
+    private void initHandler() {
+        handler=new HttpHandler(this, new CallBack(this){
+            @Override
+            public void doSuccess(String method, String jsonData) {
+                super.doSuccess(method, jsonData);
+            }
+        });
     }
 
     private void initView() {
