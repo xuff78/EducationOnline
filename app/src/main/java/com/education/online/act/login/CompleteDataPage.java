@@ -10,6 +10,6 @@ public class CompleteDataPage extends BaseFrameAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.completedata_page);
+        setContentView(R.layout.fullfilldata_page);
     }
 }
