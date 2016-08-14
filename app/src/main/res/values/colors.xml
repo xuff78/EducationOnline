@@ -19,4 +19,5 @@
     <color name="hard_gray">#343434</color><!--深灰 -->
     <color name="coffee">#72452C</color><!--咖啡色 -->
     <color name="bg_gray">#d8dbde</color><!--咖啡色 -->
+    <color name="whitesmoke">#F5F5F5</color><!--烟白色 -->
 </resources>
