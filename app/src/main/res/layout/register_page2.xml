@@ -11,15 +11,16 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/UserMobile"
+            android:id="@+id/InitPwd"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="40dp"
             android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="手机号"
+            android:hint="请输入密码"
             android:inputType="phone"
             android:maxLines="1"
+            android:singleLine="true"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -38,37 +39,28 @@
         android:weightSum="1">
 
         <EditText
-            android:id="@+id/ValidVertiCode"
-            android:layout_width="220dp"
+            android:id="@+id/ConfirmPwd"
+            android:layout_width="265dp"
             android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="40dp"
             android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="请输入验证码"
+            android:hint="请确认密码"
             android:maxLines="1"
             android:singleLine="true"
-            android:textDirection="locale"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/GetVertiCode"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/bg_gray"
-            android:gravity="center"
-            android:text="获取验证码"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
     </LinearLayout>
 
     <View
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/line2"
         android:background="@color/light_gray" />
 
+
     <Button
-        android:id="@+id/NextStep"
+        android:id="@+id/Confirmbtn"
         style="@style/txt_white_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,6 +70,6 @@
         android:layout_marginRight="50dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/shape_oranged_with_corner"
-        android:text="下一步" />
+        android:text="确定" />
 </RelativeLayout>
 
