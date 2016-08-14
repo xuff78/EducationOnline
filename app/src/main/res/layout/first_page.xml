@@ -5,54 +5,59 @@
     android:orientation="vertical">
 
     <ImageView
-        android:scaleType="centerCrop"
-        android:src="@mipmap/bg_firstpage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_firstpage" />
 
 
     <LinearLayout
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:layout_alignParentBottom="true"
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin">
+
         <TextView
+            style="@style/txt_white_16"
             android:text="轻松学习"
-            android:textSize="24sp"
-            style="@style/txt_white_16" />
+            android:textSize="24sp" />
+
         <TextView
+            style="@style/txt_white_16"
             android:layout_marginTop="10dp"
             android:text="所有问题都能找到你想要的答案"
-            android:textSize="20sp"
-            style="@style/txt_white_16" />
+            android:textSize="20sp" />
+
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
             <Button
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
                 android:id="@+id/loginBtn"
-                android:background="@drawable/shape_oranged_with_corner"
+                style="@style/txt_white_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/txt_white_16"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_oranged_with_corner"
                 android:text="登  录"
                 android:textStyle="bold" />
+
             <Button
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
                 android:id="@+id/registerBtn"
-                android:background="@drawable/shape_oranged_with_corner"
+                style="@style/txt_white_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/txt_white_16"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_oranged_with_corner"
                 android:text="注  册"
                 android:textStyle="bold" />
         </LinearLayout>

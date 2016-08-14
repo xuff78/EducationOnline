@@ -26,17 +26,8 @@
         android:textColor="@color/light_gray"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:visibility="gone" />
-
-    <ImageButton
-        android:id="@+id/back_home_imagebtn"
-        android:layout_width="45dip"
-        android:layout_height="45dip"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="3dip"
-        android:background="@null"
-        android:src="@mipmap/icon_header_home" />
+        android:text="@string/app_regist"
+        />
     <View
         android:background="@color/light_gray"
         android:layout_alignParentBottom="true"
