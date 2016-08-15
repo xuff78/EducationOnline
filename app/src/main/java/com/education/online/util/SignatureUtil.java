@@ -54,6 +54,7 @@ public final class SignatureUtil {
             params.put("sign", signature);
             LogUtil.i("sign", signature);
             LogUtil.i("TestDemo", url + params.toString());
+
             StringBuffer sb = new StringBuffer();
             Iterator var14 = params.entrySet().iterator();
 
@@ -70,7 +71,8 @@ public final class SignatureUtil {
             LogUtil.e("GLBS.error", "获取signature失败", var15);
         }
 
-        return url_api + params.toString();
+        String content= URLUtil.map2string(params);
+        return content;
     }
 
     public static void encode(final Map<String, String> params) {
@@ -148,7 +150,7 @@ public final class SignatureUtil {
         builder.append(Build.BRAND).append("^").append(Build.MODEL).append("^")
                 .append("Android").append("^").append(Build.VERSION.RELEASE)
                 .append("^").append(tm.getDeviceId()).append("^")
-                .append(tm.getSubscriberId()).append("^").append(36+"");
+                .append(tm.getSubscriberId()).append("^").append(versionCode);
         ua = builder.toString();
         LogUtil.i("TestDemo", "ua---->" + ua);
         return ua;

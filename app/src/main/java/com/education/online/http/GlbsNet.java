@@ -58,7 +58,7 @@ public final class GlbsNet {
 	 *            请求参数集
 	 * @return 返回服务器响应的json串。网络异常时，返回{@code null}。
 	 */
-	public static String doPost(String uri, HashMap<String, String> params) {
+	public static String doPost(String uri, String content) {
 		InputStreamReader isr = null;
 		BufferedReader br = null;
 		HttpURLConnection urlConn = null;
@@ -75,8 +75,6 @@ public final class GlbsNet {
 			urlConn.connect();
 			//DataOutputStream流
 			DataOutputStream out=new DataOutputStream(urlConn.getOutputStream());
-			//要上传的参数
-			String content= URLUtil.map2string(params);
 			out.writeBytes(content);
 			//刷新、关闭
 			out.flush();

@@ -89,7 +89,7 @@ public class HttpAsyncTask extends AsyncTask<Object, String, String> {
 			case 0:
 				return GlbsNet.doGet((String)params[0]);
 			case 1:
-				return GlbsNet.doPost((String)params[0],(HashMap)params[2]);
+				return GlbsNet.doPost((String)params[0],(String)params[2]);
 			default:
 				return null;
 		}

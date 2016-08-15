@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#dadada</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color><!--白色 -->
+    <color name="transparent">#00000000</color><!--透明 -->
 
     <color name="dark_orange">#fe5900</color>
     <color name="headerbg">#303F9F</color>
@@ -20,4 +21,6 @@
     <color name="coffee">#72452C</color><!--咖啡色 -->
     <color name="bg_gray">#d8dbde</color><!--咖啡色 -->
     <color name="whitesmoke">#F5F5F5</color><!--烟白色 -->
+
+
 </resources>

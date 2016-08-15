@@ -29,5 +29,8 @@ public class ActUtil {
                 "94a1f4de4f5011e6b0ee525400b263eb");
         SharedPreferencesUtil.setString(con, Constant.App_Secret,
                 "9af39ddG3jfld3B5J0mE8jd6hHi3k8al");
+        SharedPreferencesUtil.setString(con, Constant.Pic_Savepath,
+                Constant.SavePath);
+
     }
 }

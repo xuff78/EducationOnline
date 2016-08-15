@@ -36,8 +36,8 @@ public class HttpHandler extends Handle {
 
 	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
 		String url= SharedPreferencesUtil.getString(mContext, Constant.Url_API);
-		SignatureUtil.sign(mContext, url, method, paramMap);
+		String body=SignatureUtil.sign(mContext, url, method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog)
-				.execute(url, method, paramMap, 1);
+				.execute(url, method, body, 1);
 	}
 }
