@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
@@ -29,6 +30,7 @@ public class CompleteDataPage extends BaseFrameAct {
 
     String phoneTxtName="";
     private ImageView headIcon;
+    private TextView Subject;
     private Dialog progressDialog;
 
     @Override
@@ -41,7 +43,9 @@ public class CompleteDataPage extends BaseFrameAct {
 
     private void initView() {
         headIcon= (ImageView) findViewById(R.id.headIcon);
+        Subject= (TextView) findViewById(R.id.Subject);
         headIcon.setOnClickListener(listener);
+        Subject.setOnClickListener(listener);
     }
 
     View.OnClickListener listener=new View.OnClickListener() {
@@ -50,6 +54,9 @@ public class CompleteDataPage extends BaseFrameAct {
             switch (view.getId()){
                 case R.id.headIcon:
                     new SelectPicDialog(CompleteDataPage.this).show();
+                    break;
+                case R.id.Subject:
+                    startActivityForResult(new Intent(CompleteDataPage.this, SubjectSelector.class), 0x33);
                     break;
             }
         }

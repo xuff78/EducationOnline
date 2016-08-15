@@ -80,6 +80,10 @@
             android:name=".act.login.CompleteDataPage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.login.SubjectSelector"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
     </application>
 
