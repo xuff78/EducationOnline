@@ -32,6 +32,9 @@ public class CompleteDataPage extends BaseFrameAct {
     private ImageView headIcon;
     private TextView Subject;
     private Dialog progressDialog;
+    private ImageView SexFemale;
+    private ImageView SexMale;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,16 @@ public class CompleteDataPage extends BaseFrameAct {
     private void initView() {
         headIcon= (ImageView) findViewById(R.id.headIcon);
         Subject= (TextView) findViewById(R.id.Subject);
+
         headIcon.setOnClickListener(listener);
         Subject.setOnClickListener(listener);
+
+        SexFemale = (ImageView) findViewById(R.id.SexFemale);
+        SexMale = (ImageView) findViewById(R.id.SexMale);
+        SexFemale.setImageResource(R.mipmap.icon_round_right);
+        SexMale.setImageResource(R.mipmap.icon_round);
+        SexFemale.setOnClickListener(listener);
+        SexMale.setOnClickListener(listener);
     }
 
     View.OnClickListener listener=new View.OnClickListener() {
@@ -58,6 +69,15 @@ public class CompleteDataPage extends BaseFrameAct {
                 case R.id.Subject:
                     startActivityForResult(new Intent(CompleteDataPage.this, SubjectSelector.class), 0x33);
                     break;
+                case R.id.SexFemale:
+                    SexFemale.setImageResource(R.mipmap.icon_round_right);
+                    SexMale.setImageResource(R.mipmap.icon_round);
+                    break;
+                case R.id.SexMale:
+                    SexFemale.setImageResource(R.mipmap.icon_round);
+                    SexMale.setImageResource(R.mipmap.icon_round_right);
+                    break;
+
             }
         }
     };

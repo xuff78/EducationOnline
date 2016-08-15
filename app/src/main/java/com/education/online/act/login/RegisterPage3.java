@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
@@ -32,18 +33,53 @@ import java.io.File;
 public class RegisterPage3 extends BaseFrameAct {
 
     private Button Confirmiden;
+    private ImageView RoleTeacher;
+    private ImageView RoleStudent;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page3);
+       init();
+
+    }
+    private void init(){
         Confirmiden= (Button) findViewById(R.id.ConfirmIden);
+        RoleTeacher= (ImageView) findViewById(R.id.RoleTeacher);
+        RoleStudent= (ImageView) findViewById(R.id.RoleStudent);
+        RoleStudent.setImageResource(R.mipmap.icon_round_right);
+        RoleTeacher.setImageResource(R.mipmap.icon_round);
+        MyRadioBtnClickListener radioclicklistener = new MyRadioBtnClickListener();
+        RoleStudent.setOnClickListener(radioclicklistener);
+        RoleTeacher.setOnClickListener(radioclicklistener);
+
         Confirmiden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(RegisterPage3.this, CompleteDataPage.class));
+                startActivity(new Intent(RegisterPage3.this, CompleteDataPage.class));
             }
         });
     }
+    private class MyRadioBtnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            switch (view.getId())
+            {
+                case R.id.RoleStudent:
+                    ((ImageView) view).setImageResource(R.mipmap.icon_round_right);
+                    RoleTeacher.setImageResource(R.mipmap.icon_round);
+                    break;
+                case R.id.RoleTeacher:
+                    ((ImageView) view).setImageResource(R.mipmap.icon_round_right);
+                    RoleStudent.setImageResource(R.mipmap.icon_round);
+                    break;
+                default:
 
+            }
+        }
+    }
 }
+
+

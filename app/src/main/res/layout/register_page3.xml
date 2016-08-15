@@ -66,31 +66,28 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/identitySelection"
+            <ImageView
+                android:id="@+id/RoleStudent"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal">
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@mipmap/icon_round" />
 
-                <RadioButton
-                    android:id="@+id/identityStudent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="85dp"
-                    android:button="@drawable/new_style_radiobuttons"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/identityTeacher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="156dp"
-                    android:button="@drawable/new_style_radiobuttons" />
-            </RadioGroup>
+            <ImageView
+                android:id="@+id/RoleTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@mipmap/icon_round_right" />
         </LinearLayout>
 
     </LinearLayout>

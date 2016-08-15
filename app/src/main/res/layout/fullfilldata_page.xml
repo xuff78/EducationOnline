@@ -44,7 +44,7 @@
             android:layout_marginLeft="40dp"
             android:background="@color/light_gray" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@+id/line1"
@@ -52,46 +52,52 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginLeft="45dp"
+                android:layout_toLeftOf="@+id/SexFemale"
                 android:gravity="center_vertical"
                 android:text="性别"
                 android:textSize="14sp" />
 
-            <RadioGroup
-                android:id="@+id/SexSelection"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/SexFemale"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_toLeftOf="@+id/TextFemale"
+                android:gravity="center_vertical"
+                android:src="@mipmap/icon_round_right" />
+
+            <TextView
+                android:id="@+id/TextFemale"
+                android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="30dp"
-                android:orientation="horizontal">
+                android:layout_toLeftOf="@+id/SexMale"
+                android:gravity="center"
+                android:text="女"
+                android:textSize="14sp" />
 
-                <RadioButton
-                    android:id="@+id/SexMale"
-                    android:layout_width="55dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:button="@drawable/new_style_radiobuttons"
-                    android:checked="true"
-                    android:gravity="center|right"
-                    android:text="女"
-                    android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/SexMale"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_toLeftOf="@+id/TextMale"
+                android:gravity="center_vertical"
+                android:src="@mipmap/icon_round" />
 
-                <RadioButton
-                    android:id="@+id/SexFemale"
-                    android:layout_width="55dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:button="@drawable/new_style_radiobuttons"
-                    android:gravity="center|right"
-                    android:text="男"
-                    android:textSize="14sp" />
-            </RadioGroup>
+            <TextView
+                android:id="@+id/TextMale"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="男"
+                android:textSize="14sp" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 
     <View
@@ -152,14 +158,15 @@
                 android:gravity="center_vertical"
                 android:text="个人头像"
                 android:textSize="14sp" />
+
             <ImageView
+                android:id="@+id/headIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:id="@+id/headIcon"
                 android:layout_marginRight="20dp"
-                android:background="@mipmap/icon_head"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:background="@mipmap/icon_head" />
         </RelativeLayout>
 
         <View
