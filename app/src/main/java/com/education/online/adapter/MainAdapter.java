@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,21 +27,23 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Activity act;
     private LayoutInflater listInflater;
     private ImageLoader imageLoader;
-    private int itemWidth=0, itemHeight=0;
+    private int itemWidth=0, itemHeight=0, imgHeight=0;
+    private int padding=0;
 
     public MainAdapter(Activity act, String json)
     {
         this.act=act;
         imageLoader=ImageLoader.getInstance();
         listInflater= LayoutInflater.from(act);
-        itemWidth= (ScreenUtil.getWidth(act)- ImageUtil.dip2px(act, 80+40+20))/3;
-        itemHeight=ImageUtil.dip2px(act, 30);
+        itemWidth= (ScreenUtil.getWidth(act))/5;
+        imgHeight=ImageUtil.dip2px(act, 40);
+        padding=ImageUtil.dip2px(act, 10);
     }
 
     @Override
     public int getItemCount() {
         // TODO Auto-generated method stub
-        return 4;
+        return 1;
     }
 
     @Override
@@ -57,7 +60,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
-        View view=listInflater.inflate(R.layout.selector_right_item, null);
+        LinearLayout view=new LinearLayout(act);
+        view.setOrientation(LinearLayout.VERTICAL);
         view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
         vh=new SubjectHolder(view, pos);
         return vh;
@@ -65,30 +69,35 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public class SubjectHolder extends RecyclerView.ViewHolder
     {
-        TextView labelTxt;
         LinearLayout itemsLayout;
 
         public SubjectHolder(View v, int position)
         {
             super(v);
-            labelTxt = (TextView) v.findViewById(R.id.labelTxt);
-            itemsLayout = (LinearLayout) v.findViewById(R.id.itemsLayout);
-            LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(itemWidth, itemHeight);
-            llp.rightMargin=itemHeight/3;
+            itemsLayout= (LinearLayout) v;
+            LinearLayout.LayoutParams llpitem=new LinearLayout.LayoutParams(itemWidth, itemWidth);
+            LinearLayout.LayoutParams llpimg=new LinearLayout.LayoutParams(itemWidth, itemWidth);
+            llpimg.bottomMargin=5;
+            int size=9;
             LinearLayout linelayout=new LinearLayout(act);
-            int size=5;
+            linelayout.setOrientation(LinearLayout.HORIZONTAL);
             for(int i=0;i<size;i++){
+                LinearLayout layout=new LinearLayout(act);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setPadding(padding,padding*2,padding,0);
+                layout.setGravity(Gravity.CENTER);
+                ImageView img=new ImageView(act);
+                img.setBackgroundResource(R.color.whitesmoke);
+                layout.addView(img, llpimg);
                 TextView txt=new TextView(act);
-                txt.setTextSize(13);
-                txt.setGravity(Gravity.CENTER);
-                txt.setBackgroundResource(R.drawable.shape_corner_blackline);
+                txt.setTextSize(12);
                 txt.setTextColor(Color.GRAY);
-                txt.setText("测试项目");
-                linelayout.addView(txt, llp);
-                if(i%3==2||i==size-1){
+                txt.setText("科目");
+                layout.addView(txt);
+                linelayout.addView(layout, llpitem);
+                if(i%5==4||i==size-1){
                     itemsLayout.addView(linelayout);
                     linelayout=new LinearLayout(act);
-                    linelayout.setPadding(0, llp.rightMargin,0,0);
                 }
             }
         }

@@ -1,23 +1,26 @@
 package com.education.online.act;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.education.online.R;
+import com.education.online.fragment.HomePage;
 import com.education.online.http.HttpHandler;
-import com.education.online.util.ActUtil;
-import com.education.online.util.ScreenUtil;
-import com.education.online.util.StatusBarCompat;
 
 /**
  * Created by 可爱的蘑菇 on 2016/8/15.
  */
 public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
-    HttpHandler handler;
-    private RecyclerView recyclerList;
+    private int pressPos = 0;
+    private View menuBtn1, menuBtn2, menuBtn3, menuBtn4;
+    private Fragment frg=new Fragment();
+    private HomePage home=new HomePage();
+    private View lastSelectedView=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +30,46 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         _setHeaderTitle("首页");
         initView();
 
+        changePage(home);
     }
 
     private void initView() {
-        recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerList.setLayoutManager(layoutManager);
+        menuBtn1=findViewById(R.id.menuBtn1);
+        menuBtn1.setOnClickListener(this);
+        menuBtn2=findViewById(R.id.menuBtn2);
+        menuBtn2.setOnClickListener(this);
+        menuBtn3=findViewById(R.id.menuBtn3);
+        menuBtn3.setOnClickListener(this);
+        menuBtn4=findViewById(R.id.menuBtn4);
+        menuBtn4.setOnClickListener(this);
+        lastSelectedView=menuBtn1;
+        menuBtn1.setSelected(true);
+    }
+
+    private void changePage(Fragment frg){
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.replace(R.id.fragment_frame, frg);
+        ft.commit();
     }
 
     @Override
     public void onClick(View view) {
-
+        if(view!=lastSelectedView) {
+            lastSelectedView.setSelected(false);
+            view.setSelected(true);
+            lastSelectedView=view;
+            switch (view.getId()) {
+                case R.id.menuBtn1:
+                    changePage(home);
+                    break;
+                case R.id.menuBtn2:
+                    break;
+                case R.id.menuBtn3:
+                    break;
+                case R.id.menuBtn4:
+                    break;
+            }
+        }
     }
 }

@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerList"
+    <FrameLayout
+        android:layout_above="@+id/bottomLayout"
+        android:id="@+id/fragment_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="match_parent"/>
+    <View
+        android:layout_above="@+id/bottomLayout"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/menuBtn1"
+            android:layout_weight="1"
+            android:padding="9dp"
+            android:src="@drawable/selector_main_menu1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/menuBtn2"
+            android:layout_weight="1"
+            android:padding="9dp"
+            android:src="@drawable/selector_main_menu2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/menuBtn3"
+            android:layout_weight="1"
+            android:padding="9dp"
+            android:src="@drawable/selector_main_menu3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/menuBtn4"
+            android:layout_weight="1"
+            android:padding="9dp"
+            android:src="@drawable/selector_main_menu4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>
