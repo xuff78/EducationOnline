@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:drawable="@mipmap/icon_menu_main4_press" />
+    <item android:state_selected="false" android:drawable="@mipmap/icon_menu_main4" />
+    <item android:drawable="@mipmap/icon_menu_main4"/>
+</selector>
