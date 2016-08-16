@@ -60,41 +60,52 @@
                 android:text="性别"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/SexFemale"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_toLeftOf="@+id/TextFemale"
-                android:gravity="center_vertical"
-                android:src="@mipmap/icon_round_right" />
-
-            <TextView
-                android:id="@+id/TextFemale"
-                android:layout_width="60dp"
+            <LinearLayout
+                android:id="@+id/LayoutFemale"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_toLeftOf="@+id/SexMale"
-                android:gravity="center"
-                android:text="女"
-                android:textSize="14sp" />
+                android:layout_toLeftOf="@+id/LayoutMale">
 
-            <ImageView
-                android:id="@+id/SexMale"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_toLeftOf="@+id/TextMale"
-                android:gravity="center_vertical"
-                android:src="@mipmap/icon_round" />
+                <ImageView
+                    android:id="@+id/SexFemale"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical"
+                    android:src="@mipmap/icon_round_right" />
 
-            <TextView
-                android:id="@+id/TextMale"
-                android:layout_width="60dp"
+                <TextView
+                    android:id="@+id/TextFemale"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:text="女"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LayoutMale"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:text="男"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/SexMale"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical"
+                    android:src="@mipmap/icon_round" />
+
+                <TextView
+                    android:id="@+id/TextMale"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:text="男"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
 
         </RelativeLayout>

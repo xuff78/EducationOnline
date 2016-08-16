@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -34,6 +35,8 @@ public class CompleteDataPage extends BaseFrameAct {
     private Dialog progressDialog;
     private ImageView SexFemale;
     private ImageView SexMale;
+    private LinearLayout LayoutMale;
+    private LinearLayout LayoutFemale;
 
 
     @Override
@@ -55,8 +58,10 @@ public class CompleteDataPage extends BaseFrameAct {
         SexMale = (ImageView) findViewById(R.id.SexMale);
         SexFemale.setImageResource(R.mipmap.icon_round_right);
         SexMale.setImageResource(R.mipmap.icon_round);
-        SexFemale.setOnClickListener(listener);
-        SexMale.setOnClickListener(listener);
+        LayoutMale = (LinearLayout) findViewById(R.id.LayoutMale);
+        LayoutFemale = (LinearLayout) findViewById(R.id.LayoutFemale);
+        LayoutFemale.setOnClickListener(listener);
+        LayoutMale.setOnClickListener(listener);
     }
 
     View.OnClickListener listener=new View.OnClickListener() {
@@ -69,11 +74,11 @@ public class CompleteDataPage extends BaseFrameAct {
                 case R.id.Subject:
                     startActivityForResult(new Intent(CompleteDataPage.this, SubjectSelector.class), 0x33);
                     break;
-                case R.id.SexFemale:
+                case R.id.LayoutFemale:
                     SexFemale.setImageResource(R.mipmap.icon_round_right);
                     SexMale.setImageResource(R.mipmap.icon_round);
                     break;
-                case R.id.SexMale:
+                case R.id.LayoutMale:
                     SexFemale.setImageResource(R.mipmap.icon_round);
                     SexMale.setImageResource(R.mipmap.icon_round_right);
                     break;

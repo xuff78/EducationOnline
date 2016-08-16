@@ -22,72 +22,77 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/identityStudentImage"
+            <LinearLayout
+                android:id="@+id/LayoutStudent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
                 android:layout_weight="0.5"
-                android:src="@mipmap/icon_teacher" />
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/identityTeacherImage"
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/identityStudentImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:src="@mipmap/icon_teacher" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="学生"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/RoleStudent"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:src="@mipmap/icon_round" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LayoutTeacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
                 android:layout_weight="0.5"
-                android:src="@mipmap/icon_student" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/identityTeacherImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:src="@mipmap/icon_student" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:text="学生"
-                android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="教师"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:text="教师"
-                android:textSize="16sp" />
+                <ImageView
+                    android:id="@+id/RoleTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:src="@mipmap/icon_round_right" />
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/RoleStudent"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:src="@mipmap/icon_round" />
-
-            <ImageView
-                android:id="@+id/RoleTeacher"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:src="@mipmap/icon_round_right" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
