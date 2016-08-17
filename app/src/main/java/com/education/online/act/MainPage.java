@@ -1,5 +1,6 @@
 package com.education.online.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +33,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(MainPage.this, SearchAct.class));
             }
         });
         _setLeftBackText("城市", new View.OnClickListener() {

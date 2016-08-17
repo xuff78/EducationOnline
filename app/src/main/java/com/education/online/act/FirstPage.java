@@ -25,7 +25,6 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StatusBarCompat.fitPage(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_page);
 
