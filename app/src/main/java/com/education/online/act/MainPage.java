@@ -77,8 +77,6 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     changePage(home);
                     break;
                 case R.id.menuBtn2:
-                    Bundle b=new Bundle();
-                    selectorPage.setArguments(b);
                     changePage(selectorPage);
                     break;
                 case R.id.menuBtn3:
