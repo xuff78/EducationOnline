@@ -18,7 +18,6 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
     private int pressPos = 0;
     private View menuBtn1, menuBtn2, menuBtn3, menuBtn4;
-    private Fragment frg=new Fragment();
     private HomePage home=new HomePage();
     private View lastSelectedView=null;
 

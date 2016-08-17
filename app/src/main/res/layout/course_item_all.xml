@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:background="@color/whitesmoke"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/courseImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/courseImg"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:id="@+id/titleTxt"
+            android:text="名师讲课"
+            style="@style/txt_black_14" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/statusTxt"
+            android:text="100人在学习"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:layout_marginTop="6dp"
+            android:id="@+id/typeTxt"
+            android:textSize="10sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/normal_blue"
+            android:text="直播课"
+            android:background="@drawable/shape_blueline_with_corner"
+            style="@style/txt_gray_12" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_below="@+id/courseImg"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</RelativeLayout>

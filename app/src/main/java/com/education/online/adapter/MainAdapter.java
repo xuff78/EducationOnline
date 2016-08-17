@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.education.online.R;
 import com.education.online.bean.CategoryBean;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.view.ExtendedViewPager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -28,22 +30,22 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private LayoutInflater listInflater;
     private ImageLoader imageLoader;
     private int itemWidth=0, itemHeight=0, imgHeight=0;
-    private int padding=0;
+    private int padding10=0;
 
     public MainAdapter(Activity act, String json)
     {
         this.act=act;
         imageLoader=ImageLoader.getInstance();
         listInflater= LayoutInflater.from(act);
-        itemWidth= (ScreenUtil.getWidth(act))/5;
-        imgHeight=ImageUtil.dip2px(act, 40);
-        padding=ImageUtil.dip2px(act, 10);
+        padding10=ImageUtil.dip2px(act, 10);
+        itemWidth= (ScreenUtil.getWidth(act)-2*padding10)/5; //小图片和文字的形成点击区域的边长
+        imgHeight=itemWidth-2*padding10; //小图片的边长
     }
 
     @Override
     public int getItemCount() {
         // TODO Auto-generated method stub
-        return 1;
+        return 9;
     }
 
     @Override
@@ -54,17 +56,58 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int pos) {
-        SubjectHolder ivh=(SubjectHolder) vh;
+        if(pos==0) {
+            PagerHolder ivh = (PagerHolder) vh;
+        }else if(pos==1) {
+            SubjectHolder ivh = (SubjectHolder) vh;
+        }else if(pos==3) {
+            CourseHolder ivh = (CourseHolder) vh;
+        }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
-        LinearLayout view=new LinearLayout(act);
-        view.setOrientation(LinearLayout.VERTICAL);
-        view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
-        vh=new SubjectHolder(view, pos);
+        if(pos==0) {
+            View convertView = listInflater.inflate(R.layout.viewpager_layout, null);
+            int height = (int) ((float) ScreenUtil.getWidth(act) / 640 * 280);
+            RecyclerView.LayoutParams alp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+            convertView.setLayoutParams(alp);
+            vh = new PagerHolder(convertView);
+        }else if(pos==1) {
+            LinearLayout view = new LinearLayout(act);
+            view.setOrientation(LinearLayout.VERTICAL);
+            view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+            vh = new SubjectHolder(view, pos);
+        }else if(pos==2||pos==3||pos==4) {
+            View convertView = listInflater.inflate(R.layout.home_course_layout, null);
+            vh = new CourseHolder(convertView);
+        }else if(pos==5) {
+            View convertView = listInflater.inflate(R.layout.home_title_bar, null);
+            convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+            vh = new TitleHolder(convertView);
+        }else if(pos>5) {
+            View convertView = listInflater.inflate(R.layout.course_item_all, null);
+            convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+            vh = new CourseItemHolder(convertView);
+        }
         return vh;
+    }
+
+    public class PagerHolder extends RecyclerView.ViewHolder
+    {
+        ExtendedViewPager mViewPager;
+
+        public PagerHolder(View convertView) {
+            super(convertView);
+            mViewPager = (ExtendedViewPager) convertView.findViewById(R.id.galleryImgs);
+            ArrayList<String> imgs=new ArrayList<>();
+            imgs.add("");
+            imgs.add("");
+            imgs.add("");
+            mViewPager.setAdapter(new ActivityTopGalleryAdapter(act, imgs));
+            mViewPager.startAutoScroll();
+        }
     }
 
     public class SubjectHolder extends RecyclerView.ViewHolder
@@ -75,32 +118,100 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         {
             super(v);
             itemsLayout= (LinearLayout) v;
-            LinearLayout.LayoutParams llpitem=new LinearLayout.LayoutParams(itemWidth, itemWidth);
-            LinearLayout.LayoutParams llpimg=new LinearLayout.LayoutParams(itemWidth, itemWidth);
-            llpimg.bottomMargin=5;
-            int size=9;
+            itemsLayout.setPadding(padding10, 0, padding10, padding10*2);
+            LinearLayout.LayoutParams llpitem=new LinearLayout.LayoutParams(itemWidth, -2);
+            int itemsize=7;
             LinearLayout linelayout=new LinearLayout(act);
             linelayout.setOrientation(LinearLayout.HORIZONTAL);
-            for(int i=0;i<size;i++){
-                LinearLayout layout=new LinearLayout(act);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setPadding(padding,padding*2,padding,0);
-                layout.setGravity(Gravity.CENTER);
-                ImageView img=new ImageView(act);
-                img.setBackgroundResource(R.color.whitesmoke);
-                layout.addView(img, llpimg);
-                TextView txt=new TextView(act);
-                txt.setTextSize(12);
-                txt.setTextColor(Color.GRAY);
-                txt.setText("科目");
-                layout.addView(txt);
-                linelayout.addView(layout, llpitem);
-                if(i%5==4||i==size-1){
+            for(int i=0;i<itemsize+1;i++){
+                if(i==itemsize)
+                    linelayout.addView(getSubjectItemView("更多",""), llpitem);
+                else
+                    linelayout.addView(getSubjectItemView("科目",""), llpitem);
+                if(i%5==4||i==itemsize){
                     itemsLayout.addView(linelayout);
                     linelayout=new LinearLayout(act);
                 }
             }
         }
+
+        private LinearLayout getSubjectItemView(String name, String imgUrl){
+            LinearLayout.LayoutParams llpimg=new LinearLayout.LayoutParams(imgHeight, imgHeight);
+            llpimg.bottomMargin=5;
+            LinearLayout layout=new LinearLayout(act);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(padding10,padding10*2,padding10,0);
+            ImageView img=new ImageView(act);
+            img.setBackgroundResource(R.color.whitesmoke);
+            layout.addView(img, llpimg);
+            TextView txt=new TextView(act);
+            txt.setTextSize(12);
+            txt.setTextColor(Color.GRAY);
+            txt.setText(name);
+            txt.setGravity(Gravity.CENTER_HORIZONTAL);
+            layout.addView(txt);
+            return layout;
+        }
     }
 
+    public class CourseHolder extends RecyclerView.ViewHolder
+    {
+        TextView subjectName, titleTxt, timeTxt, priceTxt, statusTxt, titleTxt2, timeTxt2, priceTxt2, statusTxt2;
+        ImageView courseImg1, courseImg2;
+        View item1,item2;
+
+        public CourseHolder(View convertView) {
+            super(convertView);
+            subjectName = (TextView) convertView.findViewById(R.id.subjectName);
+            titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
+            timeTxt = (TextView) convertView.findViewById(R.id.timeTxt);
+            priceTxt = (TextView) convertView.findViewById(R.id.priceTxt);
+            priceTxt = (TextView) convertView.findViewById(R.id.priceTxt);
+            statusTxt = (TextView) convertView.findViewById(R.id.statusTxt);
+            titleTxt2 = (TextView) convertView.findViewById(R.id.titleTxt2);
+            timeTxt2 = (TextView) convertView.findViewById(R.id.timeTxt2);
+            priceTxt2 = (TextView) convertView.findViewById(R.id.priceTxt2);
+            statusTxt2 = (TextView) convertView.findViewById(R.id.statusTxt2);
+
+            courseImg1 = (ImageView) convertView.findViewById(R.id.courseImg1);
+            courseImg2 = (ImageView) convertView.findViewById(R.id.courseImg2);
+
+            item1 = convertView.findViewById(R.id.item1);
+            item2 = convertView.findViewById(R.id.item2);
+            item1.setOnClickListener(listener);
+            item2.setOnClickListener(listener);
+            convertView.findViewById(R.id.mornBtn).setOnClickListener(listener);
+        }
+
+        View.OnClickListener listener=new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+            }
+        };
+    }
+
+    public class TitleHolder extends RecyclerView.ViewHolder
+    {
+        TextView forYouTitle;
+
+        public TitleHolder(View convertView) {
+            super(convertView);
+            forYouTitle = (TextView) convertView.findViewById(R.id.forYouTitle);
+        }
+    }
+
+    public class CourseItemHolder extends RecyclerView.ViewHolder
+    {
+        TextView titleTxt,  statusTxt, typeTxt;
+        ImageView courseImg;
+
+        public CourseItemHolder(View convertView) {
+            super(convertView);
+            courseImg = (ImageView) convertView.findViewById(R.id.courseImg);
+            titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
+            statusTxt = (TextView) convertView.findViewById(R.id.statusTxt);
+            typeTxt = (TextView) convertView.findViewById(R.id.typeTxt);
+        }
+    }
 }
