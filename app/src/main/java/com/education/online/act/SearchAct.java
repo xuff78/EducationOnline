@@ -44,9 +44,9 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
         recentKeywordsLayout= (LinearLayout) findViewById(R.id.recentKeywordsLayout);
         findViewById(R.id.clearBtn).setOnClickListener(this);
 
-        int itemWidth = (ScreenUtil.getWidth(this)- ImageUtil.dip2px(this,60))/4;
+        int itemWidth = (ScreenUtil.getWidth(this)- ImageUtil.dip2px(this,90))/4;
         LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(itemWidth, -2);
-        llp.rightMargin=ImageUtil.dip2px(this, 10);
+        llp.rightMargin=ImageUtil.dip2px(this, 15);
         LinearLayout linelayout=new LinearLayout(this);
         int size=6;
         for(int i=0;i<size;i++){
@@ -57,7 +57,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             txt.setTextColor(Color.GRAY);
             txt.setText("测试");
             linelayout.addView(txt, llp);
-            if(i%3==2||i==size-1){
+            if(i%4==3||i==size-1){
                 mostKeywordsLayout.addView(linelayout);
                 linelayout=new LinearLayout(this);
                 linelayout.setPadding(0, llp.rightMargin,0,0);
