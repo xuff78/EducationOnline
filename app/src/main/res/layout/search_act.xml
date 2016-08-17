@@ -15,7 +15,7 @@
             android:text="大家都在搜"
             style="@style/txt_gray_12" />
         <LinearLayout
-            android:id="@+id/mostKeywords"
+            android:id="@+id/mostKeywordsLayout"
             android:orientation="vertical"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_height="1px" />
 
         <LinearLayout
-            android:id="@+id/recentKeywords"
+            android:id="@+id/recentKeywordsLayout"
             android:orientation="vertical"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
@@ -42,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
         <TextView
+            android:id="@+id/clearBtn"
             android:gravity="center"
             android:text="清空搜索记录"
             android:textColor="@color/normal_blue"

@@ -35,6 +35,7 @@
         android:id="@+id/cancelBtn"
         style="@style/txt_gray_14" />
     <EditText
+        android:id="@+id/searchEdt"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:singleLine="true"
