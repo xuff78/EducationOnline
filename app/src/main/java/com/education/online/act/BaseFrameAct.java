@@ -20,8 +20,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 
 
 	public ImageButton btnHome, btnBack;
-	
-	public Button rightTxtBtn;
+	private TextView left_text, right_text;
 	public LayoutInflater inflater;
 	public boolean backflag;
 
@@ -117,9 +116,18 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	/** 显示右边主页文字按钮 */
 	protected void _setRightHomeText(String name, OnClickListener listener) {
 		btnHome.setVisibility(View.GONE);
-		rightTxtBtn.setVisibility(View.VISIBLE);
-		rightTxtBtn.setText(name);
-		rightTxtBtn.setOnClickListener(listener);
+		TextView right_text= (TextView) findViewById(R.id.right_text);
+		right_text.setVisibility(View.VISIBLE);
+		right_text.setText(name);
+		right_text.setOnClickListener(listener);
+	}
+
+	protected void _setLeftBackText(String name, OnClickListener listener) {
+		btnBack.setVisibility(View.GONE);
+		TextView left_text= (TextView) findViewById(R.id.left_text);
+		left_text.setVisibility(View.VISIBLE);
+		left_text.setText(name);
+		left_text.setOnClickListener(listener);
 	}
 
 	@Override

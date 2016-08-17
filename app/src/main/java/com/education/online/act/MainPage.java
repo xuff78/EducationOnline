@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.education.online.R;
 import com.education.online.fragment.HomePage;
+import com.education.online.fragment.SelectorPage;
 import com.education.online.http.HttpHandler;
 
 /**
@@ -19,6 +20,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private int pressPos = 0;
     private View menuBtn1, menuBtn2, menuBtn3, menuBtn4;
     private HomePage home=new HomePage();
+    private SelectorPage selectorPage=new SelectorPage();
     private View lastSelectedView=null;
 
     @Override
@@ -27,6 +29,18 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         setContentView(R.layout.main_page);
 
         _setHeaderTitle("首页");
+        _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        _setLeftBackText("城市", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         initView();
 
         changePage(home);
@@ -63,6 +77,9 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     changePage(home);
                     break;
                 case R.id.menuBtn2:
+                    Bundle b=new Bundle();
+                    selectorPage.setArguments(b);
+                    changePage(selectorPage);
                     break;
                 case R.id.menuBtn3:
                     break;

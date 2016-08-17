@@ -57,7 +57,7 @@
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:background="@color/bg_gray"
+            android:background="@color/light_gray"
             android:gravity="center"
             android:text="获取验证码"
             android:textColor="@color/white"

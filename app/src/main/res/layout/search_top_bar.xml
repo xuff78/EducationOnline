@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/whitesmoke"
+    android:layout_height="45dp">
+    <LinearLayout
+        android:id="@+id/typeLayout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="70dp"
+        android:layout_height="match_parent" >
+        <TextView
+            android:text="类别"
+            android:id="@+id/typeTxt"
+            style="@style/txt_gray_14" />
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/arrow_down_gray"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+        </LinearLayout>
+    <View
+        android:layout_toRightOf="@+id/typeLayout"
+        android:background="@color/light_gray"
+        android:layout_width="1px"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:text="取消"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:id="@+id/cancelBtn"
+        style="@style/txt_gray_14" />
+    <EditText
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"
+        android:background="@null"
+        android:layout_toRightOf="@+id/typeLayout"
+        android:layout_toLeftOf="@+id/cancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+</RelativeLayout>

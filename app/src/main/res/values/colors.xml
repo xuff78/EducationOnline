@@ -10,6 +10,7 @@
     <color name="headerbg">#303F9F</color>
     <color name="hard_blue">#0173b1</color>
     <color name="light_trans_white">#22ffffff</color><!--高亮灰 -->
+    <color name="light_trans_black">#22000000</color><!--高亮灰 -->
     <!-- 商城使用字体颜色 -->
     <color name="highlight_gray">#eaeaea</color><!--高亮灰 -->
     <color name="light_blue">#ADD8E6</color><!--亮蓝色 -->

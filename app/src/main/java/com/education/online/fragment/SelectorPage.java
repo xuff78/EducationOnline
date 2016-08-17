@@ -46,6 +46,7 @@ public class SelectorPage extends BaseFragment{
         recyclerList.setLayoutManager(layoutManager);
 
         menuLeft= (ListView) v.findViewById(R.id.menuLeft);
+        cates.clear();
         CategoryBean cate=new CategoryBean();
         cates.add(cate);
         cates.add(cate);

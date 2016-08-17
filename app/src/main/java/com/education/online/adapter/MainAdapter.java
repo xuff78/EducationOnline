@@ -7,13 +7,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.bean.CategoryBean;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
@@ -70,7 +68,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         RecyclerView.ViewHolder vh=null;
         if(pos==0) {
             View convertView = listInflater.inflate(R.layout.viewpager_layout, null);
-            int height = (int) ((float) ScreenUtil.getWidth(act) / 640 * 280);
+            int height = (int) ((float) ScreenUtil.getWidth(act) / 640 * 240);
             RecyclerView.LayoutParams alp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
             convertView.setLayoutParams(alp);
             vh = new PagerHolder(convertView);
@@ -178,6 +176,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             item1 = convertView.findViewById(R.id.item1);
             item2 = convertView.findViewById(R.id.item2);
+
             item1.setOnClickListener(listener);
             item2.setOnClickListener(listener);
             convertView.findViewById(R.id.mornBtn).setOnClickListener(listener);
