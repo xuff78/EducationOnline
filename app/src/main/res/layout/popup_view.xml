@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_nocorner_black"
+    android:padding="5dip"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ListView
+        android:id="@+id/popList"
+        android:scrollbars="none"
+        android:divider="@color/light_gray"
+        android:dividerHeight="1px"
+        android:cacheColorHint="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
