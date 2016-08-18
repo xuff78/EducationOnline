@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.video.VideoMain;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
@@ -185,6 +187,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         View.OnClickListener listener=new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.mornBtn:
+                        act.startActivity(new Intent(act, VideoMain.class));
+                        break;
+                }
 
             }
         };
