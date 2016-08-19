@@ -39,7 +39,7 @@ public class VideoMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         listInflater= LayoutInflater.from(act);
         padding10= ImageUtil.dip2px(act, 10);
         itemWidth= ScreenUtil.getWidth(act)/6; //小图片和文字的形成点击区域的边长
-        imgHeight=itemWidth-3*padding10; //小图片的边长
+        imgHeight=itemWidth-2*padding10; //小图片的边长
     }
 
     @Override
@@ -79,7 +79,7 @@ public class VideoMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new TitleHolder(convertView);
-        }else if(pos>3) {
+        }else if(pos>2) {
             View convertView = listInflater.inflate(R.layout.course_item_all, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CourseItemHolder(convertView);

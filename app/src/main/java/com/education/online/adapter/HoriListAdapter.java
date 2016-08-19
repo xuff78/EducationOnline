@@ -44,7 +44,7 @@ public class HoriListAdapter extends RecyclerView.Adapter<ViewHolder>{
 	@Override
 	public int getItemCount() {
 		// TODO Auto-generated method stub
-		return 2;
+		return 6;
 	}
 
 
@@ -63,9 +63,9 @@ public class HoriListAdapter extends RecyclerView.Adapter<ViewHolder>{
 		View view = LayoutInflater.from(act).inflate(R.layout.video_items_vertical, null);
 		RecyclerView.LayoutParams rlp=new RecyclerView.LayoutParams(width, -2);
 		view.setLayoutParams(rlp);
-		CourseHolder vh=new CourseHolder(view);
 		if(position+1==6)
 			view.setPadding(padding, 0, padding, 0);
+		CourseHolder vh=new CourseHolder(view);
 		return vh;
 	}
 	

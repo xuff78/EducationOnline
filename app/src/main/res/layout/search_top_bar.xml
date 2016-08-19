@@ -40,6 +40,7 @@
         android:paddingRight="15dp"
         android:singleLine="true"
         android:background="@null"
+        android:imeOptions="actionSearch"
         android:layout_toRightOf="@+id/typeLayout"
         android:layout_toLeftOf="@+id/cancelBtn"
         android:layout_width="match_parent"

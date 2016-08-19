@@ -3,6 +3,7 @@ package com.education.online.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ public class MenuPopup extends PopupWindow {
         conentView = inflater.inflate(R.layout.popup_view, null);
         // 设置SelectPicPopupWindow的View
         this.setContentView(conentView);
+        setBackgroundDrawable(new BitmapDrawable());
         width= ImageUtil.dip2px(context,70);
         this.setWidth(width);
         this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);

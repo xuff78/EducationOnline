@@ -1,9 +1,12 @@
 package com.education.online.act;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,6 +17,7 @@ import com.education.online.http.HttpHandler;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.StatusBarCompat;
+import com.education.online.util.ToastUtils;
 import com.education.online.view.AutoFitLinearLayout;
 import com.education.online.view.MenuPopup;
 
@@ -59,6 +63,19 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
         typeLayout=findViewById(R.id.typeLayout);
         typeLayout.setOnClickListener(this);
         findViewById(R.id.cancelBtn).setOnClickListener(this);
+        searchEdt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId==EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
+                    if(!searchEdt.getText().toString().trim().equals(""))
+                    {
+                        startActivity(new Intent(SearchAct.this, SearchResultAct.class));
+                    }else
+                        ToastUtils.displayTextShort(SearchAct.this, "请填写搜索关键字");
+                }
+                return false;
+            }
+        });
 
         mostKeywordsLayout= (LinearLayout) findViewById(R.id.mostKeywordsLayout);
         recentKeywordsLayout= (AutoFitLinearLayout) findViewById(R.id.recentKeywordsLayout);
@@ -104,6 +121,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                 popup.showPopupWindow(typeLayout);
                 break;
             case R.id.cancelBtn:
+                finish();
                 break;
             case R.id.clearBtn:
                 break;
