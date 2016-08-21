@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/CourseImageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/CourseImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_teacher" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/CourseImageLayout"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/CourseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:gravity="center_vertical"
+            android:text="PHOTOSHOP基础工具机+唯美图片合成"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/CourseTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="8月7日~8月8日 14:00开课"
+            android:textColor="@color/light_gray"
+            android:textSize="13sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:id="@+id/CoursePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="￥200"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/ApplicantCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_corner_orangeline"
+                android:gravity="center"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="立即报名"
+                android:textColor="@color/dark_orange"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/NumApplicant"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/CoursePrice"
+                android:layout_toRightOf="@+id/CoursePrice"
+                android:gravity="center_vertical"
+                android:text="190人已报名"
+                android:textColor="@color/light_gray"
+                android:textSize="13sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/CourseImageLayout"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_gray" />
+
+
+</RelativeLayout>

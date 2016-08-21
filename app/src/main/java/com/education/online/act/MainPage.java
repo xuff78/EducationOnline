@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.education.online.R;
 import com.education.online.fragment.HomePage;
+import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.SelectorPage;
 import com.education.online.http.HttpHandler;
 
@@ -22,6 +23,8 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private View menuBtn1, menuBtn2, menuBtn3, menuBtn4;
     private HomePage home=new HomePage();
     private SelectorPage selectorPage=new SelectorPage();
+    private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
+
     private View lastSelectedView=null;
 
     @Override
@@ -81,6 +84,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     changePage(selectorPage);
                     break;
                 case R.id.menuBtn3:
+                    changePage(onlinecoursePage);
                     break;
                 case R.id.menuBtn4:
                     break;

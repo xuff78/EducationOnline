@@ -25,6 +25,7 @@ public class LoginActivity extends BaseFrameAct {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //What is StatusBarCompat?
         StatusBarCompat.fitPage(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
