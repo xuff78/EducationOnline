@@ -14,9 +14,6 @@ import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.SelectorPage;
 import com.education.online.http.HttpHandler;
 
-/**
- * Created by 可爱的蘑菇 on 2016/8/15.
- */
 public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
     private int pressPos = 0;

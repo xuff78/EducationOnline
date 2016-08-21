@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="20dp"
+    android:paddingBottom="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/item1"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@color/whitesmoke"
+                android:id="@+id/courseImg1"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+            <ImageView
+                android:background="@color/light_trans_black"
+                android:padding="30dp"
+                android:src="@mipmap/icon_video_play"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/titleTxt"
+            android:text="名师讲课"
+            style="@style/txt_black_14" />
+        <TextView
+            android:layout_marginTop="3dp"
+            android:id="@+id/timeTxt"
+            android:text="12:00"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:layout_marginTop="3dp"
+            android:id="@+id/priceTxt"
+            android:text="￥100"
+            android:textColor="@color/dark_orange"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:layout_marginTop="3dp"
+            android:id="@+id/statusTxt"
+            android:text="100人在学习"
+            style="@style/txt_gray_12" />
+    </LinearLayout>
+</LinearLayout>
