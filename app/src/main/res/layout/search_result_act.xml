@@ -5,7 +5,9 @@
     <include
         android:id="@+id/searchLayout"
         layout="@layout/search_top_bar" />
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/courseTypeLayout"
         android:layout_below="@+id/searchLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -15,33 +17,45 @@
             android:layout_marginTop="2dp"
             android:id="@+id/courseTypeTxt1"
             android:gravity="center"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:text="直播课     ·"
+            android:text="直播课"
             style="@style/txt_gray_14" />
         <TextView
-            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="·"
+            style="@style/txt_gray_14" />
+        <TextView
             android:id="@+id/courseTypeTxt2"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:text="    视频课    "
+            android:text="视频课"
+            style="@style/txt_gray_14" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="·"
             style="@style/txt_gray_14" />
         <TextView
             android:layout_toRightOf="@+id/courseTypeTxt2"
-            android:layout_marginTop="2dp"
             android:id="@+id/courseTypeTxt3"
             android:gravity="center"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:text="·    课件"
+            android:text="课件"
             style="@style/txt_gray_14" />
-        <View
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/light_gray"
-            android:layout_width="match_parent"
-            android:layout_height="1px" />
-        </RelativeLayout>
+        </LinearLayout>
+    <View
+        android:layout_below="@+id/courseTypeLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
     <View
         android:id="@+id/transblackBg"
         android:visibility="gone"

@@ -14,11 +14,16 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.fragment.SelectorOrder;
-import com.education.online.fragment.SelectorPage;
+import com.education.online.bean.FilterAll;
+import com.education.online.bean.FilterInfo;
+import com.education.online.fragment.dialog.SelectorFilter;
+import com.education.online.fragment.dialog.SelectorOrder;
+import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.MenuPopup;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/8/17.
@@ -26,14 +31,14 @@ import com.education.online.view.MenuPopup;
 public class SearchResultAct extends BaseFrameAct implements View.OnClickListener{
 
     HttpHandler handler;
-    private TextView typeTxt;
+    private TextView typeTxt, selectTypeView;
     private EditText searchEdt;
     private View typeLayout, menuBtn1, menuBtn2, menuBtn3, transblackBg;
     private FrameLayout filterDetailLayout;
     private MenuPopup popup;
-    private String[] typeStrs={"课程", "老师", "视频"};
+    private String[] typeStrs={"课程", "老师"};
     private int type=0;
-    private Fragment selectorPage, selectorByOrder;
+    private Fragment selectorPage, selectorByOrder, selectorFilter;
     private boolean filterShown=false;
 
     @Override
@@ -49,6 +54,15 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private void initFrgment() {
         selectorPage=new SelectorPage();
         selectorByOrder=new SelectorOrder();
+        selectorFilter=new SelectorFilter();
+
+        FilterAll filter=new FilterAll();
+        ArrayList<FilterInfo> list=new ArrayList<>();
+        setFirstFilter(list);
+        filter.setList(list);
+        Bundle b=new Bundle();
+        b.putSerializable(FilterAll.Name, filter);
+        selectorFilter.setArguments(b);
     }
 
     private void initView() {
@@ -56,7 +70,37 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 typeTxt.setText(typeStrs[i]);
-                type=i;
+                if(type!=i) {
+                    selectorFilter=new SelectorFilter();
+                    FilterAll filter=new FilterAll();
+                    ArrayList<FilterInfo> list=new ArrayList<>();
+                    if (i == 0) {
+                        setFirstFilter(list);
+                    } else {
+                        FilterInfo info=new FilterInfo();
+                        info.setTypeName("教师资质");
+                        String[] typenames=new String[]{"教师认证","专业证书"};
+                        info.setItemInfo(typenames);
+                        list.add(info);
+                        FilterInfo info2=new FilterInfo();
+                        info2.setTypeName("教龄");
+                        String[] typenames2=new String[]{"不限","1-5年","5-10年","10-15年","15年以上"};
+                        info2.setItemInfo(typenames2);
+                        list.add(info2);
+                        FilterInfo info3=new FilterInfo();
+                        info3.setTypeName("老师性别");
+                        String[] typenames3=new String[]{"不限","男","女"};
+                        info3.setItemInfo(typenames3);
+                        list.add(info3);
+                    }
+                    type=i;
+                    filter.setList(list);
+                    Bundle b=new Bundle();
+                    b.putSerializable(FilterAll.Name, filter);
+                    selectorFilter.setArguments(b);
+                    popup.dismiss();
+                }
+
             }
         });
 
@@ -88,7 +132,24 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         menuBtn2.setOnClickListener(this);
         menuBtn3=findViewById(R.id.menuBtn3);
         menuBtn3.setOnClickListener(this);
+        TextView courseTypeTxt1= (TextView) findViewById(R.id.courseTypeTxt1);
+        courseTypeTxt1.setOnClickListener(typeListener);
+        selectTypeView=courseTypeTxt1;
+        findViewById(R.id.courseTypeTxt2).setOnClickListener(typeListener);
+        findViewById(R.id.courseTypeTxt3).setOnClickListener(typeListener);
+    }
 
+    private void setFirstFilter(ArrayList<FilterInfo> list){
+        FilterInfo info=new FilterInfo();
+        info.setTypeName("价格");
+        String[] typenames=new String[]{"免费","不免费"};
+        info.setItemInfo(typenames);
+        list.add(info);
+        FilterInfo info2=new FilterInfo();
+        info2.setTypeName("开课时间");
+        String[] typenames2=new String[]{"不限","一周","1月内","2月内"};
+        info2.setItemInfo(typenames2);
+        list.add(info2);
     }
 
     @Override
@@ -109,10 +170,32 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 openOrCloseFilterLayout(selectorByOrder, 1);
                 break;
             case R.id.menuBtn3:
-//                openOrCloseFilterLayout(selectorByOrder, 2);
+                openOrCloseFilterLayout(selectorFilter, 2);
                 break;
         }
     }
+
+    View.OnClickListener typeListener=new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view) {
+            TextView txt= (TextView) view;
+            if(txt!=selectTypeView) {
+                selectTypeView.setTextColor(getResources().getColor(R.color.hard_gray));
+                txt.setTextColor(getResources().getColor(R.color.dark_orange));
+                selectTypeView = txt;
+                switch (view.getId()) {
+                    case R.id.courseTypeTxt1:
+
+                        break;
+                    case R.id.courseTypeTxt2:
+                        break;
+                    case R.id.courseTypeTxt3:
+                        break;
+                }
+            }
+        }
+    };
 
     private void openOrCloseFilterLayout(Fragment frg, int typeNew){
         if(type!=typeNew){

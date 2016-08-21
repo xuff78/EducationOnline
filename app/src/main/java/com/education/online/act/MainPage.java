@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.education.online.R;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
-import com.education.online.fragment.SelectorPage;
-import com.education.online.http.HttpHandler;
+import com.education.online.fragment.dialog.SelectorPage;
 
 public class MainPage extends BaseFrameAct implements View.OnClickListener{
 

@@ -42,6 +42,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
             @Override
             public void doSuccess(String method, String jsonData) {
                 super.doSuccess(method, jsonData);
+
             }
         });
     }

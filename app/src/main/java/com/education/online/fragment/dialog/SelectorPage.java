@@ -1,4 +1,4 @@
-package com.education.online.fragment;
+package com.education.online.fragment.dialog;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -16,13 +16,14 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.adapter.SelectorRightAdapter;
 import com.education.online.bean.CategoryBean;
+import com.education.online.fragment.BaseFragment;
 
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/8/15.
  */
-public class SelectorPage extends BaseFragment{
+public class SelectorPage extends BaseFragment {
 
     private ListView menuLeft;
     private int pressPos=0;

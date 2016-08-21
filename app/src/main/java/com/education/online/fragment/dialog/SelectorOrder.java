@@ -1,4 +1,4 @@
-package com.education.online.fragment;
+package com.education.online.fragment.dialog;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.bean.CategoryBean;
+import com.education.online.fragment.BaseFragment;
 import com.education.online.util.ImageUtil;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/8/19.
  */
-public class SelectorOrder extends BaseFragment{
+public class SelectorOrder extends BaseFragment {
 
     private ImageView pressView=null;
     private int pressPos=0;

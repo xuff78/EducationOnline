@@ -35,7 +35,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
     private AutoFitLinearLayout recentKeywordsLayout;
     private View typeLayout;
     private MenuPopup popup;
-    private String[] typeStrs={"教程", "课件", "视频"};
+    private String[] typeStrs={"课程", "老师"};
     private int type=0;
 
     @Override

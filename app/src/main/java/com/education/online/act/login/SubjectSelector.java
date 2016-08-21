@@ -6,9 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.fragment.BaseFragment;
-import com.education.online.fragment.SelectorPage;
-import com.education.online.util.StatusBarCompat;
+import com.education.online.fragment.dialog.SelectorPage;
 
 /**
  * Created by Administrator on 2016/8/15.
