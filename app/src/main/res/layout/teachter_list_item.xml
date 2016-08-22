@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/CourseImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/teacherImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_teacher" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/CourseImageLayout"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/teacherName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:gravity="center_vertical"
+                android:text="PHOTOSHOP  我爱罗"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/teacherDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="资深设计师"
+                android:textColor="@color/light_gray"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/evaluation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="5.0分"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/NumApplicant"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/evaluation"
+                    android:gravity="center_vertical"
+                    android:text="评价66"
+                    android:textColor="@color/light_gray"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <LinearLayout
+        android:id="@+id/courseLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/moreLayout"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+        <TextView
+            android:text="共x节课"
+            android:id="@+id/courseNum"
+            style="@style/txt_gray_12" />
+        <View
+            android:layout_marginTop="3dp"
+            android:background="@mipmap/arrow_down_gray"
+            android:layout_width="12dp"
+            android:layout_height="8dp" />
+        </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/whitesmoke" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+</LinearLayout>

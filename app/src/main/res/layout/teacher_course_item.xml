@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <TextView
+        android:id="@+id/courseType"
+        android:text="直播课"
+        android:layout_marginTop="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textColor="@color/light_gray"
+        android:background="@drawable/shape_grayline_with_corner"
+        style="@style/txt_gray_12" />
+    <TextView
+        android:id="@+id/courseName"
+        android:layout_marginLeft="10dp"
+        android:text="PhotoShop课程"
+        android:layout_toRightOf="@+id/courseType"
+        style="@style/txt_gray_14" />
+    <TextView
+        android:id="@+id/coursePrice"
+        android:layout_marginTop="6dp"
+        android:text="免费"
+        android:layout_below="@+id/courseType"
+        android:textColor="@color/dark_orange"
+        style="@style/txt_gray_12" />
+    <TextView
+        android:id="@+id/buyerNum"
+        android:layout_marginTop="6dp"
+        android:text="播放次数：200"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/courseType"
+        style="@style/txt_gray_12" />
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</RelativeLayout>

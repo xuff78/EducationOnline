@@ -17,6 +17,7 @@ import com.education.online.R;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
 import com.education.online.fragment.OnlineCoursePage;
+import com.education.online.fragment.TeacherList;
 import com.education.online.fragment.dialog.SelectorFilter;
 import com.education.online.fragment.dialog.SelectorOrder;
 import com.education.online.fragment.dialog.SelectorPage;
@@ -35,7 +36,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     HttpHandler handler;
     private TextView typeTxt, selectTypeView;
     private EditText searchEdt;
-    private View typeLayout, menuBtn1, menuBtn2, menuBtn3, transblackBg;
+    private View typeLayout, menuBtn1, menuBtn2, menuBtn3, transblackBg, courseTypeLayout;
     private FrameLayout filterDetailLayout;
     private MenuPopup popup;
     private String[] typeStrs={"课程", "老师"};
@@ -43,6 +44,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private Fragment selectorPage, selectorByOrder, selectorFilter, currentUsedFrg;
     private boolean filterShown=false;
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
+    private TeacherList teacherList = new TeacherList();
 
 
     @Override
@@ -67,11 +69,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         Bundle b=new Bundle();
         b.putSerializable(FilterAll.Name, filter);
         selectorFilter.setArguments(b);
-
-        addListFragmetn(onlinecoursePage);
     }
 
-    private void addListFragmetn(Fragment page) {
+    private void addListFragment(Fragment page) {
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         ft.replace(R.id.fragment_list, page);
@@ -117,6 +117,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }
         });
 
+        courseTypeLayout=findViewById(R.id.courseTypeLayout);
         typeTxt= (TextView) findViewById(R.id.typeTxt);
         typeTxt.setText(typeStrs[0]);
         searchEdt= (EditText) findViewById(R.id.searchEdt);
@@ -129,7 +130,13 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 if(actionId== EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
                     if(!searchEdt.getText().toString().trim().equals(""))
                     {
-                        startActivity(new Intent(SearchResultAct.this, SearchResultAct.class));
+                        if(type==0) {
+                            courseTypeLayout.setVisibility(View.VISIBLE);
+                            addListFragment(onlinecoursePage);
+                        }else {
+                            courseTypeLayout.setVisibility(View.GONE);
+                            addListFragment(teacherList);
+                        }
                     }else
                         ToastUtils.displayTextShort(SearchResultAct.this, "请填写搜索关键字");
                 }
@@ -203,7 +210,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 selectTypeView = txt;
                 switch (view.getId()) {
                     case R.id.courseTypeTxt1:
-
                         break;
                     case R.id.courseTypeTxt2:
                         break;
