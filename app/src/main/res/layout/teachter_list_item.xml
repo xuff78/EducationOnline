@@ -98,6 +98,7 @@
             android:id="@+id/courseNum"
             style="@style/txt_gray_12" />
         <View
+            android:id="@+id/arrowIcon"
             android:layout_marginTop="3dp"
             android:background="@mipmap/arrow_down_gray"
             android:layout_width="12dp"

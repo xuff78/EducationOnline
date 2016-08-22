@@ -62,11 +62,13 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
         ImageView teacherImage;
         TextView teacherName, teacherDesc, evaluation;
         LinearLayout courseLayout, moreLayout;
+        View arrowIcon;
         boolean isExpand=false;
 
         public TeacherItemHolder(View v, final int position)
         {
             super(v);
+            arrowIcon = v.findViewById(R.id.arrowIcon);
             teacherImage = (ImageView) v.findViewById(R.id.teacherImage);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             teacherDesc = (TextView) v.findViewById(R.id.teacherDesc);
@@ -77,7 +79,7 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             for (int i=0;i<position;i++){
                 courseLayout.addView(getCourseLayout(), llpTeacher);
             }
-            if(position>1) {
+            if(position>2) {
                 LinearLayout.LayoutParams llpCourse=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*2);
                 courseLayout.setLayoutParams(llpCourse);
                 moreLayout.setVisibility(View.VISIBLE);
@@ -85,10 +87,12 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
                     @Override
                     public void onClick(View view) {
                         if(isExpand){
+                            arrowIcon.setBackgroundResource(R.mipmap.arrow_down_gray);
                             LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*2);
                             courseLayout.setLayoutParams(llp);
                             isExpand=false;
                         }else{
+                            arrowIcon.setBackgroundResource(R.mipmap.arrow_down_gray);
                             LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*position);
                             courseLayout.setLayoutParams(llp);
                             isExpand=true;

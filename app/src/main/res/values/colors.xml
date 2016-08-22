@@ -6,6 +6,8 @@
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="transparent">#00000000</color><!--透明 -->
 
+
+    <color name="normal_red">#F95850</color>
     <color name="dark_orange">#fe5900</color>
     <color name="headerbg">#364e5e</color>
     <color name="hard_blue">#0173b1</color>
@@ -23,6 +25,7 @@
     <color name="coffee">#72452C</color><!--咖啡色 -->
     <color name="bg_gray">#d8dbde</color><!--咖啡色 -->
     <color name="whitesmoke">#F5F5F5</color><!--烟白色 -->
+    <color name="highwhite">#FAFAFA</color><!--烟白色 -->
 
 
 </resources>

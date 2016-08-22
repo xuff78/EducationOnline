@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:padding="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="订单号"
+                style="@style/txt_gray_14" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="购买课程"
+                style="@style/txt_gray_14" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="还需支付"
+                style="@style/txt_gray_14" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="0000"
+                style="@style/txt_gray_14" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="PHOTOSHOP"
+                style="@style/txt_gray_14" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="100.00"
+                android:textColor="@color/dark_orange"
+                style="@style/txt_gray_14" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+    <View
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/hintTxt"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="钱包余额"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/walletAmount"
+            android:layout_toRightOf="@+id/hintTxt"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="100.00"
+            style="@style/txt_black_14" />
+        <TextView
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_orangedline_with_corner"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="去充值"
+            android:textColor="@color/dark_orange"
+            style="@style/txt_gray_12" />
+    </RelativeLayout>
+    <View
+        android:background="@color/highwhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/orderPrice"
+            android:text="总价：120.00元"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/normal_red"
+            android:layout_centerVertical="true"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/payBtn"
+            android:textSize="15sp"
+            android:text="立即支付"
+            android:background="@color/normal_red"
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</RelativeLayout>
