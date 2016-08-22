@@ -16,10 +16,12 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
+import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.dialog.SelectorFilter;
 import com.education.online.fragment.dialog.SelectorOrder;
 import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.http.HttpHandler;
+import com.education.online.inter.DialogCallback;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.MenuPopup;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class SearchResultAct extends BaseFrameAct implements View.OnClickListener{
+public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback {
 
     HttpHandler handler;
     private TextView typeTxt, selectTypeView;
@@ -38,8 +40,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private MenuPopup popup;
     private String[] typeStrs={"课程", "老师"};
     private int type=0;
-    private Fragment selectorPage, selectorByOrder, selectorFilter;
+    private Fragment selectorPage, selectorByOrder, selectorFilter, currentUsedFrg;
     private boolean filterShown=false;
+    private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,15 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         Bundle b=new Bundle();
         b.putSerializable(FilterAll.Name, filter);
         selectorFilter.setArguments(b);
+
+        addListFragmetn(onlinecoursePage);
+    }
+
+    private void addListFragmetn(Fragment page) {
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.replace(R.id.fragment_list, page);
+        ft.commit();
     }
 
     private void initView() {
@@ -125,6 +138,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         });
 
         transblackBg=findViewById(R.id.transblackBg);
+        transblackBg.setOnClickListener(this);
         filterDetailLayout= (FrameLayout) findViewById(R.id.fragment_frame);
         menuBtn1=findViewById(R.id.menuBtn1);
         menuBtn1.setOnClickListener(this);
@@ -172,6 +186,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             case R.id.menuBtn3:
                 openOrCloseFilterLayout(selectorFilter, 2);
                 break;
+            case R.id.transblackBg:
+                closeDialog();
+                break;
         }
     }
 
@@ -203,7 +220,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             filterDetailLayout.setVisibility(View.VISIBLE);
             transblackBg.setVisibility(View.VISIBLE);
         }else if(filterShown){
-            removePage(frg);
+            removePage();
             filterDetailLayout.setVisibility(View.GONE);
             transblackBg.setVisibility(View.GONE);
         }else{
@@ -216,17 +233,18 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
 
     private void changePage(Fragment frg){
         filterShown=true;
+        currentUsedFrg=frg;
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         ft.replace(R.id.fragment_frame, frg);
         ft.commit();
     }
 
-    private void removePage(Fragment frg){
+    private void removePage(){
         filterShown=false;
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-        ft.remove(frg);
+        ft.remove(currentUsedFrg);
         ft.commit();
     }
 
@@ -238,5 +256,12 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             filterShown=false;
         }else
             super.onBackPressed();
+    }
+
+    @Override
+    public void closeDialog() {
+        removePage();
+        filterDetailLayout.setVisibility(View.GONE);
+        transblackBg.setVisibility(View.GONE);
     }
 }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <HorizontalScrollView
+        android:id="@+id/dateScroll"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Today"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="    今日"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="·"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/Day2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="8月8日"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="·"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/Day3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="8月8日"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="·"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/Day4"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="81月10日"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="·"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/Day5"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="8月11日"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="·"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/Day6"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="8月12日"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="·"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/Day7"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="8月13日"
+                android:textSize="13sp" />
+
+
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/line1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/light_gray" />
+    <FrameLayout
+        android:id="@+id/fragment_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

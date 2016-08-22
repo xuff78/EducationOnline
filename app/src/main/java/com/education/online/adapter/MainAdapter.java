@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
@@ -60,7 +61,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             PagerHolder ivh = (PagerHolder) vh;
         }else if(pos==1) {
             SubjectHolder ivh = (SubjectHolder) vh;
-        }else if(pos==3) {
+        }else if(pos==2) {
             CourseHolder ivh = (CourseHolder) vh;
         }
     }
@@ -81,7 +82,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             vh = new SubjectHolder(view, pos);
         }else if(pos==2||pos==3||pos==4) {
             View convertView = listInflater.inflate(R.layout.home_course_layout, null);
-            vh = new CourseHolder(convertView);
+            vh = new CourseHolder(convertView, pos);
         }else if(pos==5) {
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
@@ -159,9 +160,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView subjectName, titleTxt, timeTxt, priceTxt, statusTxt, titleTxt2, timeTxt2, priceTxt2, statusTxt2;
         ImageView courseImg1, courseImg2;
         View item1,item2;
+        View moreBtn;
+        int pos=0;
 
-        public CourseHolder(View convertView) {
+        public CourseHolder(View convertView, int pos) {
             super(convertView);
+            this.pos=pos;
             subjectName = (TextView) convertView.findViewById(R.id.subjectName);
             titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
             timeTxt = (TextView) convertView.findViewById(R.id.timeTxt);
@@ -181,7 +185,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             item1.setOnClickListener(listener);
             item2.setOnClickListener(listener);
-            convertView.findViewById(R.id.mornBtn).setOnClickListener(listener);
+            moreBtn = convertView.findViewById(R.id.mornBtn);
+            moreBtn.setOnClickListener(listener);
         }
 
         View.OnClickListener listener=new View.OnClickListener(){
@@ -189,7 +194,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.mornBtn:
-                        act.startActivity(new Intent(act, VideoMain.class));
+                        if(pos==2)
+                            act.startActivity(new Intent(act, LiveTelecast.class));
+                        else if(pos==3)
+                            act.startActivity(new Intent(act, VideoMain.class));
+                        else if(pos==4)
+                            act.startActivity(new Intent(act, VideoMain.class));
                         break;
                 }
 

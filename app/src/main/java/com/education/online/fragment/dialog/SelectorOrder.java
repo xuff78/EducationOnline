@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.bean.CategoryBean;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.inter.DialogCallback;
 import com.education.online.util.ImageUtil;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class SelectorOrder extends BaseFragment {
             TextView nameTxt= (TextView) item.findViewById(R.id.nameTxt);
             nameTxt.setText(names[i]);
             final ImageView img= (ImageView) item.findViewById(R.id.checkIcon);
-            if(i==0) {
+            if(i==pressPos) {
                 pressView = img;
                 img.setImageResource(R.mipmap.icon_round_right);
             }
@@ -56,6 +57,7 @@ public class SelectorOrder extends BaseFragment {
                     pressView.setImageResource(R.mipmap.icon_round);
                     img.setImageResource(R.mipmap.icon_round_right);
                     pressView=img;
+                    ((DialogCallback)getActivity()).closeDialog();
                 }
             });
             layout.addView(item, llp);

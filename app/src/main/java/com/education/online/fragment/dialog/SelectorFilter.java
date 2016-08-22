@@ -14,6 +14,8 @@ import com.education.online.R;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.inter.DialogCallback;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.AutoFitLinearLayout;
@@ -111,8 +113,18 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.confirmBtn:
+                ((DialogCallback)getActivity()).closeDialog();
                 break;
             case R.id.resetBtn:
+                for(int i=0;i<filters.size();i++){
+                    FilterInfo info=filters.get(i);
+                    if(info.getSelection()!=-1) {
+                        TextView txt = txtViews.get(i).get(info.getSelection());
+                        txt.setBackgroundResource(R.drawable.shape_corner_blackline);
+                        txt.setTextColor(Color.GRAY);
+                        info.setSelection(-1);
+                    }
+                }
                 break;
         }
     }

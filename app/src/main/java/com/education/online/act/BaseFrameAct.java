@@ -1,6 +1,9 @@
 package com.education.online.act;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.fragment.dialog.SelectorPage;
 
 public abstract class BaseFrameAct extends AppCompatActivity {
 
@@ -64,6 +68,13 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 				finish();
 			}
 		}
+	}
+
+	public void openFragment(int res, Fragment frg) {
+		FragmentManager fm=getSupportFragmentManager();
+		FragmentTransaction ft=fm.beginTransaction();
+		ft.replace(res, frg);
+		ft.commit();
 	}
 
 
