@@ -14,7 +14,16 @@ public class FilterInfo implements Serializable{
     private String[] itemInfo;
     private int pos=0;
     private int selection=-1;
+    private int selectionTemp=-1;
     private boolean singleChoice=false;
+
+    public int getSelectionTemp() {
+        return selectionTemp;
+    }
+
+    public void setSelectionTemp(int selectionTemp) {
+        this.selectionTemp = selectionTemp;
+    }
 
     public boolean isSingleChoice() {
         return singleChoice;

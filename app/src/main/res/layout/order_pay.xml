@@ -109,6 +109,8 @@
             android:id="@+id/payBtn"
             android:textSize="15sp"
             android:text="立即支付"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:background="@color/normal_red"
             android:layout_alignParentRight="true"
             android:layout_width="100dp"

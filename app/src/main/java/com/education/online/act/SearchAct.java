@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.http.HttpHandler;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.AutoFitLinearLayout;
@@ -32,7 +34,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
     private TextView typeTxt;
     private EditText searchEdt;
     private LinearLayout mostKeywordsLayout;
-    private AutoFitLinearLayout recentKeywordsLayout;
+    private LinearLayout recentKeywordsLayout;
     private View typeLayout;
     private MenuPopup popup;
     private String[] typeStrs={"课程", "老师"};
@@ -45,7 +47,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
 
         _setHeaderGone();
         initView();
-
+        initRecentLayout();
     }
 
     private void initView() {
@@ -67,8 +69,17 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId==EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
-                    if(!searchEdt.getText().toString().trim().equals(""))
+                    String word=searchEdt.getText().toString().trim();
+                    if(!word.equals(""))
                     {
+                        String wordsStr=SharedPreferencesUtil.getString(SearchAct.this, Constant.SearchWords);
+                        if(wordsStr.equals(SharedPreferencesUtil.FAILURE_STRING)){
+                            wordsStr=word;
+                            SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);
+                        }else{
+                            wordsStr=word+":"+wordsStr;
+                            SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);
+                        }
                         startActivity(new Intent(SearchAct.this, SearchResultAct.class));
                     }else
                         ToastUtils.displayTextShort(SearchAct.this, "请填写搜索关键字");
@@ -78,7 +89,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
         });
 
         mostKeywordsLayout= (LinearLayout) findViewById(R.id.mostKeywordsLayout);
-        recentKeywordsLayout= (AutoFitLinearLayout) findViewById(R.id.recentKeywordsLayout);
+        recentKeywordsLayout= (LinearLayout) findViewById(R.id.recentKeywordsLayout);
         findViewById(R.id.clearBtn).setOnClickListener(this);
 
         int itemWidth = (ScreenUtil.getWidth(this)- ImageUtil.dip2px(this,90))/4;
@@ -94,6 +105,8 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             txt.setBackgroundResource(R.drawable.shape_corner_blackline);
             txt.setTextColor(Color.GRAY);
             txt.setText("测试");
+            txt.setTag("测试");
+            txt.setOnClickListener(this);
             linelayout.addView(txt, llp);
             if(i%4==3||i==size-1){
                 mostKeywordsLayout.addView(linelayout);
@@ -101,16 +114,32 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                 linelayout.setPadding(0, llp.rightMargin,0,0);
             }
         }
+    }
 
-        String[] words={"什么", "这么神奇", "有", "娃娃哈哈哈", "啥的了飞机萨克的龙卷风", "就是说", "版本"};
+    private void initRecentLayout(){
+        recentKeywordsLayout.removeAllViews();
+        String wordsStr=SharedPreferencesUtil.getString(this, Constant.SearchWords);
+        String[] words=null;
+        if(wordsStr.equals(SharedPreferencesUtil.FAILURE_STRING)) {
+            words = new String[1];
+            words[0]="";
+        }else{
+            words=wordsStr.split(":");
+        }
+        LinearLayout.LayoutParams llprecent=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(this, 40));
+        LinearLayout.LayoutParams llpline=new LinearLayout.LayoutParams(-1, 1);
         for(int i=0;i<words.length;i++){
             TextView txt=new TextView(this);
             txt.setTextSize(14);
-            txt.setGravity(Gravity.CENTER);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setTextColor(Color.GRAY);
             txt.setText(words[i]);
-            txt.setPadding(itemHeight/3, itemHeight/6, itemHeight/3, itemHeight/6);
-            recentKeywordsLayout.addView(txt);
+            txt.setTag(words[i]);
+            txt.setOnClickListener(this);
+            recentKeywordsLayout.addView(txt, llprecent);
+            View line=new View(this);
+            line.setBackgroundResource(R.color.light_gray);
+            recentKeywordsLayout.addView(line, llpline);
         }
     }
 
@@ -124,6 +153,13 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                 finish();
                 break;
             case R.id.clearBtn:
+                SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, SharedPreferencesUtil.FAILURE_STRING);
+                initRecentLayout();
+                break;
+            default:
+                String searchword=(String)view.getTag();
+                if(searchword.length()>0)
+                    startActivity(new Intent(SearchAct.this, SearchResultAct.class));
                 break;
         }
     }

@@ -37,6 +37,11 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selector_filter, container, false);
 
+        if(filters.size()==0)
+            filters=((FilterAll)getArguments().getSerializable(FilterAll.Name)).getList();
+        for (FilterInfo info:filters){
+            info.setSelectionTemp(info.getSelection());
+        }
         initView(view);
         return view;
     }
@@ -46,11 +51,11 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
         v.findViewById(R.id.resetBtn).setOnClickListener(this);
         detailLayout= (LinearLayout) v.findViewById(R.id.detailLayout);
 
-        filters=((FilterAll)getArguments().getSerializable(FilterAll.Name)).getList();
         LinearLayout.LayoutParams llptitle = new LinearLayout.LayoutParams(-2, -2);
         llptitle.topMargin = ImageUtil.dip2px(getActivity(), 15);
         llptitle.bottomMargin = ImageUtil.dip2px(getActivity(), 15);
 
+        txtViews.clear();
         for(int j=0;j<filters.size();j++) {
             final FilterInfo info=filters.get(j);
 
@@ -87,20 +92,20 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
                 txt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(info.getSelection()!=-1) {
-                            TextView txt = selectionTxts.get(info.getSelection());
+                        if(info.getSelectionTemp()!=-1) {
+                            TextView txt = selectionTxts.get(info.getSelectionTemp());
                             txt.setBackgroundResource(R.drawable.shape_corner_blackline);
                             txt.setTextColor(Color.GRAY);
                         }
                         TextView selectTxt= (TextView) view;
                         selectTxt.setBackgroundResource(R.drawable.shape_orangedline_with_corner);
                         selectTxt.setTextColor(getResources().getColor(R.color.dark_orange));
-                        info.setSelection(k);
+                        info.setSelectionTemp(k);
                     }
                 });
             }
-            if(info.getSelection()!=-1){
-                TextView txt=selectionTxts.get(info.getSelection());
+            if(info.getSelectionTemp()!=-1){
+                TextView txt=selectionTxts.get(info.getSelectionTemp());
                 txt.setBackgroundResource(R.drawable.shape_orangedline_with_corner);
                 txt.setTextColor(getResources().getColor(R.color.dark_orange));
             }
@@ -113,16 +118,19 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.confirmBtn:
+                for (FilterInfo info:filters){
+                    info.setSelection(info.getSelectionTemp());
+                }
                 ((DialogCallback)getActivity()).closeDialog();
                 break;
             case R.id.resetBtn:
                 for(int i=0;i<filters.size();i++){
                     FilterInfo info=filters.get(i);
-                    if(info.getSelection()!=-1) {
-                        TextView txt = txtViews.get(i).get(info.getSelection());
+                    if(info.getSelectionTemp()!=-1) {
+                        TextView txt = txtViews.get(i).get(info.getSelectionTemp());
                         txt.setBackgroundResource(R.drawable.shape_corner_blackline);
                         txt.setTextColor(Color.GRAY);
-                        info.setSelection(-1);
+                        info.setSelectionTemp(-1);
                     }
                 }
                 break;

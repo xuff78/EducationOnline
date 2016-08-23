@@ -1,5 +1,6 @@
 package com.education.online.act.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.MainPage;
 import com.education.online.util.StatusBarCompat;
 
 /**
@@ -60,8 +62,10 @@ public class LoginActivity extends BaseFrameAct {
 
     private void attemptLogin() {
 
+
+        startActivity(new Intent(LoginActivity.this, MainPage.class));
         // Reset errors.
-        userName.setError(null);
+        /*userName.setError(null);
         userPsd.setError(null);
 
         String email = userName.getText().toString();
@@ -86,7 +90,7 @@ public class LoginActivity extends BaseFrameAct {
             focusView.requestFocus();
         } else {
 //            do sth
-        }
+        }*/
     }
 
     private boolean isPasswordValid(String password) {

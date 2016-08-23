@@ -39,26 +39,28 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/loginBtn"
-                style="@style/txt_white_16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_oranged_with_corner"
-                android:text="登  录"
-                android:textStyle="bold" />
+
 
             <Button
                 android:id="@+id/registerBtn"
                 style="@style/txt_white_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_oranged_with_corner"
                 android:text="注  册"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/loginBtn"
+                style="@style/txt_white_16"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_oranged_with_corner"
+                android:text="登  录"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

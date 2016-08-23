@@ -1,6 +1,7 @@
 package com.education.online.act;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -56,7 +57,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.loginBtn:
-                startActivity(new Intent(FirstPage.this, MainPage.class));
+                startActivity(new Intent(FirstPage.this, LoginActivity.class));
                 break;
             case R.id.registerBtn:
                 startActivity(new Intent(FirstPage.this, RegisterPage1.class));

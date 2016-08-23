@@ -30,17 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
 
-        <com.education.online.view.AutoFitLinearLayout
+        <LinearLayout
             android:id="@+id/recentKeywordsLayout"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <View
+        <!--<View
             android:layout_marginTop="10dp"
             android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="1px" />
+            android:layout_height="1px" />-->
         <TextView
             android:id="@+id/clearBtn"
             android:gravity="center"
