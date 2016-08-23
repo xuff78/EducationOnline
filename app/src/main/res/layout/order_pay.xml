@@ -33,13 +33,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/orderId"
                 android:text="0000"
                 style="@style/txt_gray_14" />
             <TextView
+                android:id="@+id/courseName"
                 android:layout_marginTop="10dp"
                 android:text="PHOTOSHOP"
                 style="@style/txt_gray_14" />
             <TextView
+                android:id="@+id/coursePrice"
                 android:layout_marginTop="10dp"
                 android:text="100.00"
                 android:textColor="@color/dark_orange"
@@ -75,6 +78,7 @@
             android:text="100.00"
             style="@style/txt_black_14" />
         <TextView
+            android:id="@+id/rechargeBtn"
             android:layout_marginRight="15dp"
             android:background="@drawable/shape_orangedline_with_corner"
             android:layout_alignParentRight="true"

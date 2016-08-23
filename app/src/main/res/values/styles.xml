@@ -15,7 +15,13 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/hard_gray</item>
     </style>
-
+    <style name="txt_black_12">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/hard_gray</item>
+    </style>
     <style name="txt_gray_14">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
