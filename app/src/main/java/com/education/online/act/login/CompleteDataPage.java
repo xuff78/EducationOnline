@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.MainPage;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -53,6 +54,7 @@ public class CompleteDataPage extends BaseFrameAct {
 
         headIcon.setOnClickListener(listener);
         Subject.setOnClickListener(listener);
+        findViewById(R.id.BackToHone).setOnClickListener(listener);
 
         SexFemale = (ImageView) findViewById(R.id.SexFemale);
         SexMale = (ImageView) findViewById(R.id.SexMale);
@@ -81,6 +83,9 @@ public class CompleteDataPage extends BaseFrameAct {
                 case R.id.LayoutMale:
                     SexFemale.setImageResource(R.mipmap.icon_round);
                     SexMale.setImageResource(R.mipmap.icon_round_right);
+                    break;
+                case R.id.BackToHone:
+                    startActivity(new Intent(CompleteDataPage.this, MainPage.class));
                     break;
 
             }

@@ -8,14 +8,15 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.view.PayTypeDialog;
 
 /**
  * Created by 可爱的蘑菇 on 2016/8/23.
  */
-public class WalletRecharge extends BaseFrameAct implements View.OnClickListener {
+public class WalletRecharge extends BaseFrameAct implements View.OnClickListener, PayTypeDialog.PayDialogCallBack {
 
     private EditText rechargePrice;
-
+    private PayTypeDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,20 @@ public class WalletRecharge extends BaseFrameAct implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.payBtn:
+                dialog=new PayTypeDialog(WalletRecharge.this, false, WalletRecharge.this);
+                dialog.show();
+                break;
+        }
+    }
+
+    @Override
+    public void onSelected(int payType) {
+        switch (payType){
+            case PayTypeDialog.AliPay:
+                break;
+            case PayTypeDialog.WechatPay:
+                break;
+            case PayTypeDialog.UnionPay:
                 break;
         }
     }

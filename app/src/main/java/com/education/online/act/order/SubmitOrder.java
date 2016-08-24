@@ -1,5 +1,6 @@
 package com.education.online.act.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,6 +40,8 @@ public class SubmitOrder extends BaseFrameAct implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.submitBtn:
+                Intent i=new Intent(SubmitOrder.this, OrderPay.class);
+                startActivity(i);
                 break;
         }
     }
