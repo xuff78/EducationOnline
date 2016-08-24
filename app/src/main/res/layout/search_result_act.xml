@@ -6,7 +6,6 @@
         android:id="@+id/searchLayout"
         layout="@layout/search_top_bar" />
     <LinearLayout
-        android:visibility="gone"
         android:gravity="center"
         android:id="@+id/courseTypeLayout"
         android:layout_below="@+id/searchLayout"

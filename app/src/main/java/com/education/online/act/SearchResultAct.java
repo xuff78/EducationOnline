@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
+import com.education.online.fragment.CourseVideoList;
 import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.TeacherList;
 import com.education.online.fragment.dialog.SelectorFilter;
@@ -44,6 +45,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private Fragment selectorPage, selectorByOrder, selectorFilter, currentUsedFrg;
     private boolean filterShown=false;
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
+    private CourseVideoList courseVideoList = new CourseVideoList();
     private TeacherList teacherList = new TeacherList();
 
 
@@ -55,6 +57,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         _setHeaderGone();
         initView();
         initFrgment();
+        addListFragment(onlinecoursePage);
     }
 
     private void initFrgment() {
@@ -210,10 +213,13 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 selectTypeView = txt;
                 switch (view.getId()) {
                     case R.id.courseTypeTxt1:
+                        addListFragment(onlinecoursePage);
                         break;
                     case R.id.courseTypeTxt2:
+                        addListFragment(courseVideoList);
                         break;
                     case R.id.courseTypeTxt3:
+                        addListFragment(courseVideoList);
                         break;
                 }
             }

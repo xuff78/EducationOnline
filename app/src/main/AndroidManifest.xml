@@ -118,6 +118,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="keUx4VsbXGW0ITj8dwKmtDGMiz6biN6r" />
     </application>
 
 </manifest>

@@ -74,7 +74,15 @@
                 android:text="立即报名"
                 android:textColor="@color/dark_orange"
                 android:textSize="12sp" />
-
+            <TextView
+                android:visibility="gone"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:id="@+id/courseNumTxt"
+                style="@style/txt_gray_12"
+                android:layout_alignParentRight="true"
+                android:text="共一节课"
+                android:textSize="12sp" />
             <TextView
                 android:id="@+id/NumApplicant"
                 android:layout_width="100dp"
