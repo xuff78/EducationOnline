@@ -27,6 +27,12 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
     }
 
     @Override
+    public int getItemViewType(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
         if(pos==0) {
