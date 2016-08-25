@@ -147,4 +147,56 @@
     </LinearLayout>
 
 
+    <!-- 用类似这种 -->
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/icon_comment" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="100%好评"
+                style="@style/txt_gray_12" />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:text="148好评"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
+        <View
+            android:layout_width="1px"
+            android:layout_height="35dp"
+            android:background="@color/light_gray" />
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/icon_watch" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="100%好评"
+                style="@style/txt_gray_12" />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:text="148好评"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
