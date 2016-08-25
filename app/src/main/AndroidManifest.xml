@@ -117,6 +117,9 @@
             android:name=".act.order.WalletRecharge"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity android:name=".act.CourseMainPage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:id="@+id/courseName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="PHOTOSHOP基础工具机+唯美图片合成"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:text="插班费："
+            android:textColor="@color/dark_orange"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/coursePrice"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:text="￥260"
+            android:textColor="@color/dark_orange"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:text="课程简介"
+        android:textColor="@color/bg_gray" />
+
+    <TextView
+        android:id="@+id/courseBrief"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"
+        android:text="1.中日韩外长握手合照(图) 王毅当韩外长面驳斥部署萨德
+        王毅与日外相会谈1小时：尽快启动中日海空联络机制..."
+        android:textSize="12sp" />
+
+</LinearLayout>

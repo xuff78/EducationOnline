@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/bg_gray">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:src="@mipmap/icon_video_play"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/payTips"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="本课程为收费课程，购买后可完后才能学习"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payTips"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_nocorner_orange"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="立即购买"
+            android:textColor="@color/dark_orange"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <LinearLayout
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="详情"
+                android:textColor="@color/dark_orange" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@color/dark_orange"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/directory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="目录"
+                android:textColor="@color/dark_orange" />
+
+            <View
+                android:visibility="gone"
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@color/dark_orange"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="评价"
+                android:textColor="@color/dark_orange" />
+
+            <View
+                android:visibility="gone"
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@color/dark_orange"
+                android:gravity="center" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/courseRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
+
