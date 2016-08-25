@@ -18,6 +18,24 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    /*signingConfigs {
+        debug {
+            storeFile file("D:\\android_self.jks")
+            storePassword "123456"
+            keyAlias "eric_ji"
+            keyPassword "123456"
+
+        }
+
+        release {
+            storeFile file("D:\\android_self.jks")
+            storePassword "123456"
+            keyAlias "eric_ji"
+            keyPassword "123456"
+        }
+    }*/
+
     buildTypes {
         release {
             minifyEnabled false
