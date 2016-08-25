@@ -27,7 +27,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	private TextView left_text, right_text;
 	public LayoutInflater inflater;
 	public boolean backflag;
-
+	private RelativeLayout rl;
 	private ClickListener listener;
 
 	
@@ -40,6 +40,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 		btnHome.setOnClickListener(listener);
 		btnBack=(ImageButton)findViewById(R.id.back_imagebtn);
 		btnBack.setOnClickListener(listener);
+		rl = (RelativeLayout) findViewById(R.id.heder_layout);
 
 	}
 	
@@ -85,13 +86,11 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	}
 
 	protected View _setHeaderGone() {
-		RelativeLayout rl = (RelativeLayout) findViewById(R.id.heder_layout);
 		rl.setVisibility(View.GONE);
 		return rl;
 	}
 
 	protected View _setHeaderShown() {
-		RelativeLayout rl = (RelativeLayout) findViewById(R.id.heder_layout);
 		rl.setVisibility(View.VISIBLE);
 		return rl;
 	}
