@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:text="课程内容"
+        android:textColorHighlight="@color/hard_gray" />
+
+    <TextView
+        android:id="@+id/courseDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"
+        android:text="1.中日韩外长握手合照(图) 王毅当韩外长面驳斥部署萨德
+2.王毅与日外相会谈1小时：尽快启动中日海空联络机制"
+        android:textColor="@color/bg_gray"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_gray" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:text="课程安排"
+        android:textColorHighlight="@color/hard_gray" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/coursedate"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="8月3日~8月24日"
+            android:textColorHighlight="@color/hard_gray" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/coursedate"
+            android:id="@+id/coursetime"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="09:05开课~10:50结课"
+            android:textColorHighlight="@color/hard_gray" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+    <TextView
+        android:id="@+id/courseArrangement"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"
+        android:text="1.中日韩外长握手合照(图) 王毅当韩外长面驳斥部署萨德
+2.王毅与日外相会谈1小时：尽快启动中日海空联络机制
+3.中国自信介入叙利亚 英媒：回应“萨德”
+4.政协主席代市长再任书记，罕见一身挑三职"
+        android:textColor="@color/bg_gray"
+        android:textSize="12sp" />
+
+</LinearLayout>

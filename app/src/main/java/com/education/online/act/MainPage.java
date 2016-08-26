@@ -85,9 +85,10 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     changePage(selectorPage);
                     break;
                 case R.id.menuBtn3:
-//                    changePage(onlinecoursePage);
+                   // changePage(onlinecoursePage);
                     break;
                 case R.id.menuBtn4:
+                    startActivity(new Intent(MainPage.this, CourseMainPage.class));
                     break;
                 case R.id.menuBtn5:
                     _setHeaderGone();

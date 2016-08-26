@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/courseImg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:layout_below="@+id/courseImg"
+        android:id="@+id/courseName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="PHOTOSHOP基础工具机+唯美图片合成"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_below="@+id/courseName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:text="插班费："
+            android:textColor="@color/dark_orange"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/coursePrice"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:text="￥260"
+            android:textColor="@color/dark_orange"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/studentNum"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="班级人数500人，已报名200人"
+        android:textColor="@color/bg_gray"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/icon_comment" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/icon_watch" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/praisePercent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="100%好评"
+            android:textColor="@color/bg_gray"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/courseTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016年8月开课"
+            android:textColor="@color/bg_gray"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/commentsNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="148条评论"
+            android:textColor="@color/bg_gray"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/totalSerial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="共5节"
+            android:textColor="@color/bg_gray"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+    <!-- 用类似这种 -->
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/icon_comment" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="100%好评"
+                style="@style/txt_gray_12" />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:text="148好评"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
+        <View
+            android:layout_width="1px"
+            android:layout_height="35dp"
+            android:background="@color/light_gray" />
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/icon_watch" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="100%好评"
+                style="@style/txt_gray_12" />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:text="148好评"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
