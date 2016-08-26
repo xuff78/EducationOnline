@@ -24,6 +24,8 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
     public static final int AliPay=1;
     public static final int WechatPay=2;
     public static final int UnionPay=3;
+    private View checkedIcon=null;
+    private View checkIcon, checkIcon2, checkIcon3, checkIcon4;
 
     public PayTypeDialog(Context context, boolean showWallet, PayDialogCallBack cb) {
         super(context, R.style.view_dialog);
@@ -55,33 +57,53 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
         wechatPayLayout.setOnClickListener(this);
         RelativeLayout unionPayLayout = (RelativeLayout) findViewById(R.id.unionPayLayout);
         unionPayLayout.setOnClickListener(this);
-        findViewById(R.id.cancelBtn).setOnClickListener(this);
-        findViewById(R.id.payBtn).setOnClickListener(this);
+        checkIcon=findViewById(R.id.checkIcon);
+        checkIcon.setOnClickListener(this);
+        checkIcon2=findViewById(R.id.checkIcon2);
+        checkIcon2.setOnClickListener(this);
+        checkIcon3=findViewById(R.id.checkIcon3);
+        checkIcon3.setOnClickListener(this);
+        checkIcon4=findViewById(R.id.checkIcon4);
+        checkIcon4.setOnClickListener(this);
+        findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        findViewById(R.id.payBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         if(!showWallet)
             walletPayLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View view) {
+        if(checkedIcon!=null)
+            checkedIcon.setVisibility(View.GONE);
         switch (view.getId()){
             case R.id.walletPayLayout:
+                checkedIcon=checkIcon;
                 cb.onSelected(0);
                 break;
             case R.id.alipayPayLayout:
+                checkedIcon=checkIcon2;
                 cb.onSelected(1);
                 break;
             case R.id.wechatPayLayout:
+                checkedIcon=checkIcon3;
                 cb.onSelected(2);
                 break;
             case R.id.unionPayLayout:
+                checkedIcon=checkIcon4;
                 cb.onSelected(3);
                 break;
-            case R.id.cancelBtn:
-                break;
-            case R.id.payBtn:
-                break;
         }
-        dismiss();
+        checkedIcon.setVisibility(View.VISIBLE);
     }
 
     public interface PayDialogCallBack{
