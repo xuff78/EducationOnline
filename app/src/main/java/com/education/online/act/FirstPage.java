@@ -61,7 +61,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
                 break;
             case R.id.registerBtn:
                 //startActivity(new Intent(FirstPage.this, RegisterPage1.class));
-                startActivity(new Intent(FirstPage.this, CourseMainPage.class));
+                startActivity(new Intent(FirstPage.this, VideoMainPage.class));
                 break;
         }
     }

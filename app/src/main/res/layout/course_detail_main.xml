@@ -10,9 +10,13 @@
         android:background="@color/bg_gray">
 
         <ImageView
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:id="@+id/roundLeftBack"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="15dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/icon_round_back"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -33,6 +37,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/payBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/payTips"
@@ -59,6 +64,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textdetails"
                 android:layout_width="50dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
@@ -67,6 +73,7 @@
                 android:textColor="@color/dark_orange" />
 
             <View
+                android:id="@+id/viewdetails"
                 android:layout_width="60dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center_horizontal|bottom"
@@ -83,14 +90,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textdirectory"
                 android:layout_width="50dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="目录"
-                android:textColor="@color/dark_orange" />
+                android:textColor="@color/light_gray" />
 
             <View
+                android:id="@+id/viewdirectory"
                 android:visibility="gone"
                 android:layout_width="60dp"
                 android:layout_height="2dp"
@@ -108,14 +117,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textcomments"
                 android:layout_width="50dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="评价"
-                android:textColor="@color/dark_orange" />
+                android:textColor="@color/light_gray" />
 
             <View
+                android:id="@+id/viewcomments"
                 android:visibility="gone"
                 android:layout_width="60dp"
                 android:layout_height="2dp"

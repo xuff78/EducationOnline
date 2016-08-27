@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+    <TextView
+        android:id="@+id/textdirectory"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:text="PHOTOSHOP基础工具机+唯美图片合成"
+        android:textSize="14sp"/>
+
+</LinearLayout>

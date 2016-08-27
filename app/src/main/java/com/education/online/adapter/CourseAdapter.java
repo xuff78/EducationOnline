@@ -37,7 +37,6 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
         RecyclerView.ViewHolder vh=null;
         if(pos==0) {
             View view=listInflater.inflate(R.layout.course_information, null);
-            view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CourseAdapter.CourseHolder(view, pos);
         }else if(pos==1) {
             View view=listInflater.inflate(R.layout.teacher_introduction, null);
@@ -46,11 +45,11 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
         }else if(pos==2) {
             View view=listInflater.inflate(R.layout.course_detail, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
-            vh = new CourseDetailAdapter(view, pos);
+            vh = new CourseDetailsHolder(view, pos);
         }else if(pos>2) {
             View view=listInflater.inflate(R.layout.comments_fragment, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
-            vh = new CommentslAdapter(view, pos);
+            vh = new CourseDetailsHolder(view, pos);
         }
         return vh;
     }
@@ -62,9 +61,9 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
         if (pos==0){
             CourseHolder vh = (CourseHolder) holder;
         }else if(pos==1) {
-           //TeacherInfoHolder vh =(TeacherInfoHolder) holder;
+           TeacherInfoHolder vh =(TeacherInfoHolder) holder;
         }else if(pos==2) {
-           // CourseDetailAdapter vh = (CourseDetailAdapter) holder;
+            CourseDetailsHolder vh = (CourseDetailsHolder) holder;
     }
 
     }
@@ -93,23 +92,48 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
     }
 
     public class TeacherInfoHolder extends RecyclerView.ViewHolder{
-
+        ImageView teacherPotrait;
+        TextView teacherName, teacherTitles, teacherScore, teacherComments;
+        View viewbottom;
         public TeacherInfoHolder(View v, int pos) {
             super(v);
+            teacherPotrait = (ImageView) v.findViewById(R.id.teacherpotrait);
+            teacherName = (TextView) v.findViewById(R.id.teacherName);
+            teacherScore = (TextView) v.findViewById(R.id.teacherScore);
+            teacherTitles= (TextView) v.findViewById(R.id.teacherTitles);
+            teacherComments = (TextView) v. findViewById(R.id.teacherComments);
+            viewbottom = v.findViewById(R.id.bottomview);
         }
     }
 
-    public class CourseDetailAdapter extends RecyclerView.ViewHolder{
+    public class CourseDetailsHolder extends RecyclerView.ViewHolder{
+        TextView courseDetail, coursedate, coursetime,courseArrangement;
 
-        public CourseDetailAdapter(View v, int pos) {
+        public CourseDetailsHolder(View v, int pos) {
             super(v);
+            courseDetail= (TextView) v.findViewById(R.id.courseDetail);
+            coursedate = (TextView) v.findViewById(R.id.coursedate);
+            coursetime = (TextView) v.findViewById(R.id.coursetime);
+            courseArrangement= (TextView) v.findViewById(R.id.courseArrangement);
         }
     }
 
-    public class CommentslAdapter extends RecyclerView.ViewHolder{
+    public class CommentsHolder extends RecyclerView.ViewHolder{
+        ImageView potrait,star1,star2,star3,star4,star5;
+        TextView userName, userComments,commentDate,commentTime;
 
-        public CommentslAdapter(View v, int pos) {
+
+        public CommentsHolder(View v, int pos) {
             super(v);
+            potrait = (ImageView) v. findViewById(R.id.potrait);
+            star1 = (ImageView) v.findViewById(R.id.star1);
+            star2 = (ImageView) v.findViewById(R.id.star2);
+            star3 = (ImageView) v.findViewById(R.id.star3);
+            star4 = (ImageView) v.findViewById(R.id.star4);
+            star5 = (ImageView) v.findViewById(R.id.star5);
+            userComments= (TextView) v.findViewById(R.id.userComments);
+            commentDate= (TextView) v.findViewById(R.id.commentDate);
+            commentTime= (TextView) v.findViewById(R.id.commentTime);
         }
     }
 }

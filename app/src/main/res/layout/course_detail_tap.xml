@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/courseName"
@@ -49,7 +50,7 @@
         android:textSize="12sp"
         android:gravity="center"
         android:text="课程简介"
-        android:textColor="@color/bg_gray" />
+        android:textColor="@color/light_gray" />
 
     <TextView
         android:id="@+id/courseBrief"
