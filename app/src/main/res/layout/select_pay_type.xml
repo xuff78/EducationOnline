@@ -61,7 +61,7 @@
             android:layout_height="50dp">
             <ImageView
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_pay"
+                android:src="@mipmap/icon_walletpay"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
@@ -69,6 +69,15 @@
                 android:layout_centerVertical="true"
                 android:text="余额支付"
                 style="@style/txt_gray_14"/>
+            <ImageView
+                android:id="@+id/checkIcon"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_round_right"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <View
                 android:layout_alignParentBottom="true"
                 android:background="@color/light_gray"
@@ -81,7 +90,7 @@
             android:layout_height="50dp">
             <ImageView
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_pay"
+                android:src="@mipmap/icon_alipay"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
@@ -89,6 +98,15 @@
                 android:layout_centerVertical="true"
                 android:text="支付宝"
                 style="@style/txt_gray_14"/>
+            <ImageView
+                android:id="@+id/checkIcon2"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_round_right"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <View
                 android:layout_alignParentBottom="true"
                 android:background="@color/light_gray"
@@ -109,6 +127,15 @@
                 android:layout_centerVertical="true"
                 android:text="微信支付"
                 style="@style/txt_gray_14"/>
+            <ImageView
+                android:id="@+id/checkIcon3"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_round_right"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <View
                 android:layout_alignParentBottom="true"
                 android:background="@color/light_gray"
@@ -121,7 +148,7 @@
             android:layout_height="50dp">
             <ImageView
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_pay"
+                android:src="@mipmap/icon_unionpay"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
@@ -129,6 +156,15 @@
                 android:layout_centerVertical="true"
                 android:text="银联支付"
                 style="@style/txt_gray_14"/>
+            <ImageView
+                android:id="@+id/checkIcon4"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_round_right"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <View
                 android:layout_alignParentBottom="true"
                 android:background="@color/light_gray"
