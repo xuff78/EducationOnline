@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:background="@color/bg_gray"
+                android:background="@color/whitesmoke"
                 android:id="@+id/addfavoritelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,9 +35,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+
                     android:id="@+id/addfavorite"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:padding="9dp"
                     android:src="@drawable/favorite" />
@@ -52,7 +53,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@color/bg_gray"
+                android:background="@color/whitesmoke"
                 android:id="@+id/sharelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +63,7 @@
                 <ImageView
                     android:id="@+id/share"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:padding="9dp"
                     android:src="@mipmap/iconfontfenxiang" />
@@ -77,7 +78,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@color/bg_gray"
+                android:background="@color/whitesmoke"
                 android:id="@+id/downloadlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_toRightOf="@+id/share"
-                    android:padding="9dp"
+                    android:padding="8dp"
                     android:src="@mipmap/iconfontxiazai" />
 
                 <TextView

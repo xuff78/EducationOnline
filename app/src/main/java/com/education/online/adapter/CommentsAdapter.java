@@ -34,9 +34,17 @@ public class CommentsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
+        if(pos==0){
+            View view=listInflater.inflate(R.layout.totalcomments_layout, null);
+            view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+            vh = new TotalCommentsHolder(view, pos);
+        }else{
             View view=listInflater.inflate(R.layout.comments_fragment, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CommentsHolder(view, pos);
+        }
+
+
         return vh;
     }
 
@@ -52,6 +60,13 @@ public class CommentsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     }
 
 
+    public class TotalCommentsHolder extends RecyclerView.ViewHolder{
+
+
+        public TotalCommentsHolder(View v, int pos) {
+            super(v);
+        }
+    }
 
     public class CommentsHolder extends RecyclerView.ViewHolder{
         ImageView potrait,star1,star2,star3,star4,star5;
@@ -71,7 +86,10 @@ public class CommentsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
             commentTime= (TextView) v.findViewById(R.id.commentTime);
         }
     }
+
+
 }
+
 
 
 
