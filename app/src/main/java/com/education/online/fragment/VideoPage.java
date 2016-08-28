@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -33,6 +35,10 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     private RecyclerView recyclerList;
     private View lastSelectedview;
     private int lastSelectedPosition;
+    private RelativeLayout videorelated;
+
+    private SeekBar seekbar;
+    private ImageView playBtn, expandBtn;
 
     @Nullable
     @Override
@@ -69,6 +75,12 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         viewdetails = v.findViewById(R.id.viewdetails);
         viewdirectory = v. findViewById(R.id.viewdirectory);
         viewcomments = v.findViewById(R.id.viewcomments);
+
+        videorelated = (RelativeLayout)v.findViewById(R.id.videorelated);
+        playBtn = (ImageView)v.findViewById(R.id.playBtn);
+        expandBtn = (ImageView)v.findViewById(R.id.expandBtn);
+        seekbar = (SeekBar) v.findViewById(R.id.seekbar);
+
         // get layout Manager
 
         //set Status
@@ -81,6 +93,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                 }
             });
         } else {
+            videorelated.setVisibility(View.VISIBLE);
             paytips.setVisibility(View.INVISIBLE);
             payBtn.setVisibility(View.INVISIBLE);
         }

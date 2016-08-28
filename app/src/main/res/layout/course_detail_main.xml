@@ -11,12 +11,12 @@
 
         <ImageView
             android:id="@+id/roundLeftBack"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:padding="15dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@mipmap/icon_round_back"/>
+            android:src="@mipmap/icon_round_back" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -48,6 +48,57 @@
             android:text="立即购买"
             android:textColor="@color/dark_orange"
             android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/videorelated"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="#7f000000"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/playBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/icon_play" />
+
+            <SeekBar
+                android:thumb="@mipmap/icon_oval"
+                android:id="@+id/seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/expandBtn"
+                android:layout_toRightOf="@+id/playBtn"
+                android:max="100"
+                android:progress="60" />
+
+            <ImageView
+                android:id="@+id/expandBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/icon_expand_screen" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="25dp"
+                android:layout_toLeftOf="@+id/expandBtn"
+                android:gravity="bottom|right"
+                android:text="12:09"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -60,6 +111,8 @@
             android:id="@+id/details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="35dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -100,12 +153,12 @@
 
             <View
                 android:id="@+id/viewdirectory"
-                android:visibility="gone"
                 android:layout_width="60dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center_horizontal|bottom"
                 android:background="@color/dark_orange"
-                android:gravity="center" />
+                android:gravity="center"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -113,6 +166,7 @@
             android:id="@+id/comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -127,12 +181,12 @@
 
             <View
                 android:id="@+id/viewcomments"
-                android:visibility="gone"
                 android:layout_width="60dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center_horizontal|bottom"
                 android:background="@color/dark_orange"
-                android:gravity="center" />
+                android:gravity="center"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>

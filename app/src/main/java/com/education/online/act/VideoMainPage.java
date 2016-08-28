@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -47,6 +49,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
         share_layout.setOnClickListener(this);
         download_layout = (LinearLayout) findViewById(R.id.downloadlayout);
         download_layout.setOnClickListener(this);
+
 
         videopage.setPaidStatus(true);
         changePage(videopage);
