@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -38,15 +38,15 @@
 
                     android:id="@+id/addfavorite"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_weight="1"
-                    android:padding="9dp"
+                    android:padding="5dp"
                     android:src="@drawable/favorite" />
 
                 <TextView
                     android:id="@+id/textAddFavorite"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="15dp"
                     android:gravity="center"
                     android:text="收藏"
                     android:textSize="12sp" />
@@ -63,15 +63,15 @@
                 <ImageView
                     android:id="@+id/share"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_weight="1"
-                    android:padding="9dp"
+                    android:padding="6dp"
                     android:src="@mipmap/iconfontfenxiang" />
 
                 <TextView
                     android:id="@+id/textShare"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="15dp"
                     android:gravity="center"
                     android:text="分享"
                     android:textSize="12sp" />
@@ -88,15 +88,15 @@
                 <ImageView
                     android:id="@+id/download"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_toRightOf="@+id/share"
-                    android:padding="8dp"
+                    android:padding="5dp"
                     android:src="@mipmap/iconfontxiazai" />
 
                 <TextView
                     android:id="@+id/textDownload"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="15dp"
                     android:gravity="center"
                     android:text="下载"
                     android:textSize="12sp" />
