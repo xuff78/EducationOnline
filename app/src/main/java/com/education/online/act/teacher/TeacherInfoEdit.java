@@ -13,9 +13,9 @@ public class TeacherInfoEdit extends BaseFrameAct{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wallet_recharge);
+        setContentView(R.layout.teacher_base_info_edit);
 
-        _setHeaderTitle("基本信息");
+        _setHeaderTitle("个人资料");
 
         initView();
     }

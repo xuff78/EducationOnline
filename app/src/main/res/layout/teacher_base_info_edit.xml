@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:text="真实姓名"
+            style="@style/txt_gray_12" />
+        <EditText
+            android:id="@+id/teacherName"
+            android:gravity="center_vertical"
+            android:background="@null"
+            style="@style/txt_black_12"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:text="教龄"
+            style="@style/txt_gray_12" />
+        <EditText
+            android:id="@+id/teachingTime"
+            android:gravity="center_vertical"
+            android:background="@null"
+            style="@style/txt_black_12"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <RelativeLayout
+        android:id="@+id/subjectLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="主营科目"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/teachSubjectTxt"
+            android:layout_toLeftOf="@+id/arrowRight"
+            android:layout_centerVertical="true"
+            android:text=""
+            style="@style/txt_black_12" />
+        <View
+            android:id="@+id/arrowRight"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_black_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </RelativeLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <View
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <RelativeLayout
+        android:id="@+id/educationLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="学历"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/educationTxt"
+            android:layout_toLeftOf="@+id/arrowRight2"
+            android:layout_centerVertical="true"
+            android:text=""
+            style="@style/txt_black_12" />
+        <View
+            android:id="@+id/arrowRight2"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_black_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </RelativeLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <RelativeLayout
+        android:id="@+id/schoolLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="院校"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/highSchool"
+            android:layout_toLeftOf="@+id/arrowRight3"
+            android:layout_centerVertical="true"
+            android:text=""
+            style="@style/txt_black_12" />
+        <View
+            android:id="@+id/arrowRight3"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_black_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </RelativeLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <RelativeLayout
+        android:id="@+id/professionLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="专业"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/professionTxt"
+            android:layout_toLeftOf="@+id/arrowRight4"
+            android:layout_centerVertical="true"
+            android:text=""
+            style="@style/txt_black_12" />
+        <View
+            android:id="@+id/arrowRight4"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_black_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </RelativeLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:text="单位"
+            style="@style/txt_gray_12" />
+        <EditText
+            android:id="@+id/companTxt"
+            android:gravity="center_vertical"
+            android:background="@null"
+            style="@style/txt_black_12"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <View
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="老师介绍"
+        style="@style/txt_gray_12" />
+    <EditText
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/introduce"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:padding="8dp"
+        android:background="@drawable/shape_nocorner_black"
+        style="@style/txt_black_12"
+        android:gravity="left|top"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="简介"
+        style="@style/txt_gray_12" />
+    <EditText
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/descTxt"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:padding="8dp"
+        android:background="@drawable/shape_nocorner_black"
+        style="@style/txt_black_12"
+        android:gravity="left|top"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="经历"
+        style="@style/txt_gray_12" />
+    <EditText
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/experienceTxt"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:padding="8dp"
+        android:background="@drawable/shape_nocorner_black"
+        style="@style/txt_black_12"
+        android:gravity="left|top"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:text="标签"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/labelTxt"
+            android:gravity="center_vertical"
+            android:background="@null"
+            style="@style/txt_black_12"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</LinearLayout>
+</ScrollView>
