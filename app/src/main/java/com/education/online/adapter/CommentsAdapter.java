@@ -51,7 +51,12 @@ public class CommentsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     @Override
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
-       CommentsHolder vh = (CommentsHolder) holder;
+        if (pos==0) {
+            TotalCommentsHolder vh = (TotalCommentsHolder) holder;
+        }
+        else{
+            CommentsHolder vh = (CommentsHolder) holder;
+        }
     }
 
     @Override
