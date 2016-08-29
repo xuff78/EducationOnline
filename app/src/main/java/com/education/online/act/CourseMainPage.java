@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.order.SubmitOrder;
 import com.education.online.fragment.CoursePage;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
@@ -92,7 +93,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     break;
                 case R.id.addorbuy:
                     //do sth;
-
+                    startActivity(new Intent(CourseMainPage.this, SubmitOrder.class));
                     break;
             }
         }

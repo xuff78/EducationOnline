@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:background="@color/hard_gray"
+        android:background="@mipmap/teacher_bg"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="140dp">
@@ -77,7 +77,7 @@
             android:layout_height="@dimen/user_icon_w"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_cancel" />
+            android:src="@mipmap/icon_teacher_menu_edit" />
         <TextView
             style="@style/txt_gray_14"
             android:layout_centerVertical="true"
@@ -111,7 +111,7 @@
             android:layout_height="@dimen/user_icon_w"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_cancel" />
+            android:src="@mipmap/icon_teacher_menu_video" />
         <TextView
             style="@style/txt_gray_14"
             android:id="@+id/hintTxt2"
@@ -141,7 +141,7 @@
             android:layout_height="@dimen/user_icon_w"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_cancel" />
+            android:src="@mipmap/icon_teacher_menu_comment" />
         <TextView
             style="@style/txt_gray_14"
             android:id="@+id/hintTxt3"
@@ -171,7 +171,7 @@
             android:layout_height="@dimen/user_icon_w"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_cancel" />
+            android:src="@mipmap/icon_teacher_menu_order" />
         <TextView
             style="@style/txt_gray_14"
             android:id="@+id/hintTxt4"
@@ -201,7 +201,7 @@
             android:layout_height="@dimen/user_icon_w"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_cancel" />
+            android:src="@mipmap/icon_teacher_menu_auth" />
         <TextView
             style="@style/txt_gray_14"
             android:id="@+id/hintTxt5"
@@ -236,7 +236,7 @@
             android:layout_height="@dimen/user_icon_w"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_cancel" />
+            android:src="@mipmap/icon_teacher_menu_settings" />
         <TextView
             style="@style/txt_gray_14"
             android:id="@+id/hintTxt6"

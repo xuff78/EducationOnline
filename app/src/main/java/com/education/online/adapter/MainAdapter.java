@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
 import com.education.online.util.ImageUtil;
@@ -63,6 +65,13 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             SubjectHolder ivh = (SubjectHolder) vh;
         }else if(pos==2) {
             CourseHolder ivh = (CourseHolder) vh;
+            ivh.subjectName.setText("直播");
+        }else if(pos==3) {
+            CourseHolder ivh = (CourseHolder) vh;
+            ivh.subjectName.setText("视频");
+        }else if(pos==4) {
+            CourseHolder ivh = (CourseHolder) vh;
+            ivh.subjectName.setText("课件");
         }
     }
 
@@ -200,6 +209,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             act.startActivity(new Intent(act, VideoMain.class));
                         else if(pos==4)
                             act.startActivity(new Intent(act, VideoMain.class));
+                        break;
+                    case R.id.item1:
+                    case R.id.item2:
+                        if(pos==2)
+                            act.startActivity(new Intent(act, CourseMainPage.class));
+                        else if(pos==3)
+                            act.startActivity(new Intent(act, VideoMainPage.class));
+                        else if(pos==4)
+                            act.startActivity(new Intent(act, VideoMainPage.class));
                         break;
                 }
 

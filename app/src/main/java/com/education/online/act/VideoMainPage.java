@@ -1,5 +1,6 @@
 package com.education.online.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.order.SubmitOrder;
 import com.education.online.fragment.CoursePage;
 import com.education.online.fragment.VideoPage;
 
@@ -83,7 +85,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
                     break;
                 case R.id.addorbuy:
                     //do sth;
-
+                    startActivity(new Intent(VideoMainPage.this, SubmitOrder.class));
                     break;
             }
 
