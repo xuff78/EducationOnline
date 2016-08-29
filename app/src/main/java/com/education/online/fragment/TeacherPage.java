@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
+import com.education.online.act.teacher.AuthMenu;
+import com.education.online.act.teacher.MyOrders;
 import com.education.online.act.teacher.TeacherInfoEdit;
 import com.education.online.bean.CategoryBean;
 
@@ -40,8 +42,11 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.homepageEditLayout:
-                startActivity(new Intent(getActivity(), TeacherInfoEdit.class));
+            case R.id.orderLayout:
+                startActivity(new Intent(getActivity(), MyOrders.class));
+                break;
+            case R.id.authLayout:
+                startActivity(new Intent(getActivity(), AuthMenu.class));
                 break;
         }
     }
