@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="12sp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="个人认证"
+            android:textColor="@color/light_gray"/>
+        <TextView
+            android:textSize="13sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="身份认证 学历认证"/>
+    </LinearLayout>
+    <View
+        android:layout_marginTop="15dp"
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/tablayout"
+        android:background="@color/light_gray" />
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="12sp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="老师标签"
+            android:textColor="@color/light_gray"/>
+        <TextView
+            android:textSize="13sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="清华大学 海归 MBA 博士"/>
+    </LinearLayout>
+    <View
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/tablayout"
+        android:background="@color/light_gray" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:text="自我介绍"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="空山新雨后，天气晚来秋，爷娘闻女来，自挂东南枝，采菊南山后，自挂东南枝"/>
+
+    <View
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/tablayout"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/light_gray"
+        android:text="过往经历"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="空山新雨后，天气晚来秋，爷娘闻女来，自挂东南枝，采菊南山后，自挂东南枝"/>
+
+
+</LinearLayout>

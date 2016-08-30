@@ -38,7 +38,7 @@
 
                     android:id="@+id/addfavorite"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:src="@drawable/favorite" />
@@ -49,7 +49,7 @@
                     android:layout_height="15dp"
                     android:gravity="center"
                     android:text="收藏"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -63,7 +63,7 @@
                 <ImageView
                     android:id="@+id/share"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:padding="6dp"
                     android:src="@mipmap/iconfontfenxiang" />
@@ -74,7 +74,7 @@
                     android:layout_height="15dp"
                     android:gravity="center"
                     android:text="分享"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -88,7 +88,7 @@
                 <ImageView
                     android:id="@+id/download"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_toRightOf="@+id/share"
                     android:padding="5dp"
                     android:src="@mipmap/iconfontxiazai" />
@@ -99,7 +99,7 @@
                     android:layout_height="15dp"
                     android:gravity="center"
                     android:text="下载"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>
