@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:paddingLeft="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/headImg"
+            android:layout_centerVertical="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <LinearLayout
+            android:id="@+id/topLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignTop="@+id/headImg"
+            android:layout_toRightOf="@+id/headImg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/teacherName"
+                android:text="名字"
+                style="@style/txt_gray_14" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:background="@drawable/shape_oranged_with_corner"
+                android:id="@+id/typeName"
+                android:text="设计"
+                style="@style/txt_gray_12" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/priceTxt"
+                android:text="￥260"
+                android:textColor="@color/dark_orange"
+                style="@style/txt_gray_14" />
+        </LinearLayout>
+        <TextView
+            android:layout_toLeftOf="@+id/statusImg"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/topLayout"
+            android:layout_alignLeft="@+id/topLayout"
+            android:id="@+id/subjectName"
+            android:text="平面设计-巴拉巴拉"
+            style="@style/txt_gray_12" />
+        <ImageView
+            android:id="@+id/statusImg"
+            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_alignBottom="@+id/teacherImg"
+            android:src="@mipmap/icon_status_finished"
+            android:layout_height="70dp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/imgsLayout"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</LinearLayout>

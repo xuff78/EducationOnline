@@ -126,6 +126,15 @@
         <activity android:name=".act.teacher.TeacherInfoEdit"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.teacher.AuthMenu"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.teacher.MyOrders"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.teacher.TeacherHomePage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

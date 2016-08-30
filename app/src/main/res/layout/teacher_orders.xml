@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/courseTypeLayout"
+        android:layout_below="@+id/searchLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_toLeftOf="@+id/courseTypeTxt2"
+            android:id="@+id/courseTypeTxt1"
+            android:gravity="center"
+            android:textColor="@color/normal_red"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:text="直播课"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="·"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/courseTypeTxt2"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:text="视频课"
+            style="@style/txt_gray_14" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="·"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:layout_toRightOf="@+id/courseTypeTxt2"
+            android:id="@+id/courseTypeTxt3"
+            android:gravity="center"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:text="课件"
+            style="@style/txt_gray_14" />
+    </LinearLayout>
+        <ImageView
+            android:src="@mipmap/icon_black_arrow_left"
+            android:padding="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/statusAll"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="全部"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/statusFinish"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="已完成"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/statusToPay"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="待支付"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/statusToComment"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="待评价"
+            style="@style/txt_gray_14" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

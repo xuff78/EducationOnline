@@ -1,4 +1,4 @@
-package com.education.online.fragment;
+package com.education.online.fragment.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
+import com.education.online.act.teacher.AuthMenu;
+import com.education.online.act.teacher.MyOrders;
+import com.education.online.act.teacher.TeacherHomePage;
 import com.education.online.act.teacher.TeacherInfoEdit;
 import com.education.online.bean.CategoryBean;
+import com.education.online.fragment.BaseFragment;
 
 import java.util.ArrayList;
 
@@ -41,7 +45,13 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.homepageEditLayout:
-                startActivity(new Intent(getActivity(), TeacherInfoEdit.class));
+                startActivity(new Intent(getActivity(), TeacherHomePage.class));
+                break;
+            case R.id.orderLayout:
+                startActivity(new Intent(getActivity(), MyOrders.class));
+                break;
+            case R.id.authLayout:
+                startActivity(new Intent(getActivity(), AuthMenu.class));
                 break;
         }
     }

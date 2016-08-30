@@ -14,7 +14,7 @@ import com.baidu.location.LocationClientOption;
 import com.education.online.R;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
-import com.education.online.fragment.TeacherPage;
+import com.education.online.fragment.teacher.TeacherPage;
 import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
