@@ -34,8 +34,8 @@ public class TeacherAlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public TeacherAlbumAdapter(Activity act, String jason) {
         this.activity = act;
         inflater = LayoutInflater.from(activity);
-        padding10 = ImageUtil.dip2px(act, 10);
-        itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 3; //小图片和文字的形成点击区域的边长
+        padding10 = ImageUtil.dip2px(act, 5);
+        itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 4; //小图片和文字的形成点击区域的边长
         imgHeight = itemWidth - 2 * padding10; //小图片的边长
     }
 
@@ -75,12 +75,12 @@ public class TeacherAlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemsLayout = (LinearLayout) itemView;
             itemsLayout.setPadding(padding10, 0, padding10, padding10 * 2);
             LinearLayout.LayoutParams llpitem = new LinearLayout.LayoutParams(itemWidth, -2);
-            int itemsize = 7;
+            int itemsize = 15;
             LinearLayout linelayout = new LinearLayout(activity);
             linelayout.setOrientation(LinearLayout.HORIZONTAL);
             for (int i = 0; i < itemsize + 1; i++) {
                     linelayout.addView(getSubjectItemView( ""), llpitem);
-                if (i % 3 == 2 || i == itemsize) {
+                if (i % 4 == 3 || i == itemsize) {
                     itemsLayout.addView(linelayout);
                     linelayout = new LinearLayout(activity);
 
