@@ -11,6 +11,7 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.CommentsAdapter;
 import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
+import com.education.online.fragment.teacher.HomepageCourse;
 import com.education.online.fragment.teacher.HomepageImg;
 import com.education.online.fragment.teacher.HomepageVideo;
 
@@ -26,6 +27,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     private int lastSelectedPosition=0;
     HomepageImg homepageImg=new HomepageImg();
     HomepageVideo homepageVideo=new HomepageVideo();
+    HomepageCourse homepageCourse=new HomepageCourse();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                         break;
                     case 1:
                         homepageVideo.setEdit();
+                        break;
+                    case 2:
+                        homepageCourse.setEdit();
                         break;
                 }
             }
@@ -96,6 +101,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                     lastSelectedPosition=2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewcomments.setVisibility(View.VISIBLE);
+                    openFragment(R.id.frgframe, homepageCourse);
                     break;
             }
         }

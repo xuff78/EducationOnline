@@ -80,7 +80,7 @@
 
 
     <style name="myratingbar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/myratingbar</item>
+        <!--<item name="android:progressDrawable">@drawable/myratingbar</item>-->
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
