@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="7dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_marginTop="8dp"
+        android:src="@mipmap/icon_x"
+        android:padding="15dp"
+        android:background="@drawable/shape_add_icon_bg"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
+</LinearLayout>
