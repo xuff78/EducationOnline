@@ -103,7 +103,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -119,10 +119,11 @@
             <TextView
                 android:id="@+id/textdetails"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="详情"
+                android:textSize="14sp"
                 android:textColor="@color/dark_orange" />
 
             <View
@@ -145,10 +146,11 @@
             <TextView
                 android:id="@+id/textdirectory"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="目录"
+                android:textSize="14sp"
                 android:textColor="@color/light_gray" />
 
             <View
@@ -173,10 +175,11 @@
             <TextView
                 android:id="@+id/textcomments"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="评价"
+                android:textSize="14sp"
                 android:textColor="@color/light_gray" />
 
             <View

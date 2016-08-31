@@ -6,27 +6,34 @@
     <RelativeLayout
         android:id="@+id/imagelayout"
         android:layout_width="wrap_content"
-        android:layout_height="320dp">
+        android:layout_height="300dp">
 
         <ImageView
             android:id="@+id/background_image"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="300dp"
             android:background="@mipmap/teacher_bg" />
 
         <ImageView
-            android:id="@+id/teacherpotrait1"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/icon_round_back" />
+
+        <ImageView
+            android:id="@+id/teacherpotrait"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="55dp"
             android:src="@mipmap/icon_head" />
 
         <TextView
             android:id="@+id/teacherSexual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/teacherpotrait1"
+            android:layout_below="@+id/teacherpotrait"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_red_with_corner"
@@ -44,10 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacherSexual"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:text="Adobe 王晨曦"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/teacherTitles"
@@ -55,17 +62,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacherName"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="资深平面设计师、艺术指导、总监"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacherTitles"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -76,7 +83,7 @@
                 android:layout_weight="1"
                 android:text="10年教龄"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/identityConfirmed"
@@ -85,12 +92,12 @@
                 android:layout_weight="1"
                 android:text="身份认证"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/half_visibily"
             android:orientation="horizontal">
@@ -108,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="909"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,7 +123,7 @@
                     android:layout_marginTop="5dp"
                     android:text="粉丝"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:text="6618"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -140,7 +147,7 @@
                     android:layout_marginTop="5dp"
                     android:text="学生"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -156,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:text="98%"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,7 +171,7 @@
                     android:layout_marginTop="5dp"
                     android:text="好评"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -174,7 +181,7 @@
     <LinearLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/imagelayout"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -190,11 +197,12 @@
             <TextView
                 android:id="@+id/textbrief"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="简介"
-                android:textColor="@color/dark_orange" />
+                android:textColor="@color/dark_orange"
+                android:textSize="14sp" />
 
             <View
                 android:id="@+id/viewbrief"
@@ -216,11 +224,12 @@
             <TextView
                 android:id="@+id/textsubjects"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="课程"
-                android:textColor="@color/light_gray" />
+                android:textColor="@color/light_gray"
+                android:textSize="14sp" />
 
             <View
                 android:id="@+id/viewsubjects"
@@ -244,11 +253,12 @@
             <TextView
                 android:id="@+id/textphotoalbum"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="相册"
-                android:textColor="@color/light_gray" />
+                android:textColor="@color/light_gray"
+                android:textSize="14sp" />
 
             <View
                 android:id="@+id/viewphotoalbum"
@@ -272,11 +282,12 @@
             <TextView
                 android:id="@+id/textteachercomments"
                 android:layout_width="50dp"
-                android:layout_height="48dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="评价"
-                android:textColor="@color/light_gray" />
+                android:textColor="@color/light_gray"
+                android:textSize="14sp" />
 
             <View
                 android:id="@+id/viewteachercomments"
@@ -296,16 +307,15 @@
         android:layout_height="1px"
         android:layout_below="@+id/tablayout"
         android:background="@color/light_gray" />
+
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/view"
-        android:layout_above="@+id/bottomlayout"
+        android:id="@+id/recyclerList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomlayout"
+        android:layout_below="@id/view">
 
     </android.support.v7.widget.RecyclerView>
-
-
-
 
 
     <LinearLayout
@@ -316,6 +326,7 @@
         android:background="@color/whitesmoke">
 
         <LinearLayout
+            android:id="@+id/addToFavoriteLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -323,22 +334,23 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:padding="5dp"
                 android:src="@mipmap/icon_star" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="关注"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/consultingLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -346,19 +358,19 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:padding="5dp"
                 android:src="@mipmap/icon_star" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="咨询"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -7,8 +7,9 @@
     android:paddingRight="20dp">
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/potrait"
@@ -31,8 +32,8 @@
 
         <ImageView
             android:id="@+id/star5"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
@@ -40,8 +41,8 @@
 
         <ImageView
             android:id="@+id/star4"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
             android:layout_toLeftOf="@+id/star5"
@@ -49,8 +50,8 @@
 
         <ImageView
             android:id="@+id/star3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
             android:layout_toLeftOf="@+id/star4"
@@ -58,8 +59,8 @@
 
         <ImageView
             android:id="@+id/star2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
             android:layout_toLeftOf="@+id/star3"
@@ -67,8 +68,8 @@
 
         <ImageView
             android:id="@+id/star1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
             android:layout_toLeftOf="@id/star2"
@@ -86,8 +87,9 @@
         android:text="在高有仙则不在高有仙则则名" />
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -111,6 +113,7 @@
     </LinearLayout>
 
     <View
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/light_gray" />
