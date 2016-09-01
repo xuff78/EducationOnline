@@ -135,7 +135,7 @@
         <activity android:name=".act.teacher.TeacherHomePage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherDetaiPage"
+        <activity android:name=".act.teacher.TeacherInformationPage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
         <meta-data

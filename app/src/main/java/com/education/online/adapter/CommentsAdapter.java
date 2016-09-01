@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.education.online.R;
 
 /**
- * Created by Administrator on 2016/8/25.
+ * Created by Gaozhiqun on 2016/8/25.
  */
 
 public class CommentsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{

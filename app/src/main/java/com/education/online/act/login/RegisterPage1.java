@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.act.teacher.AuthMenu;
-import com.education.online.act.teacher.TeacherDetaiPage;
 
 /**
  * Created by 可爱的蘑菇 on 2016/8/11.
@@ -44,8 +42,8 @@ public class RegisterPage1 extends BaseFrameAct {
         NextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(RegisterPage1.this,RegisterPage2.class));
-                startActivity(new Intent(RegisterPage1.this,TeacherDetaiPage.class));
+               startActivity(new Intent(RegisterPage1.this,RegisterPage2.class));
+                //startActivity(new Intent(RegisterPage1.this, TeacherPage.class));
 
             }
         });

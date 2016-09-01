@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
 import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;
@@ -19,11 +21,11 @@ import com.education.online.util.StatusBarCompat;
 /**
  * Created by Administrator on 2016/8/11.
  */
-public class FirstPage extends BaseFrameAct implements View.OnClickListener{
+public class FirstPage extends BaseFrameAct implements View.OnClickListener {
 
     HttpHandler handler;
 
-
+    private RecyclerView recyclerList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +37,11 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
 
         ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
-        handler.init(ScreenUtil.getWidth(this)+"x"+ScreenUtil.getHeight(this));
+        handler.init(ScreenUtil.getWidth(this) + "x" + ScreenUtil.getHeight(this));
     }
 
     private void initHandler() {
-        handler=new HttpHandler(this, new CallBack(this){
+        handler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonData) {
                 super.doSuccess(method, jsonData);
@@ -55,9 +57,10 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.loginBtn:
-                startActivity(new Intent(FirstPage.this, LoginActivity.class));
+                startActivity(new Intent(FirstPage.this, TeacherInformationPage.class));
+               // startActivity(new Intent(FirstPage.this, LoginActivity.class));
                 break;
             case R.id.registerBtn:
                 startActivity(new Intent(FirstPage.this, RegisterPage1.class));
