@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.education.online.R;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.act.teacher.MyOrders;
+import com.education.online.act.teacher.MyRatePage;
 import com.education.online.act.teacher.TeacherHomePage;
 import com.education.online.act.teacher.TeacherInfoEdit;
 import com.education.online.bean.CategoryBean;
@@ -52,6 +53,12 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.authLayout:
                 startActivity(new Intent(getActivity(), AuthMenu.class));
+                break;
+            case R.id.commentLayout:
+                startActivity(new Intent(getActivity(), MyRatePage.class));
+                break;
+            case R.id.settingLayout:
+//                startActivity(new Intent(getActivity(), MyRatePage.class));
                 break;
         }
     }
