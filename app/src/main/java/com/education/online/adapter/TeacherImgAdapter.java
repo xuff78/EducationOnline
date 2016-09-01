@@ -50,13 +50,8 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
     //创建一个视图
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int pos) {
         RecyclerView.ViewHolder vh =null;
-        if(pos==items.size()){
-            View view = inflater.inflate(R.layout.add_item, null);
-            vh = new AddHolder(view);
-        }else {
-            View view = inflater.inflate(R.layout.img_or_video_item, null);
-            vh = new ImgHolder(view, pos);
-        }
+        View view = inflater.inflate(R.layout.img_or_video_item, null);
+        vh = new ImgHolder(view, pos);
         return vh;
     }
 
@@ -69,6 +64,27 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
                 vh.delBtn.setVisibility(View.VISIBLE);
             } else
                 vh.delBtn.setVisibility(View.GONE);
+            vh.teacherImg.setImageResource(0);
+            vh.teacherImg.setBackgroundResource(R.color.whitesmoke);
+            vh.itemView.setOnClickListener(null);
+            if(isVideo)
+                vh.imgMask.setVisibility(View.VISIBLE);
+            else
+                vh.imgMask.setVisibility(View.GONE);
+        }else{
+            ImgHolder vh = (ImgHolder) holder;
+            vh.teacherImg.setBackgroundResource(R.drawable.shape_add_icon_bg);
+            vh.teacherImg.setImageResource(R.mipmap.icon_x);
+            int padding=ImageUtil.dip2px(activity, 15);
+            vh.teacherImg.setPadding(padding, padding, padding, padding);
+            vh.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cb.additem();
+                }
+            });
+            vh.delBtn.setVisibility(View.GONE);
+            vh.imgMask.setVisibility(View.GONE);
         }
     }
 
@@ -86,26 +102,10 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
             teacherImg = (ImageView) v.findViewById(R.id.teacherImg);
             imgMask = (ImageView) v.findViewById(R.id.imgMask);
             delBtn = (ImageView) v.findViewById(R.id.delBtn);
-            if(isVideo)
-                imgMask.setVisibility(View.VISIBLE);
             delBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    cb.onClick(view, position);
-                }
-            });
-        }
-    }
-
-    public class AddHolder extends RecyclerView.ViewHolder
-    {
-        public AddHolder(View v)
-        {
-            super(v);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
+                    cb.delitem(view, position);
                 }
             });
         }

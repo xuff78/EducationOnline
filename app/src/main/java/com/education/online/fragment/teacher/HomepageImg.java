@@ -33,7 +33,15 @@ public class HomepageImg extends BaseFragment {
 
         @Override
         public void additem() {
+            VideoImgItem item=new VideoImgItem();
+            items.add(item);
+            adapter.notifyDataSetChanged();
+        }
 
+        @Override
+        public void delitem(View v, int i) {
+            items.remove(i);
+            adapter.notifyDataSetChanged();
         }
     };
 

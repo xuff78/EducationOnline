@@ -8,4 +8,5 @@ import android.view.View;
 public interface AdapterCallback {
     void onClick(View v, int i);
     void additem();
+    void delitem(View v, int i);
 }

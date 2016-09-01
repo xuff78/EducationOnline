@@ -42,7 +42,7 @@ public class AuthMenu extends BaseFrameAct {
         findViewById(R.id.degreeLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(AuthMenu.this, TeacherInfoEdit));
+                startActivity(new Intent(AuthMenu.this, TeacherAuthPage.class));
             }
         });
     }

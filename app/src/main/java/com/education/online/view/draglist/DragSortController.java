@@ -1,12 +1,17 @@
 package com.education.online.view.draglist;
 
 import android.graphics.Point;
+import android.os.Handler;
+import android.os.Message;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AdapterView;
+
+import com.education.online.fragment.teacher.HomepageCourse;
+import com.education.online.util.LogUtil;
 
 /**
  * Class that starts and stops item drags on a {@link DragSortListView}
@@ -66,6 +71,9 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
 
     private int mCurrX;
     private int mCurrY;
+
+    private int mMoveX;
+    private int mMoveY;
 
     private boolean mDragging = false;
 
@@ -263,6 +271,10 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
                 mIsRemoving = false;
                 mDragging = false;
                 break;
+            case MotionEvent.ACTION_MOVE:
+                mMoveX = (int) ev.getX();
+                mMoveY = (int) ev.getY();
+                break;
         }
 
         return false;
@@ -322,6 +334,7 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
         final int x = (int) ev.getX();
         final int y = (int) ev.getY();
 
+//        int touchPos= (mDslv.getScrollY()+y)/mDslv.getChildAt(mDslv.getFirstVisiblePosition()).getHeight();
         int touchPos = mDslv.pointToPosition(x, y); // includes headers/footers
 
         final int numHeaders = mDslv.getHeaderViewsCount();
@@ -340,21 +353,29 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
             View dragBox = id == 0 ? item : (View) item.findViewById(id);
             if (dragBox != null) {
                 dragBox.getLocationOnScreen(mTempLoc);
-
+                LogUtil.i("test", "touchPos: "+touchPos+"  FirstVisiblePosition:"+mDslv.getFirstVisiblePosition());
+                LogUtil.i("test", "X: "+x+"  Y: "+y);
+                LogUtil.i("test", "rawX: "+rawX+"  rawY: "+rawY);
+                LogUtil.i("test", "mTempLoc[0]: "+mTempLoc[0]+"  mTempLoc[1]: "+mTempLoc[1]);
+                LogUtil.i("test", "dragBox.getWidth(): "+dragBox.getWidth()+"  dragBox.getHeight(): "+dragBox.getHeight());
                 if (rawX > mTempLoc[0] && rawY > mTempLoc[1] &&
                         rawX < mTempLoc[0] + dragBox.getWidth() &&
                         rawY < mTempLoc[1] + dragBox.getHeight()) {
 
                     mItemX = item.getLeft();
                     mItemY = item.getTop();
+                    LogUtil.i("test", "result: true");
 
                     return touchPos;
                 }
+                LogUtil.i("test", "result: false");
             }
         }
 
         return MISS;
     }
+
+    Handler handler=new Handler();
 
     @Override
     public boolean onDown(MotionEvent ev) {
@@ -362,10 +383,23 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
             mClickRemoveHitPos = viewIdHitPosition(ev, mClickRemoveId);
         }
 
-        mHitPos = startDragPosition(ev);
-        if (mHitPos != MISS && mDragInitMode == ON_DOWN) {
-            startDrag(mHitPos, (int) ev.getX() - mItemX, (int) ev.getY() - mItemY);
-        }
+        final float x=ev.getX();
+        final float y=ev.getY();
+        final int temHitPos= startDragPosition(ev);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long dis=getMoveDistance((int)x, (int)y);
+                if(dis<20) {
+                    mHitPos = temHitPos;
+                    mDslv.getOnItemLongClickListener().onItemLongClick(null, null,  0, 0);
+                    mDslv.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (mHitPos != MISS && mDragInitMode == ON_DOWN) {
+                        startDrag(mHitPos, (int) x - mItemX, (int) y - mItemY);
+                    }
+                }
+            }
+        }, 600);
 
         mIsRemoving = false;
         mCanDrag = true;
@@ -373,6 +407,12 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
         mFlingHitPos = startFlingPosition(ev);
 
         return true;
+    }
+
+    public long getMoveDistance(int x, int y) {
+        double _x = Math.abs(x - mMoveX);
+        double _y = Math.abs(y - mMoveY);
+        return (long) (Math.sqrt(_x * _x + _y * _y));
     }
 
     @Override

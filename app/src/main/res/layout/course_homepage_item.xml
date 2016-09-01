@@ -12,15 +12,6 @@
         android:src="@mipmap/del_red_round"
         android:layout_width="30dp"
         android:layout_height="30dp" />
-    <ImageView
-        android:layout_centerVertical="true"
-        android:id="@+id/drag_handle"
-        android:padding="5dp"
-        android:visibility="gone"
-        android:layout_alignParentRight="true"
-        android:src="@mipmap/drag"
-        android:layout_width="70dp"
-        android:layout_height="60dp" />
     <LinearLayout
         android:layout_toRightOf="@+id/delBtn"
         android:id="@+id/CourseImageLayout"
