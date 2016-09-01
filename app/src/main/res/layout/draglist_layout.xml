@@ -8,11 +8,10 @@
     dslv:click_remove_id="@id/delBtn"
     dslv:collapsed_height="1px"
     dslv:drag_enabled="true"
-    dslv:drag_handle_id="@id/drag_handle"
     dslv:drag_scroll_start="0.33"
     dslv:drag_start_mode="onDown"
     dslv:float_alpha="0.6"
     dslv:remove_enabled="true"
-    dslv:float_background_color="@color/light_gray"
+    dslv:float_background_color="@color/white"
     dslv:remove_mode="clickRemove"
     dslv:slide_shuffle_speed="0.3" />

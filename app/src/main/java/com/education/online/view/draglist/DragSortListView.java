@@ -2218,6 +2218,17 @@ public class DragSortListView extends ListView {
 
     }
 
+    private void doDragFloatView(boolean forceInvalidate) {
+        int movePos = getFirstVisiblePosition() + getChildCount() / 2;
+        View moveItem = getChildAt(getChildCount() / 2);
+
+        if (moveItem == null) {
+            return;
+        }
+
+        doDragFloatView(movePos, moveItem, forceInvalidate);
+    }
+
     /**
      * Start a drag of item at <code>position</code> without using
      * a FloatViewManager.
@@ -2301,17 +2312,6 @@ public class DragSortListView extends ListView {
         }
 
         return true;
-    }
-
-    private void doDragFloatView(boolean forceInvalidate) {
-        int movePos = getFirstVisiblePosition() + getChildCount() / 2;
-        View moveItem = getChildAt(getChildCount() / 2);
-
-        if (moveItem == null) {
-            return;
-        }
-
-        doDragFloatView(movePos, moveItem, forceInvalidate);
     }
 
     private void doDragFloatView(int movePos, View moveItem, boolean forceInvalidate) {

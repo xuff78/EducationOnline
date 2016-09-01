@@ -92,23 +92,26 @@ public class HomepageCourse extends BaseFragment {
         });
     }
 
-    private class DragListAdapter extends ArrayAdapter<VideoImgItem> {
+    public class DragListAdapter extends ArrayAdapter<VideoImgItem> {
 
         public DragListAdapter(List<VideoImgItem> artists, Activity act) {
             super(act, R.layout.course_homepage_item, R.id.CourseName, artists);
+        }
+
+        public void changeStatus(boolean status){
+            if(edit!=status){
+                setEdit();
+            }
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = super.getView(position, convertView, parent);
 
             TextView CourseName = (TextView) v.findViewById(R.id.CourseName);
-            ImageView drag_handle=(ImageView)v.findViewById(R.id.drag_handle);
             ImageView delBtn=(ImageView)v.findViewById(R.id.delBtn);
             if(edit){
-                drag_handle.setVisibility(View.VISIBLE);
                 delBtn.setVisibility(View.VISIBLE);
             }else{
-                drag_handle.setVisibility(View.GONE);
                 delBtn.setVisibility(View.GONE);
             }
             return v;

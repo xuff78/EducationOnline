@@ -1,5 +1,6 @@
 package com.education.online.act.teacher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -74,7 +75,13 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
         findViewById(R.id.homePageBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(TeacherHomePage.this, TeacherDetaiPage.class));
+            }
+        });
+        findViewById(R.id.professionLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TeacherHomePage.this, TeacherInfoEdit.class));
             }
         });
     }
