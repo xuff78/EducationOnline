@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView
+        style="@style/txt_white_12"
+        android:gravity="center"
+        android:background="@color/normal_red"
+        android:text="长按课程进行排序，排在前面的课程将优先显示在个人页"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 <com.education.online.view.draglist.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dslv="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dragList"
@@ -15,3 +26,4 @@
     dslv:float_background_color="@color/white"
     dslv:remove_mode="clickRemove"
     dslv:slide_shuffle_speed="0.3" />
+</LinearLayout>

@@ -24,7 +24,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     private LinearLayout details, directory, comments;
     private TextView textdetails, textdirectory, textcomments;
     private View viewdetails, viewdirectory, viewcomments;
-    private View lastSelectedview;
+    private View lastSelectedview, professionLayout;
     private int lastSelectedPosition=0;
     HomepageImg homepageImg=new HomepageImg();
     HomepageVideo homepageVideo=new HomepageVideo();
@@ -78,7 +78,8 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                 startActivity(new Intent(TeacherHomePage.this, TeacherDetaiPage.class));
             }
         });
-        findViewById(R.id.professionLayout).setOnClickListener(new View.OnClickListener() {
+        professionLayout=findViewById(R.id.professionLayout);
+        professionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TeacherHomePage.this, TeacherInfoEdit.class));
@@ -89,6 +90,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view != lastSelectedview) {
+            professionLayout.setVisibility(View.VISIBLE);
             setStatusFalse(lastSelectedPosition);
             lastSelectedview= view;
             switch (view.getId()) {
@@ -105,6 +107,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                     openFragment(R.id.frgframe, homepageVideo);
                     break;
                 case R.id.comments:
+                    professionLayout.setVisibility(View.GONE);
                     lastSelectedPosition=2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewcomments.setVisibility(View.VISIBLE);
