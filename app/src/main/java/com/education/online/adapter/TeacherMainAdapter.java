@@ -133,7 +133,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }else if (i==4){
                 TotalCommentsHolder vh = (TotalCommentsHolder) holder;
             }
-            }else if (pos > 1){
+        }else if (pos > 1){
             if (i==2) {
                 CourseHolder vh = (CourseHolder) holder;
             }else if (i==4){

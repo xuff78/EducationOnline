@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:padding="5dp"
-                android:src="@mipmap/icon_star" />
+                android:src="@mipmap/icon_comment" />
 
             <TextView
                 android:layout_width="match_parent"
