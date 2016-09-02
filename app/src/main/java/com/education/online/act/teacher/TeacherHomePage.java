@@ -75,7 +75,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
         findViewById(R.id.homePageBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(TeacherHomePage.this, TeacherDetaiPage.class));
+                startActivity(new Intent(TeacherHomePage.this, TeacherInformationPage.class));
             }
         });
         professionLayout=findViewById(R.id.professionLayout);

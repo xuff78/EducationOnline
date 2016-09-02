@@ -41,6 +41,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void setItemType(int itemType) {
         ItemType = itemType;
+        notifyDataSetChanged();
     }
 
     public int getItemType() {
@@ -70,8 +71,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }else if (i==4){
                 return 5;
             }
-            } else if (position>1)
-        {
+        } else if (position>1){
             if (i==2){
                 return 3;
             }else if (i==4){

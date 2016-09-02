@@ -25,6 +25,8 @@ public class TeacherInformationPage extends BaseFrameAct {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_main_page);
+
+        _setHeaderGone();
         InitView();
     }
 
