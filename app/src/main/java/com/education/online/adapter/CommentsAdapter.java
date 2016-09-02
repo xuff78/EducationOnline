@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.view.RatingBar;
 
 /**
  * Created by Gaozhiqun on 2016/8/25.
@@ -74,17 +75,14 @@ public class CommentsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     }
 
     public class CommentsHolder extends RecyclerView.ViewHolder{
-        ImageView potrait,star1,star2,star3,star4,star5;
+        ImageView potrait;
         TextView userName, userComments,commentDate,commentTime;
+        RatingBar ratingBar;
 
         public CommentsHolder(View v, int pos) {
             super(v);
             potrait = (ImageView) v. findViewById(R.id.potrait);
-            star1 = (ImageView) v.findViewById(R.id.star1);
-            star2 = (ImageView) v.findViewById(R.id.star2);
-            star3 = (ImageView) v.findViewById(R.id.star3);
-            star4 = (ImageView) v.findViewById(R.id.star4);
-            star5 = (ImageView) v.findViewById(R.id.star5);
+            ratingBar= (RatingBar) v.findViewById(R.id.ratingbar);
             userName= (TextView) v.findViewById(R.id.userName);
             userComments= (TextView) v.findViewById(R.id.userComments);
             commentDate= (TextView) v.findViewById(R.id.commentDate);

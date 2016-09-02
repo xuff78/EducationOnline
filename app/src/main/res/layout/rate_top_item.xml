@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/rateTxt"
+                    android:text="5.0"
+                    android:textSize="36sp"
+                    android:textColor="@color/normal_red"
+                    style="@style/txt_white_16" />
+                <TextView
+                    android:text="分"
+                    android:textColor="@color/normal_red"
+                    style="@style/txt_white_12" />
+            </LinearLayout>
+            <com.education.online.view.RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                hedgehog:clickable="true"
+                hedgehog:halfstart="true"
+                hedgehog:starCount="5"
+                hedgehog:starEmpty="@mipmap/icon_star_gray"
+                hedgehog:starFill="@mipmap/icon_star_red"
+                hedgehog:starHalf="@mipmap/icon_star_gray"
+                hedgehog:starImageHeight="30dp"
+                hedgehog:starImageWidth="25dp"
+                hedgehog:starImagePadding="5dp"/>
+            <TextView
+                android:id="@+id/numTxt"
+                android:text="共1342人评价"
+                android:layout_marginTop="10dp"
+                style="@style/txt_gray_12" />
+            </LinearLayout>
+        <View
+            android:background="@color/light_gray"
+            android:layout_width="1px"
+            android:layout_height="80dp"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/hint5"
+                    android:text="五星"
+                    android:layout_width="30dp"
+                    style="@style/txt_gray_12" />
+                <ProgressBar
+                    android:id="@+id/progress1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/hint5"
+                    android:layout_toLeftOf="@+id/rate5Txt"
+                    android:max="100"
+                    android:progress="50"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:id="@+id/rate5Txt"
+                    android:layout_alignParentRight="true"
+                    android:text="0%"
+                    android:paddingLeft="5dp"
+                    android:layout_width="35dp"
+                    style="@style/txt_gray_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/hint4"
+                    android:text="四星"
+                    android:layout_width="30dp"
+                    style="@style/txt_gray_12" />
+                <ProgressBar
+                    android:id="@+id/progress2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/hint4"
+                    android:layout_toLeftOf="@+id/rate4Txt"
+                    android:max="100"
+                    android:progress="50"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:id="@+id/rate4Txt"
+                    android:layout_alignParentRight="true"
+                    android:text="0%"
+                    android:paddingLeft="5dp"
+                    android:layout_width="35dp"
+                    style="@style/txt_gray_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/hint3"
+                    android:text="三星"
+                    android:layout_width="30dp"
+                    style="@style/txt_gray_12" />
+                <ProgressBar
+                    android:id="@+id/progress3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/hint3"
+                    android:layout_toLeftOf="@+id/rate3Txt"
+                    android:max="100"
+                    android:progress="50"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:id="@+id/rate3Txt"
+                    android:layout_alignParentRight="true"
+                    android:text="0%"
+                    android:paddingLeft="5dp"
+                    android:layout_width="35dp"
+                    style="@style/txt_gray_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/hint2"
+                    android:text="二星"
+                    android:layout_width="30dp"
+                    style="@style/txt_gray_12" />
+                <ProgressBar
+                    android:id="@+id/progress4"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/hint2"
+                    android:layout_toLeftOf="@+id/rate2Txt"
+                    android:max="100"
+                    android:progress="50"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:id="@+id/rate2Txt"
+                    android:layout_alignParentRight="true"
+                    android:text="0%"
+                    android:paddingLeft="5dp"
+                    android:layout_width="35dp"
+                    style="@style/txt_gray_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/hint1"
+                    android:text="一星"
+                    android:layout_width="30dp"
+                    style="@style/txt_gray_12" />
+                <ProgressBar
+                    android:id="@+id/progress5"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/hint1"
+                    android:layout_toLeftOf="@+id/rate1Txt"
+                    android:max="100"
+                    android:progress="50"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+                <TextView
+                    android:id="@+id/rate1Txt"
+                    android:layout_alignParentRight="true"
+                    android:text="0%"
+                    android:paddingLeft="5dp"
+                    android:layout_width="35dp"
+                    style="@style/txt_gray_12" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

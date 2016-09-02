@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/normal_red</item>
     </style>
 
     <style name="txt_black_14">
@@ -79,10 +79,8 @@
     </style>
 
 
-    <style name="myratingbar" parent="@android:style/Widget.RatingBar">
+    <style name="mratyingbar" parent="@android:style/Widget.Holo.RatingBar.Indicator">
         <item name="android:progressDrawable">@drawable/myratingbar</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:maxHeight">48dp</item>
     </style>
 
 </resources>

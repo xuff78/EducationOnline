@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
@@ -30,50 +31,22 @@
             android:textSize="14sp"
             android:text="用户名" />
 
-        <ImageView
-            android:id="@+id/star5"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+        <com.education.online.view.RatingBar
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/star4"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@+id/star5"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/star3"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@+id/star4"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/star2"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@+id/star3"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/star1"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@id/star2"
-            android:background="@mipmap/iconfontshoucang" />
+            android:id="@+id/ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            hedgehog:clickable="true"
+            hedgehog:halfstart="true"
+            hedgehog:starCount="5"
+            hedgehog:starEmpty="@mipmap/icon_star_gray"
+            hedgehog:starFill="@mipmap/icon_star_red"
+            hedgehog:starHalf="@mipmap/icon_star_gray"
+            hedgehog:starImageHeight="30dp"
+            hedgehog:starImageWidth="20dp"
+            hedgehog:starImagePadding="3dp"/>
     </RelativeLayout>
 
     <TextView

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:background="@color/whitesmoke"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/rateMenu1"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/normal_blue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="全部"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/rateMenu2"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="五星"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/rateMenu3"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="四星"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/rateMenu4"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="三星"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/rateMenu5"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="二星"
+            style="@style/txt_gray_12" />
+        <TextView
+            android:id="@+id/rateMenu6"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="一星"
+            style="@style/txt_gray_12" />
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</LinearLayout>

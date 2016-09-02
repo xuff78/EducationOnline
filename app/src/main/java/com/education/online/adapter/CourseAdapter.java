@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.util.ScreenUtil;
+import com.education.online.view.RatingBar;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -119,18 +120,15 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
     }
 
     public class CommentsHolder extends RecyclerView.ViewHolder{
-        ImageView potrait,star1,star2,star3,star4,star5;
+        ImageView potrait;
         TextView userName, userComments,commentDate,commentTime;
+        RatingBar ratingBar;
 
 
         public CommentsHolder(View v, int pos) {
             super(v);
             potrait = (ImageView) v. findViewById(R.id.potrait);
-            star1 = (ImageView) v.findViewById(R.id.star1);
-            star2 = (ImageView) v.findViewById(R.id.star2);
-            star3 = (ImageView) v.findViewById(R.id.star3);
-            star4 = (ImageView) v.findViewById(R.id.star4);
-            star5 = (ImageView) v.findViewById(R.id.star5);
+            ratingBar= (RatingBar) v.findViewById(R.id.ratingbar);
             userComments= (TextView) v.findViewById(R.id.userComments);
             commentDate= (TextView) v.findViewById(R.id.commentDate);
             commentTime= (TextView) v.findViewById(R.id.commentTime);
