@@ -82,15 +82,21 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Intent i=getIntent();
             switch (((int)view.getTag())){
                 case 0:
-                    startActivity(new Intent(TeacherCourseStart.this, LiveCourseEdit.class));
+                    i.setClass(TeacherCourseStart.this, LiveCourseEdit.class);
+                    startActivity(i);
                     break;
                 case 1:
-                    startActivity(new Intent(TeacherCourseStart.this, VideoCourseEdit.class));
+                    i.setClass(TeacherCourseStart.this, VideoCourseEdit.class);
+                    i.putExtra("Type", 1);
+                    startActivity(i);
                     break;
                 case 2:
-                    startActivity(new Intent(TeacherCourseStart.this, VideoCourseEdit.class));
+                    i.setClass(TeacherCourseStart.this, VideoCourseEdit.class);
+                    i.putExtra("Type", 0);
+                    startActivity(i);
                     break;
             }
             dialog.dismiss();

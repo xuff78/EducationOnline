@@ -2,6 +2,8 @@ package com.education.online.act.teacher;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -16,9 +18,9 @@ import com.education.online.view.SelectCourseTypeDialog;
 public class VideoCourseEdit  extends BaseFrameAct implements View.OnClickListener{
 
     HttpHandler handler;
-    private TextView submitCourseBtn;
-    private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
-    private SelectCourseTypeDialog dialog;
+    private TextView submitCourseBtn, uploadBtn, subjectTxt, priceTxt;
+    private ImageView courseImg;
+    private EditText courseName, courseDesc;
     private int type=0; // 0课件， 1视频
 
     @Override
@@ -26,18 +28,27 @@ public class VideoCourseEdit  extends BaseFrameAct implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_course_edit);
 
+        type=getIntent().getIntExtra("Type", 0);
         _setRightHomeGone();
         initView();
     }
 
     private void initView() {
 
-        submitCourseBtn= (TextView) findViewById(R.id.submitCourseBtn);
+        subjectTxt= (TextView) findViewById(R.id.subjectTxt);
+        priceTxt= (TextView) findViewById(R.id.priceTxt);
+        courseImg= (ImageView) findViewById(R.id.courseImg);
+        courseName= (EditText) findViewById(R.id.courseName);
+        courseDesc= (EditText) findViewById(R.id.courseDesc);
+        submitCourseBtn=(TextView) findViewById(R.id.submitCourseBtn);
         submitCourseBtn.setOnClickListener(this);
-
+        uploadBtn= (TextView) findViewById(R.id.uploadBtn);
+        uploadBtn.setOnClickListener(this);
         if(type==0){
+            uploadBtn.setText("上传课件");
             _setHeaderTitle("课件");
         }else if(type==1){
+            uploadBtn.setText("上传视频");
             _setHeaderTitle("视频课");
         }
     }

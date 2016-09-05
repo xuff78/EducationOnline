@@ -22,7 +22,8 @@
             style="@style/txt_gray_14" />
         <EditText
             android:id="@+id/courseName"
-            android:gravity="center_vertical"
+            android:gravity="right"
+            android:singleLine="true"
             android:background="@null"
             style="@style/txt_black_14"
             android:layout_marginLeft="10dp"
@@ -175,6 +176,7 @@
         android:text="课程详情"
         android:layout_width="match_parent"
         android:gravity="left|top"
+        android:id="@+id/courseDesc"
         android:lineSpacingExtra="5dp"
         android:layout_height="wrap_content"
         style="@style/txt_black_14" />
