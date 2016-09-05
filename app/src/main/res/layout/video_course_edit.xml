@@ -102,6 +102,36 @@
         android:layout_width="match_parent"
         android:layout_height="1px" />
     <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/joinNumLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="人数"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/joinNum"
+            android:layout_toLeftOf="@+id/arrowRight5"
+            android:layout_centerVertical="true"
+            android:text=""
+            style="@style/txt_black_14" />
+        <View
+            android:id="@+id/arrowRight5"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_black_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/courseImgLayout"
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
@@ -158,11 +188,12 @@
             android:textColor="@color/normal_red"
             android:layout_marginRight="25dp"
             style="@style/txt_black_14" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
     </RelativeLayout>
-    <View
-        android:background="@color/light_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1px" />
     <TextView
         android:paddingLeft="20dp"
         android:paddingTop="20dp"

@@ -85,7 +85,8 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
             Intent i=getIntent();
             switch (((int)view.getTag())){
                 case 0:
-                    i.setClass(TeacherCourseStart.this, LiveCourseEdit.class);
+                    i.setClass(TeacherCourseStart.this, VideoCourseEdit.class);
+                    i.putExtra("Type", 2);
                     startActivity(i);
                     break;
                 case 1:
