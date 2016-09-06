@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_above="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/txt_gray_12"
+                android:text="教学计划"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:background="@color/whitesmoke"
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <EditText
+                android:hint="例如：2016年8月6日开始，每周一、周四上课共五节"
+                android:id="@+id/timesetDesc"
+                android:singleLine="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <TextView
+                style="@style/txt_gray_12"
+                android:text="时间安排"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:background="@color/whitesmoke"
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <LinearLayout
+                android:id="@+id/courseLayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:id="@+id/addOneTimeLayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="添加一次课"
+                    style="@style/txt_gray_14" />
+                <View
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/add_red_round"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/addMutiTimeLayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="添加多次课"
+                    style="@style/txt_gray_14" />
+                <View
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/add_red_round"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+            </RelativeLayout>
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/bottomLayout"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/highwhite"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/submitCourseBtn"
+            android:text="发布课程"
+            android:gravity="center"
+            android:background="@drawable/shape_normalred_with_corner"
+            style="@style/txt_white_14"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

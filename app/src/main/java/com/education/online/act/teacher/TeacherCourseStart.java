@@ -2,34 +2,14 @@ package com.education.online.act.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.bean.FilterAll;
-import com.education.online.bean.FilterInfo;
-import com.education.online.fragment.CourseVideoList;
 import com.education.online.fragment.OnlineCoursePage;
-import com.education.online.fragment.TeacherList;
-import com.education.online.fragment.dialog.SelectorFilter;
-import com.education.online.fragment.dialog.SelectorOrder;
-import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.http.HttpHandler;
-import com.education.online.inter.DialogCallback;
-import com.education.online.util.ToastUtils;
-import com.education.online.view.MenuPopup;
 import com.education.online.view.SelectCourseTypeDialog;
-
-import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/9/5.
@@ -85,17 +65,17 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
             Intent i=getIntent();
             switch (((int)view.getTag())){
                 case 0:
-                    i.setClass(TeacherCourseStart.this, VideoCourseEdit.class);
+                    i.setClass(TeacherCourseStart.this, CourseBaseInfoEdit.class);
                     i.putExtra("Type", 2);
                     startActivity(i);
                     break;
                 case 1:
-                    i.setClass(TeacherCourseStart.this, VideoCourseEdit.class);
+                    i.setClass(TeacherCourseStart.this, CourseBaseInfoEdit.class);
                     i.putExtra("Type", 1);
                     startActivity(i);
                     break;
                 case 2:
-                    i.setClass(TeacherCourseStart.this, VideoCourseEdit.class);
+                    i.setClass(TeacherCourseStart.this, CourseBaseInfoEdit.class);
                     i.putExtra("Type", 0);
                     startActivity(i);
                     break;

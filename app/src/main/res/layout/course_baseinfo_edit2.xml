@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_above="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/txt_gray_12"
+                android:text="教学计划"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:background="@color/whitesmoke"
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <RelativeLayout
+                android:id="@+id/setTimeLayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="设置上课时间"
+                    style="@style/txt_gray_14" />
+                <TextView
+                    android:id="@+id/subjectTxt"
+                    android:layout_toLeftOf="@+id/arrowRight3"
+                    android:layout_centerVertical="true"
+                    android:text=""
+                    style="@style/txt_black_14" />
+                <View
+                    android:id="@+id/arrowRight3"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/icon_black_arrow_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </RelativeLayout>
+
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <View
+                android:background="@color/whitesmoke"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <RelativeLayout
+                android:id="@+id/paybackLayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="设置退款"
+                    style="@style/txt_gray_14" />
+                <TextView
+                    android:id="@+id/payBackTxt"
+                    android:layout_toLeftOf="@+id/arrowRight"
+                    android:layout_centerVertical="true"
+                    android:text="随时可退"
+                    style="@style/txt_black_14" />
+                <View
+                    android:id="@+id/arrowRight"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/arrow_down_br"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </RelativeLayout>
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <LinearLayout
+                android:visibility="gone"
+                android:background="@color/whitesmoke"
+                android:orientation="vertical"
+                android:id="@+id/paybackSelection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/paybackSelection1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:id="@+id/paybackSelection1Text"
+                        android:text="随时可退"
+                        android:textColor="@color/normal_red"
+                        android:gravity="center"
+                        style="@style/txt_black_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ImageView
+                        android:id="@+id/paybackSelection1Icon"
+                        android:layout_marginRight="60dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_right_red"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                </RelativeLayout>
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+                <RelativeLayout
+                    android:id="@+id/paybackSelection2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:id="@+id/paybackSelection2Text"
+                        android:text="不可退款"
+                        android:gravity="center"
+                        style="@style/txt_black_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ImageView
+                        android:id="@+id/paybackSelection2Icon"
+                        android:visibility="gone"
+                        android:layout_marginRight="60dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_right_red"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                </RelativeLayout>
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/insertLayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="插班规则"
+                    style="@style/txt_gray_14" />
+                <TextView
+                    android:id="@+id/insertTxt"
+                    android:layout_toLeftOf="@+id/arrowRight2"
+                    android:layout_centerVertical="true"
+                    android:text="不可插班"
+                    style="@style/txt_black_14" />
+                <View
+                    android:id="@+id/arrowRight2"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/arrow_down_br"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </RelativeLayout>
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <LinearLayout
+                android:visibility="gone"
+                android:background="@color/whitesmoke"
+                android:orientation="vertical"
+                android:id="@+id/insertSelection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/insertSelection1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:id="@+id/insert1Text"
+                        android:text="不可插班"
+                        android:textColor="@color/normal_red"
+                        android:gravity="center"
+                        style="@style/txt_black_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ImageView
+                        android:id="@+id/insert1Icon"
+                        android:layout_marginRight="60dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_right_red"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                </RelativeLayout>
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+                <RelativeLayout
+                    android:id="@+id/insertSelection2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:id="@+id/insert2Text"
+                        android:text="随时插班"
+                        android:gravity="center"
+                        style="@style/txt_black_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ImageView
+                        android:id="@+id/insert2Icon"
+                        android:visibility="gone"
+                        android:layout_marginRight="60dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_right_red"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                </RelativeLayout>
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/highwhite"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/submitCourseBtn"
+            android:text="发布课程"
+            android:gravity="center"
+            android:background="@drawable/shape_normalred_with_corner"
+            style="@style/txt_white_14"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

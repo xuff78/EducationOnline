@@ -3,6 +3,7 @@ package com.education.online.act.teacher;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     HomepageImg homepageImg=new HomepageImg();
     HomepageVideo homepageVideo=new HomepageVideo();
     HomepageCourse homepageCourse=new HomepageCourse();
+    ImageButton homeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +38,10 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
         setContentView(R.layout.teacher_homepage);
 
         _setHeaderTitle("主页编辑");
-        _setRightHome(R.mipmap.icon_teacher_menu_edit, new View.OnClickListener() {
+        _setRightHome(R.mipmap.teacher_home_edit, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                homeBtn.setImageResource(R.mipmap.teacher_home_done);
                 switch (lastSelectedPosition){
                     case 0:
                         homepageImg.setEdit();
@@ -58,6 +61,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     }
 
     private void initView() {
+        homeBtn = (ImageButton) findViewById(R.id.back_home_imagebtn);
         details = (LinearLayout) findViewById(R.id.details);
         details.setOnClickListener(this);
         directory = (LinearLayout) findViewById(R.id.directory);

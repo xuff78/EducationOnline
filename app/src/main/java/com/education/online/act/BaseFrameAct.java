@@ -152,7 +152,13 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 	}
-	
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		KeyBoardCancle();
+	}
+
 	public void KeyBoardCancle() {
 
 		View view = getWindow().peekDecorView();

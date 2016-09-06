@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <EditText
+            android:inputType="numberSigned"
+            android:id="@+id/minNum"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:maxLength="7"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:background="@drawable/shape_corner_blackline2"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+        <View
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/hard_gray"
+            android:layout_width="30dp"
+            android:layout_height="1px" />
+        <EditText
+            android:inputType="numberSigned"
+            android:id="@+id/maxNum"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:maxLength="7"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:background="@drawable/shape_corner_blackline2"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+    <TextView
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="注： 报名人数不得小于最低开班人数，否则自动关闭课程并自动退钱"
+        style="@style/txt_gray_14" />
+</LinearLayout>
