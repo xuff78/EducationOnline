@@ -23,21 +23,15 @@ import java.util.ArrayList;
  */
 public class CourseTimeAdapter extends BaseAdapter {
 
-    private Activity activity;
     private LayoutInflater inflater;
-    private int imgLength=0;
     private LinearLayout.LayoutParams llp;
     private ArrayList<CourseTimeBean> courses;
     private View.OnClickListener listener;
 
     public CourseTimeAdapter(Activity activity, ArrayList<CourseTimeBean> courses, View.OnClickListener listener){
-        this.activity = activity;
         this.courses=courses;
         this.listener=listener;
         inflater = LayoutInflater.from(activity);
-        imgLength= (ScreenUtil.getWidth(activity)- ImageUtil.dip2px(activity, 70))/4; //左右边距40， 中间3*10
-        llp=new LinearLayout.LayoutParams(imgLength, imgLength);
-        llp.rightMargin=ImageUtil.dip2px(activity, 10);
     }
 
     @Override
@@ -62,7 +56,7 @@ public class CourseTimeAdapter extends BaseAdapter {
         CourseTimeBean course=courses.get(position);
 
         TextView txt= (TextView) v.findViewById(R.id.courseInfo);
-        txt.setText((position+1)+" "+course.getDisplayTxt());
+        txt.setText((position+1)+". "+course.getDisplayTxt());
         View delBtn=v.findViewById(R.id.delBtn);
         delBtn.setOnClickListener(listener);
         delBtn.setTag(position);

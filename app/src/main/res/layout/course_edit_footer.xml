@@ -14,6 +14,7 @@
             android:text="添加一次课"
             style="@style/txt_gray_14" />
         <View
+            android:layout_marginRight="15dp"
             android:layout_centerVertical="true"
             android:background="@mipmap/add_red_round"
             android:layout_alignParentRight="true"
@@ -35,6 +36,7 @@
             android:text="添加多次课"
             style="@style/txt_gray_14" />
         <View
+            android:layout_marginRight="15dp"
             android:layout_centerVertical="true"
             android:background="@mipmap/add_red_round"
             android:layout_alignParentRight="true"

@@ -23,7 +23,6 @@
                 android:id="@+id/timesetDesc"
                 android:singleLine="true"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:textSize="14sp"
                 android:gravity="center_vertical"
                 android:background="@null"
