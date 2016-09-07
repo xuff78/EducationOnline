@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.bean.CourseTimeBean;
 import com.education.online.inter.WhellCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -82,14 +83,14 @@ public class WheelAddressSelectorDialog extends Dialog implements View.OnClickLi
 		for (int i=1;i<31;i++){
 			cal.add(Calendar.DATE, 1);
 			dateArray.add(dateData.format(cal.getTime()));
-			dateTxtArray.add(dateShow.format(cal.getTime()));
+			dateTxtArray.add(dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK)));
 		}
 		datetime.setWheelAdapter(new ArrayWheelAdapter(getContext())); // 文本数据源
 		datetime.setWheelSize(5);
 		datetime.setSelection(2);
 		datetime.setSkin(WheelView.Skin.Holo);
 		WheelView.WheelViewStyle style = datetime.getStyle();
-		style.selectedTextSize=16;
+		style.selectedTextSize=15;
 		style.textSize=14;
 		style.holoBorderColor=context.getResources().getColor(R.color.verylight_gray);
 		datetime.setStyle(style);
