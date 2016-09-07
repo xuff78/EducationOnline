@@ -56,4 +56,5 @@ dependencies {
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/libammsdk.jar')
+    compile files('libs/wheelview_1.3.3.jar')
 }

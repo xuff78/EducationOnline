@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/addOneTimeLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+        <TextView
+            android:id="@+id/courseInfo"
+            android:layout_centerVertical="true"
+            android:text=""
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/delBtn"
+            android:layout_alignParentRight="true"
+            android:text="删除"
+            android:gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/normal_red"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:id="@+id/modifyBtn"
+            android:layout_toLeftOf="@+id/delBtn"
+            android:text="修改"
+            android:gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/normal_red"
+            style="@style/txt_gray_14" />
+    </RelativeLayout>
+</LinearLayout>
