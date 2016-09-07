@@ -66,10 +66,6 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
             uploadLayout.setVisibility(View.GONE);
             joinNumLayout.setVisibility(View.VISIBLE);
             submitCourseBtn.setText("下一步");
-            submitCourseBtn.setBackgroundResource(R.drawable.shape_normalredline_with_corner);
-            int padding= ImageUtil.dip2px(this, 25);
-            submitCourseBtn.setTextColor(getResources().getColor(R.color.normal_red));
-            submitCourseBtn.setPadding(padding, padding/8, padding, padding/8);
             _setHeaderTitle("开设直播课");
         }
     }
