@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.CommentsAdapter;
+import com.education.online.bean.CourseTimeBean;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.view.SelectWeekdayDialog;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/8/29.

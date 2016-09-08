@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,7 +9,7 @@
     android:weightSum="1">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="60dp">
 
         <TextView
@@ -19,57 +20,30 @@
             android:text="总体评价"
             android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/tstar1"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
+        <com.education.online.view.RatingBar
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/textview1"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/tstar2"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/tstar1"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/tstar3"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/tstar2"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/tstar4"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/tstar3"
-            android:background="@mipmap/iconfontshoucang" />
-
-        <ImageView
-            android:id="@+id/tstar5"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/tstar4"
-            android:background="@mipmap/iconfontshoucang" />
+            android:id="@+id/ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            hedgehog:clickable="true"
+            hedgehog:halfstart="true"
+            hedgehog:starCount="5"
+            hedgehog:starEmpty="@mipmap/icon_star_gray"
+            hedgehog:starFill="@mipmap/icon_star_red"
+            hedgehog:starHalf="@mipmap/icon_star_gray"
+            hedgehog:starImageHeight="30dp"
+            hedgehog:starImageWidth="20dp"
+            hedgehog:starImagePadding="3dp"/>
 
         <TextView
             android:id="@+id/averageScore"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/tstar5"
+            android:layout_toRightOf="@+id/ratingbar"
             android:gravity="center_vertical"
             android:text="4.9分"
             android:textColor="@color/normal_red"

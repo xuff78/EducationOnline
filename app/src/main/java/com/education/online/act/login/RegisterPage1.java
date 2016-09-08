@@ -35,7 +35,7 @@ public class RegisterPage1 extends BaseFrameAct {
     private void initView() {
 
         GetVertiCode = (TextView) findViewById(R.id.GetVertiCode);
-        GetVertiCode.setBackgroundColor(Color.parseColor("#FF6600"));
+        //GetVertiCode.setBackgroundColor(Color.parseColor("#FF6600"));
         NextStep = (Button) findViewById(R.id.NextStep);
         EditText UserMobile = (EditText) findViewById(R.id.UserMobile);
         EditText ValidVeriCode = (EditText) findViewById(R.id.ValidVertiCode);

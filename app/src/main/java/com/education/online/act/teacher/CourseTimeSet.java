@@ -2,9 +2,6 @@ package com.education.online.act.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,19 +12,19 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.CourseTimeAdapter;
-import com.education.online.adapter.MainAdapter;
 import com.education.online.bean.CourseTimeBean;
 import com.education.online.http.HttpHandler;
 import com.education.online.inter.WhellCallback;
-import com.education.online.util.ImageUtil;
 import com.education.online.view.WheelAddressSelectorDialog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/9/6.
  */
-public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener, WhellCallback {
+//实现了wheelCallback 接口
+public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener, WhellCallback,Serializable {
 
     HttpHandler handler;
     private TextView submitCourseBtn, uploadBtn, subjectTxt, priceTxt, joinNum;
@@ -67,10 +64,13 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addOneTimeLayout:
+                //添加一次课时弹出窗口进行选择
                 dialog=new WheelAddressSelectorDialog(CourseTimeSet.this, CourseTimeSet.this);
                 dialog.show();
                 break;
             case R.id.addMutiTimeLayout:
+               Intent intent = new Intent(CourseTimeSet.this, AddSerialClass.class);
+               startActivityForResult(intent,0x11);
                 break;
             case R.id.delBtn:
                 int posdel = (int) view.getTag();
@@ -89,14 +89,16 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==0x11){
-
+           ArrayList<CourseTimeBean> temp = (ArrayList<CourseTimeBean>)this.getIntent().getSerializableExtra("TimeList");
+            courses.addAll(temp);
+            adapter.notifyDataSetChanged();//通知列表更新
         }
     }
 
     @Override
     public void onFinish(CourseTimeBean bean) {
         courses.add(bean);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();//通知列表更新
     }
 
     @Override

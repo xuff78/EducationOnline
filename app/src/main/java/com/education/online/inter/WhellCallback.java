@@ -8,4 +8,5 @@ import com.education.online.bean.CourseTimeBean;
 public interface WhellCallback {
     void onFinish(CourseTimeBean bean);
     void onChanged(CourseTimeBean bean);
+
 }

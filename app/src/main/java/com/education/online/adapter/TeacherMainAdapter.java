@@ -219,6 +219,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         textbrief.setTextColor(textbrief.getResources().getColor(R.color.dark_orange));
                         viewbrief.setVisibility(View.VISIBLE);
                         setItemType(1);
+                        getItemCount();
                         break;
                     case R.id.subjects:
                         lastSelectedview = subjects;
@@ -226,6 +227,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         textsubjects.setTextColor(textbrief.getResources().getColor(R.color.dark_orange));
                         viewsubjects.setVisibility(View.VISIBLE);
                         setItemType(2);
+                        getItemCount();
                         break;
                     case R.id.photoalbum:
 
@@ -234,6 +236,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         textphotoalbum.setTextColor(textbrief.getResources().getColor(R.color.dark_orange));
                         viewphotoalbum.setVisibility(View.VISIBLE);
                         setItemType(3);
+                        getItemCount();
                         break;
                     case R.id.teachercomments:
                         lastSelectedview = teachercomments;
@@ -241,6 +244,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         textteachercomments.setTextColor(textteachercomments.getResources().getColor(R.color.dark_orange));
                         viewteachercomments.setVisibility(View.VISIBLE);
                         setItemType(4);
+                        getItemCount();
                         break;
                 }
             }
@@ -282,6 +286,8 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             teacherExperience = (TextView) itemView.findViewById(R.id.teacherExperience);
         }
     }
+
+
 ////////////////////////////////////////////page2holder
 
     public class CourseHolder extends RecyclerView.ViewHolder {
@@ -349,7 +355,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public class CommentsHolder extends RecyclerView.ViewHolder {
-        ImageView potrait, star1, star2, star3, star4, star5;
+        ImageView potrait;
         TextView userName, userComments, commentDate, commentTime;
         RatingBar ratingbar;
 

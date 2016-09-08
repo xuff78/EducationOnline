@@ -24,6 +24,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
+import com.education.online.view.SelectWeekdayDialog;
 
 import java.io.File;
 
@@ -38,6 +39,7 @@ public class CompleteDataPage extends BaseFrameAct {
     private ImageView SexMale;
     private LinearLayout LayoutMale;
     private LinearLayout LayoutFemale;
+
 
 
     @Override
@@ -72,6 +74,7 @@ public class CompleteDataPage extends BaseFrameAct {
             switch (view.getId()){
                 case R.id.headIcon:
                     new SelectPicDialog(CompleteDataPage.this).show();
+
                     break;
                 case R.id.Subject:
                     startActivityForResult(new Intent(CompleteDataPage.this, SubjectSelector.class), 0x33);

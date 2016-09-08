@@ -129,7 +129,7 @@ public class WheelAddressSelectorDialog extends Dialog implements View.OnClickLi
 
 		findViewById(R.id.cancelBtn).setOnClickListener(this);
 		findViewById(R.id.confirmBtn).setOnClickListener(this);
-
+//设置初始值
 		if(bean!=null){
 			for(int i=0;i<dateArray.size();i++){
 				if(dateArray.get(i).equals(bean.getDatetime())) {
