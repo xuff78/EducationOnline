@@ -54,6 +54,8 @@ public class WheelTimeSelectorDialog extends Dialog implements View.OnClickListe
         this.setContentView(R.layout.wheel_course_starttime_duration);
 
         initView();
+
+
     }
 
     private void initView() {

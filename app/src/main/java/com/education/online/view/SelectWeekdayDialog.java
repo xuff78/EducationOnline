@@ -111,58 +111,58 @@ public class SelectWeekdayDialog extends Dialog implements View.OnClickListener 
         if (i == R.id.monlayout) {
             if (monview.isSelected()) {
                 monview.setSelected(false);
-                WeekdayList.remove("星期一");
+                WeekdayList.remove("周一");
             } else {
                 monview.setSelected(true);
-                WeekdayList.add("星期一");
+                WeekdayList.add("周一");
             }
         } else if (i == R.id.tueslayout) {
             if (tuesview.isSelected()) {
                 tuesview.setSelected(false);
-                WeekdayList.remove("星期二");
+                WeekdayList.remove("周二");
             } else {
                 tuesview.setSelected(true);
-                WeekdayList.add("星期二");
+                WeekdayList.add("周二");
             }
         } else if (i == R.id.wedneslayout) {
             if (wednesview.isSelected()) {
                 wednesview.setSelected(false);
-                WeekdayList.remove("星期三");
+                WeekdayList.remove("周三");
             } else {
                 wednesview.setSelected(true);
-                WeekdayList.add("星期三");
+                WeekdayList.add("周三");
             }
         } else if (i == R.id.thurslayout) {
             if (thursview.isSelected()) {
                 thursview.setSelected(false);
-                WeekdayList.remove("星期四");
+                WeekdayList.remove("周四");
             } else {
                 thursview.setSelected(true);
-                WeekdayList.add("星期四");
+                WeekdayList.add("周四");
             }
         } else if (i == R.id.frilayout) {
             if (friview.isSelected()) {
                 friview.setSelected(false);
-                WeekdayList.remove("星期五");
+                WeekdayList.remove("周五");
             } else {
                 friview.setSelected(true);
-                WeekdayList.add("星期五");
+                WeekdayList.add("周五");
             }
         } else if (i == R.id.satlayout) {
             if (satview.isSelected()){
                 satview.setSelected(false);
-                WeekdayList.remove("星期六");
+                WeekdayList.remove("周六");
             }else{
                 satview.setSelected(true);
-                WeekdayList.add("星期六");
+                WeekdayList.add("周六");
             }
         } else if (i == R.id.sunlayout) {
             if (satview.isSelected()){
                 satview.setSelected(false);
-                WeekdayList.remove("星期日");
+                WeekdayList.remove("周日");
             }else{
                 satview.setSelected(true);
-                WeekdayList.add("星期日");
+                WeekdayList.add("周日");
             }
         } else if (i == R.id.confirmtext) {
             if(!WeekdayList.isEmpty()){

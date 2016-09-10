@@ -2,6 +2,7 @@ package com.education.online.bean;
 
 import com.education.online.util.LogUtil;
 
+import java.io.Serializable;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2016/9/7.
  */
-public class CourseTimeBean {
+public class CourseTimeBean implements Serializable{
     private String longtime="";
     private String hour="";
     private String min="";

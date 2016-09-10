@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.ArraryCourseTimeBean;
 import com.education.online.bean.CourseTimeBean;
 import com.education.online.inter.WheelTimeSelectorCallback;
 import com.education.online.inter.weekdayDialogCallback;
@@ -21,7 +22,6 @@ import com.education.online.inter.WheelDateSelecterdCallback;
 import com.education.online.view.WheelDateSelectorDialog;
 import com.education.online.view.WheelTimeSelectorDialog;
 
-import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.Date;
  * Created by Administrator on 2016/9/7.
  */
 
-public class AddSerialClass extends BaseFrameAct implements View.OnClickListener,Serializable{
+public class AddSerialClass extends BaseFrameAct implements View.OnClickListener{
     Activity activity;
 
     private RelativeLayout courseFrequency,courseDuration, courseTime;
@@ -42,7 +42,7 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
     private String hour, min, longtime;
     private ArrayList<CourseTimeBean> timelist = new ArrayList<>();
     private boolean isDateSet,isWeekdaySet,isTimeSet;
-    private CourseTimeBean tempBean;
+    private CourseTimeBean tempBean ;
     private Intent intent = new Intent();
 
 
@@ -56,8 +56,8 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
             @Override
             public void onClick(View view) {
                 if (isDateSet && isTimeSet && isWeekdaySet){
-                    setResult(0x11,intent);
-                    finish();//全都设置了就回传数据结束应用
+                    returnresult();
+                  finish();//全都设置了就回传数据结束应用
                 }
                 else{
                    //弹出对话框
@@ -83,6 +83,36 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
         initi();
     }
 
+    private void returnresult(){
+        Calendar cal = Calendar.getInstance();
+        Format dateData=new SimpleDateFormat("yyyy-MM-dd");
+        Format dateShow=new SimpleDateFormat("MM月dd日");
+        Date date = new Date(System.currentTimeMillis());
+        cal.setTime(date);//获取当前时间
+        int length = enddatetime- startdatetime+1;
+        String stringtemp;//计算上结束当天
+        for (int i = 0; i<length;i++){
+            cal.add(Calendar.DATE, 1);
+            stringtemp = ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));
+            for (String s : weekdaylist){
+                if (s == stringtemp ){
+                    tempBean= new CourseTimeBean();
+                    tempBean.setDatetime(dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK)));
+                    tempBean.setMin(min);
+                    tempBean.setHour(hour);
+                    tempBean.setLongtime(longtime);
+                    timelist.add(tempBean);
+                }
+            }
+        }
+
+        Bundle bundle = new Bundle();
+        ArraryCourseTimeBean list = new ArraryCourseTimeBean();
+        list.setTimelist(timelist );
+        bundle.putSerializable("TimeListArray", list);
+        intent.putExtras(bundle);
+        setResult(0x11,intent);
+    }
 
     private void initi() {
         courseFrequency = (RelativeLayout) findViewById(R.id.courseFrequency);
@@ -91,29 +121,6 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
         courseDuration.setOnClickListener(this);
         courseTime = (RelativeLayout) findViewById(R.id.courseTime);
         courseTime.setOnClickListener(this);
-
-        Format dateData=new SimpleDateFormat("yyyy-MM-dd");
-        Format dateShow=new SimpleDateFormat("MM月dd日");
-        Date date = new Date(System.currentTimeMillis());
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);//获取当前时间
-        int length = enddatetime- startdatetime+1;//计算上结束当天
-        for (int i = 0; i<length;i++){
-            cal.add(Calendar.DATE, 1);
-            for (String s : weekdaylist){
-                if (s == ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK))){
-                    tempBean.setDatetime(dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK)));
-                    tempBean.setMin(min);
-                    tempBean.setHour(hour);
-                    tempBean.setLongtime(longtime);
-                    timelist.add(tempBean);
-                    tempBean=null;
-                }
-            }
-        }
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("TimeList",(Serializable) timelist);
-        intent.putExtras(bundle);
     }
 
     @Override
