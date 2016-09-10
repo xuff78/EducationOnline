@@ -16,6 +16,7 @@ import com.education.online.bean.ArraryCourseTimeBean;
 import com.education.online.bean.CourseTimeBean;
 import com.education.online.http.HttpHandler;
 import com.education.online.inter.WhellCallback;
+import com.education.online.util.LogUtil;
 import com.education.online.view.WheelAddressSelectorDialog;
 
 import java.io.Serializable;
@@ -101,6 +102,7 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
 
     @Override
     public void onFinish(CourseTimeBean bean) {
+        LogUtil.i("Date", "日期: "+bean.getDatetime());
         courses.add(bean);
         adapter.notifyDataSetChanged();//通知列表更新
     }

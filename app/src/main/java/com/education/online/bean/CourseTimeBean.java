@@ -20,8 +20,8 @@ public class CourseTimeBean implements Serializable{
 
     public  String getDisplayTxt(){
         String txt="";
-        SimpleDateFormat timeFormat=new SimpleDateFormat("yyyy-MM-dd HH:MM");
-        SimpleDateFormat timeEndFormat=new SimpleDateFormat("HH:MM");
+        SimpleDateFormat timeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat timeEndFormat=new SimpleDateFormat("HH:mm");
         String startTime=datetime+" "+hour+":"+min;
         Date date = null;
         try {
@@ -29,11 +29,11 @@ public class CourseTimeBean implements Serializable{
             startTime=timeFormat.format(date);
             LogUtil.i("date", "start: "+startTime);
             long add_mins=(long) (Float.valueOf(longtime)*60);
-            LogUtil.i("date", "add_mins: "+add_mins);
+//            LogUtil.i("date", "add_mins: "+add_mins);
             long end_time=date.getTime()+add_mins*60*1000;
             date.setTime(end_time);
             txt=" - "+timeEndFormat.format(date);
-            LogUtil.i("date", "end:  "+timeFormat.format(date));
+//            LogUtil.i("date", "end:  "+timeFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
