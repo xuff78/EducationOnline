@@ -14,6 +14,7 @@ import com.baidu.location.LocationClientOption;
 import com.education.online.R;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
+import com.education.online.fragment.mycenter.MyCenterMain;
 import com.education.online.fragment.teacher.TeacherPage;
 import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.util.LogUtil;
@@ -27,7 +28,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private SelectorPage selectorPage=new SelectorPage();
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
     private TeacherPage teacherPage = new TeacherPage();
-
+    private MyCenterMain centerMain=new MyCenterMain();
     private View lastSelectedView=null;
 
     @Override
@@ -88,6 +89,8 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                    // changePage(onlinecoursePage);
                     break;
                 case R.id.menuBtn4:
+                    _setHeaderGone();
+                    changePage(centerMain);
                     break;
                 case R.id.menuBtn5:
                     _setHeaderGone();
