@@ -157,11 +157,11 @@ public class SelectWeekdayDialog extends Dialog implements View.OnClickListener 
                 WeekdayList.add("周六");
             }
         } else if (i == R.id.sunlayout) {
-            if (satview.isSelected()){
-                satview.setSelected(false);
+            if (sunview.isSelected()){
+                sunview.setSelected(false);
                 WeekdayList.remove("周日");
             }else{
-                satview.setSelected(true);
+                sunview.setSelected(true);
                 WeekdayList.add("周日");
             }
         } else if (i == R.id.confirmtext) {
