@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@color/highlight_gray"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:src="@mipmap/bg_wallet_card"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <RelativeLayout
+        android:id="@+id/mySchoolLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon2"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_modify_psw" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon2"
+            android:text="设置支付密码"
+            android:textSize="14sp" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/activity_vertical_margin"
+            android:layout_height="@dimen/activity_vertical_margin"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_black_arrow_right" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <RelativeLayout
+        android:id="@+id/interestingLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon3"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_tixian" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt3"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon3"
+            android:text="提现"
+            android:textSize="14sp" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/activity_vertical_margin"
+            android:layout_height="@dimen/activity_vertical_margin"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_black_arrow_right" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <RelativeLayout
+        android:id="@+id/myQuestionLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon4"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_wallet_history" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt4"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon4"
+            android:text="查看明细"
+            android:textSize="14sp" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/activity_vertical_margin"
+            android:layout_height="@dimen/activity_vertical_margin"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_black_arrow_right" />
+    </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+</LinearLayout>
