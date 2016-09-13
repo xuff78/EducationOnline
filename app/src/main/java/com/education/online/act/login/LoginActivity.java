@@ -57,6 +57,12 @@ public class LoginActivity extends BaseFrameAct {
                 attemptLogin();
             }
         });
+        findViewById(R.id.registerBtn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterPage1.class));
+            }
+        });
     }
 
 

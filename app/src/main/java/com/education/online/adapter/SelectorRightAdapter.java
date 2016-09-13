@@ -27,11 +27,13 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
 	private LayoutInflater listInflater;
 	private ImageLoader imageLoader;
 	private int itemWidth=0, itemHeight=0;
+	private View.OnClickListener listener;
 	
-	public SelectorRightAdapter(Activity act, ArrayList<CategoryBean> arrayList)
+	public SelectorRightAdapter(Activity act, ArrayList<CategoryBean> arrayList, View.OnClickListener listener)
     {
         this.act=act;
         this.dataList=arrayList;
+		this.listener=listener;
         imageLoader=ImageLoader.getInstance();
         listInflater= LayoutInflater.from(act);
 		itemWidth= (ScreenUtil.getWidth(act)-ImageUtil.dip2px(act, 80+40+20))/3;
@@ -94,6 +96,7 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
 					linelayout=new LinearLayout(act);
 					linelayout.setPadding(0, llp.rightMargin,0,0);
 				}
+				txt.setOnClickListener(listener);
 			}
         }
     }
