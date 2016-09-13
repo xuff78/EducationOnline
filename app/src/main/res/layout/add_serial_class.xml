@@ -38,6 +38,8 @@
             android:textSize="14sp" />
 
         <TextView
+            android:layout_toLeftOf="@+id/right1"
+            android:id="@+id/textfrequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -45,11 +47,12 @@
             android:layout_marginRight="20dp"
             android:layout_toRightOf="@+id/text1"
             android:gravity="center_horizontal"
-            android:text="选择上课频次"
-            android:textColor="@color/colorPrimaryDark"
+            android:hint="选择上课频次"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/right1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -83,18 +86,21 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/textstartendtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_toRightOf="@+id/text2"
+            android:layout_toLeftOf="@+id/right2"
             android:gravity="center_horizontal"
-            android:text="选择上课区间"
-            android:textColor="@color/colorPrimaryDark"
+            android:hint="选择上课区间"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/right2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -128,7 +134,8 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/subject"
+            android:layout_toLeftOf="@+id/right3"
+            android:id="@+id/textduration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -136,11 +143,12 @@
             android:layout_marginRight="20dp"
             android:layout_toRightOf="@+id/text3"
             android:gravity="center_horizontal"
-            android:text="选择上课时间"
-            android:textColor="@color/colorPrimaryDark"
+            android:hint="选择上课时间"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/right3"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"

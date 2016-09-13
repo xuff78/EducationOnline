@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.CourseTimeAdapter;
+import com.education.online.bean.ArraryCourseTimeBean;
 import com.education.online.bean.CourseTimeBean;
 import com.education.online.http.HttpHandler;
 import com.education.online.inter.WhellCallback;
+import com.education.online.util.LogUtil;
 import com.education.online.view.WheelAddressSelectorDialog;
 
 import java.io.Serializable;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/9/6.
  */
 //实现了wheelCallback 接口
-public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener, WhellCallback,Serializable {
+public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener, WhellCallback {
 
     HttpHandler handler;
     private TextView submitCourseBtn, uploadBtn, subjectTxt, priceTxt, joinNum;
@@ -89,7 +91,10 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==0x11){
-           ArrayList<CourseTimeBean> temp = (ArrayList<CourseTimeBean>)this.getIntent().getSerializableExtra("TimeList");
+           ArrayList<CourseTimeBean> temp = new ArrayList<> ();
+            ArraryCourseTimeBean list = new ArraryCourseTimeBean();
+            list = (ArraryCourseTimeBean) data.getSerializableExtra("TimeListArray") ;
+            temp = list.getTimelist();
             courses.addAll(temp);
             adapter.notifyDataSetChanged();//通知列表更新
         }
@@ -97,6 +102,7 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
 
     @Override
     public void onFinish(CourseTimeBean bean) {
+        LogUtil.i("Date", "日期: "+bean.getDatetime());
         courses.add(bean);
         adapter.notifyDataSetChanged();//通知列表更新
     }

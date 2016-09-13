@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:background="@mipmap/teacher_bg"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/teacherImg"
+                android:layout_width="65dp"
+                android:layout_height="65dp" />
+
+            <TextView
+                android:layout_alignTop="@+id/teacherImg"
+                android:layout_toRightOf="@+id/teacherImg"
+                android:layout_marginTop="15dp"
+                android:id="@+id/nameTxt"
+                android:text="ADOBE 小方方"
+                style="@style/txt_white_12" />
+            <TextView
+                android:layout_alignLeft="@+id/nameTxt"
+                android:layout_below="@+id/nameTxt"
+                android:layout_marginTop="8dp"
+                android:id="@+id/descTxt"
+                android:text="个人资料 ＞"
+                style="@style/txt_white_12" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/myCourseLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/press_bg_transtogray" >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_course_blue" />
+                <TextView
+                    style="@style/txt_gray_14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="我的课程"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="1px"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/myDownloadLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/press_bg_transtogray" >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_download_yellow" />
+                <TextView
+                    style="@style/txt_gray_14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="我的下载"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <View
+                android:background="@color/light_gray"
+                android:layout_width="1px"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/myOrderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/press_bg_transtogray" >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_order_green" />
+                <TextView
+                    style="@style/txt_gray_14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="我的订单"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:background="@color/whitesmoke" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/myWalletLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray"
+            android:paddingRight="20dp" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_mywallet" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon"
+                android:text="我的钱包"/>
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/light_gray" />
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:background="@color/whitesmoke" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/mySchoolLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon2"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_school" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:id="@+id/hintTxt2"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon2"
+                android:text="我的校内"
+                android:textSize="14sp" />
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/interestingLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon3"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_myinterest" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:id="@+id/hintTxt3"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon3"
+                android:text="我的兴趣"
+                android:textSize="14sp" />
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/myQuestionLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon4"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_myquestion" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:id="@+id/hintTxt4"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon4"
+                android:text="我的提问"
+                android:textSize="14sp" />
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/myCommentLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon8"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_mycomment" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon8"
+                android:text="我的评价"/>
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/myCollectionLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon5"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_mycollection" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:id="@+id/hintTxt5"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon5"
+                android:text="我的收藏"/>
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:background="@color/whitesmoke" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/settingLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon6"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_teacher_menu_settings" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:id="@+id/hintTxt6"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon6"
+                android:text="设置"
+                android:textSize="14sp" />
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <RelativeLayout
+            android:id="@+id/helpLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:paddingLeft="10dp"
+            android:background="@drawable/press_bg_transtogray" >
+            <ImageView
+                android:layout_marginLeft="@dimen/padding_left"
+                android:id="@+id/settingIcon7"
+                android:layout_width="@dimen/user_icon_w"
+                android:layout_height="@dimen/user_icon_w"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_helpandfeedback" />
+            <TextView
+                style="@style/txt_gray_14"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/settingIcon7"
+                android:text="帮助和反馈"
+                android:textSize="14sp" />
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/activity_vertical_margin"
+                android:layout_height="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_black_arrow_right" />
+        </RelativeLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/whitesmoke" />
+    </LinearLayout>
+</ScrollView>
