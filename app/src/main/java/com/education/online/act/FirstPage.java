@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.education.online.R;
+import com.education.online.act.Mine.HelpandFeedback;
+import com.education.online.act.Mine.Settings;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
 import com.education.online.act.teacher.TeacherInformationPage;
@@ -59,11 +61,15 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loginBtn:
-//                startActivity(new Intent(FirstPage.this, TeacherInformationPage.class));
-                startActivity(new Intent(FirstPage.this, LoginActivity.class));
+
+    //            startActivity(new Intent(FirstPage.this, LoginActivity.class));
+                startActivity(new Intent(FirstPage.this, HelpandFeedback.class));
                 break;
             case R.id.registerBtn:
-                startActivity(new Intent(FirstPage.this, RegisterPage1.class));
+
+
+       //         startActivity(new Intent(FirstPage.this, RegisterPage1.class));
+                startActivity(new Intent(FirstPage.this, Settings.class));
                 break;
         }
     }

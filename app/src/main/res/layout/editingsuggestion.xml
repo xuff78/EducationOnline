@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+   <LinearLayout
+       android:layout_marginLeft="20dp"
+       android:layout_marginRight="20dp"
+       android:layout_marginTop="15dp"
+       android:layout_width="match_parent"
+       android:layout_height="180dp">
+       <EditText
+           android:id="@+id/entersuggestion"
+           android:hint="这里写下你的意见哦~"
+           android:textSize="13sp"
+           android:textColorHint="@color/comment_gray"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@null"
+           />
+
+   </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whitesmoke">
+        <TextView
+            android:id="@+id/submitbtn"
+            android:padding="5dp"
+            android:text="提    交"
+            android:textColor="@color/normal_red"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_marginTop="40dp"
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_smallcorner_redline"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

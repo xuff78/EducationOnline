@@ -6,6 +6,8 @@
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="transparent">#00000000</color><!--透明 -->
     <color name="red">#FF1493</color><!-- 红色-->
+    <color name="darkred">#CE021B</color><!-- 深红色-->
+
 
 
     <color name="normal_red">#F95850</color>
@@ -16,6 +18,7 @@
     <color name="light_trans_black">#22000000</color><!--高亮灰 -->
     <color name="hard_trans_black">#66000000</color><!--高亮灰 -->
     <color name="comment_gray">#D6D6D6</color><!---评价灰 -->
+    <color name="what_gray">#B8B8B8</color><!---什么灰 -->
     <!-- 商城使用字体颜色 -->
     <color name="highlight_gray">#eaeaea</color><!--高亮灰 -->
     <color name="light_blue">#ADD8E6</color><!--亮蓝色 -->
