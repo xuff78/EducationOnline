@@ -45,6 +45,12 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         });
         initView();
 
+        selectorPage.setData(new SelectorPage.CourseSelector() {
+            @Override
+            public void onSelected() {
+                startActivity(new Intent(MainPage.this, SearchResultAct.class));
+            }
+        });
         changePage(home);
         initLocation();
     }

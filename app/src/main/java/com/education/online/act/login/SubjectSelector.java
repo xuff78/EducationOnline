@@ -26,6 +26,12 @@ public class SubjectSelector extends BaseFrameAct{
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         SelectorPage selectorPage=new SelectorPage();
+        selectorPage.setData(new SelectorPage.CourseSelector() {
+            @Override
+            public void onSelected() {
+                finish();
+            }
+        });
         ft.add(R.id.fragment_frame, selectorPage);
         ft.commit();
     }

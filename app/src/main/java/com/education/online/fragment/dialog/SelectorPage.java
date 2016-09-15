@@ -30,6 +30,15 @@ public class SelectorPage extends BaseFragment {
     private MenuLeftAdapter menuAdapter;
     private ArrayList<CategoryBean> cates=new ArrayList<>();
     private RecyclerView recyclerList;
+    private CourseSelector callback;
+    private View.OnClickListener listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(callback!=null){
+                callback.onSelected();
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +47,10 @@ public class SelectorPage extends BaseFragment {
 
         initView(view);
         return view;
+    }
+
+    public void setData(CourseSelector cb){
+        callback=cb;
     }
 
     private void initView(View v) {
@@ -55,7 +68,7 @@ public class SelectorPage extends BaseFragment {
         cates.add(cate);
         cates.add(cate);
         cates.add(cate);
-        recyclerList.setAdapter(new SelectorRightAdapter(getActivity(), cates));
+        recyclerList.setAdapter(new SelectorRightAdapter(getActivity(), cates, listener));
         menuAdapter=new MenuLeftAdapter();
         menuLeft.setAdapter(menuAdapter);
         menuLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,5 +138,9 @@ public class SelectorPage extends BaseFragment {
         class Holder{
             TextView title;
         }
+    }
+
+    public interface CourseSelector{
+        void onSelected();
     }
 }
