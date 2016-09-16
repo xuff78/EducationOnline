@@ -43,7 +43,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/light_gray" />
 
 
@@ -51,7 +51,7 @@
         android:id="@+id/teleconsulting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/image2"
@@ -87,7 +87,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
 
 
         android:background="@color/light_gray" />
@@ -96,7 +96,7 @@
         android:id="@+id/suggestionAndFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/image3"
@@ -129,7 +129,7 @@
             android:src="@mipmap/icon_black_arrow_right" />
     </RelativeLayout>
     <View
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/light_gray" />
