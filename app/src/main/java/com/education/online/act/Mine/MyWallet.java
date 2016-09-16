@@ -1,23 +1,19 @@
-package com.education.online.act.mycenter;
+package com.education.online.act.Mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.fragment.CoursePage;
 
 /**
  * Created by Administrator on 2016/9/13.
  */
 public class MyWallet extends BaseFrameAct implements View.OnClickListener{
 
-    int currentPos = 0;
-    private LinearLayout addfavorite_layout, share_layout, download_layout;
-    private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
+    private TextView walletBalance, chargeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +25,28 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
     }
 
     private void initView() {
-
+        walletBalance= (TextView) findViewById(R.id.walletBalance);
+        chargeBtn= (TextView) findViewById(R.id.chargeBtn);
+        chargeBtn.setOnClickListener(this);
+        findViewById(R.id.pswLayout).setOnClickListener(this);
+        findViewById(R.id.tixianLayout).setOnClickListener(this);
+        findViewById(R.id.historyLayout).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.myCourseLayout:
+            case R.id.chargeBtn:
 //                startActivity(new Intent(getActivity(), TeacherHomePage.class));
                 break;
-            case R.id.myDownloadLayout:
+            case R.id.pswLayout:
 //                startActivity(new Intent(getActivity(), MyOrders.class));
                 break;
-            case R.id.myOrderLayout:
+            case R.id.tixianLayout:
 //                startActivity(new Intent(getActivity(), AuthMenu.class));
                 break;
-            case R.id.myWalletLayout:
-                break;
-            case R.id.mySchoolLayout:
+            case R.id.historyLayout:
+                startActivity(new Intent(MyWallet.this, MyWalletHistory.class));
                 break;
         }
     }

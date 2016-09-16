@@ -1,24 +1,17 @@
 package com.education.online.act;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
 
 import com.education.online.R;
-import com.education.online.act.Mine.HelpandFeedback;
-import com.education.online.act.Mine.Settings;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
-import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ScreenUtil;
-import com.education.online.util.StatusBarCompat;
 
 /**
  * Created by Administrator on 2016/8/11.

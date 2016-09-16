@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
-import com.education.online.act.FirstPage;
 import com.education.online.act.Mine.HelpandFeedback;
+import com.education.online.act.Mine.MyEvaluation;
+import com.education.online.act.Mine.MyWallet;
 import com.education.online.act.Mine.Settings;
-import com.education.online.act.teacher.AuthMenu;
-import com.education.online.act.teacher.MyOrders;
-import com.education.online.act.teacher.MyRatePage;
-import com.education.online.act.teacher.TeacherCourseStart;
-import com.education.online.act.teacher.TeacherHomePage;
+import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.fragment.BaseFragment;
 
 /**
@@ -36,6 +33,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.myCourseLayout).setOnClickListener(this);
         v.findViewById(R.id.myDownloadLayout).setOnClickListener(this);
         v.findViewById(R.id.myOrderLayout).setOnClickListener(this);
+        v.findViewById(R.id.descTxt).setOnClickListener(this);
 
         v.findViewById(R.id.myWalletLayout).setOnClickListener(this);
         v.findViewById(R.id.mySchoolLayout).setOnClickListener(this);
@@ -60,6 +58,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 //                startActivity(new Intent(getActivity(), AuthMenu.class));
                 break;
             case R.id.myWalletLayout:
+                startActivity(new Intent(getActivity(), MyWallet.class));
                 break;
             case R.id.mySchoolLayout:
                 break;
@@ -74,8 +73,12 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), HelpandFeedback.class));
                 break;
             case R.id.myCommentLayout:
+                startActivity(new Intent(getActivity(), MyEvaluation.class));
                 break;
             case R.id.interestingLayout:
+                break;
+            case R.id.descTxt:
+                startActivity(new Intent(getActivity(), UserInfoEdit.class));
                 break;
         }
     }

@@ -184,6 +184,18 @@
         <activity android:name=".act.Mine.SuggestionAndFeedback"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.Mine.MyWallet"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.Mine.MyWalletHistory"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.Mine.UserInfoEdit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.Mine.MyEvaluation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
