@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
+import com.education.online.act.FirstPage;
+import com.education.online.act.Mine.HelpandFeedback;
+import com.education.online.act.Mine.Settings;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.act.teacher.MyOrders;
 import com.education.online.act.teacher.MyRatePage;
@@ -65,8 +68,10 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
             case R.id.myCollectionLayout:
                 break;
             case R.id.settingLayout:
+                startActivity(new Intent(getActivity(), Settings.class));
                 break;
             case R.id.helpLayout:
+                startActivity(new Intent(getActivity(), HelpandFeedback.class));
                 break;
             case R.id.myCommentLayout:
                 break;

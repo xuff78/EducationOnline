@@ -28,6 +28,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     HttpHandler handler;
 
     private RecyclerView recyclerList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +63,10 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.loginBtn:
 
-    //            startActivity(new Intent(FirstPage.this, LoginActivity.class));
-                startActivity(new Intent(FirstPage.this, HelpandFeedback.class));
+                startActivity(new Intent(FirstPage.this, LoginActivity.class));
                 break;
             case R.id.registerBtn:
-
-
-       //         startActivity(new Intent(FirstPage.this, RegisterPage1.class));
-                startActivity(new Intent(FirstPage.this, Settings.class));
+                startActivity(new Intent(FirstPage.this, RegisterPage1.class));
                 break;
         }
     }
