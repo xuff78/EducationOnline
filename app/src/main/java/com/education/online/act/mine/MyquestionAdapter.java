@@ -27,7 +27,10 @@ public class MyquestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         RecyclerView.ViewHolder vh = null;
         View view = listInflater.inflate(R.layout.myqurestion_items, null);
         vh = new MyquestionAdapter.MyquestionitemHolder(view, viewType);
-        return null;
+        return vh;
+
+        ////////////
+
     }
 
     @Override
