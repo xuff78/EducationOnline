@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/CourseImageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/CourseImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_teacher" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="100dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/CourseImageLayout"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/design"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_corner_orangeline"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="2dp"
+                android:text="设计"
+                android:textColor="@color/dark_orange"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/design"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:id="@+id/questiondate"
+                style="@style/txt_gray_12"
+                android:text="08月4日"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/questiondate"
+                android:id="@+id/questiontime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="14:09"
+                android:textSize="13sp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:id="@+id/bonus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="30积分"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="13sp" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/CourseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:gravity="center_vertical"
+            android:text="PHOTOSHOP基础工具机+唯美图片合成"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/answerNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="已有56人回答"
+            android:textColor="@color/light_gray"
+            android:textSize="13sp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/CourseImageLayout"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_gray" />
+
+
+</RelativeLayout>

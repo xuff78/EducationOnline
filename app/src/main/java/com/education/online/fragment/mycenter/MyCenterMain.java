@@ -12,6 +12,7 @@ import com.education.online.act.Mine.MyEvaluation;
 import com.education.online.act.Mine.MyWallet;
 import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
+import com.education.online.act.mine.AskAndAnswer;
 import com.education.online.fragment.BaseFragment;
 
 /**
@@ -63,6 +64,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
             case R.id.mySchoolLayout:
                 break;
             case R.id.myQuestionLayout:
+                startActivity(new Intent(getActivity(), AskAndAnswer.class));
                 break;
             case R.id.myCollectionLayout:
                 break;

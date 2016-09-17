@@ -18,6 +18,7 @@
     <color name="light_trans_black">#22000000</color><!--高亮灰 -->
     <color name="hard_trans_black">#66000000</color><!--高亮灰 -->
     <color name="comment_gray">#D6D6D6</color><!---评价灰 -->
+    <color name="strage_gray">#F8F8F8</color><!---什么灰 -->
     <color name="what_gray">#B8B8B8</color><!---什么灰 -->
     <!-- 商城使用字体颜色 -->
     <color name="highlight_gray">#eaeaea</color><!--高亮灰 -->

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:id="@+id/layout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+   <LinearLayout
+       android:layout_marginLeft="20dp"
+       android:layout_marginRight="20dp"
+       android:layout_marginTop="15dp"
+       android:layout_width="match_parent"
+       android:layout_height="100dp">
+       <EditText
+           android:id="@+id/enterquestion"
+           android:hint="请输入提问内容"
+           android:textSize="13sp"
+           android:textColorHint="@color/comment_gray"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@null"
+           />
+
+   </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/addpicture"
+                android:padding="8dp"
+                android:background="@drawable/shape_nocorner_lightgray"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/icon_redcross"
+                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="500字"
+            android:textSize="13sp"
+            android:textColor="@color/what_gray"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+    <RelativeLayout
+        android:id="@+id/dropdownlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/what_gray"
+            android:id="@+id/text5"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:text="提问科目"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/subject"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生物"
+            android:textColor="@color/normal_red"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/dropdown"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_down_br" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="积分数"
+            />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+           <TextView
+               android:id="@+id/num1"
+               android:layout_gravity="bottom"
+               android:layout_width="wrap_content"
+               android:layout_height="20dp"
+               android:text="1"
+               android:textSize="16sp"
+               android:textColor="@color/hard_gray"/>
+
+            <SeekBar
+                android:max="100"
+                android:progress="20"
+                android:thumb="@mipmap/icon_oval0"
+                android:layout_toLeftOf="@+id/num100"
+                android:layout_toRightOf="@+id/num1"
+                android:id="@+id/seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/num100"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="100"
+                android:textSize="16sp"
+                android:textColor="@color/hard_gray"/>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>
+
+    <View
+        android:layout_below="@+id/layout1"
+        android:layout_above="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:background="@color/whitesmoke" />
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:background="@color/strage_gray"
+        android:layout_height="60dp"
+        >
+        <TextView
+            android:id="@+id/submitbtn"
+            android:padding="5dp"
+            android:text="提    交"
+            android:textColor="@color/normal_red"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_width="160dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_corner_orangeline"/>
+    </RelativeLayout>
+</RelativeLayout>

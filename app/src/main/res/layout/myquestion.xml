@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout2">
+
+    </android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:background="@color/strage_gray"
+        android:layout_height="60dp"
+        >
+        <TextView
+            android:id="@+id/askbtn"
+            android:padding="5dp"
+            android:text="提    问"
+            android:textColor="@color/normal_red"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_width="160dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_corner_orangeline"/>
+    </RelativeLayout>
+</RelativeLayout>
