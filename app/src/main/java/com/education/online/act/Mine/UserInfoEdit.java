@@ -18,8 +18,6 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.act.MainPage;
-import com.education.online.act.login.SubjectSelector;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ToastUtils;

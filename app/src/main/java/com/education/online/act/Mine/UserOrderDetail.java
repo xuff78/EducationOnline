@@ -1,7 +1,7 @@
 package com.education.online.act.Mine;
 
-import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,40 +17,42 @@ import com.education.online.view.SelectPicDialog;
 public class UserOrderDetail extends BaseFrameAct {
 
 
-    private ImageView headIcon;
-    private TextView nickName;
-    private Dialog progressDialog;
-    private ImageView SexFemale;
-    private ImageView SexMale;
-    private LinearLayout LayoutMale;
-    private LinearLayout LayoutFemale;
+    private ImageView teacherImg;
+    private TextView payMoney, orderId, createTime, teacherName, courseTitle, courseNum, priceTxt, payTxt, labelTxt;
+    private LinearLayout courseLayout;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.userinfo_edit);
+        setContentView(R.layout.user_order_detail);
 
         _setHeaderTitle("订单详情");
         initView();
     }
 
     private void initView() {
-        headIcon= (ImageView) findViewById(R.id.userIcon);
-        nickName= (TextView) findViewById(R.id.nickName);
+        teacherImg= (ImageView) findViewById(R.id.teacherImg);
+        payMoney= (TextView) findViewById(R.id.payMoney);
+        orderId= (TextView) findViewById(R.id.orderId);
+        payMoney= (TextView) findViewById(R.id.payMoney);
+        createTime= (TextView) findViewById(R.id.createTime);
+        teacherName= (TextView) findViewById(R.id.teacherName);
+        courseTitle= (TextView) findViewById(R.id.courseTitle);
+        courseNum= (TextView) findViewById(R.id.courseNum);
+        priceTxt= (TextView) findViewById(R.id.priceTxt);
+        payTxt= (TextView) findViewById(R.id.payTxt);
+        labelTxt= (TextView) findViewById(R.id.labelTxt);
 
-        headIcon.setOnClickListener(listener);
-        findViewById(R.id.birthdayLayout).setOnClickListener(listener);
+        courseLayout= (LinearLayout) findViewById(R.id.courseLayout);
+        LayoutInflater inflater=LayoutInflater.from(this);
+        for(int i=0;i<4;i++){
+            View v=inflater.inflate(R.layout.item_course_layout, null);
+            TextView courseNum= (TextView) v.findViewById(R.id.courseNum);
+            courseLayout.addView(v);
+        }
 
-        SexFemale = (ImageView) findViewById(R.id.SexFemale);
-        SexMale = (ImageView) findViewById(R.id.SexMale);
-        SexFemale.setImageResource(R.mipmap.icon_round_right);
-        SexMale.setImageResource(R.mipmap.icon_round);
-        LayoutMale = (LinearLayout) findViewById(R.id.LayoutMale);
-        LayoutFemale = (LinearLayout) findViewById(R.id.LayoutFemale);
-        LayoutFemale.setOnClickListener(listener);
-        LayoutMale.setOnClickListener(listener);
     }
 
     View.OnClickListener listener=new View.OnClickListener() {
@@ -62,14 +64,6 @@ public class UserOrderDetail extends BaseFrameAct {
 
                     break;
                 case R.id.birthdayLayout:
-                    break;
-                case R.id.LayoutFemale:
-                    SexFemale.setImageResource(R.mipmap.icon_round_right);
-                    SexMale.setImageResource(R.mipmap.icon_round);
-                    break;
-                case R.id.LayoutMale:
-                    SexFemale.setImageResource(R.mipmap.icon_round);
-                    SexMale.setImageResource(R.mipmap.icon_round_right);
                     break;
 
             }

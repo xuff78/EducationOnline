@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.RateListAdapter;
-import com.education.online.adapter.WalletHistoryAdapter;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/16.

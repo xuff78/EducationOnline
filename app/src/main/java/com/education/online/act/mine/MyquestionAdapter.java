@@ -1,4 +1,4 @@
-package com.education.online.act.mine;
+package com.education.online.act.Mine;
 
 import android.support.v7.widget.RecyclerView;
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package com.education.online.act.mine;
+package com.education.online.act.Mine;
 
 import android.content.Intent;
 import android.os.Bundle;

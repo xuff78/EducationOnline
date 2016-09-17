@@ -12,7 +12,8 @@ import com.education.online.act.Mine.MyEvaluation;
 import com.education.online.act.Mine.MyWallet;
 import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
-import com.education.online.act.mine.AskAndAnswer;
+import com.education.online.act.Mine.AskAndAnswer;
+import com.education.online.act.Mine.UserOrderDetail;
 import com.education.online.fragment.BaseFragment;
 
 /**
@@ -56,7 +57,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 //                startActivity(new Intent(getActivity(), MyOrders.class));
                 break;
             case R.id.myOrderLayout:
-//                startActivity(new Intent(getActivity(), AuthMenu.class));
+                startActivity(new Intent(getActivity(), UserOrderDetail.class));
                 break;
             case R.id.myWalletLayout:
                 startActivity(new Intent(getActivity(), MyWallet.class));

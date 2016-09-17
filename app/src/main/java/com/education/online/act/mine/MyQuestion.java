@@ -1,9 +1,8 @@
-package com.education.online.act.mine;
+package com.education.online.act.Mine;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.education.online.R;
 
