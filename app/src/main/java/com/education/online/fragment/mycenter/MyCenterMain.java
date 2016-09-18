@@ -15,6 +15,7 @@ import com.education.online.act.Mine.MyWallet;
 import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
+import com.education.online.act.Mine.MyInteresting;
 import com.education.online.fragment.BaseFragment;
 
 /**
@@ -88,6 +89,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), MyEvaluation.class));
                 break;
             case R.id.interestingLayout:
+                startActivity(new Intent(getActivity(), MyInteresting.class));
                 break;
             case R.id.descTxt:
                 startActivity(new Intent(getActivity(), UserInfoEdit.class));
