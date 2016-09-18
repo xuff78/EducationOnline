@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 
 import com.education.online.R;
 import com.education.online.act.Mine.HelpandFeedback;
+import com.education.online.act.Mine.MyCourseMuti;
 import com.education.online.act.Mine.MyEvaluation;
+import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.act.Mine.MyWallet;
 import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
-import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.act.Mine.MyInteresting;
 import com.education.online.fragment.BaseFragment;
 
 /**
@@ -49,15 +51,20 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        Intent i=new Intent();
         switch (view.getId()) {
             case R.id.myCourseLayout:
-//                startActivity(new Intent(getActivity(), TeacherHomePage.class));
+                i.setClass(getActivity(), MyCourseMuti.class);
+                i.putExtra("Type", 0);
+                startActivity(i);
                 break;
             case R.id.myDownloadLayout:
-//                startActivity(new Intent(getActivity(), MyOrders.class));
+                i.setClass(getActivity(), MyCourseMuti.class);
+                i.putExtra("Type", 2);
+                startActivity(i);
                 break;
             case R.id.myOrderLayout:
-                startActivity(new Intent(getActivity(), UserOrderDetail.class));
+                startActivity(new Intent(getActivity(), MyOrderUser.class));
                 break;
             case R.id.myWalletLayout:
                 startActivity(new Intent(getActivity(), MyWallet.class));
@@ -68,6 +75,9 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), AskAndAnswer.class));
                 break;
             case R.id.myCollectionLayout:
+                i.setClass(getActivity(), MyCourseMuti.class);
+                i.putExtra("Type", 1);
+                startActivity(i);
                 break;
             case R.id.settingLayout:
                 startActivity(new Intent(getActivity(), Settings.class));
@@ -79,6 +89,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), MyEvaluation.class));
                 break;
             case R.id.interestingLayout:
+                startActivity(new Intent(getActivity(), MyInteresting.class));
                 break;
             case R.id.descTxt:
                 startActivity(new Intent(getActivity(), UserInfoEdit.class));

@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.Mine.EvaluationEdit;
 import com.education.online.view.RatingBar;
 
 import java.util.ArrayList;
@@ -70,6 +72,12 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
             userComments = (TextView) v.findViewById(R.id.userComments);
             commentDate = (TextView) v.findViewById(R.id.commentDate);
             commentTime = (TextView) v.findViewById(R.id.commentTime);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.startActivity(new Intent(activity, EvaluationEdit.class));
+                }
+            });
         }
     }
 }

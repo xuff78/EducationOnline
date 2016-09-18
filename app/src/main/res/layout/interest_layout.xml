@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:layout_above="@+id/bottomLayout"
+        android:id="@+id/recyclerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/highwhite"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/submitCourseBtn"
+            android:text="添加到我的兴趣"
+            android:gravity="center"
+            android:background="@drawable/shape_normalredline_with_corner"
+            style="@style/txt_white_14"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/normal_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

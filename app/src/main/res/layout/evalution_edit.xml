@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:id="@+id/CourseImageLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:id="@+id/CourseImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_teacher" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/CourseImageLayout"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/topLayout"
+                android:layout_alignTop="@+id/headImg"
+                android:layout_toRightOf="@+id/headImg"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/white"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:background="@drawable/shape_oranged_with_corner"
+                    android:id="@+id/typeName"
+                    android:text="设计"
+                    style="@style/txt_gray_12" />
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/teacherName"
+                    android:text="名字"
+                    style="@style/txt_gray_12" />
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/CourseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:gravity="center_vertical"
+                android:text="PHOTOSHOP基础工具机+唯美图片合成"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/potrait"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:text="评星" />
+
+        <com.education.online.view.RatingBar
+            android:layout_alignParentRight="true"
+            android:id="@+id/ratingbar"
+            android:layout_marginRight="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            hedgehog:clickable="true"
+            hedgehog:halfstart="true"
+            hedgehog:starCount="5"
+            hedgehog:starEmpty="@mipmap/icon_star_gray"
+            hedgehog:starFill="@mipmap/icon_star_red"
+            hedgehog:starHalf="@mipmap/icon_star_gray"
+            hedgehog:starImageHeight="35dp"
+            hedgehog:starImageWidth="25dp"
+            hedgehog:starImagePadding="3dp"/>
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:text="评级详情"
+        android:textSize="14sp" />
+
+    <EditText
+        android:gravity="center_vertical"
+        android:id="@+id/complaintdetail"
+        android:layout_width="match_parent"
+        android:minHeight="40dp"
+        android:layout_height="wrap_content"
+        android:hint="在这里留下您要评价的内容哦~"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="20dp"
+        android:background="@null"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <LinearLayout
+        android:id="@+id/addpictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/addpicture"
+            android:padding="8dp"
+            android:background="@drawable/shape_nocorner_lightgray"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/icon_redcross"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:text="请上传内容截图，最多三张"
+        android:textColor="@color/what_gray"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/light_gray" />
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp">
+        <ImageView
+            android:src="@drawable/shape_corner_blackline2"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+        <TextView
+            android:textSize="13sp"
+            android:layout_marginLeft="10dp"
+            android:text="匿名评价"
+            style="@style/txt_black_12" />
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/highwhite"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/submitCourseBtn"
+            android:text="发表评论"
+            android:gravity="center"
+            android:background="@drawable/shape_normalredline_with_corner"
+            style="@style/txt_white_14"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/normal_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
