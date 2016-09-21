@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.order.GetVeriCode;
+import com.education.online.act.order.SetPayPwd;
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -41,6 +43,7 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                 break;
             case R.id.pswLayout:
 //                startActivity(new Intent(getActivity(), MyOrders.class));
+                startActivity(new Intent(MyWallet.this, GetVeriCode.class));
                 break;
             case R.id.tixianLayout:
 //                startActivity(new Intent(getActivity(), AuthMenu.class));

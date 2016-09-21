@@ -8,6 +8,8 @@ import android.view.View;
 import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
+import com.education.online.act.order.GetVeriCode;
+import com.education.online.act.order.SetPayPwd;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;
@@ -57,6 +59,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
             case R.id.loginBtn:
 
                 startActivity(new Intent(FirstPage.this, LoginActivity.class));
+
                 break;
             case R.id.registerBtn:
                 startActivity(new Intent(FirstPage.this, RegisterPage1.class));
