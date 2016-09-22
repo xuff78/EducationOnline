@@ -30,6 +30,7 @@ public class SetPayPwd extends BaseFrameAct {
     private EditText[] textViews = new EditText[6];
     private TextView textView1;
     private LinearLayout passwordlayout;
+    private View view1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,9 @@ public class SetPayPwd extends BaseFrameAct {
         textViews[4] = (EditText) findViewById(R.id.pwd5);
         textViews[5] = (EditText) findViewById(R.id.pwd6);
         textView1 = (TextView) findViewById(R.id.textview1);
+        view1=findViewById(R.id.view1);
         passwordlayout = (LinearLayout) findViewById(R.id.passwordlayout);
-        passwordlayout.setOnClickListener(new View.OnClickListener() {
+        view1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
