@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +29,7 @@ public class SetPayPwd extends BaseFrameAct {
     private boolean isConfirmEnter = false;
     private EditText[] textViews = new EditText[6];
     private TextView textView1;
-    private boolean flag = true;
+    private LinearLayout passwordlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,17 @@ public class SetPayPwd extends BaseFrameAct {
         textViews[4] = (EditText) findViewById(R.id.pwd5);
         textViews[5] = (EditText) findViewById(R.id.pwd6);
         textView1 = (TextView) findViewById(R.id.textview1);
+        passwordlayout = (LinearLayout) findViewById(R.id.passwordlayout);
+        passwordlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                for(int i=0;i<textViews.length;i++) {
+                    if(textViews[i].isFocused())
+                    imm.showSoftInput(textViews[i], InputMethodManager.SHOW_FORCED);
+                }
+            }
+        });
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
