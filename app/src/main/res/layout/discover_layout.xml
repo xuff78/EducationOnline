@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/questionAndAnswerLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray"
+        android:paddingRight="30dp" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_teacher_menu_comment" />
+        <TextView
+            android:id="@+id/hintTxt1"
+            style="@style/txt_gray_14"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon"
+            android:text="秒问秒答"/>
+        <View
+            android:layout_alignLeft="@+id/hintTxt1"
+            android:layout_alignParentBottom="true"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/growSpaceLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon5"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_grow" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt5"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon5"
+            android:text="成长空间"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="@color/whitesmoke" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <RelativeLayout
+        android:id="@+id/signLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon2"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_sign" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon2"
+            android:text="签到"
+            android:textSize="14sp" />
+        <View
+            android:layout_alignLeft="@+id/hintTxt2"
+            android:layout_alignParentBottom="true"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sayHiLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon3"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_sayhi" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt3"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon3"
+            android:text="hi同学"
+            android:textSize="14sp" />
+        <View
+            android:layout_alignLeft="@+id/hintTxt3"
+            android:layout_alignParentBottom="true"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/inviteLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon4"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_invite" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt4"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon4"
+            android:text="邀请朋友"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="@color/whitesmoke" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    <RelativeLayout
+        android:id="@+id/testLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:paddingLeft="10dp"
+        android:background="@drawable/press_bg_transtogray" >
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_left"
+            android:id="@+id/settingIcon6"
+            android:layout_width="@dimen/user_icon_w"
+            android:layout_height="@dimen/user_icon_w"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_test" />
+        <TextView
+            style="@style/txt_gray_14"
+            android:id="@+id/hintTxt6"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/settingIcon6"
+            android:text="通关测试"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/highwhite" />
+</LinearLayout>

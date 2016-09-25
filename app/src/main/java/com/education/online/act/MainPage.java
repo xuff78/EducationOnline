@@ -12,6 +12,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.education.online.R;
+import com.education.online.fragment.DiscoveryPage;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.mycenter.MyCenterMain;
@@ -26,9 +27,9 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private View menuBtn1, menuBtn2, menuBtn3, menuBtn4, menuBtn5;
     private HomePage home=new HomePage();
     private SelectorPage selectorPage=new SelectorPage();
-    private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
     private TeacherPage teacherPage = new TeacherPage();
     private MyCenterMain centerMain=new MyCenterMain();
+    private DiscoveryPage discoveryPage=new DiscoveryPage();
     private View lastSelectedView=null;
 
     @Override
@@ -86,13 +87,16 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             lastSelectedView=view;
             switch (view.getId()) {
                 case R.id.menuBtn1:
+                    _setHeaderTitle("首页");
                     changePage(home);
                     break;
                 case R.id.menuBtn2:
+                    _setHeaderTitle("科目");
                     changePage(selectorPage);
                     break;
                 case R.id.menuBtn3:
-                   // changePage(onlinecoursePage);
+                    _setHeaderTitle("发现");
+                    changePage(discoveryPage);
                     break;
                 case R.id.menuBtn4:
                     _setHeaderGone();

@@ -44,9 +44,7 @@
         android:layout_below="@+id/layout1"
         android:background="@color/light_gray" />
 
-    <LinearLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+    <RelativeLayout
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,10 +53,12 @@
 
         <EditText
             android:id="@+id/veriCode"
+            android:layout_toLeftOf="@+id/getVertiCode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
             android:background="@null"
             android:digits="1234567890"
             android:gravity="center_vertical"
@@ -69,15 +69,15 @@
 
         <TextView
             android:id="@+id/getVertiCode"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
             android:text="获取验证码"
             android:textColor="@color/hard_gray"
             android:textSize="12sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:id="@+id/view2"
