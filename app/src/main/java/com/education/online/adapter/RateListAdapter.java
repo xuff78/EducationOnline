@@ -62,7 +62,7 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     public class CommentsHolder extends RecyclerView.ViewHolder {
         ImageView potrait;
         RatingBar ratingbar;
-        TextView userName, userComments, commentDate, commentTime;
+        TextView userName, userComments, commentDate, commentTime, replyTxt;
 
         public CommentsHolder(View v, int pos) {
             super(v);
@@ -72,6 +72,9 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
             userComments = (TextView) v.findViewById(R.id.userComments);
             commentDate = (TextView) v.findViewById(R.id.commentDate);
             commentTime = (TextView) v.findViewById(R.id.commentTime);
+            replyTxt = (TextView) v.findViewById(R.id.replyTxt);
+            if(pos%2==0)
+                replyTxt.setVisibility(View.VISIBLE);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

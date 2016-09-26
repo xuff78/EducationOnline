@@ -31,6 +31,8 @@ public class MyEvaluation extends BaseFrameAct implements View.OnClickListener {
         fromMe = (TextView) findViewById(R.id.fromMe);
         toMe = (TextView) findViewById(R.id.toMe);
         toDo = (TextView) findViewById(R.id.toDo);
+        toMe.setOnClickListener(this);
+        fromMe.setOnClickListener(this);
         recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -42,8 +44,14 @@ public class MyEvaluation extends BaseFrameAct implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fromMe:
+                toMe.setTextColor(getResources().getColor(R.color.hard_gray));
+                fromMe.setTextColor(getResources().getColor(R.color.normal_red));
+                recyclerList.setAdapter(new RateListAdapter(this));
                 break;
             case R.id.toMe:
+                toMe.setTextColor(getResources().getColor(R.color.normal_red));
+                fromMe.setTextColor(getResources().getColor(R.color.hard_gray));
+                recyclerList.setAdapter(new RateListAdapter(this));
                 break;
 
         }

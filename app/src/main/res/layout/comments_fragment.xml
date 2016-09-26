@@ -23,6 +23,7 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:textColor="@color/hard_gray"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/potrait"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:maxLines="4"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/normal_gray"
         android:textSize="13sp"
         android:text="在高有仙则不在高有仙则则名" />
 
@@ -71,22 +72,34 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/normal_gray"
             android:text="2016-08-07" />
 
         <TextView
             android:textSize="13sp"
             android:id="@+id/commentTime"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/normal_gray"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:text="12:00" />
     </LinearLayout>
-
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/replyTxt"
+        android:layout_marginTop="5dp"
+        android:background="@mipmap/reply_bg"
+        android:text="测试文字测试文字测试文字测试文字测试文字"
+        android:paddingTop="12dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="15dp"
+        style="@style/txt_gray_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <View
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/light_gray" />

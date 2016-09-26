@@ -39,7 +39,7 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.chargeBtn:
-//                startActivity(new Intent(getActivity(), TeacherHomePage.class));
+                startActivity(new Intent(MyWallet.this, MyWalletCharge.class));
                 break;
             case R.id.pswLayout:
 //                startActivity(new Intent(getActivity(), MyOrders.class));
