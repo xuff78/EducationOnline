@@ -19,7 +19,7 @@ android {
         versionName "1.0"
     }
 
-    /*signingConfigs {
+    signingConfigs {
         debug {
             storeFile file("D:\\android_self.jks")
             storePassword "123456"
@@ -34,7 +34,7 @@ android {
             keyAlias "eric_ji"
             keyPassword "123456"
         }
-    }*/
+    }
 
     buildTypes {
         release {
@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.+'
     compile 'com.android.support:design:23.+'
@@ -57,4 +57,5 @@ dependencies {
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/wheelview_1.3.3.jar')
+    compile files('libs/core-3.1.0.jar')
 }
