@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/headFrame"
+        android:background="@mipmap/icon_marker_people"
+        android:layout_width="50dp"
+        android:layout_height="60dp">
+        <ImageView
+            android:src="@mipmap/icon_round_right"
+            android:id="@+id/headIcon"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </RelativeLayout>
+</LinearLayout>
