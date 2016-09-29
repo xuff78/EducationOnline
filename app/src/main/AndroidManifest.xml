@@ -243,6 +243,29 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 
+
+        <activity android:name=".act.discover.ChatPage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.ChatSetting"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.DiscoverMap"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.InvitePage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.MessageMain"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.SignEveryday"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.StudentIntroduction"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="keUx4VsbXGW0ITj8dwKmtDGMiz6biN6r" />
