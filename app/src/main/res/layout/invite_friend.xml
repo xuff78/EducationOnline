@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_above="@+id/bottomLayout"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="扫描下载APP"
+        style="@style/txt_gray_12" />
+    <ImageView
+        android:layout_marginTop="15dp"
+        android:id="@+id/qrcodeImg"
+        android:padding="15dp"
+        android:background="@drawable/shape_nocorner_black"
+        android:layout_width="260dp"
+        android:layout_height="260dp" />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_centerVertical="true"
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <TextView
+                android:layout_centerInParent="true"
+                android:layout_height="30dp"
+                android:layout_width="100dp"
+                android:text="分享到"
+                android:gravity="center"
+                android:background="@color/white"
+                style="@style/txt_gray_14" />
+        </RelativeLayout>
+        <LinearLayout
+            android:padding="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/icon_share_weibo1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:text="新浪微博"
+                    style="@style/txt_gray_12" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/icon_share_wexin2"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:text="微信"
+                    style="@style/txt_gray_12" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/icon_share_friends3"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:text="朋友圈"
+                    style="@style/txt_gray_12" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

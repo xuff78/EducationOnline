@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
+import com.education.online.act.discover.DiscoverMap;
+import com.education.online.act.discover.InvitePage;
+import com.education.online.act.discover.SignEveryday;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.act.teacher.MyOrders;
 import com.education.online.act.teacher.MyRatePage;
@@ -40,22 +43,22 @@ public class DiscoveryPage extends BaseFragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.homepageEditLayout:
+            case R.id.questionAndAnswerLayout:
 //                startActivity(new Intent(getActivity(), TeacherHomePage.class));
                 break;
-            case R.id.orderLayout:
+            case R.id.growSpaceLayout:
 //                startActivity(new Intent(getActivity(), MyOrders.class));
                 break;
-            case R.id.authLayout:
-//                startActivity(new Intent(getActivity(), AuthMenu.class));
+            case R.id.signLayout:
+                startActivity(new Intent(getActivity(), SignEveryday.class));
                 break;
-            case R.id.commentLayout:
-//                startActivity(new Intent(getActivity(), MyRatePage.class));
+            case R.id.sayHiLayout:
+                startActivity(new Intent(getActivity(), DiscoverMap.class));
                 break;
-            case R.id.settingLayout:
-//                startActivity(new Intent(getActivity(), MyRatePage.class));
+            case R.id.inviteLayout:
+                startActivity(new Intent(getActivity(), InvitePage.class));
                 break;
-            case R.id.courseManagerLayout:
+            case R.id.testLayout:
 //                startActivity(new Intent(getActivity(), TeacherCourseStart.class));
                 break;
         }
