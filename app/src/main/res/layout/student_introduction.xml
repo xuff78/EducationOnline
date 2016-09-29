@@ -219,7 +219,7 @@
             <RelativeLayout
                 android:layout_marginTop="13dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content">-
                 <TextView
                     android:text="WHO ASK ID"
                     style="@style/txt_black_12" />

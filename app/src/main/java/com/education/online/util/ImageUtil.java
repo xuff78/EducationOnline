@@ -151,10 +151,10 @@ public class ImageUtil {
 			BitMatrix matrix = null;
 			if(Density<1)
 				matrix =new MultiFormatWriter().encode(word, BarcodeFormat.QR_CODE,
-						ImageUtil.dip2px(con, 170),ImageUtil.dip2px(con, 170));
+						ImageUtil.dip2px(con, 260),ImageUtil.dip2px(con, 260));
 			else
 				matrix =new MultiFormatWriter().encode(word, BarcodeFormat.QR_CODE,
-						(int) (170 * Density), (int) (170 * Density));
+						(int) (260 * Density), (int) (260 * Density));
 			int width = matrix.getWidth();
 			int height = matrix.getHeight();
 			// 二维矩阵转为一维像素数组,也就是一直横着排了
