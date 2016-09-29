@@ -45,13 +45,12 @@
 
             <TextView
                 android:id="@+id/design"
-                android:layout_width="45dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shape_red_with_corner"
                 android:gravity="center"
-                android:padding="2dp"
                 android:text="设计"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
