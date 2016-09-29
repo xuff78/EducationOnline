@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:layout_height="18dp">
+<TextView
+    android:id="@+id/date"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="9月14日"
+    android:textSize="14sp"/>
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="75dp"
+        android:id="@+id/oval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_oval_sky_blue"
+        />
+    <View
+        android:layout_marginLeft="105dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/splitline"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+</RelativeLayout>

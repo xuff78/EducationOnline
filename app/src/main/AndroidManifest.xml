@@ -43,7 +43,6 @@
 
     <application
         android:allowBackup="true"
-        android:name=".act.EduApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -228,20 +227,19 @@
         <activity android:name=".act.order.SetPayPwd"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-
-        <activity android:name=".act.discover.DiscoverMap"
+        <activity android:name=".act.discovery.MyAnswers"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discover.StudentIntroduction"
+        <activity android:name=".act.discovery.QuestionDetails"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discover.InvitePage"
+        <activity android:name=".act.discovery.IwantToAnswer"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discover.SignEveryday"
+        <activity android:name=".act.discovery.AskAndSpeedAnswer"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discover.ChatSetting"
+        <activity android:name=".act.discovery.GrowingSpace"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 

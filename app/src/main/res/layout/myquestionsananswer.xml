@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout1"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+    <LinearLayout
+        android:id="@+id/recentquestionlayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/recentquestion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:text="最近提问"
+            android:textSize="14sp"
+            android:textColor="@color/dark_orange"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="20dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="●"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/compeletequestion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left"
+            android:text="完结提问"
+            android:textSize="14sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/layout1"
+        android:layout_above="@+id/layout2"
+        android:id="@+id/recyclerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layout2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ruby_blue">
+
+        <LinearLayout
+            android:id="@+id/subject"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/icon_menu_cate"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="科目"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sort"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/icon_menu_order"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="排序"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

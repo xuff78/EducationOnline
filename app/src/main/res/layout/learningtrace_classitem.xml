@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <View
+        android:id="@+id/view3"
+        android:visibility="gone"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="105dp"
+        android:background="@color/light_gray"
+        />
+
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="31dp"
+            android:text="09:30"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/serialtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="第1节"
+            android:textColor="@color/what_gray"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="75dp"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="2dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="4dp"
+            android:background="@color/view_gray" />
+
+        <ImageView
+            android:id="@+id/icon_oval"
+            android:layout_width="wrap_content"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="4dp"
+            android:src="@mipmap/icon_oval_normal_bit_gray" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="2dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/view_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="105dp">
+        <ImageView
+            android:layout_marginLeft="3dp"
+            android:id="@+id/classicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/icon_head" />
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/classname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="职业规划发展"
+                android:marqueeRepeatLimit="marquee_forever"
+
+                android:maxLines="1"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/onlineclass"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_normalredline_with_corner"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="直播课"
+                android:textColor="@color/normal_red"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

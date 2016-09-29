@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:src="@mipmap/icon_head" />
+
+        <TextView
+            android:id="@+id/classname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/icon"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:text="职业规划发展"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/subject"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_red_with_corner"
+            android:gravity="center"
+            android:text="数学"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/myquestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="求这个公式怎么解答"
+        android:layout_marginTop="10dp"/>
+    <ImageView
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/picture"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+    <TextView
+        android:id="@+id/time"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="2016.08.02 14:20"
+        android:textColor="@color/what_gray"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/whitesmoke">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-解答-"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/normal_blue" />
+    </LinearLayout>
+    <EditText
+        android:id="@+id/answer"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textSize="13sp"
+        android:background="@null"
+        android:textColorHint="@color/what_gray"
+        android:hint="请尽可能将要解答的内容写明白~"
+        />
+    <TextView
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="500字"
+        android:textColor="@color/what_gray"
+        android:layout_gravity="right"/>
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:id="@+id/answerpicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray"/>
+
+    <RelativeLayout
+        android:id="@+id/addpicturelayout"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+        <ImageView
+            android:layout_toLeftOf="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_redcross"/>
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/normal_red"
+            android:text="添加图片"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+<View
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"/>
+
+</LinearLayout>

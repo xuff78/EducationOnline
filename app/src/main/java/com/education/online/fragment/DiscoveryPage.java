@@ -10,6 +10,9 @@ import com.education.online.R;
 import com.education.online.act.discover.DiscoverMap;
 import com.education.online.act.discover.InvitePage;
 import com.education.online.act.discover.SignEveryday;
+import com.education.online.act.discovery.AskAndSpeedAnswer;
+import com.education.online.act.discovery.GrowingSpace;
+import com.education.online.act.discovery.QuestionDetails;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.act.teacher.MyOrders;
 import com.education.online.act.teacher.MyRatePage;
@@ -44,10 +47,12 @@ public class DiscoveryPage extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.questionAndAnswerLayout:
+                startActivity(new Intent(getActivity(), AskAndSpeedAnswer.class));
 //                startActivity(new Intent(getActivity(), TeacherHomePage.class));
                 break;
             case R.id.growSpaceLayout:
-//                startActivity(new Intent(getActivity(), MyOrders.class));
+                startActivity(new Intent(getActivity(), GrowingSpace.class));
+
                 break;
             case R.id.signLayout:
                 startActivity(new Intent(getActivity(), SignEveryday.class));

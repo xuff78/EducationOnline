@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerList"
+        android:layout_above="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+<LinearLayout
+    android:id="@+id/layout1"
+    android:gravity="center"
+    android:background="@color/whitesmoke"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <TextView
+        android:background="@drawable/shape_normalredline_with_corner"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="我要回答"
+        android:padding="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/normal_red"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+</RelativeLayout>
