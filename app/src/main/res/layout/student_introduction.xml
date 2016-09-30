@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <ScrollView
+    android:layout_above="@+id/bottomLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -255,6 +256,7 @@
     </LinearLayout>
 </ScrollView>
     <LinearLayout
+        android:id="@+id/bottomLayout"
         android:background="@color/whitesmoke"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
