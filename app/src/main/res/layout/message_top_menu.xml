@@ -13,7 +13,7 @@
         <ImageView
             android:layout_marginLeft="30dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_talk_small"
+            android:src="@mipmap/icon_qrcode_small"
             android:layout_width="20dp"
             android:layout_height="20dp" />
         <EditText
@@ -25,7 +25,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="10dp"
-        android:id="@+id/questionAndAnswerLayout"
+        android:id="@+id/systemMessageLayout"
         android:layout_width="fill_parent"
         android:layout_height="55dip"
         android:paddingLeft="10dp"
@@ -34,18 +34,18 @@
         <ImageView
             android:layout_marginLeft="@dimen/padding_left"
             android:id="@+id/settingIcon"
-            android:layout_width="@dimen/user_icon_w"
-            android:layout_height="@dimen/user_icon_w"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_teacher_menu_comment" />
+            android:src="@mipmap/icon_user_message" />
         <TextView
             android:id="@+id/hintTxt1"
             style="@style/txt_gray_14"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/settingIcon"
-            android:text="秒问秒答"/>
+            android:text="系统通知"/>
         <View
             android:layout_marginLeft="@dimen/padding_left"
             android:layout_marginRight="@dimen/padding_left"
@@ -55,7 +55,7 @@
             android:background="@color/light_gray" />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/growSpaceLayout"
+        android:id="@+id/myFavorite"
         android:layout_width="fill_parent"
         android:layout_height="55dip"
         android:paddingLeft="10dp"
@@ -63,18 +63,18 @@
         <ImageView
             android:layout_marginLeft="@dimen/padding_left"
             android:id="@+id/settingIcon5"
-            android:layout_width="@dimen/user_icon_w"
-            android:layout_height="@dimen/user_icon_w"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_grow" />
+            android:src="@mipmap/icon_faver_list" />
         <TextView
             style="@style/txt_gray_14"
             android:id="@+id/hintTxt5"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/settingIcon5"
-            android:text="成长空间"/>
+            android:text="我的关注"/>
     </RelativeLayout>
     <View
         android:layout_width="fill_parent"

@@ -266,6 +266,12 @@
         <activity android:name=".act.discover.StudentIntroduction"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.MyFavoriteList"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.discover.SystemMessagePage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

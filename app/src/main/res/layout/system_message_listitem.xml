@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginTop="13dp"
+        android:src="@mipmap/icon_system_course"
+        android:layout_centerVertical="true"
+        android:id="@+id/messageIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/userIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="课堂"
+                android:textSize="13sp"
+                android:id="@+id/titleTxt"
+                style="@style/txt_black_14" />
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
+                android:text="2016.10.7 14:21"
+                android:textSize="11sp"
+                android:id="@+id/timeTxt"
+                style="@style/txt_gray_12" />
+        </RelativeLayout>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="2dp"
+            android:text="上课提醒：真的要上课了~~~"
+            android:textSize="11sp"
+            android:id="@+id/descTxt"
+            style="@style/txt_gray_12" />
+    </LinearLayout>
+</LinearLayout>
+    <View
+        android:layout_marginTop="13dp"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <View
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</LinearLayout>

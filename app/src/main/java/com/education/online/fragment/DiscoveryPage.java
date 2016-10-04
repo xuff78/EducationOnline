@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.education.online.R;
 import com.education.online.act.discover.DiscoverMap;
 import com.education.online.act.discover.InvitePage;
+import com.education.online.act.discover.MessageMain;
 import com.education.online.act.discover.SignEveryday;
 import com.education.online.act.discovery.AskAndSpeedAnswer;
 import com.education.online.act.discovery.GrowingSpace;
@@ -64,7 +65,7 @@ public class DiscoveryPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), InvitePage.class));
                 break;
             case R.id.testLayout:
-//                startActivity(new Intent(getActivity(), TeacherCourseStart.class));
+                startActivity(new Intent(getActivity(), MessageMain.class));
                 break;
         }
     }

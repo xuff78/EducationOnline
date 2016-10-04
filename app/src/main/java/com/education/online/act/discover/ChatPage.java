@@ -16,7 +16,7 @@ public class ChatPage extends BaseFrameAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_setting);
+        setContentView(R.layout.main_page);
 
         _setHeaderTitle("赵老板");
         _setRightHome(R.mipmap.icon_chatsetting, new View.OnClickListener() {

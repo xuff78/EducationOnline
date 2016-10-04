@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -59,7 +60,7 @@
         <com.kyleduo.switchbutton.SwitchButton
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:id="@+id/sb_use_listener"
+            android:id="@+id/switchBtn"
             style="@style/SwitchButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

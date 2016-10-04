@@ -238,6 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
             <RelativeLayout
+                android:id="@+id/myQrcode"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp">
                 <TextView
@@ -279,6 +280,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
+            android:id="@+id/toChatBtn"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_width="match_parent"

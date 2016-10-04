@@ -1,5 +1,6 @@
 package com.education.online.act.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,15 +29,24 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     }
 
     private void initView() {
-        recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerList.setLayoutManager(layoutManager);
-        recyclerList.setAdapter(new VideoMainAdapter(this, ""));
+//        recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerList.setLayoutManager(layoutManager);
+//        recyclerList.setAdapter(new VideoMainAdapter(this, ""));
+        findViewById(R.id.systemMessageLayout).setOnClickListener(this);
+        findViewById(R.id.myFavorite).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.systemMessageLayout:
+                startActivity(new Intent(MessageMain.this, SystemMessagePage.class));
+                break;
+            case R.id.myFavorite:
+                startActivity(new Intent(MessageMain.this, MyFavoriteList.class));
+                break;
+        }
     }
 }
