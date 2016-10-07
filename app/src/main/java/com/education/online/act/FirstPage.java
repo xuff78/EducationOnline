@@ -6,15 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.education.online.R;
-import com.education.online.act.discovery.AskAndSpeedAnswer;
-import com.education.online.act.discovery.GrowingSpace;
-import com.education.online.act.discovery.IwantToAnswer;
-import com.education.online.act.discovery.MyAnswers;
-import com.education.online.act.discovery.QuestionDetails;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
-import com.education.online.act.order.GetVeriCode;
-import com.education.online.act.order.SetPayPwd;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;

@@ -1,4 +1,4 @@
-package com.education.online.act.discover;
+package com.education.online.act.discovery;
 
 import android.os.Bundle;
 import android.view.View;
