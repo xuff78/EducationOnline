@@ -1,4 +1,4 @@
-package com.education.online.act.discover;
+package com.education.online.act.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,22 +13,16 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.CircleOptions;
-import com.baidu.mapapi.map.DotOptions;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.PolygonOptions;
 import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/29.

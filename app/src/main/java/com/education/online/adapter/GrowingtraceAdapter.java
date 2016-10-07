@@ -1,4 +1,4 @@
-package com.education.online.act.discovery;
+package com.education.online.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

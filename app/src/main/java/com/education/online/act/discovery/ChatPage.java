@@ -1,9 +1,8 @@
-package com.education.online.act.discover;
+package com.education.online.act.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;

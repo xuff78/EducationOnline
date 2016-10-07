@@ -1,17 +1,15 @@
-package com.education.online.act.discovery;
+package com.education.online.act.discovery.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.act.Mine.AskAndAnswer;
+import com.education.online.adapter.AnswersAdapter;
 
 /**
  * Created by Administrator on 2016/9/28.

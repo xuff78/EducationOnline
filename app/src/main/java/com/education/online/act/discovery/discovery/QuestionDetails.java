@@ -1,4 +1,4 @@
-package com.education.online.act.discovery;
+package com.education.online.act.discovery.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,10 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.adapter.QuestionDetailsitemAdapter;
 
 /**
  * Created by Administrator on 2016/9/29.

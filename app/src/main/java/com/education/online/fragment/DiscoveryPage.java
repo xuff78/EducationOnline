@@ -7,18 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
-import com.education.online.act.discover.DiscoverMap;
-import com.education.online.act.discover.InvitePage;
-import com.education.online.act.discover.MessageMain;
-import com.education.online.act.discover.SignEveryday;
-import com.education.online.act.discovery.AskAndSpeedAnswer;
-import com.education.online.act.discovery.GrowingSpace;
-import com.education.online.act.discovery.QuestionDetails;
-import com.education.online.act.teacher.AuthMenu;
-import com.education.online.act.teacher.MyOrders;
-import com.education.online.act.teacher.MyRatePage;
-import com.education.online.act.teacher.TeacherCourseStart;
-import com.education.online.act.teacher.TeacherHomePage;
+import com.education.online.act.discovery.DiscoverMap;
+import com.education.online.act.discovery.InvitePage;
+import com.education.online.act.discovery.MessageMain;
+import com.education.online.act.discovery.SignEveryday;
+import com.education.online.act.discovery.discovery.AskAndSpeedAnswer;
+import com.education.online.act.discovery.discovery.GrowingSpace;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/25.

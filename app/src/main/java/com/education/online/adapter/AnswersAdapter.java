@@ -1,4 +1,4 @@
-package com.education.online.act.discovery;
+package com.education.online.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +13,34 @@ import com.education.online.R;
 /**
  * Created by Administrator on 2016/9/28.
  */
-public class MyAnswersAdapter extends RecyclerView.Adapter {
+public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClickListener{
 
 
     private Activity act;
     private LayoutInflater listInflater;
 
-    public MyAnswersAdapter(Activity act, String jason){
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(view);
+        }
+    }
+
+    ////定义个接口
+    public static interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view);
+    }
+
+    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
+
+
+
+    public  AnswersAdapter(Activity act, String jason){
         this.act = act;
         this.listInflater = LayoutInflater.from(act);
 
@@ -27,8 +48,9 @@ public class MyAnswersAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh =null;
-        View view = listInflater.inflate(R.layout.myanswer_item,null);
-        vh = new MyAnswersAdapter.AnswerHolder(view,viewType);
+        View view = listInflater.inflate(R.layout.myquestionsandanswer_item,null);
+        vh = new AnswersAdapter.AnswerHolder(view,viewType);
+        view.setOnClickListener(this);
         return vh;
     }
 
@@ -40,7 +62,7 @@ public class MyAnswersAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
     @Override

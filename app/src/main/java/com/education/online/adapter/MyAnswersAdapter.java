@@ -1,4 +1,4 @@
-package com.education.online.act.discovery;
+package com.education.online.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -9,39 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.tencent.mm.sdk.diffdev.OAuthListener;
 
 /**
  * Created by Administrator on 2016/9/28.
  */
-public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClickListener{
+public class MyAnswersAdapter extends RecyclerView.Adapter {
 
 
     private Activity act;
     private LayoutInflater listInflater;
 
-    @Override
-    public void onClick(View view) {
-        if (mOnItemClickListener != null) {
-            //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(view);
-        }
-    }
-
-    ////定义个接口
-    public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view);
-    }
-
-    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        this.mOnItemClickListener = listener;
-    }
-
-
-
-
-    public  AnswersAdapter(Activity act, String jason){
+    public MyAnswersAdapter(Activity act, String jason){
         this.act = act;
         this.listInflater = LayoutInflater.from(act);
 
@@ -49,9 +27,8 @@ public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClick
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh =null;
-        View view = listInflater.inflate(R.layout.myquestionsandanswer_item,null);
-        vh = new AnswersAdapter.AnswerHolder(view,viewType);
-        view.setOnClickListener(this);
+        View view = listInflater.inflate(R.layout.myanswer_item,null);
+        vh = new MyAnswersAdapter.AnswerHolder(view,viewType);
         return vh;
     }
 
@@ -63,7 +40,7 @@ public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClick
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 
     @Override

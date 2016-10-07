@@ -1,4 +1,4 @@
-package com.education.online.act.discovery;
+package com.education.online.act.discovery.discovery;
 
 import android.os.Bundle;
 import android.widget.EditText;

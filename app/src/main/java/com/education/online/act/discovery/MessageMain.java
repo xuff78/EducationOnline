@@ -1,16 +1,12 @@
-package com.education.online.act.discover;
+package com.education.online.act.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapView;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.adapter.VideoMainAdapter;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/29.
