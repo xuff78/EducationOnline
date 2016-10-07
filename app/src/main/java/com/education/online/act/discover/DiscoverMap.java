@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolygonOptions;
 import com.baidu.mapapi.map.Stroke;
@@ -42,6 +43,7 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
     private LocationClient locationClient;
     private BDLocationListener myListener = new MyLocationListener();// 注册定位监听，返回定位的结果
     private Marker loactionMarker;
+    private Overlay roundRate=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +74,17 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
         locationClient.start();
 
 
+        View v=inflater.inflate(R.layout.people_marker_view, null);
+        Bundle b=new Bundle();
+        LatLng ll=new LatLng(39.8763560000,116.3808710000);
+        addMarkerToMap(ll, b, v);
 
-//        View v=inflater.inflate(R.layout.people_marker_view, null);
-//        Bundle b=new Bundle();
-//        LatLng ll=new LatLng();
-//        addMarkerToMap()
+        View v2=inflater.inflate(R.layout.people_marker_view, null);
+        Bundle b2=new Bundle();
+        LatLng ll2=new LatLng(39.8735860000,116.3709450000);
+        addMarkerToMap(ll2, b2, v2);
+
+
     }
 
     @Override
@@ -96,6 +104,8 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
     }
 
     public void showWorkingSpace() {
+        if(roundRate!=null)
+            roundRate.remove();
         LatLng llCircle = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
         /**
          *CircleOptions:创建圆的选项
@@ -110,10 +120,10 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
          * */
 
         OverlayOptions ooCircle = new CircleOptions()
-                .fillColor(0x441b93e5)
+                .fillColor(0x331b93e5)
                 .center(llCircle).stroke(new Stroke(2, 0xff1b93e5))
                 .radius(1400);
-        baiduMap.addOverlay(ooCircle);
+        roundRate=baiduMap.addOverlay(ooCircle);
 
 //        OverlayOptions ooDot = new DotOptions().center(llCircle).radius(6)
 //                .color(0xFF0000FF);
@@ -148,14 +158,20 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
         public void onReceiveLocation(BDLocation bdLocation) {
             if (bdLocation != null) {
                 myLocation=bdLocation;
+                LatLng ll=new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
-                if(loactionMarker==null) {
-                    View me = inflater.inflate(R.layout.people_marker_view, null);
-                    View headerBg = me.findViewById(R.id.headFrame);
-                    headerBg.setBackgroundResource(R.mipmap.icon_marker_me);
-                    loactionMarker=addMarkerToMap(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()), null, me);
-                    showWorkingSpace();
+                View me = inflater.inflate(R.layout.people_marker_view, null);
+                View headerBg = me.findViewById(R.id.headFrame);
+                headerBg.setBackgroundResource(R.mipmap.icon_marker_me);
+                Bundle b=new Bundle();
+                if(loactionMarker!=null)
+                    loactionMarker.remove();
+                else{
+                    MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15);
+                    baiduMap.animateMapStatus(u);
                 }
+                loactionMarker=addMarkerToMap(ll, b, me);
+                showWorkingSpace();
             }
         }
     }
