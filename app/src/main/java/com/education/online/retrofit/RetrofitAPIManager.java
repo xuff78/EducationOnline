@@ -2,6 +2,7 @@ package com.education.online.retrofit;
 
 import android.content.Context;
 
+import com.education.online.util.Constant;
 import com.education.online.util.SharedPreferencesUtil;
 
 import java.io.IOException;
@@ -11,6 +12,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by Administrator on 2016/8/12.
@@ -18,10 +21,12 @@ import retrofit2.Retrofit;
 public class RetrofitAPIManager {
 
     public static Retrofit getRetrofit(Context con) {
-        String url=SharedPreferencesUtil.getString(con, "");
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(Constant.API_Url_User)
                 .client(genericClient())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit;
     }

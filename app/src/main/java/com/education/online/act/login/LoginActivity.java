@@ -15,6 +15,10 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.retrofit.RCallBack;
+import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.StatusBarCompat;
 
 /**
@@ -24,6 +28,7 @@ public class LoginActivity extends BaseFrameAct {
 
     private EditText userName;
     private EditText userPsd;
+    HttpHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class LoginActivity extends BaseFrameAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initHandler();
         _setHeaderGone();
         initView();
     }
@@ -69,12 +75,12 @@ public class LoginActivity extends BaseFrameAct {
     private void attemptLogin() {
 
 
-        startActivity(new Intent(LoginActivity.this, MainPage.class));
+//        startActivity(new Intent(LoginActivity.this, MainPage.class));
         // Reset errors.
-        /*userName.setError(null);
+        userName.setError(null);
         userPsd.setError(null);
 
-        String email = userName.getText().toString();
+        String name = userName.getText().toString();
         String password = userPsd.getText().toString();
 
         boolean cancel = false;
@@ -86,7 +92,7 @@ public class LoginActivity extends BaseFrameAct {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(name)) {
             userName.setError(getString(R.string.error_field_required));
             focusView = userName;
             cancel = true;
@@ -95,12 +101,23 @@ public class LoginActivity extends BaseFrameAct {
         if (cancel) {
             focusView.requestFocus();
         } else {
-//            do sth
-        }*/
+            handler.login(name, password);
+//            RetrofitHandler.login(this, name, password, new RCallBack(this));
+        }
     }
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
+    }
+
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) {
+                super.doSuccess(method, jsonData);
+
+            }
+        });
     }
 
 }

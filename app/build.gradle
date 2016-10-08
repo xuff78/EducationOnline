@@ -53,6 +53,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.kyleduo.switchbutton:library:1.4.4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
     compile files('libs/alipaySdk-20160516.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')

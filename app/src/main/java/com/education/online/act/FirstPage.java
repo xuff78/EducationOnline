@@ -10,15 +10,24 @@ import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.retrofit.IHandler;
+import com.education.online.retrofit.RCallBack;
+import com.education.online.retrofit.RetrofitAPIManager;
+import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.ActUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by Administrator on 2016/8/11.
  */
 public class FirstPage extends BaseFrameAct implements View.OnClickListener {
 
-    HttpHandler handler;
 
     private RecyclerView recyclerList;
 
@@ -28,22 +37,10 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         setContentView(R.layout.first_page);
 
         _setHeaderGone();
-        initHandler();
         initView();
 
         ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
-        handler.init(ScreenUtil.getWidth(this) + "x" + ScreenUtil.getHeight(this));
-    }
-
-    private void initHandler() {
-        handler = new HttpHandler(this, new CallBack(this) {
-            @Override
-            public void doSuccess(String method, String jsonData) {
-                super.doSuccess(method, jsonData);
-
-            }
-        });
     }
 
     private void initView() {
@@ -55,7 +52,6 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loginBtn:
-
                 startActivity(new Intent(FirstPage.this, LoginActivity.class));
 
 

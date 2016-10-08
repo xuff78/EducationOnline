@@ -7,6 +7,8 @@ import android.os.Environment;
  */
 public class Constant {
 
+    public static final String API_Url_User="http://106.75.5.58:43320/";
+    public static final String API_Url_Service="http://106.75.5.58:43330/";
     public static final String Url_API="url_api";
     public static final String Product_code="Product_code";
     public static final String App_Channel="app_channel";
@@ -25,7 +27,6 @@ public class Constant {
     public static final String API_BASE = "ih.base.";
 
     public class Method{
-
         public static final String init=API_BASE + "sys.init";
     }
 }
