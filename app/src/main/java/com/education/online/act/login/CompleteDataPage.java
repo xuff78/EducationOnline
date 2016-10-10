@@ -22,6 +22,7 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -133,7 +134,9 @@ public class CompleteDataPage extends BaseFrameAct {
             @Override
             public void doSuccess(String method, String jsonData) {
                 super.doSuccess(method, jsonData);
-
+                if(method.equals(Method.Regist)) {
+                    startActivity(new Intent(CompleteDataPage.this, MainPage.class));
+                }
             }
         });
     }

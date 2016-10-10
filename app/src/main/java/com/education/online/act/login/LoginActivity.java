@@ -115,7 +115,7 @@ public class LoginActivity extends BaseFrameAct {
             @Override
             public void doSuccess(String method, String jsonData) {
                 super.doSuccess(method, jsonData);
-
+                startActivity(new Intent(LoginActivity.this, MainPage.class));
             }
         });
     }
