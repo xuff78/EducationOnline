@@ -105,11 +105,6 @@ public class CompleteDataPage extends BaseFrameAct {
                     break;
                 case R.id.BackToHone:
                     httphandler.regist(phone, password,identity );
-
-                    if (true) {
-                        Toast.makeText(CompleteDataPage.this,"注册成功",Toast.LENGTH_SHORT);
-                        startActivity(new Intent(CompleteDataPage.this, MainPage.class));
-                    }
                     break;
 
             }
