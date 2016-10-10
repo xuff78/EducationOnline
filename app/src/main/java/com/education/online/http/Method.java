@@ -6,4 +6,5 @@ package com.education.online.http;
 public class Method {
     
     public static final String Login="uc/user/login";
+    public static final String Regist="uc/user/register";
 }

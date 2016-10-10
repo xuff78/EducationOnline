@@ -7,8 +7,13 @@
     <string name="error_invalid_email">请输入用户名</string>
     <string name="error_invalid_password">请正确填写密码</string>
     <string name="error_field_required">请填写该项</string>
+    <string name="error_password_unequal">两次密码输入不一致</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
     <string name="app_regist">注册</string>
+    <string name="enter_valid_vericode">请输入正确的验证码</string>
+    <string name="faliure_wrong_vericode">验证码错误</string>
+    <string name="faliure_phonechanged">手机号码已变更，请重新获取验证码！</string>
+    <string name="enter_valid_phone">请输入正确的手机号</string>
 </resources>

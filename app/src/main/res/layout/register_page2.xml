@@ -40,7 +40,7 @@
 
         <EditText
             android:id="@+id/ConfirmPwd"
-            android:layout_width="265dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="40dp"

@@ -38,6 +38,8 @@ public class RegisterPage3 extends BaseFrameAct {
     private ImageView RoleStudent;
     private LinearLayout LayoutTeacher;
     private LinearLayout LayoutStudent;
+    private Intent intent;
+    private String identity;
 
 
 
@@ -59,11 +61,15 @@ public class RegisterPage3 extends BaseFrameAct {
         MyRadioBtnClickListener radioclicklistener = new MyRadioBtnClickListener();
         LayoutTeacher.setOnClickListener(radioclicklistener);
         LayoutStudent.setOnClickListener(radioclicklistener);
-
+        intent = getIntent();
+        identity = "teacher";
         Confirmiden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterPage3.this, CompleteDataPage.class));
+                intent.putExtra("identity",identity);
+                intent.setClass(RegisterPage3.this,CompleteDataPage.class);
+                startActivity(intent);
+
             }
         });
     }
@@ -75,12 +81,13 @@ public class RegisterPage3 extends BaseFrameAct {
                 case R.id.LayoutStudent:
                     RoleStudent.setImageResource(R.mipmap.icon_round_right);
                     RoleTeacher.setImageResource(R.mipmap.icon_round);
+                    identity = "teacher";
                     break;
                 case R.id.LayoutTeacher:
                     RoleTeacher.setImageResource(R.mipmap.icon_round_right);
                     RoleStudent.setImageResource(R.mipmap.icon_round);
+                    identity = "student";
                     break;
-                default:
 
             }
         }

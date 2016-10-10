@@ -15,10 +15,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -39,6 +42,14 @@ public class CompleteDataPage extends BaseFrameAct {
     private ImageView SexMale;
     private LinearLayout LayoutMale;
     private LinearLayout LayoutFemale;
+    private Intent intent;
+    private HttpHandler httphandler;
+    private String phone;
+    private String password;
+    private String identity;
+    private String username;
+    private String sexual;
+
 
 
 
@@ -66,6 +77,11 @@ public class CompleteDataPage extends BaseFrameAct {
         LayoutFemale = (LinearLayout) findViewById(R.id.LayoutFemale);
         LayoutFemale.setOnClickListener(listener);
         LayoutMale.setOnClickListener(listener);
+        intent = getIntent();
+        phone = intent.getStringExtra("phone");
+        password = intent.getStringExtra("password");
+        identity = intent.getStringExtra("identity");
+        initHandler();
     }
 
     View.OnClickListener listener=new View.OnClickListener() {
@@ -74,7 +90,6 @@ public class CompleteDataPage extends BaseFrameAct {
             switch (view.getId()){
                 case R.id.headIcon:
                     new SelectPicDialog(CompleteDataPage.this).show();
-
                     break;
                 case R.id.Subject:
                     startActivityForResult(new Intent(CompleteDataPage.this, SubjectSelector.class), 0x33);
@@ -88,7 +103,12 @@ public class CompleteDataPage extends BaseFrameAct {
                     SexMale.setImageResource(R.mipmap.icon_round_right);
                     break;
                 case R.id.BackToHone:
-                    startActivity(new Intent(CompleteDataPage.this, MainPage.class));
+                    httphandler.regist(phone, password,identity );
+
+                    if (true) {
+                        Toast.makeText(CompleteDataPage.this,"注册成功",Toast.LENGTH_SHORT);
+                        startActivity(new Intent(CompleteDataPage.this, MainPage.class));
+                    }
                     break;
 
             }
@@ -107,6 +127,17 @@ public class CompleteDataPage extends BaseFrameAct {
                 startPhotoZoom(Uri.fromFile(file));
         }
     };
+
+    private void initHandler() {
+        httphandler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) {
+                super.doSuccess(method, jsonData);
+
+            }
+        });
+    }
+
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
 
@@ -183,4 +214,6 @@ public class CompleteDataPage extends BaseFrameAct {
             }
         }
     }
+
+
 }

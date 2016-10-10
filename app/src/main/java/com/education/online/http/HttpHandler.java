@@ -42,10 +42,20 @@ public class HttpHandler extends Handle {
 		requestPost(Method.Login, paramMap, true);
 	}
 
-	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
-		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+Method.Login, paramMap); //这个是加密过程，可以不看
-		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+Method.Login, method, body, 1);
+	public void regist(String phone, String password,String identity)
+	{
+		HashMap<String, String> paraMap = new HashMap<>();
+		paraMap.put("phone",phone);
+		paraMap.put("password",password);
+		paraMap.put("identity",identity);
+		requestPost(Method.Regist,paraMap,true);
 	}
+
+	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
+		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
+		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);
+	}
+
 
 //	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
 //		String url= SharedPreferencesUtil.getString(mContext, Constant.Url_API);

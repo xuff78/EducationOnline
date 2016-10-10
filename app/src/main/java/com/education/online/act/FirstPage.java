@@ -53,12 +53,9 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.loginBtn:
                 startActivity(new Intent(FirstPage.this, LoginActivity.class));
-
-
                 break;
             case R.id.registerBtn:
                 startActivity(new Intent(FirstPage.this, RegisterPage1.class));
-
                 break;
         }
     }
