@@ -21,6 +21,8 @@ import com.education.online.retrofit.RCallBack;
 import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.StatusBarCompat;
 
+import org.json.JSONException;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -113,7 +115,7 @@ public class LoginActivity extends BaseFrameAct {
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
-            public void doSuccess(String method, String jsonData) {
+            public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 startActivity(new Intent(LoginActivity.this, MainPage.class));
             }

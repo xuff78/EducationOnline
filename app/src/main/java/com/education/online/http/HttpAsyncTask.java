@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import com.education.online.util.ActUtil;
 import com.education.online.util.LogUtil;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 
 
@@ -105,7 +107,11 @@ public class HttpAsyncTask extends AsyncTask<Object, String, String> {
 			progressDialog.dismiss();
 
 		if(!isCancel&&result!=null) {
-			mHttpCb.httpCallback(mReqMethod, result.trim());
+			try {
+				mHttpCb.httpCallback(mReqMethod, result.trim());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}

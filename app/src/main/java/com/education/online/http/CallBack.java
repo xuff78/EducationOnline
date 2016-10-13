@@ -8,6 +8,8 @@ import com.education.online.util.DialogUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 
+import org.json.JSONException;
+
 
 /**
  * 回调接口，使用OA系统的程序进行实现
@@ -29,7 +31,7 @@ public class CallBack {
 	 * 
 	 * @param jsonMessage 回调成功字符串信息
 	 */
-	public void onSuccess(String method, String jsonMessage){
+	public void onSuccess(String method, String jsonMessage) throws JSONException {
 //		LogUtil.e(TAG, "onSuccess:"+jsonMessage);
 		JsonMessage msg= JsonUtil.getJsonMessage(jsonMessage);
 		if(msg.getCode()==null){
@@ -41,8 +43,7 @@ public class CallBack {
 		}
 	}
 
-	public void doSuccess(String method, String jsonData){
-
+	public void doSuccess(String method, String jsonData) throws JSONException {
 	}
 	
 	/**

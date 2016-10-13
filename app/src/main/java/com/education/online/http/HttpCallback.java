@@ -4,6 +4,8 @@
 package com.education.online.http;
 
 
+import org.json.JSONException;
+
 /**
  * Http连接回调类，在使用HttpAsyncTask类进行网络连接后，需要实现此接口，将联网获得的数据返回给调用者。
  * 
@@ -24,5 +26,5 @@ public interface HttpCallback {
 	 * @param result
 	 *            服务器返回的数据，字符串经split处理后的结果，其中数组的第一个元素代表连接返回码，"0"为正常
 	 */
-	void httpCallback(String reqUrl, String result);
+	void httpCallback(String reqUrl, String result) throws JSONException;
 }

@@ -17,9 +17,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.MainPage;
+import com.education.online.act.ucloud.Callback;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
@@ -27,6 +33,10 @@ import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,6 +50,10 @@ public class RegisterPage3 extends BaseFrameAct {
     private LinearLayout LayoutStudent;
     private Intent intent;
     private String identity;
+    private HttpHandler handler;
+    private String phone;
+    private String password;
+    private String sessionid;
 
 
 
@@ -62,17 +76,40 @@ public class RegisterPage3 extends BaseFrameAct {
         LayoutTeacher.setOnClickListener(radioclicklistener);
         LayoutStudent.setOnClickListener(radioclicklistener);
         intent = getIntent();
-        identity = "teacher";
+        identity = "student";
+        phone = intent.getStringExtra("phone");
+        password = intent.getStringExtra("password");
+        initHandler();
+
         Confirmiden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent.putExtra("identity",identity);
-                intent.setClass(RegisterPage3.this,CompleteDataPage.class);
-                startActivity(intent);
+
+                handler.regist(phone,password,identity);
 
             }
         });
     }
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+
+                Toast.makeText(RegisterPage3.this,"注册成功！",Toast.LENGTH_SHORT);
+                //解析jason
+                if(method.equals(Method.Regist)) {
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                   String sessionid = jsonObject.getString("sessionid");
+                    intent.putExtra("sessionid",sessionid);
+                    intent.setClass(RegisterPage3.this,CompleteDataPage.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+
     private class MyRadioBtnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {

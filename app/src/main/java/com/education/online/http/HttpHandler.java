@@ -50,6 +50,15 @@ public class HttpHandler extends Handle {
 		paraMap.put("identity",identity);
 		requestPost(Method.Regist,paraMap,true);
 	}
+	public  void update(String sessionid,String name,String gender,String avatar){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",sessionid);
+		paraMap.put("name",name);
+		paraMap.put("gender",gender);
+		paraMap.put("avatar",avatar);
+		requestPost(Method.Update,paraMap,true);
+
+	}
 
 	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看

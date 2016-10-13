@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.education.online.util.ToastUtils;
 
+import org.json.JSONException;
+
 
 /**
  * 业务逻辑处理类，负责联网的调用，及对数据的处理。此超类中封装了对联网模块的调用。
@@ -42,7 +44,7 @@ public abstract class Handle implements HttpCallback {
 	/**
 	 * 处理请求返回的结果
 	 */
-	public void httpCallback(String reqUrl, String result) {
+	public void httpCallback(String reqUrl, String result) throws JSONException {
 		if(result.equals(GlbsNet.HTTP_ERROR_MESSAGE)) {
 			ToastUtils.displayTextShort(mContext, result);
 			mCallBack.onHTTPException(reqUrl,result);

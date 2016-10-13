@@ -12,6 +12,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,12 +31,13 @@ import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
 import com.education.online.view.SelectWeekdayDialog;
 
+import org.json.JSONException;
+
 import java.io.File;
 
 public class CompleteDataPage extends BaseFrameAct {
 
-
-    String phoneTxtName="";
+    private EditText RealName;
     private ImageView headIcon;
     private TextView Subject;
     private Dialog progressDialog;
@@ -45,11 +47,11 @@ public class CompleteDataPage extends BaseFrameAct {
     private LinearLayout LayoutFemale;
     private Intent intent;
     private HttpHandler httphandler;
-    private String phone;
-    private String password;
-    private String identity;
-    private String username;
-    private String sexual;
+    private String phoneTxtName="";
+    private String sessionid;
+    private String name="";
+    private String gender="male";
+    private String avatar="";
 
 
 
@@ -58,14 +60,12 @@ public class CompleteDataPage extends BaseFrameAct {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullfilldata_page);
-
         initView();
     }
 
     private void initView() {
         headIcon= (ImageView) findViewById(R.id.headIcon);
         Subject= (TextView) findViewById(R.id.Subject);
-
         headIcon.setOnClickListener(listener);
         Subject.setOnClickListener(listener);
         findViewById(R.id.BackToHone).setOnClickListener(listener);
@@ -76,12 +76,11 @@ public class CompleteDataPage extends BaseFrameAct {
         SexMale.setImageResource(R.mipmap.icon_round);
         LayoutMale = (LinearLayout) findViewById(R.id.LayoutMale);
         LayoutFemale = (LinearLayout) findViewById(R.id.LayoutFemale);
+        RealName= (EditText) findViewById(R.id.RealName);
         LayoutFemale.setOnClickListener(listener);
         LayoutMale.setOnClickListener(listener);
         intent = getIntent();
-        phone = intent.getStringExtra("phone");
-        password = intent.getStringExtra("password");
-        identity = intent.getStringExtra("identity");
+        sessionid = intent.getStringExtra("sessionid");
         initHandler();
     }
 
@@ -98,13 +97,17 @@ public class CompleteDataPage extends BaseFrameAct {
                 case R.id.LayoutFemale:
                     SexFemale.setImageResource(R.mipmap.icon_round_right);
                     SexMale.setImageResource(R.mipmap.icon_round);
+                    gender="male";
                     break;
                 case R.id.LayoutMale:
                     SexFemale.setImageResource(R.mipmap.icon_round);
                     SexMale.setImageResource(R.mipmap.icon_round_right);
+                    gender = "female";
                     break;
                 case R.id.BackToHone:
-                    httphandler.regist(phone, password,identity );
+                    name = RealName.getText().toString();
+                    httphandler.update(sessionid,name,gender,avatar);
+                    //httphandler.regist(phone, password,identity );
                     break;
 
             }
@@ -127,11 +130,13 @@ public class CompleteDataPage extends BaseFrameAct {
     private void initHandler() {
         httphandler = new HttpHandler(this, new CallBack(this) {
             @Override
-            public void doSuccess(String method, String jsonData) {
+            public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                if(method.equals(Method.Regist)) {
-                    startActivity(new Intent(CompleteDataPage.this, MainPage.class));
-                }
+//
+                Toast.makeText(CompleteDataPage.this,"updatesuccess",Toast.LENGTH_SHORT);
+                intent.setClass(CompleteDataPage.this,MainPage.class);
+                startActivity(intent);
+
             }
         });
     }
