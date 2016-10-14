@@ -39,7 +39,7 @@ public class HttpHandler extends Handle {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("phone", phone);
 		paramMap.put("password", password);
-		requestPost(Method.Login, paramMap, true);
+		requestPostUser(Method.Login, paramMap, true);
 	}
 
 	public void regist(String phone, String password,String identity)
@@ -48,7 +48,7 @@ public class HttpHandler extends Handle {
 		paraMap.put("phone",phone);
 		paraMap.put("password",password);
 		paraMap.put("identity",identity);
-		requestPost(Method.Regist,paraMap,true);
+		requestPostUser(Method.Regist,paraMap,true);
 	}
 	public  void update(String name,String gender,String avatar){
 		HashMap<String, String > paraMap =new HashMap<>();
@@ -56,12 +56,17 @@ public class HttpHandler extends Handle {
 		paraMap.put("name",name);
 		paraMap.put("gender",gender);
 		paraMap.put("avatar",avatar);
-		requestPost(Method.Update,paraMap,true);
+		requestPostUser(Method.Update,paraMap,true);
 
 	}
 
-	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
+	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
+		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);
+	}
+
+	protected void requestPostEdu(String method, HashMap paramMap, boolean showDialog) {
+		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_Service+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);
 	}
 
