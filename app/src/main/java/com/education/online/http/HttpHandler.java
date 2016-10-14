@@ -50,9 +50,9 @@ public class HttpHandler extends Handle {
 		paraMap.put("identity",identity);
 		requestPost(Method.Regist,paraMap,true);
 	}
-	public  void update(String sessionid,String name,String gender,String avatar){
+	public  void update(String name,String gender,String avatar){
 		HashMap<String, String > paraMap =new HashMap<>();
-		paraMap.put("sessionid",sessionid);
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paraMap.put("name",name);
 		paraMap.put("gender",gender);
 		paraMap.put("avatar",avatar);

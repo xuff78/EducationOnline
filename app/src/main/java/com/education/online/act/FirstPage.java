@@ -17,6 +17,7 @@ import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.ActUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.SharedPreferencesUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,8 +40,17 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         _setHeaderGone();
         initView();
 
-        ActUtil.initData(this);
+//        ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!SharedPreferencesUtil.getSessionid(this).equals(SharedPreferencesUtil.FAILURE_STRING)) {
+            startActivity(new Intent(this, MainPage.class));
+            finish();
+        }
     }
 
     private void initView() {

@@ -428,35 +428,6 @@ public final class SharedPreferencesUtil {
 
 	private static final String TAG = "SharedPreferencesUtil";
 
-	private static final Hashtable<String, Object> DATA = new Hashtable<String, Object>();
-
-	public static Object getTmpData(String key) {
-		if (DATA.containsKey(key)) {
-			return DATA.get(key);
-		} else {
-			return FAILURE_STRING;
-		}
-
-	}
-
-	public static void saveTmpData(String key, Object value) {
-		if (value != null && !"".equals(value)) {
-			DATA.put(key, value);
-		}
-	}
-
-	public static void removeTmpData(String key) {
-		DATA.remove(key);
-	}
-
-	public static void clearTmpData() {
-		DATA.clear();
-	}
-
-	public static int getSize() {
-		return DATA.size();
-	}
-
 	public static boolean getBooleanSharedPreference(Context context, String key, boolean defValue) {
 		return getSharedPreferences(context).getBoolean(key, defValue);
 	}

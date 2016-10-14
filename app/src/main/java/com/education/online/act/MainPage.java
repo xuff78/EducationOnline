@@ -2,10 +2,14 @@ package com.education.online.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -18,6 +22,8 @@ import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.mycenter.MyCenterMain;
 import com.education.online.fragment.teacher.TeacherPage;
 import com.education.online.fragment.dialog.SelectorPage;
+import com.education.online.util.ActUtil;
+import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 
@@ -144,5 +150,40 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         if (mLocationClient != null && mLocationClient.isStarted()) {
             mLocationClient.requestLocation();
         }
+    }
+
+    private static boolean isExit = false;
+
+    Handler exithandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            exithandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mLocationClient!=null){
+            mLocationClient.stop();
+        }
+        super.onDestroy();
     }
 }

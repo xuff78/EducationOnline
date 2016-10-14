@@ -14,11 +14,15 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.FirstPage;
 import com.education.online.act.MainPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.retrofit.RCallBack;
 import com.education.online.retrofit.RetrofitHandler;
+import com.education.online.util.Constant;
+import com.education.online.util.JsonUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
 
 import org.json.JSONException;
@@ -47,6 +51,10 @@ public class LoginActivity extends BaseFrameAct {
     private void initView() {
         userName = (EditText) findViewById(R.id.userName);
         userPsd = (EditText) findViewById(R.id.userPsd);
+        String loginName=SharedPreferencesUtil.getString(this, Constant.UserName);
+        if(!loginName.equals(SharedPreferencesUtil.FAILURE_STRING)){
+            userName.setText(loginName);
+        }
         userPsd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -117,7 +125,14 @@ public class LoginActivity extends BaseFrameAct {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                startActivity(new Intent(LoginActivity.this, MainPage.class));
+                String sessionid = JsonUtil.getString(jsonData, "sessionid");
+                SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
+
+                Intent intent = new Intent(LoginActivity.this, FirstPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }

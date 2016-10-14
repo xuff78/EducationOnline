@@ -16,6 +16,8 @@ public class Constant {
     public static final String App_Secret="app_secret";
     public static final String Pic_Savepath="picSavePath";
     public static final String SearchWords="SearchWords";
+    public static final String UserInfo="UserInfo";
+    public static final String UserName="UserName";
     public static final String SavePath = Environment.getExternalStorageDirectory().getAbsolutePath()
             + "/EduOL";
 

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.FirstPage;
 import com.education.online.act.MainPage;
 import com.education.online.act.upyun.UploadTask;
 import com.education.online.http.CallBack;
@@ -51,19 +52,11 @@ public class CompleteDataPage extends BaseFrameAct {
     private LinearLayout LayoutFemale;
     private Intent intent;
     private HttpHandler httphandler;
-    private String phone;
-    private String password;
-    private String identity;
-    private String username;
-    private String sexual;
     private String phoneTxtName="";
-    private String sessionid;
     private String name="";
     private String gender="male";
     private String avatar="";
     private ImageLoader imageloader;
-    private String uploadImgUrl;
-
 
 
     @Override
@@ -71,6 +64,7 @@ public class CompleteDataPage extends BaseFrameAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullfilldata_page);
         imageloader=ImageLoader.getInstance();
+        _setLeftBackGone();
         initView();
     }
 
@@ -91,7 +85,6 @@ public class CompleteDataPage extends BaseFrameAct {
         LayoutFemale.setOnClickListener(listener);
         LayoutMale.setOnClickListener(listener);
         intent = getIntent();
-        sessionid = intent.getStringExtra("sessionid");
         initHandler();
     }
 
@@ -117,7 +110,7 @@ public class CompleteDataPage extends BaseFrameAct {
                     break;
                 case R.id.BackToHone:
                     name = RealName.getText().toString();
-                    httphandler.update(sessionid,name,gender,avatar);
+                    httphandler.update(name,gender,avatar);
                     //httphandler.regist(phone, password,identity );
                     break;
 
@@ -145,7 +138,9 @@ public class CompleteDataPage extends BaseFrameAct {
                 super.doSuccess(method, jsonData);
 //
                 Toast.makeText(CompleteDataPage.this,"updatesuccess",Toast.LENGTH_SHORT);
-                intent.setClass(CompleteDataPage.this,MainPage.class);
+
+                Intent intent = new Intent(CompleteDataPage.this, FirstPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
             }
@@ -231,9 +226,9 @@ public class CompleteDataPage extends BaseFrameAct {
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        uploadImgUrl = UploadTask.UPLOAD_URL + result;
-                        LogUtil.d("Img", uploadImgUrl);
-                        imageloader.displayImage(uploadImgUrl, headIcon);
+                        avatar = UploadTask.UPLOAD_URL + result;
+                        LogUtil.d("Img", avatar);
+                        imageloader.displayImage(avatar, headIcon);
                     }
 
                     @Override

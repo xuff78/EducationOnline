@@ -1,18 +1,7 @@
 package com.education.online.act.login;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,25 +10,15 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.act.MainPage;
-import com.education.online.act.ucloud.Callback;
+import com.education.online.act.FirstPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
-import com.education.online.util.FileUtil;
-import com.education.online.util.ImageUtil;
-import com.education.online.util.LogUtil;
-import com.education.online.util.ScreenUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.SharedPreferencesUtil;
-import com.education.online.util.ToastUtils;
-import com.education.online.view.SelectPicDialog;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 public class RegisterPage3 extends BaseFrameAct {
 
@@ -100,10 +79,13 @@ public class RegisterPage3 extends BaseFrameAct {
                 //解析jason
                 if(method.equals(Method.Regist)) {
                     JSONObject jsonObject = new JSONObject(jsonData);
-                   String sessionid = jsonObject.getString("sessionid");
-                    intent.putExtra("sessionid",sessionid);
+                    String sessionid = jsonObject.getString("sessionid");
+                    SharedPreferencesUtil.setString(RegisterPage3.this, Constant.UserInfo, jsonData);
+                    SharedPreferencesUtil.setSessionid(RegisterPage3.this, sessionid);
+
                     intent.setClass(RegisterPage3.this,CompleteDataPage.class);
                     startActivity(intent);
+
                 }
             }
         });
