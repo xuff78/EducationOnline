@@ -130,9 +130,7 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
 
-                Intent intent = new Intent(LoginActivity.this, FirstPage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                finish();
             }
         });
     }
