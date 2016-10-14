@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.fragment.dialog.SelectorPage;
+import com.education.online.util.ImageUtil;
 
 public abstract class BaseFrameAct extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 		btnBack.setOnClickListener(listener);
 		rl = (RelativeLayout) findViewById(R.id.heder_layout);
 
+		ImageUtil.initImageLoader(this);
 	}
 	
 	

@@ -25,13 +25,34 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageUtil {
+
+	public static void initImageLoader(Context context) {
+		if(context!=null){
+			if(!ImageLoader.getInstance().isInited()){
+				ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+						.threadPriority(Thread.NORM_PRIORITY - 2)
+						.memoryCacheSize(2*1024*1024)
+						.denyCacheImageMultipleSizesInMemory()
+						.threadPoolSize(3)
+//						.defaultDisplayImageOptions(ImageUtil.getImageOptions())
+						.discCacheFileNameGenerator(new Md5FileNameGenerator())
+						.tasksProcessingOrder(QueueProcessingType.LIFO)
+						.build();
+				ImageLoader.getInstance().init(config);
+			}
+		}
+	}
 
 	public static DisplayImageOptions getImageOption(int Resid){
 		DisplayImageOptions options = new DisplayImageOptions.Builder()

@@ -20,15 +20,19 @@ import android.widget.Toast;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
+import com.education.online.act.upyun.UploadTask;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
 import com.education.online.view.SelectWeekdayDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
@@ -50,15 +54,14 @@ public class CompleteDataPage extends BaseFrameAct {
     private String identity;
     private String username;
     private String sexual;
-
-
-
+    private ImageLoader imageloader;
+    private String uploadImgUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullfilldata_page);
-
+        imageloader=ImageLoader.getInstance();
         initView();
     }
 
@@ -209,6 +212,24 @@ public class CompleteDataPage extends BaseFrameAct {
                 final Bitmap output = ImageUtil.createCircleImage(photo, Math.min(photo.getHeight(), photo.getWidth()));
                 FileUtil.saveBitmap(output, phoneTxtName, CompleteDataPage.this, 100);
                 headIcon.setImageBitmap(output);
+
+                new UploadTask(new UploadTask.UploadCallBack() {
+
+                    @Override
+                    public void onSuccess(String result) {
+                        progressDialog.dismiss();
+                        uploadImgUrl = UploadTask.UPLOAD_URL + result;
+                        LogUtil.d("Img", uploadImgUrl);
+                        imageloader.displayImage(uploadImgUrl, headIcon);
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        DialogUtil.showInfoDailog(CompleteDataPage.this, "提示", "图片上传失败!");
+                        progressDialog.dismiss();
+                        // mFaceImagePath.delete();
+                    }
+                }).execute(file, phoneTxtName + ".png");
             }
         }
     }
