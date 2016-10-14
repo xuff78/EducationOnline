@@ -175,6 +175,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     Toast.LENGTH_SHORT).show();
             exithandler.sendEmptyMessageDelayed(0, 2000);
         } else {
+            SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
             finish();
         }
     }

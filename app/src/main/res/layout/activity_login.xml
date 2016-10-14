@@ -71,8 +71,8 @@
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:imeActionId="@+id/login"
-                    android:imeActionLabel="登  录"
-                    android:imeOptions="actionUnspecified"
+                    android:imeActionLabel="登录"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
