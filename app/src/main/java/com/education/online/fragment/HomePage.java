@@ -11,6 +11,10 @@ import android.widget.ListView;
 import com.education.online.R;
 import com.education.online.adapter.MainAdapter;
 import com.education.online.bean.CategoryBean;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -21,6 +25,18 @@ public class HomePage extends BaseFragment {
 
     private ArrayList<CategoryBean> cates = new ArrayList<>();
     private RecyclerView recyclerList;
+    private HttpHandler handler;
+
+
+    private void initHandler() {
+        handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,6 +44,8 @@ public class HomePage extends BaseFragment {
         View view = inflater.inflate(R.layout.home_page, container, false);
 
         initView(view);
+        initHandler();
+        handler.getHomepage();
         return view;
     }
 

@@ -13,12 +13,20 @@ import android.view.ViewGroup;
 import com.education.online.R;
 import com.education.online.adapter.CourseAdapter;
 import com.education.online.adapter.MainAdapter;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.util.Constant;
+import com.education.online.util.JsonUtil;
+import com.education.online.util.SharedPreferencesUtil;
+
+import org.json.JSONException;
 
 /**
  * Created by Administrator on 2016/8/25.
  */
 
 public class CoursePage extends BaseFragment {
+
     private RecyclerView recyclerList;
 
     @Nullable

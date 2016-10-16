@@ -14,9 +14,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.adapter.CourseAdapter;
 import com.education.online.adapter.SelectorRightAdapter;
 import com.education.online.bean.CategoryBean;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ public class SelectorPage extends BaseFragment {
     private ArrayList<CategoryBean> cates=new ArrayList<>();
     private RecyclerView recyclerList;
     private CourseSelector callback;
+    private HttpHandler handler;
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -40,12 +46,24 @@ public class SelectorPage extends BaseFragment {
         }
     };
 
+    private void initHandler() {
+        handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selector_page,container,false);
 
         initView(view);
+        initHandler();
+        handler.getSubjectList();
         return view;
     }
 
