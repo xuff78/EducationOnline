@@ -12,11 +12,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.CourseMainPage;
 import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
+import com.education.online.bean.HomePageInfo;
+import com.education.online.bean.SubjectBean;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
@@ -34,10 +37,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ImageLoader imageLoader;
     private int itemWidth=0, itemHeight=0, imgHeight=0;
     private int padding10=0;
+    private HomePageInfo info;
 
     public MainAdapter(Activity act, String json)
     {
         this.act=act;
+        info= JSON.parseObject(json, HomePageInfo.class);
         imageLoader=ImageLoader.getInstance();
         listInflater= LayoutInflater.from(act);
         padding10=ImageUtil.dip2px(act, 10);
@@ -130,14 +135,16 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             itemsLayout= (LinearLayout) v;
             itemsLayout.setPadding(padding10, 0, padding10, padding10*2);
             LinearLayout.LayoutParams llpitem=new LinearLayout.LayoutParams(itemWidth, -2);
-            int itemsize=7;
             LinearLayout linelayout=new LinearLayout(act);
             linelayout.setOrientation(LinearLayout.HORIZONTAL);
+            int itemsize=info.getSubject_list().size();
             for(int i=0;i<itemsize+1;i++){
                 if(i==itemsize)
                     linelayout.addView(getSubjectItemView("更多",""), llpitem);
-                else
-                    linelayout.addView(getSubjectItemView("科目",""), llpitem);
+                else {
+                    SubjectBean subject=info.getSubject_list().get(i);
+                    linelayout.addView(getSubjectItemView(subject.getSubject_name(), ""), llpitem);
+                }
                 if(i%5==4||i==itemsize){
                     itemsLayout.addView(linelayout);
                     linelayout=new LinearLayout(act);

@@ -23,17 +23,17 @@ import java.util.ArrayList;
  */
 public class HomePage extends BaseFragment {
 
-    private ArrayList<CategoryBean> cates = new ArrayList<>();
     private RecyclerView recyclerList;
     private HttpHandler handler;
-
+    private String jsonStr;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-
+                jsonStr=jsonData;
+                recyclerList.setAdapter(new MainAdapter(getActivity(), jsonStr));
             }
         });
     }
@@ -44,8 +44,12 @@ public class HomePage extends BaseFragment {
         View view = inflater.inflate(R.layout.home_page, container, false);
 
         initView(view);
-        initHandler();
-        handler.getHomepage();
+        if(jsonStr==null) {
+            initHandler();
+            handler.getHomepage();
+        }else{
+            recyclerList.setAdapter(new MainAdapter(getActivity(), jsonStr));
+        }
         return view;
     }
 
@@ -54,6 +58,5 @@ public class HomePage extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-        recyclerList.setAdapter(new MainAdapter(getActivity(), ""));
     }
 }

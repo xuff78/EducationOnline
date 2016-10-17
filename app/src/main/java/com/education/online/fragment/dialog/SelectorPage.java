@@ -13,10 +13,13 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.adapter.CourseAdapter;
 import com.education.online.adapter.SelectorRightAdapter;
 import com.education.online.bean.CategoryBean;
+import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.BaseFragment;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -24,6 +27,7 @@ import com.education.online.http.HttpHandler;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/15.
@@ -33,15 +37,16 @@ public class SelectorPage extends BaseFragment {
     private ListView menuLeft;
     private int pressPos=0;
     private MenuLeftAdapter menuAdapter;
-    private ArrayList<CategoryBean> cates=new ArrayList<>();
+    private ArrayList<SubjectBean> cates=new ArrayList<>();
     private RecyclerView recyclerList;
     private CourseSelector callback;
     private HttpHandler handler;
+    private SelectorRightAdapter subjectList;
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(callback!=null){
-                callback.onSelected();
+                callback.onSelected((SubjectBean) view.getTag());
             }
         }
     };
@@ -50,11 +55,35 @@ public class SelectorPage extends BaseFragment {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
-                super.doSuccess(method, jsonData);
-
+                cates= JSON.parseObject(jsonData, new TypeReference<ArrayList<SubjectBean>>(){});
+                setListData();
             }
         });
     }
+
+    private void setListData() {
+        menuAdapter=new MenuLeftAdapter();
+        menuLeft.setAdapter(menuAdapter);
+        menuLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @SuppressLint("NewApi")
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int position,
+                                    long arg3) {
+                pressPos=position;
+                menuAdapter.notifyDataSetChanged();
+                if(position>0) {
+                    subjectList = new SelectorRightAdapter(getActivity(), cates.get(position - 1).getChild_subject(), listener);
+                    recyclerList.setAdapter(subjectList);
+                }
+            }
+        });
+        if(pressPos>0) {
+            subjectList = new SelectorRightAdapter(getActivity(), cates.get(pressPos - 1).getChild_subject(), listener);
+            recyclerList.setAdapter(subjectList);
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,8 +91,12 @@ public class SelectorPage extends BaseFragment {
         View view = inflater.inflate(R.layout.selector_page,container,false);
 
         initView(view);
-        initHandler();
-        handler.getSubjectList();
+        if(cates.size()==0) {
+            initHandler();
+            handler.getSubjectList();
+        }else{
+            setListData();
+        }
         return view;
     }
 
@@ -76,29 +109,8 @@ public class SelectorPage extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-
         menuLeft= (ListView) v.findViewById(R.id.menuLeft);
-        cates.clear();
-        CategoryBean cate=new CategoryBean();
-        cates.add(cate);
-        cates.add(cate);
-        cates.add(cate);
-        cates.add(cate);
-        cates.add(cate);
-        cates.add(cate);
-        recyclerList.setAdapter(new SelectorRightAdapter(getActivity(), cates, listener));
-        menuAdapter=new MenuLeftAdapter();
-        menuLeft.setAdapter(menuAdapter);
-        menuLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @SuppressLint("NewApi")
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position,
-                                    long arg3) {
-                pressPos=position;
-                menuAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     public class MenuLeftAdapter extends BaseAdapter {
@@ -148,7 +160,7 @@ public class SelectorPage extends BaseFragment {
                 holder.title.setTextColor(Color.RED);
                 holder.title.setText("热门推荐");
             }else
-                holder.title.setText(cates.get(position-1).getName());
+                holder.title.setText(cates.get(position-1).getSubject_name());
 
             return convertView;
         }
@@ -159,6 +171,6 @@ public class SelectorPage extends BaseFragment {
     }
 
     public interface CourseSelector{
-        void onSelected();
+        void onSelected(SubjectBean subject);
     }
 }

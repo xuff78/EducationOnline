@@ -126,6 +126,8 @@ public class LoginActivity extends BaseFrameAct {
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 String sessionid = JsonUtil.getString(jsonData, "sessionid");
+                String usercode = JsonUtil.getString(jsonData, "usercode");
+                SharedPreferencesUtil.setUsercode(LoginActivity.this, usercode);
                 SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());

@@ -12,4 +12,5 @@ public class Method {
 
     public static final String getSubjectList = "education/subject/list";
     public static final String getHomePage = "education/homepage/view";
+    public static final String getUserInfo = "education/user/view";
 }

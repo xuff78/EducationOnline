@@ -16,6 +16,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.education.online.R;
+import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.DiscoveryPage;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
@@ -54,7 +55,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
         selectorPage.setData(new SelectorPage.CourseSelector() {
             @Override
-            public void onSelected() {
+            public void onSelected(SubjectBean subject) {
                 startActivity(new Intent(MainPage.this, SearchResultAct.class));
             }
         });

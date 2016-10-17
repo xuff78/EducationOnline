@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.dialog.SelectorPage;
 
 /**
@@ -28,7 +29,7 @@ public class SubjectSelector extends BaseFrameAct{
         SelectorPage selectorPage=new SelectorPage();
         selectorPage.setData(new SelectorPage.CourseSelector() {
             @Override
-            public void onSelected() {
+            public void onSelected(SubjectBean subject) {
                 finish();
             }
         });

@@ -52,6 +52,12 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getHomePage, paramMap, true);
 	}
 
+	public void getUserInfo(String usercode) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("usercode",usercode);
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getUserInfo, paramMap, true);
+	}
 
 	public void regist(String phone, String password,String identity)
 	{
