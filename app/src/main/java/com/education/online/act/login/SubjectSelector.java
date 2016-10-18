@@ -1,5 +1,6 @@
 package com.education.online.act.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +31,9 @@ public class SubjectSelector extends BaseFrameAct{
         selectorPage.setData(new SelectorPage.CourseSelector() {
             @Override
             public void onSelected(SubjectBean subject) {
+                Intent i=new Intent();
+                i.putExtra(SubjectBean.Name, subject);
+                setResult(0x11, i);
                 finish();
             }
         });

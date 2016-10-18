@@ -1,12 +1,14 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by 可爱的蘑菇 on 2016/10/16.
  */
-public class SubjectBean {
+public class SubjectBean implements Serializable{
 
+    public static String Name="SubjectBean";
     private String subject_name = ""; //科目名称
     private String subject_id = ""; // 科目ID
     private ArrayList<SubjectBean> child_subject=new ArrayList<>();
