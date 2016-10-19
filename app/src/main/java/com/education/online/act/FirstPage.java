@@ -1,6 +1,7 @@
 package com.education.online.act;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -62,6 +63,9 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loginBtn:
+
+//                String url="mqqwpa://im/chat?chat_type=wpa&uin=215337591";
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 startActivity(new Intent(FirstPage.this, LoginActivity.class));
                 break;
             case R.id.registerBtn:

@@ -8,14 +8,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.login.SubjectSelector;
 import com.education.online.adapter.MainAdapter;
 import com.education.online.bean.SubjectBean;
+import com.education.online.bean.TeacherBean;
 import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
@@ -32,13 +35,17 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
     private TextView teachSubjectTxt, educationTxt;
     private HttpHandler handler;
     private SubjectBean subject;
+    private TeacherBean teacher;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-
+                if(method.equals(Method.getUserInfo)){
+                    teacher= JSON.parseObject(jsonData, TeacherBean.class);
+                    setFormData();
+                }
             }
         });
     }
@@ -73,6 +80,21 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
         findViewById(R.id.subjectLayout).setOnClickListener(this);
         findViewById(R.id.educationLayout).setOnClickListener(this);
 
+    }
+
+    private void setFormData() {
+        teacherName.setText(teacher.getName());
+        teachingTime.setText(teacher.getWork_time());
+        highSchool.setText(teacher.getSchool());
+        companyName.setText(teacher.getUnit());
+        introduce.setText(teacher.getAbout_teacher());
+        descTxt.setText(teacher.getIntroduction());
+        experienceTxt.setText(teacher.getExperience());
+        labelTxt.setText(teacher.getTags());
+        professionEdt.setText(teacher.getSubject());
+
+        teachSubjectTxt.setText(teacher.getMain_tech());
+        educationTxt.setText(teacher.getEdu_bg());
     }
 
     @Override
