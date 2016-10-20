@@ -15,4 +15,6 @@ public class Method {
     public static final String getUserInfo = "education/user/view";
     public static final String updateTeacher = "education/user/update";
     public static final String getInterestList = "/education/user/interestList";
+
+    public static final String addClass="education/course/add";
 }

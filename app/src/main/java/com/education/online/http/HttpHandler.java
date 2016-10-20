@@ -6,6 +6,7 @@ package com.education.online.http;
 
 import android.app.Activity;
 
+import com.education.online.bean.AddClassBean;
 import com.education.online.util.Constant;
 import com.education.online.util.LeanSignatureUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -112,6 +113,28 @@ public class HttpHandler extends Handle {
 		paraMap.put("experience",experience);
 		paraMap.put("tags",tags);
 		requestPostEdu(Method.updateTeacher,paraMap,true);
+
+	}
+
+	public void addClass(AddClassBean addClassBean){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("name",addClassBean.getName());
+		paraMap.put("course_type",addClassBean.getCourse_type());
+		paraMap.put("subject_id",addClassBean.getSubject_id());
+		paraMap.put("original_price",addClassBean.getOriginal_price());
+		paraMap.put("price",addClassBean.getPrice());
+		paraMap.put("img",addClassBean.getImg());
+		paraMap.put("course_url",addClassBean.getCourse_url());
+		paraMap.put("introduction",addClassBean.getIntroduction());
+		paraMap.put("min_follow",addClassBean.getMin_follow());
+		paraMap.put("max_follow",addClassBean.getMax_follow());
+		paraMap.put("refund",addClassBean.getRefund());
+		paraMap.put("transfer",addClassBean.getTransfer());
+		paraMap.put("plan",addClassBean.getPlan());
+		paraMap.put("courseware_time",addClassBean.getCourseware_time());
+		paraMap.put("time_len",addClassBean.getTime_len());
+		requestPostEdu(Method.addClass,paraMap,true);
 
 	}
 

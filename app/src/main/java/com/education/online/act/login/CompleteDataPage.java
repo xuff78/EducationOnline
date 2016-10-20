@@ -3,6 +3,7 @@ package com.education.online.act.login;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
@@ -182,6 +184,8 @@ public class CompleteDataPage extends BaseFrameAct {
                 if(method.equals(Method.Regist)) {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     String sessionid = jsonObject.getString("sessionid");
+                    String user_identity = JsonUtil.getString(jsonData, "user_identity");
+                    SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserIdentity, user_identity);
                     SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserInfo, jsonData);
                     SharedPreferencesUtil.setSessionid(CompleteDataPage.this, sessionid);}
                     Intent intent = new Intent(CompleteDataPage.this, FirstPage.class);
@@ -281,7 +285,7 @@ public class CompleteDataPage extends BaseFrameAct {
                         progressDialog.dismiss();
                         // mFaceImagePath.delete();
                     }
-                }).execute(file, phoneTxtName + ".png");
+                }).execute(file,"avtar/"+ phoneTxtName + ".png");
             }
         }
     }

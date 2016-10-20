@@ -38,6 +38,7 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
     private ListView courseList;
     private CourseTimeAdapter adapter;
     private int modifyPos=-1;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,26 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
         courseList.addFooterView(footer);
         adapter=new CourseTimeAdapter(this, courses, this);
         courseList.setAdapter(adapter);
+
+        intent= getIntent();
+
+
+        _setLeftBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String temp = "";
+                String temp2="";
+                for(CourseTimeBean course : courses)
+                {
+                    temp=temp+","+course.getDatetime()+" "+course.getHour()+":"+course.getMin();
+                    temp2=course.getLongtime();
+                }
+                intent.putExtra("courseware_time",temp);
+                intent.putExtra("time_len",temp2);
+                setResult(0x11,intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -100,12 +121,14 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
         }
     }
 
+
     @Override
     public void onFinish(CourseTimeBean bean) {
         LogUtil.i("Date", "日期: "+bean.getDatetime());
         courses.add(bean);
         adapter.notifyDataSetChanged();//通知列表更新
     }
+
 
     @Override
     public void onChanged(CourseTimeBean bean) {
