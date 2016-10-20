@@ -77,6 +77,37 @@ public class HttpHandler extends Handle {
 
 	}
 
+	public  void update(String gender,String avatar,String nickname, String birthday){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+//		paraMap.put("name",name);
+		paraMap.put("gender",gender);
+		paraMap.put("avatar",avatar);
+		paraMap.put("nickname",nickname);
+		paraMap.put("birthday",birthday);
+		requestPostUser(Method.Update,paraMap,true);
+
+	}
+
+
+	public  void updateTeacher(String subject_id,String work_time,String specialty,String edu_bg,String school
+			,String unit,String about_teacher,String introduction,String experience,String tags){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("subject_id",subject_id);
+		paraMap.put("work_time",work_time);
+		paraMap.put("specialty",specialty);
+		paraMap.put("edu_bg",edu_bg);
+		paraMap.put("school",school);
+		paraMap.put("unit",unit);
+		paraMap.put("about_teacher",about_teacher);
+		paraMap.put("introduction",introduction);
+		paraMap.put("experience",experience);
+		paraMap.put("tags",tags);
+		requestPostUser(Method.updateTeacher,paraMap,true);
+
+	}
+
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);

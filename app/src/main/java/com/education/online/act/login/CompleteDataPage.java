@@ -26,6 +26,7 @@ import com.education.online.act.upyun.UploadTask;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
@@ -226,9 +227,9 @@ public class CompleteDataPage extends BaseFrameAct {
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        avatar = UploadTask.UPLOAD_URL + result;
+                        avatar = result;
                         LogUtil.d("Img", avatar);
-                        imageloader.displayImage(avatar, headIcon);
+                        imageloader.displayImage(ImageUtil.getImageUrl(avatar), headIcon);
                     }
 
                     @Override

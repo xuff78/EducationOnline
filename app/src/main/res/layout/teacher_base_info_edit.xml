@@ -20,9 +20,9 @@
         <TextView
             android:text="真实姓名"
             style="@style/txt_gray_12" />
-        <EditText
+        <TextView
             android:id="@+id/teacherName"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:background="@null"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"
@@ -45,7 +45,7 @@
             style="@style/txt_gray_12" />
         <EditText
             android:id="@+id/teachingTime"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:background="@null"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"
@@ -132,7 +132,7 @@
             style="@style/txt_gray_12" />
         <EditText
             android:id="@+id/highSchool"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:background="@null"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"
@@ -156,7 +156,7 @@
             style="@style/txt_gray_12" />
         <EditText
             android:id="@+id/professionEdt"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:background="@null"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"
@@ -179,7 +179,7 @@
             style="@style/txt_gray_12" />
         <EditText
             android:id="@+id/companyName"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:background="@null"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"
@@ -273,7 +273,7 @@
             style="@style/txt_gray_12" />
         <EditText
             android:id="@+id/labelTxt"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:background="@null"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"

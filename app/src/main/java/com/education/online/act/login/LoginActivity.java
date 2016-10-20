@@ -127,6 +127,8 @@ public class LoginActivity extends BaseFrameAct {
                 super.doSuccess(method, jsonData);
                 String sessionid = JsonUtil.getString(jsonData, "sessionid");
                 String usercode = JsonUtil.getString(jsonData, "usercode");
+                String user_identity = JsonUtil.getString(jsonData, "user_identity");
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserIdentity, user_identity);
                 SharedPreferencesUtil.setUsercode(LoginActivity.this, usercode);
                 SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);

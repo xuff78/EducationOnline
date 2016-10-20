@@ -31,8 +31,8 @@ import org.json.JSONException;
 public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListener{
 
     private String[] degree={"高中","中专","大专","本科","硕士","博士","博士后"};
-    private EditText teacherName, teachingTime, highSchool, companyName, introduce, descTxt, experienceTxt, labelTxt, professionEdt;
-    private TextView teachSubjectTxt, educationTxt;
+    private EditText teachingTime, highSchool, companyName, introduce, descTxt, experienceTxt, labelTxt, professionEdt;
+    private TextView teachSubjectTxt, educationTxt, teacherName;
     private HttpHandler handler;
     private SubjectBean subject;
     private TeacherBean teacher;
@@ -45,6 +45,14 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
                 if(method.equals(Method.getUserInfo)){
                     teacher= JSON.parseObject(jsonData, TeacherBean.class);
                     setFormData();
+                }else if(method.equals(Method.updateTeacher)){
+                    DialogUtil.showInfoDialog(TeacherInfoEdit.this, "提示", "修改成功", new DialogInterface.OnClickListener(){
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
                 }
             }
         });
@@ -64,7 +72,7 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
     }
 
     private void initView() {
-        teacherName= (EditText) findViewById(R.id.teacherName);
+        teacherName= (TextView) findViewById(R.id.teacherName);
         teachingTime= (EditText) findViewById(R.id.teachingTime);
         highSchool= (EditText) findViewById(R.id.highSchool);
         companyName= (EditText) findViewById(R.id.companyName);
@@ -91,9 +99,9 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
         descTxt.setText(teacher.getIntroduction());
         experienceTxt.setText(teacher.getExperience());
         labelTxt.setText(teacher.getTags());
-        professionEdt.setText(teacher.getSubject());
+        professionEdt.setText(teacher.getSpecialty());
 
-        teachSubjectTxt.setText(teacher.getMain_tech());
+        teachSubjectTxt.setText(teacher.getSubject());
         educationTxt.setText(teacher.getEdu_bg());
     }
 
@@ -114,13 +122,13 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
                 });
                 break;
             case R.id.right_text:
-                String name=teacherName.getText().toString().trim();
-                String subject=teachSubjectTxt.getText().toString().trim();
-                if(name.length()==0)
-                    ToastUtils.displayTextShort(TeacherInfoEdit.this, "请填写姓名");
-                else if(subject.length()==0)
+                String subjectTxt=teachSubjectTxt.getText().toString().trim();
+                if(subjectTxt.length()==0)
                     ToastUtils.displayTextShort(TeacherInfoEdit.this, "请填写学科");
-
+                handler.updateTeacher(subject.getSubject_id(), teachingTime.getText().toString(), professionEdt.getText().toString(),
+                        professionEdt.getText().toString(), highSchool.getText().toString(), companyName.getText().toString(),
+                        introduce.getText().toString(), descTxt.getText().toString(), experienceTxt.getText().toString(),
+                        labelTxt.getText().toString());
                 break;
         }
     }

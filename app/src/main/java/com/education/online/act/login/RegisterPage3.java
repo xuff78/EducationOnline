@@ -100,12 +100,12 @@ public class RegisterPage3 extends BaseFrameAct {
                 case R.id.LayoutStudent:
                     RoleStudent.setImageResource(R.mipmap.icon_round_right);
                     RoleTeacher.setImageResource(R.mipmap.icon_round);
-                    identity = "teacher";
+                    identity = "student";
                     break;
                 case R.id.LayoutTeacher:
                     RoleTeacher.setImageResource(R.mipmap.icon_round_right);
                     RoleStudent.setImageResource(R.mipmap.icon_round);
-                    identity = "student";
+                    identity = "teacher";
                     break;
 
             }

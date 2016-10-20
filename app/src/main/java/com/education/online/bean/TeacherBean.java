@@ -14,8 +14,8 @@ public class TeacherBean {
     private String gender = "";  // 性别 1-男 2-女
     private String avatar = "";  // 头像地址
     private String work_time = "";  // 工作时间
-    private String main_tech = "";  // 主营科技
-    private String subject = "";  // 专业
+    private String specialty = "";
+    private String subject = "";  // 主营科目
     private String edu_bg = "";  // 学历
     private String school = "";  // 院校
     private String unit = "";  // 单位
@@ -23,6 +23,23 @@ public class TeacherBean {
     private String introduction = "";  // 简介
     private String experience = "";  // 经历
     private String tags = "";  // 标签
+    private String message="";
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
 
     public String getUsercode() {
         return usercode;
@@ -70,14 +87,6 @@ public class TeacherBean {
 
     public void setWork_time(String work_time) {
         this.work_time = work_time;
-    }
-
-    public String getMain_tech() {
-        return main_tech;
-    }
-
-    public void setMain_tech(String main_tech) {
-        this.main_tech = main_tech;
     }
 
     public String getSubject() {
