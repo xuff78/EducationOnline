@@ -102,16 +102,26 @@ public class HttpHandler extends Handle {
 			,String unit,String about_teacher,String introduction,String experience,String tags){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
-		paraMap.put("subject_id",subject_id);
-		paraMap.put("work_time",work_time);
-		paraMap.put("specialty",specialty);
-		paraMap.put("edu_bg",edu_bg);
-		paraMap.put("school",school);
-		paraMap.put("unit",unit);
-		paraMap.put("about_teacher",about_teacher);
-		paraMap.put("introduction",introduction);
-		paraMap.put("experience",experience);
-		paraMap.put("tags",tags);
+		if(subject_id.length()>0)
+			paraMap.put("subject_id",subject_id);
+		if(work_time.length()>0)
+			paraMap.put("work_time",work_time);
+		if(specialty.length()>0)
+			paraMap.put("specialty",specialty);
+		if(edu_bg.length()>0)
+			paraMap.put("edu_bg",edu_bg);
+		if(school.length()>0)
+			paraMap.put("school",school);
+		if(unit.length()>0)
+			paraMap.put("unit",unit);
+		if(about_teacher.length()>0)
+			paraMap.put("about_teacher",about_teacher);
+		if(introduction.length()>0)
+			paraMap.put("introduction",introduction);
+		if(experience.length()>0)
+			paraMap.put("experience",experience);
+		if(tags.length()>0)
+			paraMap.put("tags",tags);
 		requestPostEdu(Method.updateTeacher,paraMap,true);
 
 	}

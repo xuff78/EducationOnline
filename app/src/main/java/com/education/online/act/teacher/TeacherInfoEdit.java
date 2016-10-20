@@ -34,7 +34,7 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
     private EditText teachingTime, highSchool, companyName, introduce, descTxt, experienceTxt, labelTxt, professionEdt;
     private TextView teachSubjectTxt, educationTxt, teacherName;
     private HttpHandler handler;
-    private SubjectBean subject;
+    private SubjectBean subject=new SubjectBean();
     private TeacherBean teacher;
 
     private void initHandler() {
@@ -126,7 +126,7 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
                 if(subjectTxt.length()==0)
                     ToastUtils.displayTextShort(TeacherInfoEdit.this, "请填写学科");
                 handler.updateTeacher(subject.getSubject_id(), teachingTime.getText().toString(), professionEdt.getText().toString(),
-                        professionEdt.getText().toString(), highSchool.getText().toString(), companyName.getText().toString(),
+                        educationTxt.getText().toString(), highSchool.getText().toString(), companyName.getText().toString(),
                         introduce.getText().toString(), descTxt.getText().toString(), experienceTxt.getText().toString(),
                         labelTxt.getText().toString());
                 break;

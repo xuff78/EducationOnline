@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.education.online.util.ActUtil;
 import com.education.online.util.LogUtil;
@@ -69,6 +71,7 @@ public class HttpAsyncTask extends AsyncTask<Object, String, String> {
 		mHttpCb = httpCb;
 		mContext = context;
 		this. isShowDlg= isShowDlg;
+
 	}
 
 	@Override
@@ -124,4 +127,5 @@ public class HttpAsyncTask extends AsyncTask<Object, String, String> {
 			isCancel=true;
 		}
 	};
+
 }
