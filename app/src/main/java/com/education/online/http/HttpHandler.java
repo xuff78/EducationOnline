@@ -104,7 +104,7 @@ public class HttpHandler extends Handle {
 		paraMap.put("introduction",introduction);
 		paraMap.put("experience",experience);
 		paraMap.put("tags",tags);
-		requestPostUser(Method.updateTeacher,paraMap,true);
+		requestPostEdu(Method.updateTeacher,paraMap,true);
 
 	}
 
