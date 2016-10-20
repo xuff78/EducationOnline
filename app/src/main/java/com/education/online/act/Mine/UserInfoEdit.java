@@ -1,7 +1,9 @@
 package com.education.online.act.Mine;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,16 +14,31 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.upyun.UploadTask;
+import com.education.online.bean.TeacherBean;
+import com.education.online.bean.UserInfo;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.LogUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
 
 import java.io.File;
 
@@ -33,61 +50,128 @@ public class UserInfoEdit extends BaseFrameAct {
 
     String phoneTxtName="";
     private ImageView headIcon;
-    private TextView nickName;
+    private TextView nickName, userBirthday, userPhone, userName;
     private Dialog progressDialog;
     private ImageView SexFemale;
     private ImageView SexMale;
     private LinearLayout LayoutMale;
     private LinearLayout LayoutFemale;
+    private DatePickerDialog datePickerDialog;
+    private String avatar="";
+    private ImageLoader imageloader;
+    private UserInfo userinfo;
+    private HttpHandler mHandler;
+    private String gender="";
 
+    private void initHandler() {
+        mHandler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getUserInfo)){
+                    userinfo= JSON.parseObject(jsonData, UserInfo.class);
+                    setFormData();
+                }else if(method.equals(Method.Update)){
+                    DialogUtil.showInfoDialog(UserInfoEdit.this, "提示", "修改成功", new DialogInterface.OnClickListener(){
 
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.userinfo_edit);
 
+        imageloader=ImageLoader.getInstance();
         _setHeaderTitle("个人资料");
+        _setRightHomeText("修改", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mHandler.update(gender, avatar, nickName.getText().toString(), userBirthday.getText().toString());
+            }
+        });
+        initHandler();
         initView();
+        String usercode= SharedPreferencesUtil.getUsercode(this);
+        mHandler.getUserInfo(usercode);
     }
 
     private void initView() {
         headIcon= (ImageView) findViewById(R.id.userIcon);
         nickName= (TextView) findViewById(R.id.nickName);
+        userBirthday= (TextView) findViewById(R.id.userBirthday);
+        userPhone= (TextView) findViewById(R.id.userPhone);
+        userName=(TextView) findViewById(R.id.userName);
 
         headIcon.setOnClickListener(listener);
         findViewById(R.id.birthdayLayout).setOnClickListener(listener);
 
         SexFemale = (ImageView) findViewById(R.id.SexFemale);
         SexMale = (ImageView) findViewById(R.id.SexMale);
-        SexFemale.setImageResource(R.mipmap.icon_round_right);
-        SexMale.setImageResource(R.mipmap.icon_round);
         LayoutMale = (LinearLayout) findViewById(R.id.LayoutMale);
         LayoutFemale = (LinearLayout) findViewById(R.id.LayoutFemale);
         LayoutFemale.setOnClickListener(listener);
         LayoutMale.setOnClickListener(listener);
     }
 
+    private void setFormData() {
+        nickName.setText(userinfo.getNickname());
+        userBirthday.setText(userinfo.getBirthday());
+        imageloader.displayImage(ImageUtil.getImageUrl(userinfo.getAvatar()), headIcon);
+        userPhone.setText(userinfo.getPhone());
+        userName.setText(userinfo.getName());
+        gender=userinfo.getGender();
+        if(gender.equals("2")){
+            SexFemale.setImageResource(R.mipmap.icon_round_right);
+        }else if(gender.equals("1")){
+            SexMale.setImageResource(R.mipmap.icon_round_right);
+        }
+    }
+
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.headIcon:
+                case R.id.userIcon:
                     new SelectPicDialog(UserInfoEdit.this).show();
-
                     break;
                 case R.id.birthdayLayout:
+                    String date=userBirthday.getText().toString();
+                    if(!date.contains("-"))
+                        date= ActUtil.getDate();
+                    String[] dateStart = date.split("-");
+                    datePickerDialog=new DatePickerDialog(UserInfoEdit.this, mDateSetListener, Integer.valueOf(dateStart[0]),
+                            Integer.valueOf(dateStart[1])-1, Integer.valueOf(dateStart[2]));
+                    datePickerDialog.show();
                     break;
                 case R.id.LayoutFemale:
+                    gender="female";
                     SexFemale.setImageResource(R.mipmap.icon_round_right);
                     SexMale.setImageResource(R.mipmap.icon_round);
                     break;
                 case R.id.LayoutMale:
+                    gender="male";
                     SexFemale.setImageResource(R.mipmap.icon_round);
                     SexMale.setImageResource(R.mipmap.icon_round_right);
                     break;
 
             }
+        }
+    };
+
+    DatePickerDialog.OnDateSetListener mDateSetListener=new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            System.out.println("---> 设置后: year="+year+", month="+monthOfYear+",day="+dayOfMonth);
+            String dateStr=year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+            userBirthday.setText(dateStr);
         }
     };
 
@@ -176,6 +260,24 @@ public class UserInfoEdit extends BaseFrameAct {
                 final Bitmap output = ImageUtil.createCircleImage(photo, Math.min(photo.getHeight(), photo.getWidth()));
                 FileUtil.saveBitmap(output, phoneTxtName, UserInfoEdit.this, 100);
                 headIcon.setImageBitmap(output);
+
+                new UploadTask(new UploadTask.UploadCallBack() {
+
+                    @Override
+                    public void onSuccess(String result) {
+                        progressDialog.dismiss();
+                        avatar = result;
+                        LogUtil.d("Img", avatar);
+                        imageloader.displayImage(ImageUtil.getImageUrl(avatar), headIcon);
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        DialogUtil.showInfoDailog(UserInfoEdit.this, "提示", "图片上传失败!");
+                        progressDialog.dismiss();
+                        // mFaceImagePath.delete();
+                    }
+                }).execute(file, "avatar/"+phoneTxtName + ".png");
             }
         }
     }

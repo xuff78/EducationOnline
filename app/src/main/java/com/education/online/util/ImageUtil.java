@@ -21,6 +21,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.ExifInterface;
 import android.widget.ImageView;
 
+import com.education.online.act.upyun.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -204,6 +205,10 @@ public class ImageUtil {
 				bm.recycle();
 			img.setImageDrawable(null);
 		}
+	}
+
+	public static String getImageUrl(String img) {
+		return UploadTask.UPLOAD_URL+img;
 	}
 
 	public static Bitmap toRoundCorner(Bitmap bitmap, float pixels) {

@@ -24,6 +24,7 @@ import com.education.online.fragment.mycenter.MyCenterMain;
 import com.education.online.fragment.teacher.TeacherPage;
 import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -61,6 +62,9 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         });
         changePage(home);
         initLocation();
+        if(!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")){
+            menuBtn5.setVisibility(View.GONE);
+        }
     }
 
     private void initView() {

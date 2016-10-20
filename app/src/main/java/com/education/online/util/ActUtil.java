@@ -3,6 +3,11 @@ package com.education.online.util;
 import android.app.Activity;
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Administrator on 2016/8/12.
  */
@@ -32,6 +37,15 @@ public class ActUtil {
         SharedPreferencesUtil.setString(con, Constant.Pic_Savepath,
                 Constant.SavePath);
 
+    }
+
+    public static String getDate() {
+        Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
+        long todayL=mCalendar.getTimeInMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(todayL);//获取当
+        String dateTxt = formatter.format(curDate);
+        return dateTxt;
     }
 
     public static String getWeekDay(int i) {

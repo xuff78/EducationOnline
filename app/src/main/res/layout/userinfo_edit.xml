@@ -22,7 +22,7 @@
                 style="@style/txt_gray_12" />
             <EditText
                 android:id="@+id/nickName"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|right"
                 android:background="@null"
                 style="@style/txt_black_12"
                 android:layout_marginLeft="10dp"
@@ -35,7 +35,7 @@
             android:layout_height="1px" />
 
         <RelativeLayout
-            android:id="@+id/subjectLayout"
+            android:id="@+id/headImgLayout"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:layout_width="match_parent"
@@ -45,12 +45,12 @@
                 android:text="用户头像"
                 style="@style/txt_gray_12" />
             <ImageView
-                android:background="@color/whitesmoke"
+                android:src="@color/whitesmoke"
                 android:id="@+id/userIcon"
                 android:layout_toLeftOf="@+id/arrowRight"
                 android:layout_centerVertical="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
             <View
                 android:id="@+id/arrowRight"
                 android:layout_centerVertical="true"
@@ -81,7 +81,7 @@
             <TextView
                 android:text="手机号"
                 style="@style/txt_gray_12" />
-            <EditText
+            <TextView
                 android:id="@+id/userPhone"
                 android:gravity="center_vertical|right"
                 android:background="@null"
@@ -104,7 +104,7 @@
             <TextView
                 android:text="真实姓名"
                 style="@style/txt_gray_12" />
-            <EditText
+            <TextView
                 android:id="@+id/userName"
                 android:gravity="center_vertical|right"
                 android:background="@null"
@@ -144,7 +144,7 @@
                     android:id="@+id/SexFemale"
                     android:layout_width="17dp"
                     android:layout_height="17dp"
-                    android:src="@mipmap/icon_round_right" />
+                    android:src="@mipmap/icon_round" />
 
                 <TextView
                     android:id="@+id/TextFemale"
@@ -224,11 +224,13 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
         <TextView
+            android:visibility="gone"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:text="个人简介"
             style="@style/txt_gray_12" />
         <EditText
+            android:visibility="gone"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:id="@+id/introduce"
