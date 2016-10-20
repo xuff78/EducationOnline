@@ -9,18 +9,28 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.AddClassBean;
+import com.education.online.bean.JsonMessage;
+import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+
+import org.json.JSONException;
 
 /**
  * Created by Administrator on 2016/9/6.
  */
 public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickListener{
 
+    private AddClassBean addClassBean;
     HttpHandler handler;
     private TextView submitCourseBtn, payBackTxt, insertTxt, paybackSelection1Text, paybackSelection2Text, insert1Text, insert2Text;
     private View arrowRight, arrowRight2, paybackSelection, insertSelection;
     private ImageView paybackSelection1Icon, paybackSelection2Icon, insert1Icon, insert2Icon;
     private int payback=0, insert=0;
+    private Intent intent;
+    private HttpHandler httpHandler;
+    private String time_len;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,28 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
         findViewById(R.id.paybackLayout).setOnClickListener(this);
         findViewById(R.id.insertLayout).setOnClickListener(this);
         findViewById(R.id.submitCourseBtn).setOnClickListener(this);
+        intent = getIntent();
+        addClassBean = (AddClassBean) intent.getSerializableExtra("addClassBean");
+
+        initiHandler();
+
+    }
+    public void initiHandler(){
+        httpHandler = new HttpHandler(this, new CallBack(this)
+        {
+            @Override
+            public void onSuccess(String method, String jsonMessage) throws JSONException {
+                super.onSuccess(method, jsonMessage);
+              //  finish();
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+                super.onFailure(method, jsonMessage);
+            }
+        });
+
+
 
     }
 
@@ -80,6 +112,8 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 break;
             case R.id.submitCourseBtn:
 
+                httpHandler.addClass(addClassBean);
+
                 break;
             case R.id.insert1Text:
                 insert1Text.setTextColor(getResources().getColor(R.color.normal_red));
@@ -87,6 +121,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 insert2Text.setTextColor(getResources().getColor(R.color.hard_gray));
                 insert2Icon.setVisibility(View.GONE);
                 insertTxt.setText(insert1Text.getText().toString());
+                addClassBean.setTransfer("non");
                 break;
             case R.id.insert2Text:
                 insert2Text.setTextColor(getResources().getColor(R.color.normal_red));
@@ -94,6 +129,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 insert1Text.setTextColor(getResources().getColor(R.color.hard_gray));
                 insert1Icon.setVisibility(View.GONE);
                 insertTxt.setText(insert2Text.getText().toString());
+                addClassBean.setTransfer("always");
                 break;
             case R.id.paybackSelection1Text:
                 paybackSelection1Text.setTextColor(getResources().getColor(R.color.normal_red));
@@ -101,6 +137,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 paybackSelection2Text.setTextColor(getResources().getColor(R.color.hard_gray));
                 paybackSelection2Icon.setVisibility(View.GONE);
                 payBackTxt.setText(paybackSelection1Text.getText().toString());
+                addClassBean.setRefund("always");
                 break;
             case R.id.paybackSelection2Text:
                 paybackSelection2Text.setTextColor(getResources().getColor(R.color.normal_red));
@@ -108,7 +145,25 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 paybackSelection1Text.setTextColor(getResources().getColor(R.color.hard_gray));
                 paybackSelection1Icon.setVisibility(View.GONE);
                 payBackTxt.setText(paybackSelection2Text.getText().toString());
+                addClassBean.setRefund("non");
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0x11)
+        {
+            String temp = data.getStringExtra("courseware_time");
+            String temp1 = data.getStringExtra("time_len");
+            float temp2 = Float.parseFloat(temp1);
+            int temp3 = (int)(temp2*60);
+            temp1=String.valueOf(temp3);
+            addClassBean.setTime_len(temp1);
+            addClassBean.setCourseware_time(temp);
+
+
         }
     }
 }

@@ -17,6 +17,7 @@ public class CourseMemberEdit  extends BaseFrameAct {
 
     private EditText minNum, maxNum;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
