@@ -29,10 +29,9 @@ public class RegisterPage3 extends BaseFrameAct {
     private LinearLayout LayoutStudent;
     private Intent intent;
     private String identity;
-    private HttpHandler handler;
+    //private HttpHandler handler;
     private String phone;
     private String password;
-    private String sessionid;
 
 
 
@@ -56,19 +55,23 @@ public class RegisterPage3 extends BaseFrameAct {
         LayoutStudent.setOnClickListener(radioclicklistener);
         intent = getIntent();
         identity = "student";
-        phone = intent.getStringExtra("phone");
-        password = intent.getStringExtra("password");
-        initHandler();
+       // phone = intent.getStringExtra("phone");
+       // password = intent.getStringExtra("password");
+       // initHandler();
 
         Confirmiden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                handler.regist(phone,password,identity);
+               // handler.regist(phone,password,identity);
+                intent.putExtra("identity",identity);
+                intent.setClass(RegisterPage3.this,CompleteDataPage.class);
+                startActivity(intent);
 
             }
         });
     }
+    /*
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
@@ -89,7 +92,7 @@ public class RegisterPage3 extends BaseFrameAct {
                 }
             }
         });
-    }
+    }*/
 
 
     private class MyRadioBtnClickListener implements View.OnClickListener{
@@ -100,12 +103,12 @@ public class RegisterPage3 extends BaseFrameAct {
                 case R.id.LayoutStudent:
                     RoleStudent.setImageResource(R.mipmap.icon_round_right);
                     RoleTeacher.setImageResource(R.mipmap.icon_round);
-                    identity = "teacher";
+                    identity ="student";
                     break;
                 case R.id.LayoutTeacher:
                     RoleTeacher.setImageResource(R.mipmap.icon_round_right);
                     RoleStudent.setImageResource(R.mipmap.icon_round);
-                    identity = "student";
+                    identity =  "teacher";
                     break;
 
             }

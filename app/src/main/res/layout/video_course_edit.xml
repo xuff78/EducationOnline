@@ -22,7 +22,7 @@
             style="@style/txt_gray_14" />
         <EditText
             android:id="@+id/courseName"
-            android:gravity="right"
+            android:gravity="right|center_vertical"
             android:singleLine="true"
             android:background="@null"
             style="@style/txt_black_14"
@@ -204,7 +204,7 @@
         android:background="@null"
         android:padding="20dp"
         android:layout_centerVertical="true"
-        android:text="课程详情"
+        android:hint="课程详情..."
         android:layout_width="match_parent"
         android:gravity="left|top"
         android:id="@+id/courseDesc"

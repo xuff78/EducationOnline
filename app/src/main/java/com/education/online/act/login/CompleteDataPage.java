@@ -26,10 +26,12 @@ import com.education.online.act.upyun.UploadTask;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
+import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
@@ -37,8 +39,12 @@ import com.education.online.view.SelectWeekdayDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class CompleteDataPage extends BaseFrameAct {
 
@@ -50,13 +56,21 @@ public class CompleteDataPage extends BaseFrameAct {
     private ImageView SexMale;
     private LinearLayout LayoutMale;
     private LinearLayout LayoutFemale;
+    private LinearLayout setsubject;
     private Intent intent;
     private HttpHandler httphandler;
     private String phoneTxtName="";
     private String name="";
-    private String gender="male";
+    private String gender="female";
     private String avatar="";
+    private String nickname = "";
+    private String subject_id ="2";//temple value needmiodified
+    private String password;
+    private  String phone;
+    private String identity;
     private ImageLoader imageloader;
+    private View view2;
+
 
 
     @Override
@@ -74,17 +88,28 @@ public class CompleteDataPage extends BaseFrameAct {
         headIcon.setOnClickListener(listener);
         Subject.setOnClickListener(listener);
         findViewById(R.id.BackToHone).setOnClickListener(listener);
+        view2 = findViewById(R.id.view2);
 
+        setsubject = (LinearLayout) findViewById(R.id.setsubject);
         SexFemale = (ImageView) findViewById(R.id.SexFemale);
         SexMale = (ImageView) findViewById(R.id.SexMale);
         SexFemale.setImageResource(R.mipmap.icon_round_right);
         SexMale.setImageResource(R.mipmap.icon_round);
         LayoutMale = (LinearLayout) findViewById(R.id.LayoutMale);
         LayoutFemale = (LinearLayout) findViewById(R.id.LayoutFemale);
+
         RealName= (EditText) findViewById(R.id.RealName);
         LayoutFemale.setOnClickListener(listener);
         LayoutMale.setOnClickListener(listener);
         intent = getIntent();
+        password = intent.getStringExtra("password");
+        phone = intent.getStringExtra("phone");
+        identity = intent.getStringExtra("identity");
+        if(identity.equals("student"))
+        {
+            setsubject.setVisibility(View.GONE);
+            view2.setVisibility(View.GONE);
+        }
         initHandler();
     }
 
@@ -101,16 +126,31 @@ public class CompleteDataPage extends BaseFrameAct {
                 case R.id.LayoutFemale:
                     SexFemale.setImageResource(R.mipmap.icon_round_right);
                     SexMale.setImageResource(R.mipmap.icon_round);
-                    gender="male";
+                    gender="female";
                     break;
                 case R.id.LayoutMale:
                     SexFemale.setImageResource(R.mipmap.icon_round);
                     SexMale.setImageResource(R.mipmap.icon_round_right);
-                    gender = "female";
+                    gender = "male";
                     break;
                 case R.id.BackToHone:
-                    name = RealName.getText().toString();
-                    httphandler.update(name,gender,avatar);
+                    if (identity.equals("teacher") && subject_id.length()==0 ) {
+                        Toast.makeText(CompleteDataPage.this, "请选择教学科目", Toast.LENGTH_SHORT).show();
+                    }else {
+                        name = RealName.getText().toString();
+                        String SHApassword="";
+                        try {
+                            SHApassword = SHA.getSHA(password);
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+                        httphandler.regist(phone,SHApassword,identity,nickname,name,gender,avatar,subject_id);
+
+                    }
+
+
+
+                   // httphandler.update(name,gender,avatar);
                     //httphandler.regist(phone, password,identity );
                     break;
 
@@ -137,12 +177,16 @@ public class CompleteDataPage extends BaseFrameAct {
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
 //
-                Toast.makeText(CompleteDataPage.this,"updatesuccess",Toast.LENGTH_SHORT);
+                Toast.makeText(CompleteDataPage.this,"注册成功！",Toast.LENGTH_SHORT);
 
-                Intent intent = new Intent(CompleteDataPage.this, FirstPage.class);
+                if(method.equals(Method.Regist)) {
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    String sessionid = jsonObject.getString("sessionid");
+                    SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserInfo, jsonData);
+                    SharedPreferencesUtil.setSessionid(CompleteDataPage.this, sessionid);}
+                    Intent intent = new Intent(CompleteDataPage.this, FirstPage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
             }
         });
     }
@@ -221,7 +265,7 @@ public class CompleteDataPage extends BaseFrameAct {
                 FileUtil.saveBitmap(output, phoneTxtName, CompleteDataPage.this, 100);
                 headIcon.setImageBitmap(output);
 
-                new UploadTask(new UploadTask.UploadCallBack() {
+                new UploadTask(new UploadTask.UploadCallBack() {//后台上传照片
 
                     @Override
                     public void onSuccess(String result) {
@@ -241,6 +285,5 @@ public class CompleteDataPage extends BaseFrameAct {
             }
         }
     }
-
 
 }

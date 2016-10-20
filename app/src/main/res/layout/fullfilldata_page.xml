@@ -123,12 +123,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/view1"
         android:orientation="vertical">
-
         <LinearLayout
+            android:id="@+id/setsubject"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -151,10 +150,12 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="30dp"
             android:background="@color/light_gray" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"

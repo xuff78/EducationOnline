@@ -23,7 +23,6 @@ import com.education.online.fragment.BaseFragment;
  */
 public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

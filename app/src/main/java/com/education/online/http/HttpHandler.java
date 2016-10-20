@@ -59,14 +59,21 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getUserInfo, paramMap, true);
 	}
 
-	public void regist(String phone, String password,String identity)
+	public void regist(String phone, String password,String identity,String nickname,String name,String gender,String avatar,String subject_id)
 	{
 		HashMap<String, String> paraMap = new HashMap<>();
 		paraMap.put("phone",phone);
 		paraMap.put("password",password);
 		paraMap.put("identity",identity);
+		paraMap.put("nickname",nickname);
+		paraMap.put("name",name);
+		paraMap.put("gender",gender);
+		paraMap.put("avatar",avatar);
+		paraMap.put("subject_id",subject_id);
 		requestPostUser(Method.Regist,paraMap,true);
 	}
+
+
 	public  void update(String name,String gender,String avatar){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));

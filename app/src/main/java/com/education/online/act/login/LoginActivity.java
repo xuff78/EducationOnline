@@ -22,10 +22,13 @@ import com.education.online.retrofit.RCallBack;
 import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
 
 import org.json.JSONException;
+
+import java.security.NoSuchAlgorithmException;
 
 /**
  * A login screen that offers login via email/password.
@@ -51,15 +54,19 @@ public class LoginActivity extends BaseFrameAct {
     private void initView() {
         userName = (EditText) findViewById(R.id.userName);
         userPsd = (EditText) findViewById(R.id.userPsd);
-        String loginName=SharedPreferencesUtil.getString(this, Constant.UserName);
-        if(!loginName.equals(SharedPreferencesUtil.FAILURE_STRING)){
+        String loginName=SharedPreferencesUtil.getString(this, Constant.UserName);//保存用户名在本地
+        if(!loginName.equals(SharedPreferencesUtil.FAILURE_STRING)){//有数据时自动填写
             userName.setText(loginName);
         }
         userPsd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) {
-                    attemptLogin();
+                    try {
+                        attemptLogin();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 }
                 return false;
@@ -70,7 +77,11 @@ public class LoginActivity extends BaseFrameAct {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                try {
+                    attemptLogin();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
             }
         });
         findViewById(R.id.registerBtn).setOnClickListener(new OnClickListener() {
@@ -82,7 +93,7 @@ public class LoginActivity extends BaseFrameAct {
     }
 
 
-    private void attemptLogin() {
+    private void attemptLogin() throws NoSuchAlgorithmException {
 
 
 //        startActivity(new Intent(LoginActivity.this, MainPage.class));
@@ -91,7 +102,10 @@ public class LoginActivity extends BaseFrameAct {
         userPsd.setError(null);
 
         String name = userName.getText().toString();
-        String password = userPsd.getText().toString();
+        String uncodepassword=userPsd.getText().toString();
+        String password = SHA.getSHA(uncodepassword);
+
+        //String password = userPsd.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -128,7 +142,7 @@ public class LoginActivity extends BaseFrameAct {
                 String sessionid = JsonUtil.getString(jsonData, "sessionid");
                 String usercode = JsonUtil.getString(jsonData, "usercode");
                 SharedPreferencesUtil.setUsercode(LoginActivity.this, usercode);
-                SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);
+                SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);//保存sessionid
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
 
