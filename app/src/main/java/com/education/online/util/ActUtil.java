@@ -2,6 +2,8 @@ package com.education.online.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,8 +16,11 @@ import java.util.Locale;
 public class ActUtil {
 
     public static void closeSoftPan(Activity activity) {
-
-
+        View view = activity.getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     public static void initData(Context con) {
