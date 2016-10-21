@@ -53,6 +53,19 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getHomePage, paramMap, true);
 	}
 
+	public void getInterestList() {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getInterestList, paramMap, true);
+	}
+
+	public void editInterest(String subject_ids) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("subject_ids",subject_ids);
+		requestPostEdu(Method.editInterest, paramMap, true);
+	}
+
 	public void getUserInfo(String usercode) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("usercode",usercode);

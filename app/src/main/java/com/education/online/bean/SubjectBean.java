@@ -11,10 +11,19 @@ public class SubjectBean implements Serializable{
     public static String Name="SubjectBean";
     private String subject_name = ""; //科目名称
     private String subject_id = ""; // 科目ID
+    private boolean isSelected=false;
     private ArrayList<SubjectBean> child_subject=new ArrayList<>();
     private ArrayList<SubjectBean> child_subject_details=new ArrayList<>();
 
     public SubjectBean(){}
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getSubject_name() {
         return subject_name;

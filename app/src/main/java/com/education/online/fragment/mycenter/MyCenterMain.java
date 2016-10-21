@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.Mine.HelpandFeedback;
 import com.education.online.act.Mine.MyCourseMuti;
@@ -16,12 +18,22 @@ import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
 import com.education.online.act.Mine.MyInteresting;
+import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/10.
  */
 public class MyCenterMain extends BaseFragment implements View.OnClickListener{
+
+    private HttpHandler handler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +41,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.mycenter_layout, container, false);
 
         initView(view);
+        initHandler();
         return view;
     }
 
@@ -88,11 +101,24 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), MyEvaluation.class));
                 break;
             case R.id.interestingLayout:
-                startActivity(new Intent(getActivity(), MyInteresting.class));
+                handler.getSubjectList();
                 break;
             case R.id.descTxt:
                 startActivity(new Intent(getActivity(), UserInfoEdit.class));
                 break;
         }
+    }
+
+    private void initHandler() {
+        handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                if(method.equals(Method.getSubjectList)){
+                    Intent i=new Intent(getActivity(), MyInteresting.class);
+                    i.putExtra("jsonData", jsonData);
+                    startActivity(i);
+                }
+            }
+        });
     }
 }
