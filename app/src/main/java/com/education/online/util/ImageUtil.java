@@ -208,7 +208,7 @@ public class ImageUtil {
 	}
 
 	public static String getImageUrl(String img) {
-		return UploadTask.UPLOAD_URL+img;
+		return UploadTask.UPLOAD_URL+"/"+img;
 	}
 
 	public static Bitmap toRoundCorner(Bitmap bitmap, float pixels) {

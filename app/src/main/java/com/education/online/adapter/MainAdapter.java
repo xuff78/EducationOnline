@@ -19,13 +19,17 @@ import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
 import com.education.online.bean.HomePageInfo;
+import com.education.online.bean.LiveCourse;
 import com.education.online.bean.SubjectBean;
+import com.education.online.bean.VideoCourse;
+import com.education.online.bean.WareCourse;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 可爱的蘑菇 on 2016/8/15.
@@ -71,12 +75,69 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }else if(pos==2) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("直播");
+            List<LiveCourse> liveCourses=info.getLive();
+            if(liveCourses.size()>0){
+                LiveCourse live=liveCourses.get(0);
+                imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                ivh.titleTxt.setText(live.getCourse_name());
+                ivh.priceTxt.setText("¥"+live.getPrice());
+                ivh.timeTxt.setText(live.getCourseware_date());
+                ivh.statusTxt.setText(live.getFollow()+"人在学习");
+            }else
+                ivh.item1.setVisibility(View.INVISIBLE);
+            if(liveCourses.size()>1){
+                LiveCourse live=liveCourses.get(1);
+                imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
+                ivh.titleTxt2.setText(live.getCourse_name());
+                ivh.priceTxt2.setText("¥"+live.getPrice());
+                ivh.timeTxt2.setText(live.getCourseware_date());
+                ivh.statusTxt2.setText(live.getFollow()+"人在学习");
+            }else
+                ivh.item2.setVisibility(View.INVISIBLE);
         }else if(pos==3) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("视频");
+            List<VideoCourse> liveCourses=info.getVideo();
+            if(liveCourses.size()>0){
+                VideoCourse live=liveCourses.get(0);
+                imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                ivh.titleTxt.setText(live.getCourse_name());
+                ivh.priceTxt.setText("¥"+live.getPrice());
+                ivh.timeTxt.setVisibility(View.GONE);
+                ivh.statusTxt.setText(live.getFollow()+"人在学习");
+            }else
+                ivh.item1.setVisibility(View.INVISIBLE);
+            if(liveCourses.size()>1){
+                VideoCourse live=liveCourses.get(1);
+                imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
+                ivh.titleTxt2.setText(live.getCourse_name());
+                ivh.priceTxt2.setText("¥"+live.getPrice());
+                ivh.timeTxt2.setVisibility(View.GONE);
+                ivh.statusTxt2.setText(live.getFollow()+"人在学习");
+            }else
+                ivh.item2.setVisibility(View.INVISIBLE);
         }else if(pos==4) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("课件");
+            List<WareCourse> liveCourses=info.getWare();
+            if(liveCourses.size()>0){
+                WareCourse live=liveCourses.get(0);
+                imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                ivh.titleTxt.setText(live.getCourse_name());
+                ivh.priceTxt.setText("¥"+live.getPrice());
+                ivh.timeTxt.setVisibility(View.GONE);
+                ivh.statusTxt.setText(live.getFollow()+"人在学习");
+            }else
+                ivh.item1.setVisibility(View.INVISIBLE);
+            if(liveCourses.size()>1){
+                WareCourse live=liveCourses.get(1);
+                imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
+                ivh.titleTxt2.setText(live.getCourse_name());
+                ivh.priceTxt2.setText("¥"+live.getPrice());
+                ivh.timeTxt2.setVisibility(View.GONE);
+                ivh.statusTxt2.setText(live.getFollow()+"人在学习");
+            }else
+                ivh.item2.setVisibility(View.INVISIBLE);
         }
     }
 
