@@ -6,9 +6,11 @@ import java.io.Serializable;
  * Created by Great Gao on 2016/10/20.
  */
 public class AddClassBean implements Serializable{
+    public final static String Name ="AddClassBean";
+
     private String name = "";//课程名称
     private String course_type = ""; //课程类型
-    private String subject_id = "test_id_need_modify"; //科目ID  无
+    private String subject_id = ""; //科目ID  无
     private String original_price = ""; //原价  无
     private String price = ""; //价格
     private String img = ""; //简图

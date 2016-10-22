@@ -21,6 +21,10 @@ import com.education.online.view.WheelAddressSelectorDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2016/9/6.
@@ -63,6 +67,11 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
         courseList.setAdapter(adapter);
 
         intent= getIntent();
+        ArraryCourseTimeBean temp = (ArraryCourseTimeBean) intent.getSerializableExtra("arrayCourseTimeBean");
+        if(temp!=null)
+        courses.addAll(temp.getTimelist());
+
+
 
 
         _setLeftBackListener(new View.OnClickListener() {
@@ -70,13 +79,21 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
             public void onClick(View v) {
                 String temp = "";
                 String temp2="";
-                for(CourseTimeBean course : courses)
+                for(int i=0;i< courses.size();i++)
                 {
-                    temp=temp+","+course.getDatetime()+" "+course.getHour()+":"+course.getMin();
+                    CourseTimeBean course=courses.get(i);
+                    if (i==courses.size()-1) {
+                        temp = temp + course.getDatetime() + " " + course.getHour() + ":" + course.getMin();
+                    }else {
+                        temp = temp + course.getDatetime() + " " + course.getHour() + ":" + course.getMin() + ",";
+                    }
                     temp2=course.getLongtime();
                 }
                 intent.putExtra("courseware_time",temp);
                 intent.putExtra("time_len",temp2);
+                ArraryCourseTimeBean arraryCourseTimeBean = new ArraryCourseTimeBean();
+                arraryCourseTimeBean.setTimelist(courses);
+                intent.putExtra("arrayCourseTimeBean",arraryCourseTimeBean);
                 setResult(0x11,intent);
                 finish();
             }
@@ -117,6 +134,8 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
             list = (ArraryCourseTimeBean) data.getSerializableExtra("TimeListArray") ;
             temp = list.getTimelist();
             courses.addAll(temp);
+            courses= (ArrayList<CourseTimeBean>) removeDuplicateWithOrder(courses);
+            //courses 去重
             adapter.notifyDataSetChanged();//通知列表更新
         }
     }
@@ -129,7 +148,16 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
         adapter.notifyDataSetChanged();//通知列表更新
     }
 
-
+    public List removeDuplicateWithOrder(List list) {
+        Set set = new HashSet();
+        List newList = new ArrayList();
+        for (Iterator iter = list.iterator(); iter.hasNext();) {
+            Object element = iter.next();
+            if (set.add(element))
+                newList.add(element);
+        }
+        return newList;
+    }
     @Override
     public void onChanged(CourseTimeBean bean) {
         courses.set(modifyPos, bean);

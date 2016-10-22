@@ -10,9 +10,11 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.bean.AddClassBean;
+import com.education.online.bean.ArraryCourseTimeBean;
 import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.util.DialogUtil;
 
 import org.json.JSONException;
 
@@ -29,6 +31,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
     private int payback=0, insert=0;
     private Intent intent;
     private HttpHandler httpHandler;
+    private ArraryCourseTimeBean arraryCourseTimeBean ;
     private String time_len;
 
 
@@ -67,6 +70,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
         findViewById(R.id.submitCourseBtn).setOnClickListener(this);
         intent = getIntent();
         addClassBean = (AddClassBean) intent.getSerializableExtra("addClassBean");
+        arraryCourseTimeBean = new ArraryCourseTimeBean();
 
         initiHandler();
 
@@ -77,12 +81,13 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
             @Override
             public void onSuccess(String method, String jsonMessage) throws JSONException {
                 super.onSuccess(method, jsonMessage);
-              //  finish();
+                DialogUtil.showInfoDailog(CourseBaseInfoEdit2.this, "提示", "发布课程成功!");
             }
 
             @Override
             public void onFailure(String method, JsonMessage jsonMessage) {
                 super.onFailure(method, jsonMessage);
+                //
             }
         });
 
@@ -94,7 +99,9 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.setTimeLayout:
-                startActivityForResult(new Intent(CourseBaseInfoEdit2.this, CourseTimeSet.class), 0x10);
+                intent.setClass(CourseBaseInfoEdit2.this, CourseTimeSet.class);
+                intent.putExtra("arrayCourseTimeBean",arraryCourseTimeBean);
+                startActivityForResult(intent, 0x10);
                 break;
             case R.id.paybackLayout:
                 arrowRight.setRotationX(1);
@@ -155,6 +162,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==0x11)
         {
+            arraryCourseTimeBean = (ArraryCourseTimeBean) data.getSerializableExtra("arrayCourseTimeBean");
             String temp = data.getStringExtra("courseware_time");
             String temp1 = data.getStringExtra("time_len");
             float temp2 = Float.parseFloat(temp1);
@@ -162,8 +170,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
             temp1=String.valueOf(temp3);
             addClassBean.setTime_len(temp1);
             addClassBean.setCourseware_time(temp);
-
-
         }
+
     }
 }
