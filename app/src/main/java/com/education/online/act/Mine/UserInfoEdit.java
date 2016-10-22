@@ -185,6 +185,8 @@ public class UserInfoEdit extends BaseFrameAct {
             progressDialog.dismiss();
             if(file.exists())
                 startPhotoZoom(Uri.fromFile(file));
+            else
+                ToastUtils.displayTextShort(UserInfoEdit.this, "找不到文件");
         }
     };
 

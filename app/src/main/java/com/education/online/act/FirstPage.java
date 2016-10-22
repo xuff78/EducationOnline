@@ -41,7 +41,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         _setHeaderGone();
         initView();
 
-//        ActUtil.initData(this);
+        ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
     }
 
