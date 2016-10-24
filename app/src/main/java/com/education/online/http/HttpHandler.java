@@ -48,6 +48,56 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getSubjectList, paramMap, true);
 	}
 
+	/**
+	 *
+	 * @param status 课程状态 （over-已完结 underway-未完结）
+	 * @param course_type  课程类型（courseware-课件 video-视频 live-直播）
+	 * @param subject_id
+	 * @param key_word
+	 * @param is_free 是否免费 yes-是 no-不是
+	 * @param usercode
+	 * @param sort  排序（hot-热度 course_id-课程ID sort_order-教师设置排序值正序 evaluate-评价 price-价格）
+	 * @param page_size
+     * @param page
+     */
+	public void getCourseList(String status, String course_type, String subject_id, String key_word, String is_free, String usercode,
+							  String sort, String page_size, String page) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("status", status);
+		if(course_type!=null)
+			paramMap.put("course_type", course_type);
+		if(subject_id!=null)
+			paramMap.put("subject_id", subject_id);
+		if(key_word!=null)
+			paramMap.put("key_word", key_word);
+		if(is_free!=null)
+			paramMap.put("is_free", is_free);
+		if(usercode!=null)
+			paramMap.put("usercode", usercode);
+		if(sort!=null)
+			paramMap.put("sort", sort);
+		if(page_size!=null)
+			paramMap.put("page_size", page_size);
+		if(page!=null)
+			paramMap.put("page", page);
+		requestPostEdu(Method.getCourseList, paramMap, true);
+	}
+
+	public void updateSortList(String course_ids) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("course_ids", course_ids);
+		requestPostEdu(Method.updateSortList, paramMap, true);
+	}
+
+	public void deleteCourse(String course_id) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("course_id", course_id);
+		requestPostEdu(Method.deleteCourse, paramMap, true);
+	}
+
 	public void getHomepage() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		requestPostEdu(Method.getHomePage, paramMap, true);
