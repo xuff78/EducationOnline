@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -18,11 +20,17 @@ import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
 import com.education.online.act.Mine.MyInteresting;
+import com.education.online.bean.HomePageInfo;
 import com.education.online.bean.SubjectBean;
+import com.education.online.bean.UserInfo;
 import com.education.online.fragment.BaseFragment;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.Constant;
+import com.education.online.util.ImageUtil;
+import com.education.online.util.SharedPreferencesUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 
@@ -34,12 +42,13 @@ import java.util.ArrayList;
 public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 
     private HttpHandler handler;
+    private ImageLoader imageLoader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mycenter_layout, container, false);
-
+        imageLoader=ImageLoader.getInstance();
         initView(view);
         initHandler();
         return view;
@@ -59,6 +68,12 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.settingLayout).setOnClickListener(this);
         v.findViewById(R.id.helpLayout).setOnClickListener(this);
         v.findViewById(R.id.myCommentLayout).setOnClickListener(this);
+
+        UserInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), UserInfo.class);
+        ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
+        imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), teacherImg);
+        TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
+        nameTxt.setText(user.getName());
     }
 
     @Override

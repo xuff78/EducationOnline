@@ -21,6 +21,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.ExifInterface;
 import android.widget.ImageView;
 
+import com.education.online.R;
 import com.education.online.act.upyun.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -49,6 +50,7 @@ public class ImageUtil {
 //						.defaultDisplayImageOptions(ImageUtil.getImageOptions())
 						.discCacheFileNameGenerator(new Md5FileNameGenerator())
 						.tasksProcessingOrder(QueueProcessingType.LIFO)
+						.defaultDisplayImageOptions(getImageOption(R.mipmap.icon_user_defalut))
 						.build();
 				ImageLoader.getInstance().init(config);
 			}
