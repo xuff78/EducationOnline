@@ -21,6 +21,7 @@ import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
 import com.education.online.act.Mine.MyInteresting;
 import com.education.online.bean.HomePageInfo;
+import com.education.online.bean.LoginInfo;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.UserInfo;
 import com.education.online.fragment.BaseFragment;
@@ -69,11 +70,11 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.helpLayout).setOnClickListener(this);
         v.findViewById(R.id.myCommentLayout).setOnClickListener(this);
 
-        UserInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), UserInfo.class);
+        LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), LoginInfo.class);
         ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
         imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), teacherImg);
         TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
-        nameTxt.setText(user.getName());
+        nameTxt.setText(user.getNickname());
     }
 
     @Override

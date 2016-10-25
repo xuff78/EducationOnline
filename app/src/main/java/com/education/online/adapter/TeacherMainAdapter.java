@@ -129,7 +129,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             vh.teacherName.setText(teacherBean.getName());
             vh.teacherTitles.setText(teacherBean.getSpecialty());
             vh.teachingExperience.setText(teacherBean.getWork_time()+"年教龄");
-            vh.teachingExperience.setText("");
+            vh.identityConfirmed.setText("已认证");
             vh.fansNum.setText(teacherBean.getAttention_count());
             vh.studentNum.setText(teacherBean.getStudent_count());
             vh.praisePercent.setText(teacherBean.getGood_evaluate_ratio());

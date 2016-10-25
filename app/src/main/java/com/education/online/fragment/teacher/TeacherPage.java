@@ -18,6 +18,7 @@ import com.education.online.act.teacher.TeacherCourseStart;
 import com.education.online.act.teacher.TeacherHomePage;
 import com.education.online.act.teacher.TeacherInfoEdit;
 import com.education.online.bean.CategoryBean;
+import com.education.online.bean.LoginInfo;
 import com.education.online.bean.UserInfo;
 import com.education.online.fragment.BaseFragment;
 import com.education.online.util.Constant;
@@ -51,11 +52,11 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.authLayout).setOnClickListener(this);
         v.findViewById(R.id.settingLayout).setOnClickListener(this);
 
-        UserInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), UserInfo.class);
+        LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), LoginInfo.class);
         ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
         imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), teacherImg);
         TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
-        nameTxt.setText(user.getName());
+        nameTxt.setText(user.getUsername());
         TextView descTxt= (TextView) v.findViewById(R.id.descTxt);
         descTxt.setText("未生效");
         TextView sexTxt= (TextView) v.findViewById(R.id.sexTxt);
