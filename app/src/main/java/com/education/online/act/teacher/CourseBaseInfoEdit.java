@@ -157,7 +157,7 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        course = result;
+                        course = result.substring(1);
                         LogUtil.d("Img", course);
                        // imageloader.displayImage(ImageUtil.getImageUrl(course), courseImg);
                         Toast.makeText(CourseBaseInfoEdit.this,"图片上传成功！",Toast.LENGTH_SHORT);

@@ -1,5 +1,6 @@
 package com.education.online.act.teacher;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,10 +9,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.CommentsAdapter;
 import com.education.online.adapter.TeacherMainAdapter;
+import com.education.online.bean.TeacherBean;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.DialogUtil;
+import com.education.online.util.SharedPreferencesUtil;
+
+import org.json.JSONException;
 
 /**
  * Created by Administrator on 2016/9/1.
@@ -21,29 +31,45 @@ public class TeacherInformationPage extends BaseFrameAct {
 
     private LinearLayout consultingLayout, addToFavoriteLayout;
     private RecyclerView recyclerViewList;
+    private HttpHandler handler;
+    private TeacherBean teacher;
+    private TeacherMainAdapter adapter;
+
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getUserInfo)){
+                    teacher= JSON.parseObject(jsonData, TeacherBean.class);
+                    adapter=new TeacherMainAdapter(TeacherInformationPage.this, teacher);
+                    recyclerViewList.setAdapter(adapter);
+                }else if(method.equals(Method.updateTeacher)){
+                }
+
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_main_page);
 
         _setHeaderGone();
+        initHandler();
         InitView();
+
+        handler.getUserInfo(SharedPreferencesUtil.getUsercode(this));
     }
 
     private void InitView() {
-
-
         consultingLayout = (LinearLayout) findViewById(R.id.consultingLayout);
         addToFavoriteLayout = (LinearLayout) findViewById(R.id.addToFavoriteLayout);
-
-
         recyclerViewList = (RecyclerView) findViewById(R.id.recyclerViewList);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(TeacherInformationPage.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewList.setLayoutManager(layoutManager);
-
-        recyclerViewList.setAdapter(new TeacherMainAdapter(this, ""));
 
     }
 }

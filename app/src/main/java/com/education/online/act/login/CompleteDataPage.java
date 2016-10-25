@@ -274,9 +274,8 @@ public class CompleteDataPage extends BaseFrameAct {
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        avatar = UploadTask.UPLOAD_URL + result;
+                        avatar = result.substring(1);
                         LogUtil.d("Img", avatar);
-                        imageloader.displayImage(avatar, headIcon);
                     }
 
                     @Override

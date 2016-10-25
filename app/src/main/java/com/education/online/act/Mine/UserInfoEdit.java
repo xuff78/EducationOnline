@@ -268,9 +268,9 @@ public class UserInfoEdit extends BaseFrameAct {
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        avatar = result;
+                        avatar = result.substring(1);
                         LogUtil.d("Img", avatar);
-                        imageloader.displayImage(ImageUtil.getImageUrl(avatar), headIcon);
+//                        imageloader.displayImage(ImageUtil.getImageUrl(avatar), headIcon);
                     }
 
                     @Override

@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.TeacherBean;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.RatingBar;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import static java.security.AccessController.getContext;
 
@@ -26,19 +28,11 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private Activity act;
     private LayoutInflater inflater;
-
-
     private int itemWidth = 0, itemHeight = 0, imgHeight = 0;
     private int padding10 = 0;
     private int ItemType = 1;
-
-
-    /*
-    * itemType 1: MainHolder
-    *
-    *
-    *
-    * */
+    private TeacherBean teacherBean;
+    private ImageLoader imageLoader;
 
     public void setItemType(int itemType) {
         ItemType = itemType;
@@ -49,12 +43,14 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return ItemType;
     }
 
-    public TeacherMainAdapter(Activity act, String jason) {
+    public TeacherMainAdapter(Activity act, TeacherBean teacherBean) {
         this.act = act;
+        this.teacherBean=teacherBean;
         inflater = LayoutInflater.from(act);
         padding10 = ImageUtil.dip2px(act, 5);
         itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 4; //小图片和文字的形成点击区域的边长
         imgHeight = itemWidth - 2 * padding10; //小图片的边长
+        imageLoader=ImageLoader.getInstance();
     }
 
     @Override
@@ -124,6 +120,19 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         int i = getItemType();
         if (pos == 0) {
             MainHolder vh = (MainHolder) holder;
+            imageLoader.displayImage(ImageUtil.getImageUrl(teacherBean.getAvatar()), vh.teacherpotrait);
+            if(teacherBean.getGender().equals("1")){
+                vh.teacherSexual.setText("男");
+            }else if(teacherBean.getGender().equals("0")){
+                vh.teacherSexual.setText("女");
+            }
+            vh.teacherName.setText(teacherBean.getName());
+            vh.teacherTitles.setText(teacherBean.getSpecialty());
+            vh.teachingExperience.setText(teacherBean.getWork_time()+"年教龄");
+            vh.teachingExperience.setText("");
+            vh.fansNum.setText(teacherBean.getAttention_count());
+            vh.studentNum.setText(teacherBean.getStudent_count());
+            vh.praisePercent.setText(teacherBean.getGood_evaluate_ratio());
         } else if (pos == 1 ){
             if(i==1){
                     BriefHolder vh =(BriefHolder) holder;
@@ -171,10 +180,11 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private View viewbrief, viewsubjects, viewphotoalbum, viewteachercomments;
         private View lastSelectedview;
         private int lastSelectedPosition;
+        private ImageView backBtn;
 
         public MainHolder(View v) {
             super(v);
-
+            backBtn = (ImageView) v.findViewById(R.id.backBtn);
             teacherpotrait = (ImageView) v.findViewById(R.id.teacherpotrait);
             teacherSexual = (TextView) v.findViewById(R.id.teacherSexual);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
@@ -185,7 +195,12 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             fansNum = (TextView) v.findViewById(R.id.fansNum);
             studentNum = (TextView) v.findViewById(R.id.studentNum);
             praisePercent = (TextView) v.findViewById(R.id.praisePercent);
-
+            backBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.finish();
+                }
+            });
 
             brief = (LinearLayout) v.findViewById(R.id.brief);
             brief.setOnClickListener(this);

@@ -24,6 +24,34 @@ public class TeacherBean {
     private String experience = "";  // 经历
     private String tags = "";  // 标签
     private String message="";
+    private String attention_count = "";  // 粉丝数量
+    private String student_count = "";  // 学生数量
+    private String good_evaluate_ratio = "";  // 好评率（自行转成百分数）
+
+
+    public String getAttention_count() {
+        return attention_count;
+    }
+
+    public void setAttention_count(String attention_count) {
+        this.attention_count = attention_count;
+    }
+
+    public String getStudent_count() {
+        return student_count;
+    }
+
+    public void setStudent_count(String student_count) {
+        this.student_count = student_count;
+    }
+
+    public String getGood_evaluate_ratio() {
+        return good_evaluate_ratio;
+    }
+
+    public void setGood_evaluate_ratio(String good_evaluate_ratio) {
+        this.good_evaluate_ratio = good_evaluate_ratio;
+    }
 
     public String getMessage() {
         return message;

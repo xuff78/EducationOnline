@@ -98,6 +98,19 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.deleteCourse, paramMap, true);
 	}
 
+	public void updateValidate(String pic_urls) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("pic_urls", pic_urls);
+		requestPostEdu(Method.updateValidate, paramMap, true);
+	}
+
+	public void getValidateView() {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getValidateView, paramMap, true);
+	}
+
 	public void getHomepage() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		requestPostEdu(Method.getHomePage, paramMap, true);
