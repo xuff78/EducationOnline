@@ -9,8 +9,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.CourseEvaluate;
+import com.education.online.bean.CourseExtm;
+import com.education.online.bean.CreatUserInfo;
+import com.education.online.bean.EvaluateBean;
+import com.education.online.bean.EvaluateListBean;
+import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.RatingBar;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -20,11 +37,22 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
 
     private Activity act;
     private LayoutInflater listInflater;
+    private CourseDetailBean courseDetailBean;
+    private EvaluateListBean evaluateListBean;
+    private ImageLoader imageLoader;
 
 
-    public CourseAdapter(Activity act, String jason) {
+
+
+
+
+
+    public CourseAdapter(Activity act, CourseDetailBean courseDetailBean,EvaluateListBean evaluateListBean){
         this.act=act;
         listInflater= LayoutInflater.from(act);
+        imageLoader=ImageLoader.getInstance();
+        this.courseDetailBean = courseDetailBean;
+        this.evaluateListBean = evaluateListBean;
     }
 
     @Override
@@ -50,7 +78,7 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
         }else if(pos>2) {
             View view=listInflater.inflate(R.layout.comments_fragment, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
-            vh = new CourseDetailsHolder(view, pos);
+            vh = new CommentsHolder(view, pos);
         }
         return vh;
     }
@@ -61,26 +89,75 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
 
         if (pos==0){
             CourseHolder vh = (CourseHolder) holder;
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg);
+            vh.courseName.setText(courseDetailBean.getCourse_name());
+            vh.coursePrice.setText("￥"+courseDetailBean.getPrice());
+            vh.studentNum.setText("班级人数"+courseDetailBean.getMax_follow()+"人，已报名"+courseDetailBean.getFollow()+"人");
+            vh.praisePercent.setText(courseDetailBean.getHot()+"%好评");
+            vh.totalSerial.setText("共"+courseDetailBean.getCourse_extm().size()+"次课");
+            DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+            Date date = null;
+            try {
+                 date = format1.parse(courseDetailBean.getCourse_extm().get(0).getCourseware_date());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            vh.courseTime.setText(formatter.format(date)+"开课");
+
         }else if(pos==1) {
            TeacherInfoHolder vh =(TeacherInfoHolder) holder;
+            vh.teacherName.setText(courseDetailBean.getUser_info().getUser_name());
+            vh.teacherTitles.setText(courseDetailBean.getUser_info().getIntroduction());
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getUser_info().getAvatar()),vh.teacherPotrait);
+            vh.teacherScore.setText(courseDetailBean.getUser_info().getAverage()+"分");
+            vh.teacherComments.setText("评论"+courseDetailBean.getUser_info().getEvaluate_count());
         }else if(pos==2) {
             CourseDetailsHolder vh = (CourseDetailsHolder) holder;
-    }
+            vh.courseDetail.setText(courseDetailBean.getIntroduction());
+            vh.courseArrangement.setText(courseDetailBean.getPlan());
+            vh.courseArrangement.setText(courseDetailBean.getPlan());
+    }else
+        {
+           CommentsHolder vh = (CommentsHolder) holder;
+            for (int i=0;i<evaluateListBean.getEvaluateList().size();i++)
+            {
+                vh.userName.setText(evaluateListBean.getEvaluateList().get(i).getUser_name());
+                DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm");
+                Date date = new Date();
+                try {
+                     date = format1.parse(evaluateListBean.getEvaluateList().get((i)).getEvaluate_date());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                vh.commentTime.setText(formatter1.format(date));
+                vh.commentDate.setText(formatter.format(date));
+                vh.ratingBar.setStar(Float.parseFloat(evaluateListBean.getEvaluateList().get(i).getStar()));
+               imageLoader.displayImage(ImageUtil.getImageUrl(evaluateListBean.getEvaluateList().get(i).getAvatar()),vh.potrait);
+            }
+
+        }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+       List<EvaluateBean> list = evaluateListBean.getEvaluateList();
+     return (3+list.size());
+       //return 4;
     }
 
 
 
     public class CourseHolder extends RecyclerView.ViewHolder {
         ImageView courseImg ;
-        TextView coursePrice, courseTime, commentsNum, totalSerial, praisePercent, studentNum;
+        TextView coursePrice, courseTime, commentsNum, totalSerial, praisePercent, studentNum,courseName;
         public CourseHolder(View v,int pos) {
             super(v);
+            courseName = (TextView) v.findViewById(R.id.courseName);
             courseImg = (ImageView) v.findViewById(R.id.courseImg);
             coursePrice = (TextView) v.findViewById(R.id.coursePrice);
             courseTime = (TextView) v.findViewById(R.id.courseTime);
@@ -93,6 +170,7 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
     }
 
     public class TeacherInfoHolder extends RecyclerView.ViewHolder{
+
         ImageView teacherPotrait;
         TextView teacherName, teacherTitles, teacherScore, teacherComments;
         View viewbottom;
@@ -123,15 +201,15 @@ public class CourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder
         ImageView potrait;
         TextView userName, userComments,commentDate,commentTime;
         RatingBar ratingBar;
-
-
         public CommentsHolder(View v, int pos) {
             super(v);
+            userName= (TextView) v.findViewById(R.id.userName);
             potrait = (ImageView) v. findViewById(R.id.potrait);
             ratingBar= (RatingBar) v.findViewById(R.id.ratingbar);
             userComments= (TextView) v.findViewById(R.id.userComments);
             commentDate= (TextView) v.findViewById(R.id.commentDate);
             commentTime= (TextView) v.findViewById(R.id.commentTime);
+
         }
     }
 }

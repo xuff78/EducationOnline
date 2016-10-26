@@ -103,9 +103,6 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
             _setHeaderTitle("开设直播课");
             addClassBean.setCourse_type("live");
         }
-
-        addClassBean.setImg("test");
-        addClassBean.setSubject_id("test");
     }
 
     @Override
@@ -125,16 +122,19 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
                 break;
             case R.id.submitCourseBtn:
                 addClassBean.setIntroduction(courseDesc.getText().toString().trim());
+                addClassBean.setName(subjectTxt.getText().toString());
                 if (addClassBean.getName().length() == 0 || addClassBean.getIntroduction().length() == 0 || addClassBean.getCourse_type().length() == 0 || addClassBean.getSubject_id().length() == 0
                         || addClassBean.getOriginal_price().length() == 0 || addClassBean.getPrice().length() == 0 || addClassBean.getMin_follow().length() == 0
                         || addClassBean.getMax_follow().length() == 0 || addClassBean.getImg().length() == 0) {
                     Toast.makeText(CourseBaseInfoEdit.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    addClassBean.setName(courseName.getText().toString());
                     Intent intent = new Intent();
                     intent.setClass(CourseBaseInfoEdit.this, CourseBaseInfoEdit2.class);
                     intent.putExtra("addClassBean", addClassBean);
-                    startActivity(intent);
+                    intent.putExtra("type",type);
+                    startActivityForResult(intent,0x10);
                 }
                 break;
             case R.id.uploadBtn:
@@ -186,9 +186,12 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 0x11) {
             SubjectBean subjectBean = (SubjectBean) data.getSerializableExtra(SubjectBean.Name);
-            addClassBean.setName(subjectBean.getSubject_name());
+           // addClassBean.setName(subjectBean.getSubject_name());
             addClassBean.setSubject_id(subjectBean.getSubject_id());
             subjectTxt.setText(subjectBean.getSubject_name());
+        }else if (resultCode==0x14){
+
+            finish();
         } else if (resultCode == 0x12) {
             priceTxt.setText("现价 " + data.getStringExtra("cp") + "  原价 " + data.getStringExtra("op"));
             addClassBean.setPrice(data.getStringExtra("cp"));

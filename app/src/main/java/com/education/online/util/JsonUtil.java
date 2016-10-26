@@ -1,6 +1,13 @@
 package com.education.online.util;
 
 
+import com.alibaba.fastjson.JSON;
+import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.CourseEvaluate;
+import com.education.online.bean.CourseExtm;
+import com.education.online.bean.CreatUserInfo;
+import com.education.online.bean.EvaluateBean;
+import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
 
 import org.json.JSONArray;
@@ -10,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -88,6 +96,157 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public static CourseDetailBean getCourseDetail (String jsonStr) throws JSONException {
+        CourseDetailBean courseDetailBean = new CourseDetailBean();
+        List<CourseExtm> courseExtms = new ArrayList<>();
+        CourseEvaluate courseEvaluate = new CourseEvaluate();
+        CreatUserInfo creatUserInfo = new CreatUserInfo();
+        List<EvaluateBean> evaluateBeans = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if (!jsonObject.isNull("course_id"))
+        courseDetailBean.setCourse_id(jsonObject.getString("course_id"));
+        if(!jsonObject.isNull("course_name"))
+            courseDetailBean.setCourse_name(jsonObject.getString("course_name"));
+        if(!jsonObject.isNull("subject_name"))
+            courseDetailBean.setSubject_name(jsonObject.getString("subject_name"));
+        if(!jsonObject.isNull("img"))
+            courseDetailBean.setImg(jsonObject.getString("img"));
+        if(!jsonObject.isNull("original_price"))
+            courseDetailBean.setOriginal_price(jsonObject.getString("original_price"));
+        if(!jsonObject.isNull("price"))
+            courseDetailBean.setPrice(jsonObject.getString("price"));
+        if(!jsonObject.isNull("follow"))
+            courseDetailBean.setFollow(jsonObject.getString("follow"));
+        if(!jsonObject.isNull("min_follow"))
+            courseDetailBean.setMin_follow(jsonObject.getString("min_follow"));
+        if(!jsonObject.isNull("max_follow"))
+            courseDetailBean.setMax_follow(jsonObject.getString("max_follow"));
+        if(!jsonObject.isNull("plan"))
+            courseDetailBean.setPlan(jsonObject.getString("plan"));
+        if(!jsonObject.isNull("refund"))
+            courseDetailBean.setRefund(jsonObject.getString("refund"));
+        if(!jsonObject.isNull("transfer"))
+            courseDetailBean.setTransfer(jsonObject.getString("transfer"));
+        if(!jsonObject.isNull("introduction"))
+            courseDetailBean.setIntroduction(jsonObject.getString("introduction"));
+        if(!jsonObject.isNull("hot"))
+            courseDetailBean.setHot(jsonObject.getString("hot"));
+        if(!jsonObject.isNull("course_type"))
+            courseDetailBean.setCourse_type(jsonObject.getString("course_type"));
+        if(!jsonObject.isNull("user_code"))
+            courseDetailBean.setUsercode(jsonObject.getString("user_code"));
+        if(!jsonObject.isNull("is_collection"))
+            courseDetailBean.setIs_collection(jsonObject.getString("is_collection"));
+        if(!jsonObject.isNull("user_info")) {
+            JSONObject jsonObject1 = jsonObject.getJSONObject("user_info");
+            if (!jsonObject1.isNull("user_name"))
+                creatUserInfo.setUser_name(jsonObject1.getString("user_name"));
+            if (!jsonObject1.isNull("introduction"))
+                creatUserInfo.setIntroduction(jsonObject1.getString("introduction"));
+            if (!jsonObject1.isNull("avatar "))
+                creatUserInfo.setAvatar(jsonObject1.getString("avatar "));
+            if (!jsonObject1.isNull("evaluate_count"))
+                creatUserInfo.setEvaluate_count(jsonObject1.getString("evaluate_count"));
+            if (!jsonObject1.isNull("average"))
+                creatUserInfo.setAverage(jsonObject1.getString("average"));
+            courseDetailBean.setUser_info(creatUserInfo);
+        }
+        if (!jsonObject.isNull("course_extm"))
+        {
+            JSONArray jsonArray = jsonObject.getJSONArray("course_extm");
+            for (int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject item = jsonArray.getJSONObject(i);
+                CourseExtm courseExtm = new CourseExtm();
+                if(!item.isNull("courseware_date"))
+                courseExtm.setCourseware_date(item.getString("courseware_date"));
+                if(!item.isNull("url"))
+                    courseExtm.setUrl(item.getString("url"));
+                if(!item.isNull("state"))
+                    courseExtm.setState(item.getString("state"));
+                courseExtms.add(courseExtm);
+
+            }
+            courseDetailBean.setCourse_extm(courseExtms);
+
+        }
+        if(!jsonObject.isNull("course_evaluate"))
+        {
+            JSONObject jsonObject1 = jsonObject.getJSONObject("course_evaluate");
+            if(!jsonObject1.isNull("total"))
+                courseEvaluate.setTotal("total");
+            if(!jsonObject1.isNull("page_total"))
+                courseEvaluate.setPage_total("page-total");
+            if(!jsonObject1.isNull("current_page"))
+                courseEvaluate.setCurrent_page("current_page");
+            if(!jsonObject1.isNull("evaluate")){
+                JSONArray jsonArray = jsonObject1.getJSONArray("evaluate");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject item = jsonArray.getJSONObject(i);
+                    EvaluateBean evaluateBean = new EvaluateBean();
+                    if (!item.isNull("info"))
+                        evaluateBean.setInfo(item.getString("info"));
+                    if (!item.isNull("star"))
+                        evaluateBean.setStar(item.getString("star"));
+                    if (!item.isNull("evaluate_date"))
+                        evaluateBean.setEvaluate_date(item.getString("evaluate_date"));
+                    if (!item.isNull("user_name"))
+                        evaluateBean.setUser_name(item.getString("user_name"));
+                    if (!item.isNull("avatar"))
+                        evaluateBean.setAvatar(item.getString("avatar"));
+                    evaluateBeans.add(evaluateBean);
+                }
+                courseEvaluate.setEvaluate(evaluateBeans);
+
+            }
+            courseDetailBean.setCourse_evaluate(courseEvaluate);
+
+        }
+        return courseDetailBean;
+
+    }
+
+    public static EvaluateListBean getEvaluateList(String jsonStr) throws JSONException {
+        EvaluateListBean  evaluateListBean = new EvaluateListBean();
+        List<EvaluateBean> evaluateBeanList = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if(!jsonObject.isNull("average"));
+        evaluateListBean.setAverage(jsonObject.getString("average"));
+        if(!jsonObject.isNull("evaluate_details")) {
+            JSONObject jsonObject1 = jsonObject.getJSONObject("evaluate_details");
+            if(!jsonObject1.isNull("page_total"))
+                evaluateListBean.setPagetotal(jsonObject1.getString("page_total"));
+            if (!jsonObject1.isNull("total"))
+                evaluateListBean.setTotal(jsonObject1.getString("total"));
+            if(!jsonObject1.isNull("current_page"))
+                evaluateListBean.setCurrent_page(jsonObject1.getString("current_page"));
+            if (!jsonObject1.isNull("evaluate"))
+            {
+                JSONArray jsonArray = jsonObject1.getJSONArray("evaluate");
+                for (int i=0;i<jsonArray.length();i++)
+                {
+                    JSONObject item = jsonArray.getJSONObject(i);
+                    EvaluateBean evaluateBean = new EvaluateBean();
+                    if (!item.isNull("info"))
+                        evaluateBean.setInfo(item.getString("info"));
+                    if (!item.isNull("star"))
+                        evaluateBean.setStar(item.getString("star"));
+                    if (!item.isNull("evaluate_date"))
+                        evaluateBean.setEvaluate_date(item.getString("evaluate_date"));
+                    if (!item.isNull("user_name"))
+                        evaluateBean.setUser_name(item.getString("user_name"));
+                    if (!item.isNull("avatar"))
+                        evaluateBean.setAvatar(item.getString("avatar"));
+                    evaluateBeanList.add(evaluateBean);
+                }
+                evaluateListBean.setEvaluateList(evaluateBeanList);
+            }
+        }
+
+        return evaluateListBean;
+
     }
 
 //    public static ArrayList<RainBean> getRainInfo(String jsonStr) {

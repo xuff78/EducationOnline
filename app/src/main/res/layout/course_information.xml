@@ -12,12 +12,11 @@
 
     <TextView
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/courseImg"
+        android:layout_below="@+id/courseName"
         android:id="@+id/courseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="PHOTOSHOP基础工具机+唯美图片合成"
         android:textSize="13sp" />
 
     <LinearLayout
@@ -42,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical|left"
-            android:text="￥260"
+
             android:textColor="@color/dark_orange"
             android:textSize="15sp" />
 
@@ -54,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="班级人数500人，已报名200人"
         android:textColor="@color/bg_gray"
         android:textSize="13sp" />
 
@@ -94,7 +92,7 @@
             <TextView
                 android:id="@+id/commentsNum"
                 android:layout_marginTop="3dp"
-                android:text="148好评"
+                android:text="0条评论"
                 style="@style/txt_gray_12" />
         </LinearLayout>
         <View
@@ -115,12 +113,12 @@
             <TextView
                 android:id="@+id/courseTime"
                 android:layout_marginTop="10dp"
-                android:text="2016年8.20开课"
+
                 style="@style/txt_gray_12" />
             <TextView
                 android:id="@+id/totalSerial"
                 android:layout_marginTop="3dp"
-                android:text="共5节"
+
                 style="@style/txt_gray_12" />
         </LinearLayout>
     </LinearLayout>

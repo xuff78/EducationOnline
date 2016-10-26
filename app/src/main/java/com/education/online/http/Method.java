@@ -20,6 +20,10 @@ public class Method {
     public static final String getCourseList = "education/course/list";
     public static final String updateSortList = "education/course/sort";
     public static final String deleteCourse = "education/course/delete";
-
+    public static final String getCourseDtail = "education/course/view";
+    public static final String getEvaluateList = "education/course/evaluateList";
     public static final String addClass="education/course/add";
+    public static final String addCollection ="education/course/collection" ;
+    public static final String addAttention ="education/user/attention";
+
 }

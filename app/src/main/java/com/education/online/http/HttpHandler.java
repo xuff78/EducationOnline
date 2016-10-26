@@ -224,6 +224,39 @@ public class HttpHandler extends Handle {
 
 	}
 
+	public void getCourseDetail( String course_id)
+	{
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("course_id",course_id);
+		requestPostEdu(Method.getCourseDtail,paraMap,true);
+	}
+
+	public void getEvaluateList(String course_id,String star, String page_size,String page)
+	{
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("course_id",course_id);
+		paraMap.put("star",star);
+		paraMap.put("page_size",page_size);
+		paraMap.put("page",page);
+		requestPostEdu(Method.getEvaluateList,paraMap,true);
+	}
+	public void addCollection (String course_id){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("course_id",course_id);
+		requestPostEdu(Method.addCollection,paraMap,true);
+	}
+
+	public void addAttention (String user_code){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("user_code",user_code);
+		requestPostEdu(Method.addAttention,paraMap,true);
+	}
+
+
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);
@@ -233,7 +266,6 @@ public class HttpHandler extends Handle {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_Service+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_Service+method, method, body, 1);
 	}
-
 
 //	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
 //		String url= SharedPreferencesUtil.getString(mContext, Constant.Url_API);

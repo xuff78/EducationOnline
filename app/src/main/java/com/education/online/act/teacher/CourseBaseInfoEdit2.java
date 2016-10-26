@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
@@ -33,6 +34,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
     private HttpHandler httpHandler;
     private ArraryCourseTimeBean arraryCourseTimeBean ;
     private String time_len;
+    private int type;
 
 
     @Override
@@ -70,6 +72,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
         findViewById(R.id.submitCourseBtn).setOnClickListener(this);
         intent = getIntent();
         addClassBean = (AddClassBean) intent.getSerializableExtra("addClassBean");
+        type = intent.getIntExtra("type",0);
         arraryCourseTimeBean = new ArraryCourseTimeBean();
 
         initiHandler();
@@ -81,7 +84,12 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
             @Override
             public void onSuccess(String method, String jsonMessage) throws JSONException {
                 super.onSuccess(method, jsonMessage);
-                DialogUtil.showInfoDailog(CourseBaseInfoEdit2.this, "提示", "发布课程成功!");
+                Intent intent = new Intent();
+                intent.putExtra("success",true);
+                setResult(0x14,intent);
+                finish();
+
+
             }
 
             @Override
@@ -90,10 +98,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 //
             }
         });
-
-
-
-    }
+  }
 
     @Override
     public void onClick(View view) {
@@ -118,8 +123,16 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                     insertSelection.setVisibility(View.GONE);
                 break;
             case R.id.submitCourseBtn:
+                if(type==2&&addClassBean.getCourseware_time().length()!=0)//直播课且有时间
+                {
+                    httpHandler.addClass(addClassBean);
+                }else
+                {
+                    Toast.makeText(CourseBaseInfoEdit2.this,"请填写完整信息",Toast.LENGTH_SHORT).show();
 
-                httpHandler.addClass(addClassBean);
+                }
+
+
 
                 break;
             case R.id.insert1Text:
