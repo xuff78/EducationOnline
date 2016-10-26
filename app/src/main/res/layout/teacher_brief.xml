@@ -60,7 +60,6 @@
         android:layout_below="@+id/tablayout"
         android:background="@color/light_gray" />
     <TextView
-        android:id="@+id/teacherSelfIntro"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +67,7 @@
         android:textColor="@color/light_gray"
         android:text="自我介绍"/>
     <TextView
+        android:id="@+id/teacherSelfIntro"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +82,6 @@
         android:background="@color/light_gray" />
 
     <TextView
-        android:id="@+id/teacherExperience"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,6 +89,7 @@
         android:textColor="@color/light_gray"
         android:text="过往经历"/>
     <TextView
+        android:id="@+id/teacherExperience"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

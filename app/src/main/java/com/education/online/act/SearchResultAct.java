@@ -13,7 +13,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
 import com.education.online.fragment.CourseVideoList;
@@ -22,19 +25,27 @@ import com.education.online.fragment.TeacherList;
 import com.education.online.fragment.dialog.SelectorFilter;
 import com.education.online.fragment.dialog.SelectorOrder;
 import com.education.online.fragment.dialog.SelectorPage;
+import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.inter.CourseUpdate;
 import com.education.online.inter.DialogCallback;
+import com.education.online.util.Constant;
+import com.education.online.util.DialogUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.MenuPopup;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/17.
  */
 public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback {
 
-    HttpHandler handler;
     private TextView typeTxt, selectTypeView;
     private EditText searchEdt;
     private View typeLayout, menuBtn1, menuBtn2, menuBtn3, transblackBg, courseTypeLayout;
@@ -42,22 +53,52 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private MenuPopup popup;
     private String[] typeStrs={"课程", "老师"};
     private int type=0;
+    private String courseType="live";
+    private String is_free=null;
+    private String sort=null;
+    private String subject_id=null;
     private Fragment selectorPage, selectorByOrder, selectorFilter, currentUsedFrg;
     private boolean filterShown=false;
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
     private CourseVideoList courseVideoList = new CourseVideoList();
     private TeacherList teacherList = new TeacherList();
+    private HttpHandler handler;
+    private String pageSize="20";
+    private int page=1;
+    private List<CourseBean> items=new ArrayList<>();
+    private CourseUpdate currentCourseFrg;
 
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getCourseList)){
+                    items= JSON.parseObject(JsonUtil.getString(jsonData, "course_info"),
+                            new TypeReference<List<CourseBean>>(){});
+                    currentCourseFrg.addCourses(items);
+                }else if(method.equals(Method.updateSortList)){
+                }else if(method.equals(Method.updateSortList)){
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result_act);
 
+        initHandler();
         _setHeaderGone();
         initView();
         initFrgment();
-        addListFragment(onlinecoursePage);
+        addCourseListFragment(onlinecoursePage);
+        String searchwords=getIntent().getStringExtra(Constant.SearchWords);
+        searchEdt.setText(searchwords);
+        searchEdt.setSelection(searchwords.length());
+        type=getIntent().getIntExtra("Type", 0);
+        handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize, String.valueOf(page));
     }
 
     private void initFrgment() {
@@ -74,7 +115,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         selectorFilter.setArguments(b);
     }
 
-    private void addListFragment(Fragment page) {
+    private void addCourseListFragment(CourseUpdate page) {
+        currentCourseFrg=page;
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         ft.replace(R.id.fragment_list, page);
@@ -135,10 +177,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     {
                         if(type==0) {
                             courseTypeLayout.setVisibility(View.VISIBLE);
-                            addListFragment(onlinecoursePage);
+                            addCourseListFragment(onlinecoursePage);
                         }else {
                             courseTypeLayout.setVisibility(View.GONE);
-                            addListFragment(teacherList);
+                            addCourseListFragment(teacherList);
                         }
                     }else
                         ToastUtils.displayTextShort(SearchResultAct.this, "请填写搜索关键字");
@@ -213,13 +255,13 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 selectTypeView = txt;
                 switch (view.getId()) {
                     case R.id.courseTypeTxt1:
-                        addListFragment(onlinecoursePage);
+                        addCourseListFragment(onlinecoursePage);
                         break;
                     case R.id.courseTypeTxt2:
-                        addListFragment(courseVideoList);
+                        addCourseListFragment(courseVideoList);
                         break;
                     case R.id.courseTypeTxt3:
-                        addListFragment(courseVideoList);
+                        addCourseListFragment(courseVideoList);
                         break;
                 }
             }

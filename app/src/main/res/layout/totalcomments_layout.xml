@@ -45,7 +45,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/ratingbar"
             android:gravity="center_vertical"
-            android:text="4.9分"
+            android:text="-分"
             android:textColor="@color/normal_red"
             android:textSize="15sp" />
     </RelativeLayout>

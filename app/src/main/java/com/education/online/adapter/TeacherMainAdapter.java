@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseBean;
+import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.TeacherBean;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.RatingBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.security.AccessController.getContext;
 
@@ -33,6 +40,10 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private int ItemType = 1;
     private TeacherBean teacherBean;
     private ImageLoader imageLoader;
+    private List<EvaluateBean> evaluations=new ArrayList<>();
+    private String totalcomment="";
+    private EvaluateCallback callback;
+    private float average=0f;
 
     public void setItemType(int itemType) {
         ItemType = itemType;
@@ -43,9 +54,11 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return ItemType;
     }
 
-    public TeacherMainAdapter(Activity act, TeacherBean teacherBean) {
+    public TeacherMainAdapter(Activity act, TeacherBean teacherBean, List<EvaluateBean> evaluations, EvaluateCallback callback) {
         this.act = act;
+        this.callback=callback;
         this.teacherBean=teacherBean;
+        this.evaluations=evaluations;
         inflater = LayoutInflater.from(act);
         padding10 = ImageUtil.dip2px(act, 5);
         itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 4; //小图片和文字的形成点击区域的边长
@@ -72,7 +85,10 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (i==2){
                 return 3;
             }else if (i==4){
-                return 6;
+                if(getItemCount()-1==position)
+                    return -1;
+                else
+                    return 6;
             }
         }
         return 2;
@@ -110,6 +126,15 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
                 vh = new CommentsHolder(view, viewType);
                 break;
+            case -1:
+                TextView footer= new TextView(act);
+                footer.setLayoutParams(new RecyclerView.LayoutParams(-1, ImageUtil.dip2px(act, 40)));
+                footer.setGravity(Gravity.CENTER);
+                footer.setTextColor(act.getResources().getColor(R.color.normal_gray));
+                footer.setTextSize(14);
+                footer.setText("全部加载");
+                vh = new FooterViewHolder(footer);
+                break;
         }
         return vh;
     }
@@ -129,25 +154,72 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             vh.teacherName.setText(teacherBean.getName());
             vh.teacherTitles.setText(teacherBean.getSpecialty());
             vh.teachingExperience.setText(teacherBean.getWork_time()+"年教龄");
-            vh.identityConfirmed.setText("已认证");
+            if(teacherBean.getIs_validate().equals("1"))
+                vh.identityConfirmed.setText("已认证");
+            else
+                vh.identityConfirmed.setText("未认证");
             vh.fansNum.setText(teacherBean.getAttention_count());
             vh.studentNum.setText(teacherBean.getStudent_count());
             vh.praisePercent.setText(teacherBean.getGood_evaluate_ratio());
         } else if (pos == 1 ){
             if(i==1){
-                    BriefHolder vh =(BriefHolder) holder;
+                BriefHolder vh =(BriefHolder) holder;
+                String identityDetail="";
+//            if(teacherBean.getIs_ext_validate().equals("1"))
+//                identityDetail+="用户资料认证 ";
+                if(teacherBean.getIs_id_validate().equals("1"))
+                    identityDetail+="身份认证 ";
+                if(teacherBean.getIs_tc_validate().equals("1"))
+                    identityDetail+="教师认证 ";
+                if(teacherBean.getIs_edu_bg_validate().equals("1"))
+                    identityDetail+="学历认证 ";
+                if(teacherBean.getIs_specialty_validate().equals("1"))
+                    identityDetail+="专业资格认证 ";
+                if(teacherBean.getIs_unit_validate().equals("1"))
+                    identityDetail+="单位认证 ";
+                vh.teacherIdentify.setText(identityDetail);
+                vh.teacherMarks.setText(teacherBean.getTags());
+                vh.teacherSelfIntro.setText(teacherBean.getIntroduction());
+                vh.teacherExperience.setText(teacherBean.getExperience());
             }else if(i==2){
                 CourseHolder vh = (CourseHolder) holder;
+                CourseBean courseBean=teacherBean.getCourse_info().get(0);
+                imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), vh.teacherImage);
+                vh.coursePrice.setText(ActUtil.getPrice(courseBean.getPrice()));
+                vh.courseName.setText(courseBean.getCourse_name());
+                vh.totallength.setText("共"+courseBean.getCount()+"节");
+                vh.totallength.setVisibility(View.VISIBLE);
+                vh.followNum.setText(courseBean.getFollow()+"人报名");
             }else if (i==3){
                 AlbumHolder vh = (AlbumHolder) holder;
             }else if (i==4){
                 TotalCommentsHolder vh = (TotalCommentsHolder) holder;
+                vh.ratingbar.setStar(average);
+                vh.averageScore.setText(average+"分");
+                vh.totalcomments.setText("共有"+totalcomment+"条评论");
+                if(evaluations.size()==0)
+                    callback.requestData();
             }
         }else if (pos > 1){
             if (i==2) {
                 CourseHolder vh = (CourseHolder) holder;
+                CourseBean courseBean=teacherBean.getCourse_info().get(pos-2);
+                imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), vh.teacherImage);
+                vh.coursePrice.setText(ActUtil.getPrice(courseBean.getPrice()));
+                vh.courseName.setText(courseBean.getCourse_name());
+                vh.totallength.setText("共"+courseBean.getCount()+"节");
+                vh.totallength.setVisibility(View.VISIBLE);
+                vh.followNum.setText(courseBean.getFollow()+"人报名");
             }else if (i==4){
-                CommentsHolder vh = (CommentsHolder ) holder;
+                if(pos<evaluations.size()-1) {
+                    CommentsHolder vh = (CommentsHolder) holder;
+                    EvaluateBean evaluateBean = evaluations.get(pos - 2);
+                    vh.ratingbar.setStar(Float.valueOf(evaluateBean.getStar()));
+                    vh.commentDate.setText(evaluateBean.getEvaluate_date());
+                    imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
+                    vh.userName.setText(evaluateBean.getUser_name());
+                    vh.userComments.setText(evaluateBean.getInfo());
+                }
             }
         }
 
@@ -160,13 +232,17 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case 1:
                 return 2;
             case 2:
-                return 5;
+                return 1+teacherBean.getCourse_info().size();
             case 3:
                 return 2;
             case 4:
-                return 7;
+                return 3+evaluations.size();
         }
         return 2;
+    }
+
+    public void setAverage(String average) {
+        this.average = Float.valueOf(average);
     }
 
 
@@ -307,7 +383,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class CourseHolder extends RecyclerView.ViewHolder {
         ImageView teacherImage;
-        TextView courseName, coursePrice, totallength;
+        TextView courseName, coursePrice, totallength, followNum;
 
 
         public CourseHolder(View itemView) {
@@ -316,7 +392,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             courseName = (TextView) itemView.findViewById(R.id.courseName);
             coursePrice = (TextView) itemView.findViewById(R.id.coursePrice);
             totallength = (TextView) itemView.findViewById(R.id.totallength);
-
+            followNum = (TextView) itemView.findViewById(R.id.followNum);
         }
     }
 
@@ -363,9 +439,14 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class TotalCommentsHolder extends RecyclerView.ViewHolder {
 
+        RatingBar ratingbar;
+        TextView totalcomments, averageScore;
 
         public TotalCommentsHolder(View v, int pos) {
             super(v);
+            ratingbar= (RatingBar) v.findViewById(R.id.ratingbar);
+            totalcomments = (TextView) v.findViewById(R.id.totalcomments);
+            averageScore = (TextView) v.findViewById(R.id.averageScore);
         }
     }
 
@@ -385,6 +466,17 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    public class FooterViewHolder extends RecyclerView.ViewHolder {
+        public FooterViewHolder(View v) {
+            super(v);
+        }
+    }
+
+
+    public interface EvaluateCallback{
+        void requestData();
+        void loadNext();
+    }
 
 }
 

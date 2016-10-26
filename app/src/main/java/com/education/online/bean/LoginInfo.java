@@ -23,6 +23,15 @@ public class LoginInfo {
     private String sessionid="";
     private String avatar="";
     private String nickname="";
+    private String visit="0";
+
+    public String getVisit() {
+        return visit;
+    }
+
+    public void setVisit(String visit) {
+        this.visit = visit;
+    }
 
     public String getUsername() {
         return username;

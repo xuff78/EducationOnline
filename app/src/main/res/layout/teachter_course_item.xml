@@ -61,9 +61,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:text="起/时"
+                    android:visibility="gone"
                     android:textColor="@color/light_gray"
-                    android:textSize="13sp"
-                    android:visibility="gone" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/totallength"
@@ -76,7 +76,14 @@
                     android:visibility="gone" />
 
             </LinearLayout>
-
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/followNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0人报名"
+                android:textColor="@color/normal_gray"
+                android:textSize="13sp"/>
 
         </LinearLayout>
 

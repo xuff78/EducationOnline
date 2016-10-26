@@ -76,6 +76,7 @@
             android:text="2016-08-07" />
 
         <TextView
+            android:visibility="gone"
             android:textSize="13sp"
             android:id="@+id/commentTime"
             android:textColor="@color/normal_gray"

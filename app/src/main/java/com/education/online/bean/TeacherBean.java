@@ -1,5 +1,8 @@
 package com.education.online.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/10/19.
  */
@@ -27,7 +30,79 @@ public class TeacherBean {
     private String attention_count = "";  // 粉丝数量
     private String student_count = "";  // 学生数量
     private String good_evaluate_ratio = "";  // 好评率（自行转成百分数）
+    private String is_validate="";
+    private String is_ext_validate=""; // 用户资料验证 0-待审核,1-通过,2-拒绝,3-未提交
+    private String is_id_validate=""; // 身份证验证0-待审核,1-通过,2-拒绝,3-未提交
+    private String is_tc_validate=""; // 教师证验证0-待审核,1-通过,2-拒绝,3-未提交
+    private String is_edu_bg_validate=""; // 学历验证0-待审核,1-通过,2-拒绝,3-未提交
+    private String is_specialty_validate=""; // 是否专业资质验证0-待审核,1-通过,2-拒绝,3-未提交
+    private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
 
+    private ArrayList<CourseBean> course_info=new ArrayList<>();
+
+    public String getIs_ext_validate() {
+        return is_ext_validate;
+    }
+
+    public void setIs_ext_validate(String is_ext_validate) {
+        this.is_ext_validate = is_ext_validate;
+    }
+
+    public String getIs_id_validate() {
+        return is_id_validate;
+    }
+
+    public void setIs_id_validate(String is_id_validate) {
+        this.is_id_validate = is_id_validate;
+    }
+
+    public String getIs_tc_validate() {
+        return is_tc_validate;
+    }
+
+    public void setIs_tc_validate(String is_tc_validate) {
+        this.is_tc_validate = is_tc_validate;
+    }
+
+    public String getIs_edu_bg_validate() {
+        return is_edu_bg_validate;
+    }
+
+    public void setIs_edu_bg_validate(String is_edu_bg_validate) {
+        this.is_edu_bg_validate = is_edu_bg_validate;
+    }
+
+    public String getIs_specialty_validate() {
+        return is_specialty_validate;
+    }
+
+    public void setIs_specialty_validate(String is_specialty_validate) {
+        this.is_specialty_validate = is_specialty_validate;
+    }
+
+    public String getIs_unit_validate() {
+        return is_unit_validate;
+    }
+
+    public void setIs_unit_validate(String is_unit_validate) {
+        this.is_unit_validate = is_unit_validate;
+    }
+
+    public ArrayList<CourseBean> getCourse_info() {
+        return course_info;
+    }
+
+    public void setCourse_info(ArrayList<CourseBean> course_info) {
+        this.course_info = course_info;
+    }
+
+    public String getIs_validate() {
+        return is_validate;
+    }
+
+    public void setIs_validate(String is_validate) {
+        this.is_validate = is_validate;
+    }
 
     public String getAttention_count() {
         return attention_count;

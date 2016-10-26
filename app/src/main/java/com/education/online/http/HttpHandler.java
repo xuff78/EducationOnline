@@ -98,6 +98,13 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.deleteCourse, paramMap, true);
 	}
 
+	public void addAttention(String usercode) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("usercode", usercode);
+		requestPostEdu(Method.addAttention, paramMap, true);
+	}
+
 	public void updateValidate(String pic_urls) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
@@ -171,6 +178,25 @@ public class HttpHandler extends Handle {
 		paraMap.put("birthday",birthday);
 		requestPostUser(Method.Update,paraMap,true);
 
+	}
+
+	public  void getEvaluate(String usercode,String star,int page){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("usercode",usercode);
+		if(star!=null)
+			paraMap.put("star",star);
+		paraMap.put("page_size","20");
+		paraMap.put("page", String.valueOf(page));
+		requestPostEdu(Method.getEvaluate,paraMap,false);
+	}
+
+	public  void getEvaluateOthers(String page){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("page_size","20");
+		paraMap.put("page",page);
+		requestPostEdu(Method.getEvaluateOthers,paraMap,true);
 	}
 
 

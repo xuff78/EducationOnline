@@ -79,4 +79,8 @@ public class ActUtil {
         }
         return weekDay;
     }
+
+    public static String getPrice(String price) {
+        return "￥"+price;
+    }
 }

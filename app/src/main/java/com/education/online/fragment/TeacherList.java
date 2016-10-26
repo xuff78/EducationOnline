@@ -11,13 +11,14 @@ import com.education.online.R;
 import com.education.online.adapter.OnlineCourseAdapter;
 import com.education.online.adapter.TeacherAdapter;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.inter.CourseUpdate;
 
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/8/22.
  */
-public class TeacherList extends BaseFragment {
+public class TeacherList extends CourseUpdate {
 
     private RecyclerView teacherList;
     ArrayList<OnlineCourseBean> onlineCourseBeanArrayList = new ArrayList<>();

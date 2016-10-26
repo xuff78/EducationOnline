@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -18,16 +21,16 @@ import java.util.ArrayList;
  */
 
 public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
-    ArrayList<OnlineCourseBean> onlineCourseBeanArrayList;
+    ArrayList<CourseBean> onlineCourseBeanArrayList;
     private Activity activity;
     private LayoutInflater inflater;
+    private ImageLoader imageLoader;
 
-
-    public OnlineCourseAdapter(Activity activity, ArrayList<OnlineCourseBean> onlineCourseArraryList ){
+    public OnlineCourseAdapter(Activity activity, ArrayList<CourseBean> onlineCourseArraryList ){
         this.activity = activity;
         this.onlineCourseBeanArrayList = onlineCourseArraryList;
         inflater = LayoutInflater.from(activity);
-
+        imageLoader=ImageLoader.getInstance();
 
     }
 
@@ -49,8 +52,11 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
     @Override
     //绑定数据源
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        OnlineCourseBean CourseItem = onlineCourseBeanArrayList.get(position);
+        CourseBean course = onlineCourseBeanArrayList.get(position);
         //将数据源与视图布局绑定，暂时先不写
+        CourseItemHolder courseItemHolder= (CourseItemHolder) holder;
+        imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),courseItemHolder.courseImage);
+        courseItemHolder.courseName.setText(course.getCourse_name());
     }
 
     @Override
@@ -60,7 +66,7 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
 
     public class CourseItemHolder extends RecyclerView.ViewHolder
     {
-        ImageView imageView;
+        ImageView courseImage;
         TextView courseName;
         TextView timeBeginToEnd;
         TextView Prise;
@@ -69,8 +75,7 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
         public CourseItemHolder(View v, int position)
         {
             super(v);
-            OnlineCourseBean CourseItem = onlineCourseBeanArrayList.get(position);
-            imageView = (ImageView) v.findViewById(R.id.CourseImage);
+            courseImage = (ImageView) v.findViewById(R.id.CourseImage);
             courseName = (TextView) v.findViewById(R.id.CourseName);
 //            timeBeginToEnd = v.findViewById();
 

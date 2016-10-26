@@ -17,6 +17,15 @@ public class CourseBean {
     private String follow = ""; // 报名人数
     private String plan = ""; // 教学计划
     private String user_name = ""; // 创建人姓名
+    private String count="";
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public String getCourse_id() {
         return course_id;

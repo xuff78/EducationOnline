@@ -11,18 +11,22 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.adapter.MainAdapter;
 import com.education.online.adapter.OnlineCourseAdapter;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.inter.CourseUpdate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/20.
  */
 
-public class OnlineCoursePage extends BaseFragment {
+public class OnlineCoursePage extends CourseUpdate{
 
     private RecyclerView OnlineCoursePageRecycleList;
-    ArrayList<OnlineCourseBean> onlineCourseBeanArrayList = new ArrayList<>();
+    private OnlineCourseAdapter adapter;
+    ArrayList<CourseBean> onlineCourseBeanArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,19 +37,18 @@ public class OnlineCoursePage extends BaseFragment {
         return view;
     }
 
+    public void addCourses(List<CourseBean> courses){
+        onlineCourseBeanArrayList.addAll(courses);
+        adapter.notifyDataSetChanged();
+    }
 
     private void initView(View v) {
-        onlineCourseBeanArrayList.clear();
-        OnlineCourseBean courseBean = new OnlineCourseBean();
-        onlineCourseBeanArrayList.add(courseBean);
-        onlineCourseBeanArrayList.add(courseBean);
-        onlineCourseBeanArrayList.add(courseBean);
-        onlineCourseBeanArrayList.add(courseBean);
 
         OnlineCoursePageRecycleList = (RecyclerView) v.findViewById(R.id.OnlineCoursePageRecycleList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         OnlineCoursePageRecycleList.setLayoutManager(layoutManager);
-        OnlineCoursePageRecycleList.setAdapter(new  OnlineCourseAdapter(getActivity(),onlineCourseBeanArrayList));
+        adapter=new OnlineCourseAdapter(getActivity(), onlineCourseBeanArrayList);
+        OnlineCoursePageRecycleList.setAdapter(adapter);
     }
 }

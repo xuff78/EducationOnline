@@ -72,6 +72,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                     String word=searchEdt.getText().toString().trim();
                     if(!word.equals(""))
                     {
+                        //记录搜索词
                         String wordsStr=SharedPreferencesUtil.getString(SearchAct.this, Constant.SearchWords);
                         if(wordsStr.equals(SharedPreferencesUtil.FAILURE_STRING)){
                             wordsStr=word;
@@ -80,7 +81,10 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                             wordsStr=word+":"+wordsStr;
                             SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);
                         }
-                        startActivity(new Intent(SearchAct.this, SearchResultAct.class));
+                        Intent i=new Intent(SearchAct.this, SearchResultAct.class);
+                        i.putExtra(Constant.SearchWords, word);
+                        i.putExtra("Type", type);
+                        startActivity(i);
                     }else
                         ToastUtils.displayTextShort(SearchAct.this, "请填写搜索关键字");
                 }

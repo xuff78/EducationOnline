@@ -17,6 +17,7 @@ import com.education.online.act.teacher.MyRatePage;
 import com.education.online.act.teacher.TeacherCourseStart;
 import com.education.online.act.teacher.TeacherHomePage;
 import com.education.online.act.teacher.TeacherInfoEdit;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.bean.CategoryBean;
 import com.education.online.bean.LoginInfo;
 import com.education.online.bean.UserInfo;
@@ -54,6 +55,7 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
 
         LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), LoginInfo.class);
         ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
+        teacherImg.setOnClickListener(this);
         imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), teacherImg);
         TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
         nameTxt.setText(user.getUsername());
@@ -65,6 +67,7 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
         }else if(user.getGender().equals("0")){
             sexTxt.setText("女");
         }
+        ((TextView) v.findViewById(R.id.visitNum)).setText(user.getVisit());
     }
 
     @Override
@@ -87,6 +90,9 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.courseManagerLayout:
                 startActivity(new Intent(getActivity(), TeacherCourseStart.class));
+                break;
+            case R.id.teacherImg:
+                startActivity(new Intent(getActivity(), TeacherInformationPage.class));
                 break;
         }
     }
