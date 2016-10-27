@@ -162,8 +162,11 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                 break;
             default:
                 String searchword=(String)view.getTag();
-                if(searchword.length()>0)
-                    startActivity(new Intent(SearchAct.this, SearchResultAct.class));
+                if(searchword.length()>0) {
+                    Intent i=new Intent(SearchAct.this, SearchResultAct.class);
+                    i.putExtra(Constant.SearchWords, searchword);
+                    startActivity(i);
+                }
                 break;
         }
     }

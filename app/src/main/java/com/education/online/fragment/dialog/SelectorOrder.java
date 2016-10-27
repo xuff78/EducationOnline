@@ -58,6 +58,7 @@ public class SelectorOrder extends BaseFragment {
                     img.setImageResource(R.mipmap.icon_round_right);
                     pressView=img;
                     ((DialogCallback)getActivity()).closeDialog();
+                    ((DialogCallback)getActivity()).onSelected(pressPos);
                 }
             });
             layout.addView(item, llp);

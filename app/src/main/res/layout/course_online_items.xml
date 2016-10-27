@@ -64,13 +64,15 @@
             <TextView
                 android:id="@+id/ApplicantCourse"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="5dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
                 android:background="@drawable/shape_corner_orangeline"
                 android:gravity="center"
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="立即报名"
                 android:textColor="@color/dark_orange"
                 android:textSize="12sp" />

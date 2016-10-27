@@ -22,7 +22,8 @@ public class Method {
     public static final String deleteCourse = "education/course/delete";
     public static final String getEvaluate = "education/user/evaluate";
     public static final String getEvaluateOthers = "education/user/evaluateOthers";
-    public static final String addAttention = "education/user/attention";
+    public static final String getCourseDtail = "education/course/view";
+    public static final String getEvaluateList = "education/course/evaluateList";
 
     public static final String addClass="education/course/add";
     public static final String addCollection ="education/course/collection" ;

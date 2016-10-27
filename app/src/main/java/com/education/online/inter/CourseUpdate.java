@@ -11,5 +11,5 @@ import java.util.List;
  * Created by Administrator on 2016/10/26.
  */
 public class CourseUpdate extends Fragment{
-    public void addCourses(List<CourseBean> items){};
+    public void addCourses(List<CourseBean> items, boolean isNew){};
 }

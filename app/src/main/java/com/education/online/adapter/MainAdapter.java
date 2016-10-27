@@ -204,7 +204,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     linelayout.addView(getSubjectItemView("更多",""), llpitem);
                 else {
                     SubjectBean subject=info.getSubject_list().get(i);
-                    linelayout.addView(getSubjectItemView(subject.getSubject_name(), ""), llpitem);
+                    linelayout.addView(getSubjectItemView(subject.getSubject_name(), subject.getSubject_img()), llpitem);
                 }
                 if(i%5==4||i==itemsize){
                     itemsLayout.addView(linelayout);
@@ -222,6 +222,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ImageView img=new ImageView(act);
             img.setBackgroundResource(R.color.whitesmoke);
             layout.addView(img, llpimg);
+            imageLoader.displayImage(ImageUtil.getImageUrl(imgUrl),img);
             TextView txt=new TextView(act);
             txt.setTextSize(12);
             txt.setTextColor(Color.GRAY);

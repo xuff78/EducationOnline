@@ -19,6 +19,7 @@ import com.education.online.R;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
+import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.CourseVideoList;
 import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.TeacherList;
@@ -44,7 +45,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback {
+public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback, SelectorPage.CourseSelector{
 
     private TextView typeTxt, selectTypeView;
     private EditText searchEdt;
@@ -57,10 +58,12 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private String is_free=null;
     private String sort=null;
     private String subject_id=null;
+    private String searchwords=null;
     private Fragment selectorPage, selectorByOrder, selectorFilter, currentUsedFrg;
     private boolean filterShown=false;
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
     private CourseVideoList courseVideoList = new CourseVideoList();
+    private CourseVideoList coursewareList = new CourseVideoList();
     private TeacherList teacherList = new TeacherList();
     private HttpHandler handler;
     private String pageSize="20";
@@ -76,7 +79,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 if(method.equals(Method.getCourseList)){
                     items= JSON.parseObject(JsonUtil.getString(jsonData, "course_info"),
                             new TypeReference<List<CourseBean>>(){});
-                    currentCourseFrg.addCourses(items);
+                    currentCourseFrg.addCourses(items, true);
                 }else if(method.equals(Method.updateSortList)){
                 }else if(method.equals(Method.updateSortList)){
                 }
@@ -94,15 +97,21 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         initView();
         initFrgment();
         addCourseListFragment(onlinecoursePage);
-        String searchwords=getIntent().getStringExtra(Constant.SearchWords);
-        searchEdt.setText(searchwords);
-        searchEdt.setSelection(searchwords.length());
-        type=getIntent().getIntExtra("Type", 0);
-        handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize, String.valueOf(page));
+        type = getIntent().getIntExtra("Type", 0);
+        if(getIntent().hasExtra(Constant.SearchWords)) {
+            searchwords = getIntent().getStringExtra(Constant.SearchWords);
+            searchEdt.setText(searchwords);
+            searchEdt.setSelection(searchwords.length());
+            handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize, String.valueOf(page));
+        }else if(getIntent().hasExtra(Constant.SearchSubject)){
+            subject_id = getIntent().getStringExtra(Constant.SearchSubject);
+            handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize, String.valueOf(page));
+        }
     }
 
     private void initFrgment() {
         selectorPage=new SelectorPage();
+        ((SelectorPage)selectorPage).setData(this);
         selectorByOrder=new SelectorOrder();
         selectorFilter=new SelectorFilter();
 
@@ -268,8 +277,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         }
     };
 
+    int dialogType=0;
     private void openOrCloseFilterLayout(Fragment frg, int typeNew){
-        if(type!=typeNew){
+        if(dialogType!=typeNew){
             changePage(frg);
             filterDetailLayout.setVisibility(View.VISIBLE);
             transblackBg.setVisibility(View.VISIBLE);
@@ -282,7 +292,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             filterDetailLayout.setVisibility(View.VISIBLE);
             transblackBg.setVisibility(View.VISIBLE);
         }
-        type=typeNew;
+        dialogType=typeNew;
     }
 
     private void changePage(Fragment frg){
@@ -317,5 +327,55 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         removePage();
         filterDetailLayout.setVisibility(View.GONE);
         transblackBg.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onSelected(SubjectBean subject) {
+        closeDialog();
+        subject_id=subject.getSubject_id();
+        page=1;
+        handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
+                sort, pageSize, String.valueOf(page));
+    }
+
+    @Override
+    public void onfinish(ArrayList<FilterInfo> filters) {
+        if(type==0){
+            FilterInfo freefilter=filters.get(0);
+            if(freefilter.getSelection()==0)
+                is_free="yes";
+            else if(freefilter.getSelection()==1)
+                is_free="no";
+            FilterInfo day=filters.get(1);
+            if(day.getSelection()==0)
+                is_free=null;
+            else if(day.getSelection()==1){
+
+            }else if(day.getSelection()==2){
+
+            }else if(day.getSelection()==3){
+
+            }
+            page=1;
+            handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
+                    sort, pageSize, String.valueOf(page));
+        }else{
+
+        }
+    }
+
+    @Override
+    public void onSelected(int pos) {
+        if(pos==0){
+            sort=null;
+        }else if(pos==1){
+            sort="hot";
+        }else if(pos==2){
+            sort="evaluate";
+        }else if(pos==3){
+            sort="price";
+        }
+        handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
+                sort, pageSize, String.valueOf(page));
     }
 }

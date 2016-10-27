@@ -57,7 +57,10 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         selectorPage.setData(new SelectorPage.CourseSelector() {
             @Override
             public void onSelected(SubjectBean subject) {
-                startActivity(new Intent(MainPage.this, SearchResultAct.class));
+                Intent i=new Intent(MainPage.this, SearchResultAct.class);
+//                i.putExtra(Constant.SearchWords, subject.getSubject_name());
+                i.putExtra(Constant.SearchSubject, subject.getSubject_id());
+                startActivity(i);
             }
         });
         changePage(home);

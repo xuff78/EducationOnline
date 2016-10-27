@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.CourseMainPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.util.ImageUtil;
@@ -57,6 +59,9 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
         CourseItemHolder courseItemHolder= (CourseItemHolder) holder;
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),courseItemHolder.courseImage);
         courseItemHolder.courseName.setText(course.getCourse_name());
+        courseItemHolder.CourseTime.setText("");
+        courseItemHolder.CoursePrice.setText(course.getPrice());
+        courseItemHolder.NumApplicant.setText(course.getFollow());
     }
 
     @Override
@@ -68,17 +73,29 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
     {
         ImageView courseImage;
         TextView courseName;
-        TextView timeBeginToEnd;
-        TextView Prise;
-        TextView ApplicantNum;
-        TextView ApplicantNow;
-        public CourseItemHolder(View v, int position)
+        TextView CourseTime;
+        TextView CoursePrice;
+        TextView NumApplicant;
+        TextView ApplicantCourse;
+        public CourseItemHolder(View v, final int position)
         {
             super(v);
             courseImage = (ImageView) v.findViewById(R.id.CourseImage);
             courseName = (TextView) v.findViewById(R.id.CourseName);
+            CourseTime = (TextView) v.findViewById(R.id.CourseTime);
+            CoursePrice = (TextView) v.findViewById(R.id.CoursePrice);
+            NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
+            ApplicantCourse = (TextView) v.findViewById(R.id.ApplicantCourse);
 //            timeBeginToEnd = v.findViewById();
-
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent();
+                    intent.putExtra("course_id", onlineCourseBeanArrayList.get(position).getCourse_id());
+                    intent.setClass(activity, CourseMainPage.class);
+                    activity.startActivity(intent);
+                }
+            });
         }
 
 

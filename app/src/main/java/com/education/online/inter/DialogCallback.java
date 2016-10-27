@@ -2,6 +2,8 @@ package com.education.online.inter;
 
 import android.support.v4.app.Fragment;
 
+import com.education.online.bean.FilterInfo;
+
 import java.util.ArrayList;
 
 /**
@@ -9,4 +11,6 @@ import java.util.ArrayList;
  */
 public interface DialogCallback {
     void closeDialog();
+    void onfinish(ArrayList<FilterInfo> filters);
+    void onSelected(int pos);
 }

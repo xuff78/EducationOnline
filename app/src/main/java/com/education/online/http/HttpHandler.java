@@ -98,13 +98,6 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.deleteCourse, paramMap, true);
 	}
 
-	public void addAttention(String usercode) {
-		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
-		paramMap.put("usercode", usercode);
-		requestPostEdu(Method.addAttention, paramMap, true);
-	}
-
 	public void updateValidate(String pic_urls) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));

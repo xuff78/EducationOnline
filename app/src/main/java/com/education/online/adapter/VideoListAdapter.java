@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -19,13 +22,14 @@ import java.util.ArrayList;
 public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
     private Activity activity;
     private LayoutInflater inflater;
+    private ArrayList<CourseBean> courses=new ArrayList<>();
+    private ImageLoader imageLoader;
 
-
-    public VideoListAdapter(Activity activity){
+    public VideoListAdapter(Activity activity, ArrayList<CourseBean> courses){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
-
-
+        this.courses=courses;
+        imageLoader=ImageLoader.getInstance();
     }
 
     @Override
@@ -39,26 +43,31 @@ public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int pos) {
         RecyclerView.ViewHolder vh =null;
         View view=inflater.inflate(R.layout.course_online_items, null);
-        vh = new CourseItemHolder(view, pos);
+        vh = new itemHolder(view, pos);
         return vh;
     }
 
     @Override
     //绑定数据源
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        itemHolder itemHolder= (itemHolder) holder;
+        CourseBean course=courses.get(position);
+        imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),itemHolder.imageView);
+        itemHolder.courseName.setText(course.getCourse_name());
+        itemHolder.CourseTime.setText(course.getSubject_name());
+        itemHolder.CoursePrice.setText(course.getPrice());
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return courses.size();
     }
 
-    public class CourseItemHolder extends RecyclerView.ViewHolder
+    public class itemHolder extends RecyclerView.ViewHolder
     {
         ImageView imageView;
         TextView courseName, courseNumTxt, CourseTime, CoursePrice;
-        public CourseItemHolder(View v, int position)
+        public itemHolder(View v, int position)
         {
             super(v);
             imageView = (ImageView) v.findViewById(R.id.CourseImage);
@@ -70,9 +79,6 @@ public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
             v.findViewById(R.id.NumApplicant).setVisibility(View.GONE);
             v.findViewById(R.id.ApplicantCourse).setVisibility(View.GONE);
-
         }
-
-
     }
 }

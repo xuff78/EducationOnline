@@ -122,6 +122,7 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
                     info.setSelection(info.getSelectionTemp());
                 }
                 ((DialogCallback)getActivity()).closeDialog();
+                ((DialogCallback)getActivity()).onfinish(filters);
                 break;
             case R.id.resetBtn:
                 for(int i=0;i<filters.size();i++){

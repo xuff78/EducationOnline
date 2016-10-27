@@ -37,7 +37,9 @@ public class OnlineCoursePage extends CourseUpdate{
         return view;
     }
 
-    public void addCourses(List<CourseBean> courses){
+    public void addCourses(List<CourseBean> courses, boolean isNew){
+        if(isNew)
+            onlineCourseBeanArrayList.clear();
         onlineCourseBeanArrayList.addAll(courses);
         adapter.notifyDataSetChanged();
     }
