@@ -279,9 +279,26 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             act.startActivity(new Intent(act, VideoMain.class));
                         break;
                     case R.id.item1:
+                        Intent intent = new Intent();
+                        String course_id = info.getLive().get(0).getCourse_id();
+                        intent.putExtra("course_id", course_id);
+                        if(pos==2) {
+                            intent.setClass(act, CourseMainPage.class);
+                            act.startActivity(intent);
+                        }
+                        else if(pos==3)
+                            act.startActivity(new Intent(act, VideoMainPage.class));
+                        else if(pos==4)
+                            act.startActivity(new Intent(act, VideoMainPage.class));
+                        break;
                     case R.id.item2:
-                        if(pos==2)
-                            act.startActivity(new Intent(act, CourseMainPage.class));
+                        Intent intent2 = new Intent();
+                        String course_id2 = info.getLive().get(1).getCourse_id();
+                        intent2.putExtra("course_id", course_id2);
+                        if(pos==2) {
+                            intent2.setClass(act, CourseMainPage.class);
+                            act.startActivity(intent2);
+                        }
                         else if(pos==3)
                             act.startActivity(new Intent(act, VideoMainPage.class));
                         else if(pos==4)

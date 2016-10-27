@@ -33,6 +33,7 @@ public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClick
     }
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
