@@ -14,6 +14,7 @@ import com.education.online.adapter.OnlineCourseAdapter;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.inter.CourseUpdate;
+import com.education.online.inter.LoadMoreScrollerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,15 +54,10 @@ public class OnlineCoursePage extends CourseUpdate{
         adapter=new OnlineCourseAdapter(getActivity(), onlineCourseBeanArrayList);
         OnlineCoursePageRecycleList.setAdapter(adapter);
 
-        OnlineCoursePageRecycleList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        OnlineCoursePageRecycleList.addOnScrollListener(new LoadMoreScrollerListener(layoutManager) {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
+            public void onLoadMore(int currentPage) {
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
