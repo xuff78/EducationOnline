@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/CourseImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/courseImg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:id="@+id/courseName"/>
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/courseBrief"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:gravity="center_vertical"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/CourseImageLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+<RelativeLayout
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/hard_gray"
+        android:layout_marginTop="8dp"
+        android:text="评星"
+        android:textSize="14sp"
+        />
+    <com.education.online.view.RatingBar
+        android:layout_alignParentRight="true"
+        android:id="@+id/ratingbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        hedgehog:clickable="true"
+        hedgehog:halfstart="true"
+        hedgehog:starCount="5"
+        hedgehog:starEmpty="@mipmap/icon_star_gray"
+        hedgehog:starFill="@mipmap/icon_star_red"
+        hedgehog:starHalf="@mipmap/icon_star_gray"
+        hedgehog:starImageHeight="30dp"
+        hedgehog:starImageWidth="20dp"
+        hedgehog:starImagePadding="3dp"/>
+
+
+</RelativeLayout>
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/CourseImageLayout"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_gray" />
+<TextView
+    android:id="@+id/textview1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="13sp"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="30dp"
+    android:text="评星详情"/>
+
+    <EditText
+        android:id="@+id/comment"
+        android:gravity="top"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:hint="   在这里留下您要评价的内容哦~"
+        android:textSize="12sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/shape_grayline_with_corner"/>
+
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/CourseImageLayout"
+        android:layout_marginTop="15dp"
+        android:background="@color/light_gray" />
+
+<LinearLayout
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="15dp"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+ <ImageView
+     android:background="@drawable/shape_nocorner_lightgray"
+     android:id="@+id/imageview1"
+     android:layout_width="40dp"
+     android:layout_height="40dp"
+     android:src="@mipmap/icon_redcross1"
+     />
+    <ImageView
+        android:visibility="gone"
+        android:background="@drawable/shape_nocorner_lightgray"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/imageview2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        />
+    <ImageView
+        android:visibility="gone"
+        android:background="@drawable/shape_nocorner_lightgray"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/imageview3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        />
+</LinearLayout>
+    <TextView
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="请上传举报内容截图，最多3张"/>
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/line4"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/CourseImageLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+    <LinearLayout
+        android:id="@+id/anonymous"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+     <ImageView
+         android:id="@+id/anonymousimage"
+         android:layout_width="18dp"
+         android:src="@mipmap/icon_round"
+         android:layout_marginLeft="5dp"
+         android:layout_height="18dp" />
+
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="匿名评价"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@color/whitesmoke"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/submitbtn"
+                android:padding="5dp"
+                android:text="发表评论"
+                android:textColor="@color/normal_red"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:layout_width="160dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/shape_smallcorner_redline"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -28,5 +28,6 @@ public class Method {
     public static final String addClass="education/course/add";
     public static final String addCollection ="education/course/collection" ;
     public static final String addAttention ="education/user/attention";
+    public static final String evaluate ="education/course/evaluate";
 
 }
