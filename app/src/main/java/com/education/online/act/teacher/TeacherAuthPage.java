@@ -117,95 +117,23 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
         }
     }
 
-    private void setPicUrl(String url){
-        switch (clickViewId){
-            case R.id.idStatus:
-                pic1=url;
-                break;
-            case R.id.teacherStatus:
-                pic2=url;
-                break;
-            case R.id.eduStatus:
-                pic3=url;
-                break;
-            case R.id.zyzzStatus:
-                pic4=url;
-                break;
-            case R.id.gzdwStatus:
-                pic5=url;
-                break;
-        }
-    }
-
     @Override
     public void onClick(View view) {
         clickViewId=view.getId();
-        new SelectPicDialog(TeacherAuthPage.this).show();
+        Intent intent=new Intent();
+        intent.putExtra("ResId", clickViewId);
+        switch (clickViewId){
+            case R.id.idStatus:
+                intent.setClass(TeacherAuthPage.this, TeacherAuthIdentity.class);
+                break;
+            case R.id.teacherStatus:
+            case R.id.eduStatus:
+            case R.id.zyzzStatus:
+            case R.id.gzdwStatus:
+                intent.setClass(TeacherAuthPage.this, TeacherAuthOthers.class);
+                break;
+        }
+        startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && (requestCode == SelectPicDialog.SELECT_PIC_BY_TACK_PHOTO ||
-                requestCode == SelectPicDialog.SELECT_PIC_BY_PICK_PHOTO)) {
-
-            progressDialog = ProgressDialog.show(this, "", "处理中。。");
-            final String picPath = SelectPicDialog.doPhoto(this, requestCode, data);
-            Log.i("Upload", "最终选择的图片=" + picPath);
-            if (picPath == null) {
-                ToastUtils.displayTextShort(this, "获取图片失败");
-                return;
-            }
-            final Bitmap newResizeBmp = ImageUtil.getSmallBitmap(picPath);
-            if (newResizeBmp == null || newResizeBmp.isRecycled()) {
-                progressDialog.dismiss();
-                return;
-            }
-
-            new Thread() {
-                @Override
-                public void run() {
-                    // TODO Auto-generated method stub
-                    super.run();
-                    phoneTxtName = "head" + System.currentTimeMillis();
-                    FileUtil.saveBitmap(newResizeBmp, phoneTxtName, TeacherAuthPage.this);
-                    if (newResizeBmp != null)
-                        newResizeBmp.recycle();
-                    handler.sendEmptyMessage(0);
-                }
-            }.start();
-        }
-    }
-
-    private Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            // TODO Auto-generated method stub
-            super.handleMessage(msg);
-            File file = FileUtil.getFile(phoneTxtName + ".png", TeacherAuthPage.this);
-            progressDialog.dismiss();
-            if (file.exists()) {
-                new UploadTask(new UploadTask.UploadCallBack() {
-
-                    @Override
-                    public void onSuccess(String result) {
-                        progressDialog.dismiss();
-                        String url = result.substring(1);
-                        LogUtil.d("validate", url);
-                        setPicUrl(url);
-                        Toast.makeText(TeacherAuthPage.this,"上传成功！",Toast.LENGTH_SHORT);
-                    }
-
-                    @Override
-                    public void onFailed() {
-                        DialogUtil.showInfoDailog(TeacherAuthPage.this, "提示", "图片上传失败!");
-                        progressDialog.dismiss();
-                        // mFaceImagePath.delete();
-                    }
-                }).execute(file, "validate/"+phoneTxtName + ".png");
-            }
-        }
-    };
 }

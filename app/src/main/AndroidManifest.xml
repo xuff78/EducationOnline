@@ -146,6 +146,12 @@
         <activity android:name=".act.teacher.TeacherAuthPage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.teacher.TeacherAuthIdentity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+        <activity android:name=".act.teacher.TeacherAuthOthers"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
 
         <activity android:name=".act.teacher.TeacherCourseStart"
             android:screenOrientation="portrait"
