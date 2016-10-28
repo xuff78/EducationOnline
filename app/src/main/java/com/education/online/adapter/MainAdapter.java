@@ -257,7 +257,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             timeTxt2 = (TextView) convertView.findViewById(R.id.timeTxt2);
             priceTxt2 = (TextView) convertView.findViewById(R.id.priceTxt2);
             statusTxt2 = (TextView) convertView.findViewById(R.id.statusTxt2);
-
             courseImg1 = (ImageView) convertView.findViewById(R.id.courseImg1);
             courseImg2 = (ImageView) convertView.findViewById(R.id.courseImg2);
 

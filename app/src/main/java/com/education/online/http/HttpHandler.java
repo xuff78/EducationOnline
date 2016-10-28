@@ -274,6 +274,16 @@ public class HttpHandler extends Handle {
 		paraMap.put("user_code",user_code);
 		requestPostEdu(Method.addAttention,paraMap,true);
 	}
+	public void evaluate(String course_id,String star,String evaluate_info,String is_secret ){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("course_id",course_id);
+		paraMap.put("star",star);
+		paraMap.put("evaluate_info",evaluate_info);
+		paraMap.put("is_secret",is_secret);
+		requestPostEdu(Method.evaluate,paraMap,true);
+
+	}
 
 
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {

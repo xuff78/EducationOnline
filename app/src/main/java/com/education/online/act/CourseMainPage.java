@@ -40,6 +40,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     private CourseDetailBean courseDetailBean;
     private EvaluateListBean evaluateListBean;
     private String course_id;
+    private boolean flag=false;
     Intent intent;
     HttpHandler httpHandler;
     public void initiHandler(){
@@ -51,6 +52,15 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 if(method.equals(Method.getCourseDtail)) {
                     courseDetailBean = JsonUtil.getCourseDetail(jsonData);
                     _setHeaderTitle(courseDetailBean.getCourse_name());
+                    if (courseDetailBean.getIs_collection().length()==0)
+                    {
+                        flag=false;
+                        addfavorite.setImageResource(R.mipmap.icon_star);
+
+                    }else{
+                        flag=true;
+                        addfavorite.setImageResource(R.mipmap.icon_star_red);
+                    }
                     httpHandler.getEvaluateList(course_id,"1","10","1");
 
                 }else if(method.equals(Method.getEvaluateList)){
@@ -63,7 +73,10 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     changePage(coursepage);
                 }
                 else if (method.equals(Method.addCollection)){
+                    if(flag)
                     Toast.makeText(CourseMainPage.this,"收藏成功！",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(CourseMainPage.this,"取消收藏成功！",Toast.LENGTH_SHORT).show();
                 }
 
                 //  DialogUtil.showInfoDailog(CourseMainPage.this, "提示", "发布课程成功!");
@@ -97,7 +110,6 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
         course_id = intent.getStringExtra("course_id");
         initiHandler();
         httpHandler.getCourseDetail(course_id);
-
         addfavorite = (ImageView) findViewById(R.id.addfavorite);
         share = (ImageView) findViewById(R.id.share);
         download = (ImageView) findViewById(R.id.download);
@@ -135,16 +147,21 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
        //     view.setSelected(true);
             switch (view.getId()) {
                 case R.id.addfavoritelayout:
-                    addfavorite.setImageResource(R.mipmap.icon_star_red);
+                    if (!flag) {
+                        addfavorite.setImageResource(R.mipmap.icon_star_red);
+                        flag=true;
+                    }
+                    else {
+                        addfavorite.setImageResource(R.mipmap.icon_star);
+                        flag=false;
+                    }
                     httpHandler.addCollection(course_id);
                     break;
                 case R.id.sharelayout:
                     //do sth;
-
                     break;
                 case R.id.downloadlayout:
                     //do sth;
-
                     break;
                 case R.id.addorbuy:
                     //do sth;

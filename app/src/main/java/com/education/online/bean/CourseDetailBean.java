@@ -1,12 +1,13 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Great Gao on 2016/10/24.
  */
-public class CourseDetailBean {
+public class CourseDetailBean implements Serializable{
     private String course_id = "";
     private String course_name = "";
     private String subject_name = "";
