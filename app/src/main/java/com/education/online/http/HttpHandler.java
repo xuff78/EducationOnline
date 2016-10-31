@@ -61,7 +61,7 @@ public class HttpHandler extends Handle {
      * @param page
      */
 	public void getCourseList(String status, String course_type, String subject_id, String key_word, String is_free, String usercode,
-							  String sort, String page_size, String page) {
+							  String sort, String page_size, String page, String query_type) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("status", status);
@@ -81,6 +81,7 @@ public class HttpHandler extends Handle {
 			paramMap.put("page_size", page_size);
 		if(page!=null)
 			paramMap.put("page", page);
+		paramMap.put("query_type", query_type);
 		requestPostEdu(Method.getCourseList, paramMap, true);
 	}
 
@@ -98,10 +99,21 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.deleteCourse, paramMap, true);
 	}
 
-	public void updateValidate(String pic_urls) {
+	public void getValidateDetails(String validate_type) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("validate_type", validate_type);
+		requestPostEdu(Method.getValidateDetails, paramMap, true);
+	}
+
+	public void updateValidate(String pic_urls, String name, String id_number) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("pic_urls", pic_urls);
+		if(name!=null)
+			paramMap.put("name", name);
+		if(id_number!=null)
+			paramMap.put("id_number", id_number);
 		requestPostEdu(Method.updateValidate, paramMap, true);
 	}
 
@@ -136,14 +148,13 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getUserInfo, paramMap, true);
 	}
 
-	public void regist(String phone, String password,String identity,String nickname,String name,String gender,String avatar,String subject_id)
+	public void regist(String phone, String password,String identity,String nickname,String gender,String avatar,String subject_id)
 	{
 		HashMap<String, String> paraMap = new HashMap<>();
 		paraMap.put("phone",phone);
 		paraMap.put("password",password);
 		paraMap.put("identity",identity);
 		paraMap.put("nickname",nickname);
-		paraMap.put("name",name);
 		paraMap.put("gender",gender);
 		paraMap.put("avatar",avatar);
 		paraMap.put("subject_id",subject_id);

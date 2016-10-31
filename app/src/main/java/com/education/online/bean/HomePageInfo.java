@@ -14,6 +14,15 @@ public class HomePageInfo {
     List<VideoCourse> video =new ArrayList<>();
     List<WareCourse> ware =new ArrayList<>();
     List<SubjectBean> subject_list=new ArrayList<>();
+    List<AdvertsBean> adverts_info=new ArrayList<>();
+
+    public List<AdvertsBean> getAdverts_info() {
+        return adverts_info;
+    }
+
+    public void setAdverts_info(List<AdvertsBean> adverts_info) {
+        this.adverts_info = adverts_info;
+    }
 
     public List<SubjectBean> getSubject_list() {
         return subject_list;

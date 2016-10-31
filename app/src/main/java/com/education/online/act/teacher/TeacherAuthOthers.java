@@ -16,14 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.upyun.UploadTask;
+import com.education.online.bean.ImageInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
@@ -33,6 +37,7 @@ import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/28.
@@ -48,6 +53,7 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
     private LinearLayout imgListLayout;
     private ArrayList<String> imgList=new ArrayList<>();
     private int ResId=-1;
+    private int imgType=-1;
     private ImageLoader imageLoader;
 
     private void initHandler() {
@@ -71,8 +77,11 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
             @Override
             public void onClick(View view) {
                 String ids="";
+                for(String imgUrl:imgList){
+                    ids=ids+imgUrl+"_"+imgType+",";
+                }
                 if(ids.length()>0)
-                    mHandler.updateValidate(ids.substring(0, ids.length()-1));
+                    mHandler.updateValidate(ids.substring(0, ids.length()-1), null, null);
                 else
                     ToastUtils.displayTextShort(TeacherAuthOthers.this, "没有上传任何认证");
             }
@@ -88,22 +97,33 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
         hintTxt=(TextView)findViewById(R.id.hintTxt);
         uploadImg=(ImageView) findViewById(R.id.uploadImg);
         uploadImg.setOnClickListener(this);
-
+        String jsonData=getIntent().getStringExtra("jsonData");
+        List<ImageInfo> imgs= JSON.parseObject(JsonUtil.getString(jsonData, "pic_info"), new TypeReference<List<ImageInfo>>(){});
+        for (ImageInfo img:imgs){
+            String[] imgUrls=img.getPic_urls().split(",");
+            for (int i=0;i<imgUrls.length;i++) {
+                addImage(imgUrls[i]);
+            }
+        }
         switch (ResId){
             case R.id.teacherStatus:
                 _setHeaderTitle("教师认证");
+                imgType=3;
                 hintTxt.setText("请提交在有效期内的教师证照片，需保证头像及文字清晰可见。");
                 break;
             case R.id.eduStatus:
                 _setHeaderTitle("学历认证");
+                imgType=4;
                 hintTxt.setText("请提交证明您学历水平的证件照片，例如：学生证、在读证明、毕业证等（需包含照片、姓名、专业、校方印章等有效信息）。");
                 break;
             case R.id.zyzzStatus:
                 _setHeaderTitle("专业资历认证");
+                imgType=5;
                 hintTxt.setText("请提交您教学能力或者专业能力的证明，例如：\n•职称证书（建议中小学老师上传）\n•考级证书（建议艺术老师上传）");
                 break;
             case R.id.gzdwStatus:
                 _setHeaderTitle("工作资历");
+                imgType=6;
                 hintTxt.setText("请提交您工作的学校、机构等单位的证明，例如：\n•劳动合同（包含姓名、单位印章等信息）\n•工作证（包含照片、姓名、单位名称等信息）");
                 break;
         }
@@ -163,7 +183,7 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        addImage(result);
+                        addImage(result.substring(1));
                     }
 
                     @Override
@@ -177,8 +197,7 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
         }
     };
 
-    private void addImage(String result) {
-        final String imgUrl = result.substring(1);
+    private void addImage(final String imgUrl) {
         LogUtil.d("validate", imgUrl);
         imgList.add(imgUrl);
         Toast.makeText(TeacherAuthOthers.this,"上传成功！",Toast.LENGTH_SHORT);

@@ -70,6 +70,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private int page=1;
     private List<CourseBean> items=new ArrayList<>();
     private CourseUpdate currentCourseFrg;
+    private String query_type=Constant.TypeCourse;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -99,13 +100,18 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         addCourseListFragment(onlinecoursePage);
         type = getIntent().getIntExtra("Type", 0);
         if(getIntent().hasExtra(Constant.SearchWords)) {
-            searchwords = getIntent().getStringExtra(Constant.SearchWords);
-            searchEdt.setText(searchwords);
-            searchEdt.setSelection(searchwords.length());
-            handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize, String.valueOf(page));
+            if(type==1) {
+                query_type=Constant.TypeTeacher;
+                handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize, String.valueOf(page), query_type);
+            }else {
+                searchwords = getIntent().getStringExtra(Constant.SearchWords);
+                searchEdt.setText(searchwords);
+                searchEdt.setSelection(searchwords.length());
+                handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize, String.valueOf(page), query_type);
+            }
         }else if(getIntent().hasExtra(Constant.SearchSubject)){
             subject_id = getIntent().getStringExtra(Constant.SearchSubject);
-            handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize, String.valueOf(page));
+            handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize, String.valueOf(page), query_type);
         }
     }
 
@@ -335,7 +341,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         subject_id=subject.getSubject_id();
         page=1;
         handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                sort, pageSize, String.valueOf(page));
+                sort, pageSize, String.valueOf(page), query_type);
     }
 
     @Override
@@ -358,7 +364,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }
             page=1;
             handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                    sort, pageSize, String.valueOf(page));
+                    sort, pageSize, String.valueOf(page), query_type);
         }else{
 
         }
@@ -376,6 +382,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             sort="price";
         }
         handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                sort, pageSize, String.valueOf(page));
+                sort, pageSize, String.valueOf(page), query_type);
     }
 }

@@ -10,39 +10,47 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.upyun.UploadTask;
+import com.education.online.bean.ImageInfo;
 import com.education.online.bean.TeacherAuth;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/28.
  */
 public class TeacherAuthIdentity extends BaseFrameAct implements View.OnClickListener{
 
-    private TextView nameEdt, idEdt;
+    private EditText nameEdt, idEdt;
     private ImageView imgAdd1,imgAdd2;
     private String pic1="", pic2="";
     private Dialog progressDialog;
     private String phoneTxtName = "";
     private HttpHandler mHandler;
+    private ImageLoader imageLoader;
     private int idImgType=1;
 
     private void initHandler() {
@@ -61,28 +69,55 @@ public class TeacherAuthIdentity extends BaseFrameAct implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.id_identity_layout);
 
+        imageLoader=ImageLoader.getInstance();
         _setHeaderTitle("身份认证");
         _setRightHomeText("提交认证  ", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String ids="";
-                if(ids.length()>0)
-                    mHandler.updateValidate(ids.substring(0, ids.length()-1));
+                String name=nameEdt.getText().toString();
+                String id=idEdt.getText().toString();
+                String hint="";
+                if(pic1.length()==0||pic2.length()==0)
+                    hint="请上传照片";
+                if(id.length()==0)
+                    hint="请填写身份证";
+                if(name.length()==0)
+                    hint="请填写姓名";
+                if(hint.length()==0)
+                    mHandler.updateValidate(pic1+"_1,"+pic2+"_2", name, id);
                 else
-                    ToastUtils.displayTextShort(TeacherAuthIdentity.this, "没有上传任何认证");
+                    ToastUtils.displayTextShort(TeacherAuthIdentity.this, hint);
             }
         });
+
         initHandler();
         initView();
     }
 
     private void initView() {
-        nameEdt=(TextView)findViewById(R.id.nameEdt);
-        idEdt=(TextView)findViewById(R.id.idEdt);
+        nameEdt=(EditText)findViewById(R.id.nameEdt);
+        idEdt=(EditText)findViewById(R.id.idEdt);
         imgAdd1=(ImageView) findViewById(R.id.imgAdd1);
         imgAdd2=(ImageView)findViewById(R.id.imgAdd2);
         imgAdd1.setOnClickListener(this);
         imgAdd2.setOnClickListener(this);
+        String jsonData=getIntent().getStringExtra("jsonData");
+        String name=JsonUtil.getString(jsonData, "user_name");
+        if(name.length()>0) {
+            nameEdt.setText(name);
+            nameEdt.setEnabled(false);
+        }
+        idEdt.setText(JsonUtil.getString(jsonData, "id_number"));
+        List<ImageInfo> imgs= JSON.parseObject(JsonUtil.getString(jsonData, "pic_info"), new TypeReference<List<ImageInfo>>(){});
+        for (ImageInfo img:imgs){
+            if(img.getPic_type().equals("1")) {
+                pic1 = img.getPic_urls();
+                imageLoader.displayImage(ImageUtil.getImageUrl(pic1), imgAdd1);
+            } else if(img.getPic_type().equals("2")) {
+                pic2 = img.getPic_urls();
+                imageLoader.displayImage(ImageUtil.getImageUrl(pic2), imgAdd2);
+            }
+        }
     }
 
     @Override

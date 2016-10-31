@@ -50,9 +50,21 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
         mHandler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
-                super.doSuccess(method, jsonData);
-                ToastUtils.displayTextShort(TeacherAuthPage.this, "提交成功");
-                finish();
+                Intent intent=new Intent();
+                intent.putExtra("ResId", clickViewId);
+                intent.putExtra("jsonData", jsonData);
+                switch (clickViewId){
+                    case R.id.idStatus:
+                        intent.setClass(TeacherAuthPage.this, TeacherAuthIdentity.class);
+                        break;
+                    case R.id.teacherStatus:
+                    case R.id.eduStatus:
+                    case R.id.zyzzStatus:
+                    case R.id.gzdwStatus:
+                        intent.setClass(TeacherAuthPage.this, TeacherAuthOthers.class);
+                        break;
+                }
+                startActivity(intent);
             }
         });
     }
@@ -63,26 +75,6 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
         setContentView(R.layout.teacher_auth);
 
         _setHeaderTitle("认证设置");
-        _setRightHomeText("提交认证  ", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String ids="";
-                if(pic1.length()>0)
-                    ids=ids+pic1+"_1,";
-                if(pic2.length()>0)
-                    ids=ids+pic2+"_3,";
-                if(pic3.length()>0)
-                    ids=ids+pic3+"_4,";
-                if(pic4.length()>0)
-                    ids=ids+pic4+"_5,";
-                if(pic5.length()>0)
-                    ids=ids+pic5+"_6,";
-                if(ids.length()>0)
-                    mHandler.updateValidate(ids.substring(0, ids.length()-1));
-                else
-                    ToastUtils.displayTextShort(TeacherAuthPage.this, "没有上传任何认证");
-            }
-        });
         status= JSON.parseObject(getIntent().getStringExtra("jsonData"), TeacherAuth.class);
         initHandler();
         initView();
@@ -103,7 +95,7 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
 
     private void setInfo(TextView txt, String status) {
         if(status.equals("3")){
-            txt.setOnClickListener(this);
+
         }else {
             txt.setTextColor(getResources().getColor(R.color.normal_red));
             txt.setBackgroundResource(R.drawable.shape_normalredline_with_corner);
@@ -115,25 +107,32 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
                 txt.setText("拒绝");
             }
         }
+        if(!status.equals("1"))
+            txt.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         clickViewId=view.getId();
-        Intent intent=new Intent();
-        intent.putExtra("ResId", clickViewId);
+        String validate_type="";
         switch (clickViewId){
             case R.id.idStatus:
-                intent.setClass(TeacherAuthPage.this, TeacherAuthIdentity.class);
+                validate_type="id";
                 break;
             case R.id.teacherStatus:
+                validate_type="tc";
+                break;
             case R.id.eduStatus:
+                validate_type="edu_bg";
+                break;
             case R.id.zyzzStatus:
+                validate_type="specialty";
+                break;
             case R.id.gzdwStatus:
-                intent.setClass(TeacherAuthPage.this, TeacherAuthOthers.class);
+                validate_type="unit";
                 break;
         }
-        startActivity(intent);
+        mHandler.getValidateDetails(validate_type);
     }
 
 }

@@ -146,7 +146,7 @@ public class CompleteDataPage extends BaseFrameAct {
                         } catch (NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
-                        httphandler.regist(phone,SHApassword,identity,nickname,name,gender,avatar,subject_id);
+                        httphandler.regist(phone,SHApassword,identity,name,gender,avatar,subject_id);
 
                     }
 

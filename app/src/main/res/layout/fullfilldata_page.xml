@@ -22,7 +22,7 @@
                 android:layout_marginLeft="45dp"
                 android:layout_weight="0.3"
                 android:gravity="center_vertical"
-                android:text="真实姓名"
+                android:text="昵称"
                 android:textSize="14sp" />
 
             <EditText

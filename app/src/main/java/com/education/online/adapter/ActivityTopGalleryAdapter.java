@@ -11,20 +11,22 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.education.online.R;
+import com.education.online.bean.AdvertsBean;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityTopGalleryAdapter extends PagerAdapter {
 //	private int defualtRes;
 	DisplayImageOptions options;
-	private ArrayList<String> imgs=new ArrayList<String>();
+	private List<AdvertsBean> imgs=new ArrayList<>();
 	ImageLoader imageDownloader = ImageLoader.getInstance();
 	Context con;
 
-	public ActivityTopGalleryAdapter(Activity con, ArrayList<String> arrayList) {
+	public ActivityTopGalleryAdapter(Activity con, List<AdvertsBean> arrayList) {
 		this.imgs=arrayList;
 		this.con=con;
 		options = ImageUtil.getImageOption(0);
@@ -41,8 +43,8 @@ public class ActivityTopGalleryAdapter extends PagerAdapter {
     	ImageView img = new ImageView(con);
     	img.setScaleType(ScaleType.CENTER_CROP);
         img.setBackgroundResource(R.color.whitesmoke);
-    	final String url = imgs.get(position);
-//        imageDownloader.displayImage(url, img, options);
+    	final String url = imgs.get(position).getImg();
+        imageDownloader.displayImage(ImageUtil.getImageUrl(url), img, options);
         container.addView(img, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         img.setOnClickListener(new OnClickListener() {
 			

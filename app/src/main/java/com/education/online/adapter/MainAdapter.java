@@ -177,11 +177,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public PagerHolder(View convertView) {
             super(convertView);
             mViewPager = (ExtendedViewPager) convertView.findViewById(R.id.galleryImgs);
-            ArrayList<String> imgs=new ArrayList<>();
-            imgs.add("");
-            imgs.add("");
-            imgs.add("");
-            mViewPager.setAdapter(new ActivityTopGalleryAdapter(act, imgs));
+            mViewPager.setAdapter(new ActivityTopGalleryAdapter(act, info.getAdverts_info()));
             mViewPager.startAutoScroll();
         }
     }

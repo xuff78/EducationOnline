@@ -24,6 +24,9 @@ public class Constant {
     public static final String SavePath = Environment.getExternalStorageDirectory().getAbsolutePath()
             + "/EduOL";
 
+    public static final String TypeTeacher="teacher";
+    public static final String TypeCourse="course";
+
     //微信的
     public static final String WXAppId="WXAppId";
     public static final String WXAppSecret="WXAppSecret";

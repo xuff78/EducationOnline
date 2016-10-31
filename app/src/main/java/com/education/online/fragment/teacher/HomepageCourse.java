@@ -27,6 +27,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.AdapterCallback;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
@@ -94,7 +95,7 @@ public class HomepageCourse extends BaseFragment {
         if(items.size()==0) {
             initHandler();
             handler.getCourseList("underway", null, null, null, null, SharedPreferencesUtil.getUsercode(getActivity()),
-                    "sort_order", "100", "1");
+                    "sort_order", "100", "1", Constant.TypeCourse);
         }else{
             items.clear();
             items.addAll(tempitems);
