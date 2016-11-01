@@ -95,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
         <LinearLayout
+            android:visibility="gone"
             android:paddingLeft="20dp"
             android:paddingRight="40dp"
             android:gravity="center_vertical"
@@ -113,10 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
         </LinearLayout>
-        <View
+        <!--<View
             android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="1px" />
+            android:layout_height="1px" />-->
         <RelativeLayout
             android:paddingRight="25dp"
             android:layout_width="match_parent"

@@ -61,7 +61,7 @@ public class HttpHandler extends Handle {
      * @param page
      */
 	public void getCourseList(String status, String course_type, String subject_id, String key_word, String is_free, String usercode,
-							  String sort, String page_size, String page, String query_type) {
+							  String sort, String page_size, String page, String query_type, String start_date, String end_date) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("status", status);
@@ -81,6 +81,10 @@ public class HttpHandler extends Handle {
 			paramMap.put("page_size", page_size);
 		if(page!=null)
 			paramMap.put("page", page);
+		if(start_date!=null)
+			paramMap.put("start_date", start_date);
+		if(end_date!=null)
+			paramMap.put("end_date", end_date);
 		paramMap.put("query_type", query_type);
 		requestPostEdu(Method.getCourseList, paramMap, true);
 	}

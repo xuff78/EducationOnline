@@ -24,6 +24,7 @@
             android:id="@+id/teacherName"
             android:gravity="center_vertical|right"
             android:background="@null"
+            android:text="请在教师认证中填写"
             style="@style/txt_black_12"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"

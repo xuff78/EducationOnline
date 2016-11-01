@@ -18,6 +18,7 @@ public class TeacherBean {
     private String avatar = "";  // 头像地址
     private String work_time = "";  // 工作时间
     private String specialty = "";
+    private String subject_id="";
     private String subject = "";  // 主营科目
     private String edu_bg = "";  // 学历
     private String school = "";  // 院校
@@ -39,6 +40,14 @@ public class TeacherBean {
     private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
 
     private ArrayList<CourseBean> course_info=new ArrayList<>();
+
+    public String getSubject_id() {
+        return subject_id;
+    }
+
+    public void setSubject_id(String subject_id) {
+        this.subject_id = subject_id;
+    }
 
     public String getIs_ext_validate() {
         return is_ext_validate;

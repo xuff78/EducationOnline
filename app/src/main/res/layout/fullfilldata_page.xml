@@ -33,7 +33,7 @@
                 android:layout_weight="0.7"
                 android:background="@null"
                 android:gravity="center|right"
-                android:text="杨璐"
+                android:text=""
                 android:textSize="14sp" />
         </LinearLayout>
 

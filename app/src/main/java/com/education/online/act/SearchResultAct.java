@@ -59,6 +59,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private String sort=null;
     private String subject_id=null;
     private String searchwords=null;
+    private String start_date=null, end_date=null;
     private Fragment selectorPage, selectorByOrder, selectorFilter, currentUsedFrg;
     private boolean filterShown=false;
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
@@ -102,16 +103,19 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         if(getIntent().hasExtra(Constant.SearchWords)) {
             if(type==1) {
                 query_type=Constant.TypeTeacher;
-                handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize, String.valueOf(page), query_type);
+                handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize,
+                        String.valueOf(page), query_type, null, null);
             }else {
                 searchwords = getIntent().getStringExtra(Constant.SearchWords);
                 searchEdt.setText(searchwords);
                 searchEdt.setSelection(searchwords.length());
-                handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize, String.valueOf(page), query_type);
+                handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize,
+                        String.valueOf(page), query_type, null, null);
             }
         }else if(getIntent().hasExtra(Constant.SearchSubject)){
             subject_id = getIntent().getStringExtra(Constant.SearchSubject);
-            handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize, String.valueOf(page), query_type);
+            handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize,
+                    String.valueOf(page), query_type, null, null);
         }
     }
 
@@ -147,9 +151,17 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     selectorFilter=new SelectorFilter();
                     FilterAll filter=new FilterAll();
                     ArrayList<FilterInfo> list=new ArrayList<>();
+                    is_free=null;
+                    sort=null;
+                    subject_id=null;
+                    searchwords=null;
+                    start_date=null;
+                    end_date=null;
                     if (i == 0) {
+                        courseType="live";
                         setFirstFilter(list);
                     } else {
+                        courseType=null;
                         FilterInfo info=new FilterInfo();
                         info.setTypeName("教师资质");
                         String[] typenames=new String[]{"教师认证","专业证书"};
@@ -341,7 +353,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         subject_id=subject.getSubject_id();
         page=1;
         handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                sort, pageSize, String.valueOf(page), query_type);
+                sort, pageSize, String.valueOf(page), query_type, start_date, end_date);
     }
 
     @Override
@@ -364,7 +376,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }
             page=1;
             handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                    sort, pageSize, String.valueOf(page), query_type);
+                    sort, pageSize, String.valueOf(page), query_type, start_date, end_date);
         }else{
 
         }
@@ -382,6 +394,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             sort="price";
         }
         handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                sort, pageSize, String.valueOf(page), query_type);
+                sort, pageSize, String.valueOf(page), query_type, start_date, end_date);
     }
 }

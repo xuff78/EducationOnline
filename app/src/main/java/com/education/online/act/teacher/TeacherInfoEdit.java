@@ -91,7 +91,8 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
     }
 
     private void setFormData() {
-        teacherName.setText(teacher.getName());
+        if(teacher.getName().length()>0)
+            teacherName.setText(teacher.getName());
         teachingTime.setText(teacher.getWork_time());
         highSchool.setText(teacher.getSchool());
         companyName.setText(teacher.getUnit());
@@ -103,6 +104,7 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
 
         teachSubjectTxt.setText(teacher.getSubject());
         educationTxt.setText(teacher.getEdu_bg());
+        subject.setSubject_id(teacher.getSubject_id());
     }
 
     @Override
