@@ -10,10 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.bean.TeacherWithCourse;
 import com.education.online.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/22.
@@ -22,13 +26,13 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
 //    ArrayList<OnlineCourseBean> onlineCourseBeanArrayList;
     private Activity activity;
     private LayoutInflater inflater;
+    private List<TeacherWithCourse> teachers=new ArrayList<>();
+    private ImageLoader loader=ImageLoader.getInstance();
 
-
-    public TeacherAdapter(Activity activity){
+    public TeacherAdapter(Activity activity, List<TeacherWithCourse> teachers){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
-
-
+        this.teachers=teachers;
     }
 
     @Override
@@ -54,13 +58,13 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return 6;
+        return teachers.size();
     }
 
     public class TeacherItemHolder extends RecyclerView.ViewHolder
     {
         ImageView teacherImage;
-        TextView teacherName, teacherDesc, evaluation;
+        TextView teacherName, teacherDesc, evaluation, NumApplicant;
         LinearLayout courseLayout, moreLayout;
         View arrowIcon;
         boolean isExpand=false;
@@ -68,16 +72,23 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
         public TeacherItemHolder(View v, final int position)
         {
             super(v);
+            TeacherWithCourse teacher=teachers.get(position);
             arrowIcon = v.findViewById(R.id.arrowIcon);
             teacherImage = (ImageView) v.findViewById(R.id.teacherImage);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             teacherDesc = (TextView) v.findViewById(R.id.teacherDesc);
             evaluation = (TextView) v.findViewById(R.id.evaluation);
+            NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
             courseLayout = (LinearLayout) v.findViewById(R.id.courseLayout);
             moreLayout = (LinearLayout) v.findViewById(R.id.moreLayout);
+            loader.displayImage(ImageUtil.getImageUrl(teacher.getAvatar()), teacherImage);
+            teacherName.setText(teacher.getUser_name());
+            teacherDesc.setText(teacher.getAbout_teacher());
+            evaluation.setText(teacher.getAverage()+"分");
+            NumApplicant.setText("评价: "+teacher.getEvaluate_count());
             LinearLayout.LayoutParams llpTeacher=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60));
-            for (int i=0;i<position;i++){
-                courseLayout.addView(getCourseLayout(), llpTeacher);
+            for (int i=0;i<teacher.getCourse_detail().size();i++){
+                courseLayout.addView(getCourseLayout(teacher.getCourse_detail().get(i)), llpTeacher);
             }
             if(position>2) {
                 LinearLayout.LayoutParams llpCourse=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*2);
@@ -102,12 +113,26 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             }
         }
 
-        private View getCourseLayout() {
+        private View getCourseLayout(CourseBean courseBean) {
             View v=inflater.inflate(R.layout.teacher_course_item, null);
             TextView courseType= (TextView) v.findViewById(R.id.courseType);
+            switch (Integer.valueOf(courseBean.getCourse_type())){
+                case 1:
+                    courseType.setText("课件");
+                    break;
+                case 2:
+                    courseType.setText("视频");
+                    break;
+                case 3:
+                    courseType.setText("直播课");
+                    break;
+            }
             TextView courseName= (TextView) v.findViewById(R.id.courseName);
+            courseName.setText(courseBean.getCourse_name());
             TextView coursePrice= (TextView) v.findViewById(R.id.coursePrice);
+            coursePrice.setText(courseBean.getPrice());
             TextView buyerNum= (TextView) v.findViewById(R.id.buyerNum);
+            buyerNum.setText(courseBean.getFollow()+"人在学习");
             return v;
         }
 

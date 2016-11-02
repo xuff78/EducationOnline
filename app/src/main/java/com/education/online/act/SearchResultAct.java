@@ -20,6 +20,7 @@ import com.education.online.bean.CourseBean;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
 import com.education.online.bean.SubjectBean;
+import com.education.online.bean.TeacherWithCourse;
 import com.education.online.fragment.CourseVideoList;
 import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.TeacherList;
@@ -53,7 +54,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private FrameLayout filterDetailLayout;
     private MenuPopup popup;
     private String[] typeStrs={"课程", "老师"};
-    private int type=0;
+    private int type=0; //0课程， 1教师
     private String courseType="live";
     private String is_free=null;
     private String sort=null;
@@ -70,8 +71,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private String pageSize="20";
     private int page=1;
     private List<CourseBean> items=new ArrayList<>();
+    private List<TeacherWithCourse> teacheritems=new ArrayList<>();
     private CourseUpdate currentCourseFrg;
-    private String query_type=Constant.TypeCourse;
+//    private String query_type=Constant.TypeCourse;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -79,9 +81,15 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getCourseList)){
-                    items= JSON.parseObject(JsonUtil.getString(jsonData, "course_info"),
-                            new TypeReference<List<CourseBean>>(){});
-                    currentCourseFrg.addCourses(items, true);
+                    String courseInfo=JsonUtil.getString(jsonData, "course_info");
+                    if(type==0) {
+                        items = JSON.parseObject(courseInfo, new TypeReference<List<CourseBean>>() {});
+                        currentCourseFrg.addCourses(items, true);
+                    }else if(type==1){
+                        teacheritems = JSON.parseObject(courseInfo,  new TypeReference<List<TeacherWithCourse>>() {});
+                        teacherList.addTeacherCourses(teacheritems, true);
+                    }
+                    page++;
                 }else if(method.equals(Method.updateSortList)){
                 }else if(method.equals(Method.updateSortList)){
                 }
@@ -98,24 +106,26 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         _setHeaderGone();
         initView();
         initFrgment();
-        addCourseListFragment(onlinecoursePage);
         type = getIntent().getIntExtra("Type", 0);
         if(getIntent().hasExtra(Constant.SearchWords)) {
             if(type==1) {
-                query_type=Constant.TypeTeacher;
+                addCourseListFragment(teacherList);
+                courseTypeLayout.setVisibility(View.GONE);
                 handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize,
-                        String.valueOf(page), query_type, null, null);
+                        String.valueOf(page), type, null, null);
             }else {
+                addCourseListFragment(onlinecoursePage);
                 searchwords = getIntent().getStringExtra(Constant.SearchWords);
                 searchEdt.setText(searchwords);
                 searchEdt.setSelection(searchwords.length());
                 handler.getCourseList("underway", courseType, null, searchwords, null, null, null, pageSize,
-                        String.valueOf(page), query_type, null, null);
+                        String.valueOf(page), type, null, null);
             }
         }else if(getIntent().hasExtra(Constant.SearchSubject)){
+            addCourseListFragment(onlinecoursePage);
             subject_id = getIntent().getStringExtra(Constant.SearchSubject);
             handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize,
-                    String.valueOf(page), query_type, null, null);
+                    String.valueOf(page), type, null, null);
         }
     }
 
@@ -123,6 +133,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         selectorPage=new SelectorPage();
         ((SelectorPage)selectorPage).setData(this);
         selectorByOrder=new SelectorOrder();
+        Bundle b2=new Bundle();
+        b2.putInt("type", type);
+        selectorByOrder.setArguments(b2);
         selectorFilter=new SelectorFilter();
 
         FilterAll filter=new FilterAll();
@@ -158,23 +171,27 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     start_date=null;
                     end_date=null;
                     if (i == 0) {
+                        courseTypeLayout.setVisibility(View.VISIBLE);
+                        addCourseListFragment(onlinecoursePage);
                         courseType="live";
                         setFirstFilter(list);
                     } else {
+                        courseTypeLayout.setVisibility(View.GONE);
+                        addCourseListFragment(teacherList);
                         courseType=null;
                         FilterInfo info=new FilterInfo();
                         info.setTypeName("教师资质");
-                        String[] typenames=new String[]{"教师认证","专业证书"};
+                        String[] typenames=new String[]{"教师认证","专业证书","双重认证"};
                         info.setItemInfo(typenames);
                         list.add(info);
                         FilterInfo info2=new FilterInfo();
                         info2.setTypeName("教龄");
-                        String[] typenames2=new String[]{"不限","1-5年","5-10年","10-15年","15年以上"};
+                        String[] typenames2=new String[]{"1-5年","5-10年","10-15年","15年以上"};
                         info2.setItemInfo(typenames2);
                         list.add(info2);
                         FilterInfo info3=new FilterInfo();
                         info3.setTypeName("老师性别");
-                        String[] typenames3=new String[]{"不限","男","女"};
+                        String[] typenames3=new String[]{"男","女"};
                         info3.setItemInfo(typenames3);
                         list.add(info3);
                     }
@@ -183,6 +200,14 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     Bundle b=new Bundle();
                     b.putSerializable(FilterAll.Name, filter);
                     selectorFilter.setArguments(b);
+
+                    selectorPage=new SelectorPage();
+                    ((SelectorPage)selectorPage).setData(SearchResultAct.this);
+                    selectorByOrder=new SelectorOrder();
+                    Bundle b2=new Bundle();
+                    b2.putInt("type", type);
+                    selectorByOrder.setArguments(b2);
+
                     popup.dismiss();
                 }
 
@@ -202,13 +227,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 if(actionId== EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
                     if(!searchEdt.getText().toString().trim().equals(""))
                     {
-                        if(type==0) {
-                            courseTypeLayout.setVisibility(View.VISIBLE);
-                            addCourseListFragment(onlinecoursePage);
-                        }else {
-                            courseTypeLayout.setVisibility(View.GONE);
-                            addCourseListFragment(teacherList);
-                        }
+                        page=1;
+                        handler.getCourseList("underway", courseType, subject_id, null, null, null, null, pageSize,
+                                String.valueOf(page), type, null, null);
                     }else
                         ToastUtils.displayTextShort(SearchResultAct.this, "请填写搜索关键字");
                 }
@@ -353,7 +374,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         subject_id=subject.getSubject_id();
         page=1;
         handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                sort, pageSize, String.valueOf(page), query_type, start_date, end_date);
+                sort, pageSize, String.valueOf(page), type, start_date, end_date);
     }
 
     @Override
@@ -376,7 +397,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }
             page=1;
             handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                    sort, pageSize, String.valueOf(page), query_type, start_date, end_date);
+                    sort, pageSize, String.valueOf(page), type, start_date, end_date);
         }else{
 
         }
@@ -394,6 +415,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             sort="price";
         }
         handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
-                sort, pageSize, String.valueOf(page), query_type, start_date, end_date);
+                sort, pageSize, String.valueOf(page), type, start_date, end_date);
     }
 }

@@ -95,7 +95,7 @@ public class HomepageCourse extends BaseFragment {
         if(items.size()==0) {
             initHandler();
             handler.getCourseList("underway", null, null, null, null, SharedPreferencesUtil.getUsercode(getActivity()),
-                    "sort_order", "100", "1", Constant.TypeCourse, null, null);
+                    "sort_order", "100", "1", 0, null, null);
         }else{
             items.clear();
             items.addAll(tempitems);

@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import com.education.online.R;
 import com.education.online.adapter.OnlineCourseAdapter;
 import com.education.online.adapter.TeacherAdapter;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.bean.TeacherWithCourse;
 import com.education.online.inter.CourseUpdate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/22.
@@ -21,7 +24,8 @@ import java.util.ArrayList;
 public class TeacherList extends CourseUpdate {
 
     private RecyclerView teacherList;
-    ArrayList<OnlineCourseBean> onlineCourseBeanArrayList = new ArrayList<>();
+    private TeacherAdapter adapter;
+    private List<TeacherWithCourse> onlineCourseBeanArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,12 +36,19 @@ public class TeacherList extends CourseUpdate {
         return view;
     }
 
+    public void addTeacherCourses(List<TeacherWithCourse> courses, boolean isNew){
+        if(isNew)
+            onlineCourseBeanArrayList.clear();
+        onlineCourseBeanArrayList.addAll(courses);
+        adapter.notifyDataSetChanged();
+    }
 
     private void initView(View v) {
         teacherList = (RecyclerView) v.findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         teacherList.setLayoutManager(layoutManager);
-        teacherList.setAdapter(new TeacherAdapter(getActivity()));
+        adapter=new TeacherAdapter(getActivity(), onlineCourseBeanArrayList);
+        teacherList.setAdapter(adapter);
     }
 }

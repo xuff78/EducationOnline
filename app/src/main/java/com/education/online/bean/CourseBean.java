@@ -18,6 +18,15 @@ public class CourseBean {
     private String plan = ""; // 教学计划
     private String user_name = ""; // 创建人姓名
     private String count="";
+    private String course_type="";
+
+    public String getCourse_type() {
+        return course_type;
+    }
+
+    public void setCourse_type(String course_type) {
+        this.course_type = course_type;
+    }
 
     public String getCount() {
         return count;
