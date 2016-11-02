@@ -385,6 +385,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 is_free="yes";
             else if(freefilter.getSelection()==1)
                 is_free="no";
+            else
+                is_free=null;
             FilterInfo day=filters.get(1);
             if(day.getSelection()==0)
                 is_free=null;
@@ -394,11 +396,14 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
 
             }else if(day.getSelection()==3){
 
+            }else {
+                start_date = null;
+                end_date = null;
             }
             page=1;
             handler.getCourseList("underway", courseType, subject_id, searchwords, is_free, null,
                     sort, pageSize, String.valueOf(page), type, start_date, end_date);
-        }else{
+        }else if(type==1){
 
         }
     }

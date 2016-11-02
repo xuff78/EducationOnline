@@ -92,15 +92,22 @@ public class SelectorFilter extends BaseFragment implements View.OnClickListener
                 txt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(info.getSelectionTemp()!=-1) {
-                            TextView txt = selectionTxts.get(info.getSelectionTemp());
+                        if(k!=info.getSelectionTemp()) {
+                            if (info.getSelectionTemp() != -1) {
+                                TextView txt = selectionTxts.get(info.getSelectionTemp());
+                                txt.setBackgroundResource(R.drawable.shape_corner_blackline);
+                                txt.setTextColor(Color.GRAY);
+                            }
+                            TextView selectTxt = (TextView) view;
+                            selectTxt.setBackgroundResource(R.drawable.shape_orangedline_with_corner);
+                            selectTxt.setTextColor(getResources().getColor(R.color.dark_orange));
+                            info.setSelectionTemp(k);
+                        }else{
+                            TextView txt = (TextView) view;
                             txt.setBackgroundResource(R.drawable.shape_corner_blackline);
                             txt.setTextColor(Color.GRAY);
+                            info.setSelectionTemp(-1);
                         }
-                        TextView selectTxt= (TextView) view;
-                        selectTxt.setBackgroundResource(R.drawable.shape_orangedline_with_corner);
-                        selectTxt.setTextColor(getResources().getColor(R.color.dark_orange));
-                        info.setSelectionTemp(k);
                     }
                 });
             }

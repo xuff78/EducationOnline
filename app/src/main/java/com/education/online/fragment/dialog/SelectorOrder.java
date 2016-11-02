@@ -33,6 +33,7 @@ public class SelectorOrder extends BaseFragment {
         View view = inflater.inflate(R.layout.selector_byorder,container,false);
 
         initView(view);
+
         return view;
     }
 
@@ -40,7 +41,12 @@ public class SelectorOrder extends BaseFragment {
         LayoutInflater inflater=LayoutInflater.from(getActivity());
         LinearLayout layout= (LinearLayout) v;
         LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(getActivity(), 50));
-        for(int i=0;i<4;i++){
+        int type=getArguments().getInt("type",0);
+        int size=4;
+        if(type==1){
+            size=3;
+        }
+        for(int i=0;i<size;i++){
             final int j=i;
             View item=inflater.inflate(R.layout.selector_by_order_item, null);
             TextView nameTxt= (TextView) item.findViewById(R.id.nameTxt);
