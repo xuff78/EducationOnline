@@ -7,11 +7,13 @@ package com.education.online.http;
 import android.app.Activity;
 
 import com.education.online.bean.AddClassBean;
+import com.education.online.bean.CourseFilter;
 import com.education.online.util.Constant;
 import com.education.online.util.LeanSignatureUtil;
 import com.education.online.util.SharedPreferencesUtil;
-import com.education.online.util.SignatureUtil;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 
@@ -91,6 +93,34 @@ public class HttpHandler extends Handle {
 			paramMap.put("query_type", "teacher");
 		}
 		requestPostEdu(Method.getCourseList, paramMap, true);
+	}
+
+	public void getCourseList(CourseFilter filter){
+
+		try {
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+			Class userCla = (Class) filter.getClass();
+			Field[] fs = userCla.getDeclaredFields();
+//			java.lang.reflect.Method[] methods = userCla.getMethods();
+			for(int i = 0 ; i < fs.length; i++){
+				Field f = fs[i];
+				f.setAccessible(true); //设置些属性是可以访问的
+				Object val = f.get(filter);
+				if(val!=null) {
+//					String type = f.getType().toString();//得到此属性的类型
+//					if (type.endsWith("int") || type.endsWith("Integer")) {
+//
+//					} else if (type.endsWith("String")) {
+//
+//					}
+					paramMap.put(f.getName(), String.valueOf(val));
+				}
+			}
+			requestPostEdu(Method.getCourseList, paramMap, true);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void updateSortList(String course_ids) {

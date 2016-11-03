@@ -19,6 +19,24 @@ public class CourseBean {
     private String user_name = ""; // 创建人姓名
     private String count="";
     private String course_type="";
+    private String status="";
+    private String course_count="";
+
+    public String getCourse_count() {
+        return course_count;
+    }
+
+    public void setCourse_count(String course_count) {
+        this.course_count = course_count;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getCourse_type() {
         return course_type;

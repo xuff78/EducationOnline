@@ -284,7 +284,7 @@ public class CompleteDataPage extends BaseFrameAct {
                         progressDialog.dismiss();
                         // mFaceImagePath.delete();
                     }
-                }).execute(file,"avtar/"+ phoneTxtName + ".png");
+                }).execute(file,"avatar/"+ phoneTxtName + ".png");
             }
         }
     }

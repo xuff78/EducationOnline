@@ -70,8 +70,6 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId==EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
                     String word=searchEdt.getText().toString().trim();
-                    if(!word.equals(""))
-                    {
                         //记录搜索词
                         String wordsStr=SharedPreferencesUtil.getString(SearchAct.this, Constant.SearchWords);
                         if(wordsStr.equals(SharedPreferencesUtil.FAILURE_STRING)){
@@ -85,8 +83,6 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                         i.putExtra(Constant.SearchWords, word);
                         i.putExtra("Type", type);
                         startActivity(i);
-                    }else
-                        ToastUtils.displayTextShort(SearchAct.this, "请填写搜索关键字");
                 }
                 return false;
             }

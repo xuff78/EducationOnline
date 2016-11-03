@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +50,18 @@ public class ActUtil {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date curDate = new Date(todayL);//获取当
         String dateTxt = formatter.format(curDate);
+        LogUtil.i("Date", "today date: "+dateTxt);
+        return dateTxt;
+    }
+
+    public static String getChangedDate(int type, int num) {
+        Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
+        mCalendar.add(type, num);
+        long todayL=mCalendar.getTimeInMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(todayL);//获取当
+        String dateTxt = formatter.format(curDate);
+        LogUtil.i("Date", "change date: "+dateTxt);
         return dateTxt;
     }
 
@@ -82,5 +95,43 @@ public class ActUtil {
 
     public static String getPrice(String price) {
         return "￥"+price;
+    }
+
+    public static String getCourseStatusTxt(String status) {
+        String courseStatusTxt="";
+        if(status!=null&&status.length()>0){
+            switch (Integer.valueOf(status)){
+                case 0:
+                    courseStatusTxt="待审核";
+                    break;
+                case 1:
+                    courseStatusTxt="通过";
+                    break;
+                case 2:
+                    courseStatusTxt="拒绝";
+                    break;
+            }
+        }
+        return courseStatusTxt;
+    }
+
+    public static String getCourseTypeTxt(String course_type, TextView courseType) {
+        String txt="";
+        if(course_type!=null&&course_type.length()>0){
+            switch (Integer.valueOf(course_type)) {
+                case 1:
+                    txt = "课件";
+                    break;
+                case 2:
+                    txt = "视频";
+                    break;
+                case 3:
+                    txt = "直播课";
+                    break;
+            }
+            courseType.setText(txt);
+        }else
+            courseType.setVisibility(View.GONE);
+        return txt;
     }
 }

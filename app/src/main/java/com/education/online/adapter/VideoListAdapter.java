@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.VideoMainPage;
+import com.education.online.act.video.VideoMain;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.util.ImageUtil;
@@ -67,7 +70,7 @@ public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     {
         ImageView imageView;
         TextView courseName, courseNumTxt, CourseTime, CoursePrice;
-        public itemHolder(View v, int position)
+        public itemHolder(View v, final int position)
         {
             super(v);
             imageView = (ImageView) v.findViewById(R.id.CourseImage);
@@ -79,6 +82,14 @@ public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
             v.findViewById(R.id.NumApplicant).setVisibility(View.GONE);
             v.findViewById(R.id.ApplicantCourse).setVisibility(View.GONE);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i=new Intent(activity, VideoMainPage.class);
+                    i.putExtra("course_id", courses.get(position).getCourse_id());
+                    activity.startActivity(i);
+                }
+            });
         }
     }
 }

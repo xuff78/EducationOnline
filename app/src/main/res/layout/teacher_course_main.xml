@@ -39,21 +39,13 @@
         android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="1px" />
-    <FrameLayout
-        android:layout_above="@+id/filterLayout"
-        android:id="@+id/fragment_list"
-        android:layout_below="@+id/courseTypeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
-    <FrameLayout
-        android:visibility="gone"
+    <android.support.v7.widget.RecyclerView
         android:layout_above="@+id/filterLayout"
-        android:id="@+id/fragment_frame"
-        android:paddingTop="85dp"
+        android:layout_below="@+id/courseTypeLayout"
+        android:id="@+id/recyclerList"
         android:layout_width="match_parent"
-        android:minHeight="280dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent" />
     <LinearLayout
         android:id="@+id/filterLayout"
         android:layout_alignParentBottom="true"

@@ -19,6 +19,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.adapter.TeacherImgAdapter;
 import com.education.online.bean.CourseBean;
+import com.education.online.bean.CourseFilter;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.TeacherBean;
 import com.education.online.bean.VideoImgItem;
@@ -27,6 +28,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.AdapterCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
@@ -94,8 +96,11 @@ public class HomepageCourse extends BaseFragment {
         edit=false;
         if(items.size()==0) {
             initHandler();
-            handler.getCourseList("underway", null, null, null, null, SharedPreferencesUtil.getUsercode(getActivity()),
-                    "sort_order", "100", "1", 0, null, null);
+            CourseFilter filter=new CourseFilter();
+            filter.setCourse_type(null);
+            filter.setUsercode(SharedPreferencesUtil.getUsercode(getActivity()));
+            filter.setSort("sort_order");
+            handler.getCourseList(filter);
         }else{
             items.clear();
             items.addAll(tempitems);
@@ -209,6 +214,8 @@ public class HomepageCourse extends BaseFragment {
 
             CourseBean course=getItem(position);
 
+            TextView courseType = (TextView) v.findViewById(R.id.courseType);
+            ActUtil.getCourseTypeTxt(course.getCourse_type(), courseType);
             TextView CourseName = (TextView) v.findViewById(R.id.CourseName);
             ImageView delBtn=(ImageView)v.findViewById(R.id.delBtn);
             ImageView CourseImage=(ImageView)v.findViewById(R.id.CourseImage);
@@ -219,7 +226,7 @@ public class HomepageCourse extends BaseFragment {
             CoursePrice.setText("￥"+course.getPrice());
             TextView NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
             NumApplicant.setText(course.getFollow()+"人已报名");
-            CourseName.setText(course.getSubject_name());
+            CourseName.setText(CourseName.getText().toString()+course.getSubject_name());
             if(edit){
                 delBtn.setVisibility(View.VISIBLE);
             }else{

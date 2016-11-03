@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
+import com.education.online.act.teacher.TeacherHomePage;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.bean.TeacherWithCourse;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -111,6 +117,9 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
                     }
                 });
             }
+            View teacherLayout=v.findViewById(R.id.CourseImageLayout);
+            teacherLayout.setTag(teacher);
+            teacherLayout.setOnClickListener(listener);
         }
 
         private View getCourseLayout(CourseBean courseBean) {
@@ -133,8 +142,36 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             coursePrice.setText(courseBean.getPrice());
             TextView buyerNum= (TextView) v.findViewById(R.id.buyerNum);
             buyerNum.setText(courseBean.getFollow()+"人在学习");
+            v.setTag(courseBean);
+            v.setOnClickListener(listener);
             return v;
         }
+
+        View.OnClickListener listener=new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId()==R.id.CourseImageLayout) {
+                    TeacherWithCourse teacher = (TeacherWithCourse) view.getTag();
+                    Intent i=new Intent(activity, TeacherInformationPage.class);
+                    i.putExtra(Constant.UserCode, teacher.getUsercode());
+                    activity.startActivity(i);
+                }else {
+                    CourseBean course = (CourseBean) view.getTag();
+                    Intent i = new Intent();
+                    switch (Integer.valueOf(course.getCourse_type())) {
+                        case 1:
+                        case 2:
+                            i.setClass(activity, VideoMainPage.class);
+                            break;
+                        case 3:
+                            i.setClass(activity, CourseMainPage.class);
+                            break;
+                    }
+                    i.putExtra("course_id", course.getCourse_id());
+                    activity.startActivity(i);
+                }
+            }
+        };
 
     }
 }
