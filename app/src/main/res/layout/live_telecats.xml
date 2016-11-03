@@ -19,6 +19,7 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
+                android:textColor="@color/normal_blue"
                 android:text="    今日"
                 android:textSize="13sp" />
 

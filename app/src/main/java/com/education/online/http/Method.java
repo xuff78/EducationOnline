@@ -25,6 +25,7 @@ public class Method {
     public static final String getCourseDtail = "education/course/view";
     public static final String getEvaluateList = "education/course/evaluateList";
     public static final String getValidateDetails = "education/user/validateDetails";
+    public static final String getlistByDate = "education/course/listByDate";
 
     public static final String addClass="education/course/add";
     public static final String addCollection ="education/course/collection" ;

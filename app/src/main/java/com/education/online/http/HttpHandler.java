@@ -137,6 +137,13 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.deleteCourse, paramMap, true);
 	}
 
+	public void getlistByDate(String course_date) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("course_date", course_date);
+		requestPostEdu(Method.getlistByDate, paramMap, true);
+	}
+
 	public void getValidateDetails(String validate_type) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
