@@ -65,6 +65,17 @@ public class ActUtil {
         return dateTxt;
     }
 
+    public static String getChangedDateByMonthDay(int type, int num) {
+        Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
+        mCalendar.add(type, num);
+        long todayL=mCalendar.getTimeInMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日");
+        Date curDate = new Date(todayL);//获取当
+        String dateTxt = formatter.format(curDate);
+        LogUtil.i("Date", "change date: "+dateTxt);
+        return dateTxt;
+    }
+
     public static String getWeekDay(int i) {
         String weekDay="";
         switch (i){

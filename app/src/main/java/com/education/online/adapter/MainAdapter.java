@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.CourseMainPage;
+import com.education.online.act.SearchResultAct;
 import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
@@ -23,6 +24,7 @@ import com.education.online.bean.LiveCourse;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.VideoCourse;
 import com.education.online.bean.WareCourse;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
@@ -197,10 +199,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             int itemsize=info.getSubject_list().size();
             for(int i=0;i<itemsize+1;i++){
                 if(i==itemsize)
-                    linelayout.addView(getSubjectItemView("更多", null), llpitem);
+                    linelayout.addView(getSubjectItemView(null), llpitem);
                 else {
                     SubjectBean subject=info.getSubject_list().get(i);
-                    linelayout.addView(getSubjectItemView(subject.getSubject_name(), subject.getSubject_img()), llpitem);
+                    linelayout.addView(getSubjectItemView(subject), llpitem);
                 }
                 if(i%5==4||i==itemsize){
                     itemsLayout.addView(linelayout);
@@ -209,7 +211,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         }
 
-        private LinearLayout getSubjectItemView(String name, String imgUrl){
+        private LinearLayout getSubjectItemView(SubjectBean subject){
             LinearLayout.LayoutParams llpimg=new LinearLayout.LayoutParams(imgHeight, imgHeight);
             llpimg.bottomMargin=5;
             LinearLayout layout=new LinearLayout(act);
@@ -218,18 +220,37 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ImageView img=new ImageView(act);
             img.setBackgroundResource(R.color.whitesmoke);
             layout.addView(img, llpimg);
-            if(imgUrl!=null)
-                imageLoader.displayImage(ImageUtil.getImageUrl(imgUrl),img);
-            else
-                img.setImageResource(R.mipmap.icon_menu_more);
             TextView txt=new TextView(act);
             txt.setTextSize(12);
             txt.setTextColor(Color.GRAY);
-            txt.setText(name);
             txt.setGravity(Gravity.CENTER_HORIZONTAL);
             layout.addView(txt);
+            if(subject!=null)
+                layout.setTag(subject.getSubject_id());
+            if(subject!=null) {
+                txt.setText(subject.getSubject_name());
+                imageLoader.displayImage(ImageUtil.getImageUrl(subject.getSubject_img()), img);
+            }else {
+                img.setImageResource(R.mipmap.icon_menu_more);
+                txt.setText("更多");
+            }
+            layout.setOnClickListener(listener);
             return layout;
         }
+
+        View.OnClickListener listener=new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Object object=view.getTag();
+                if(object!=null) {
+                    String id = (String) object;
+                    Intent i = new Intent(act, SearchResultAct.class);
+                    i.putExtra(Constant.SearchSubject, id);
+                    act.startActivity(i);
+                }
+            }
+        };
     }
 
     public class CourseHolder extends RecyclerView.ViewHolder

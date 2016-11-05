@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.CourseMainPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
@@ -62,9 +64,9 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
 
     public class AllTypeCourseHolder extends RecyclerView.ViewHolder{
 
-        public AllTypeCourseHolder(View v, int pos) {
+        public AllTypeCourseHolder(View v, final int pos) {
             super(v);
-            CourseBean course=courseList.get(pos);
+            final CourseBean course=courseList.get(pos);
 
             TextView courseType = (TextView) v.findViewById(R.id.courseType);
             ActUtil.getCourseTypeTxt(course.getCourse_type(), courseType);
@@ -82,7 +84,16 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
             courseNumTxt.setText("共"+course.getCourse_count()+"节课");
             TextView statusTxt= (TextView) v.findViewById(R.id.statusTxt);
             statusTxt.setText(ActUtil.getCourseStatusTxt(course.getStatus()));
-
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    String course_id = course.getCourse_id();
+                    intent.putExtra("course_id", course_id);
+                    intent.setClass(act, CourseMainPage.class);
+                    act.startActivity(intent);
+                }
+            });
         }
     }
 }

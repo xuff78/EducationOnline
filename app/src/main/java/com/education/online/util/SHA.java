@@ -25,4 +25,26 @@ public class SHA {
         }
         return sb.toString();
     }
+
+    public static String digesPSW(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] digest = md.digest(password.getBytes());
+            return bytesToHex(digest);
+        } catch (NoSuchAlgorithmException e) {
+        }
+        return password;
+    }
+
+    private static String bytesToHex(final byte[] bytes) {
+        final StringBuilder buf = new StringBuilder(bytes.length * 2);
+        for (final byte b : bytes) {
+            final String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                buf.append("0");
+            }
+            buf.append(hex);
+        }
+        return buf.toString();
+    }
 }
