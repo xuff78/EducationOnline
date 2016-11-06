@@ -1,10 +1,13 @@
 package com.education.online.act;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -99,6 +102,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT>=21) {
+            getWindow().setEnterTransition(new Explode().setDuration(1000));
+            getWindow().setExitTransition(new Explode().setDuration(1000));
+        }
         setContentView(R.layout.search_result_act);
 
         initHandler();

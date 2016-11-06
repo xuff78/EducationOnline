@@ -1,14 +1,20 @@
 package com.education.online.act;
 
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.ChangeTransform;
+import android.transition.Explode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -21,7 +27,7 @@ import com.education.online.R;
 import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.util.ImageUtil;
 
-public abstract class BaseFrameAct extends AppCompatActivity {
+public abstract class BaseFrameAct extends FragmentActivity {
 
 
 	public ImageButton btnHome, btnBack;
@@ -35,13 +41,6 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.app_frame);
-		listener = new ClickListener();
-		btnHome=(ImageButton) findViewById(R.id.back_home_imagebtn);
-		btnHome.setOnClickListener(listener);
-		btnBack=(ImageButton)findViewById(R.id.back_imagebtn);
-		btnBack.setOnClickListener(listener);
-		rl = (RelativeLayout) findViewById(R.id.heder_layout);
 
 		ImageUtil.initImageLoader(this);
 	}
@@ -49,6 +48,14 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	
 	@Override
 	public void setContentView(int layoutResID) {
+
+		super.setContentView(R.layout.app_frame);
+		listener = new ClickListener();
+		btnHome=(ImageButton) findViewById(R.id.back_home_imagebtn);
+		btnHome.setOnClickListener(listener);
+		btnBack=(ImageButton)findViewById(R.id.back_imagebtn);
+		btnBack.setOnClickListener(listener);
+		rl = (RelativeLayout) findViewById(R.id.heder_layout);
 
 		inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		View content = inflater.inflate(layoutResID, null);

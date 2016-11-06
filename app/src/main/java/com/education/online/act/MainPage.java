@@ -1,12 +1,16 @@
 package com.education.online.act;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.ChangeTransform;
+import android.transition.Transition;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -45,11 +49,12 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
 
+        _setHeaderGone();
         _setHeaderTitle("首页");
         _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainPage.this, SearchAct.class));
+                ActUtil.startAnimActivity(MainPage.this, new Intent(MainPage.this, SearchAct.class));
             }
         });
         initView();

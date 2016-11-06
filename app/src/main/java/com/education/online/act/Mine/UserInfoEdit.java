@@ -129,8 +129,10 @@ public class UserInfoEdit extends BaseFrameAct {
         userName.setText(userinfo.getName());
         gender=userinfo.getGender();
         if(gender.equals("2")){
+            gender="female";
             SexFemale.setImageResource(R.mipmap.icon_round_right);
         }else if(gender.equals("1")){
+            gender="male";
             SexMale.setImageResource(R.mipmap.icon_round_right);
         }
     }

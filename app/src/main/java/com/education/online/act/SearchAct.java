@@ -1,11 +1,17 @@
 package com.education.online.act;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -43,6 +49,10 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT>=21) {
+            getWindow().setEnterTransition(new Fade().setDuration(500));
+            getWindow().setExitTransition(new Fade().setDuration(500));
+        }
         setContentView(R.layout.search_act);
 
         _setHeaderGone();
@@ -79,10 +89,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                             wordsStr=word+":"+wordsStr;
                             SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);
                         }
-                        Intent i=new Intent(SearchAct.this, SearchResultAct.class);
-                        i.putExtra(Constant.SearchWords, word);
-                        i.putExtra("Type", type);
-                        startActivity(i);
+                        startAnimAcitivity(word);
                 }
                 return false;
             }
@@ -159,11 +166,21 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             default:
                 String searchword=(String)view.getTag();
                 if(searchword.length()>0) {
-                    Intent i=new Intent(SearchAct.this, SearchResultAct.class);
-                    i.putExtra(Constant.SearchWords, searchword);
-                    startActivity(i);
+                    startAnimAcitivity(searchword);
                 }
                 break;
+        }
+    }
+
+    private void startAnimAcitivity(String searchword){
+        Intent i=new Intent(SearchAct.this, SearchResultAct.class);
+        i.putExtra(Constant.SearchWords, searchword);
+        i.putExtra("Type", type);
+        if(Build.VERSION.SDK_INT>=21) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.editLayout), "searchEditLayout")).toBundle();
+            startActivity(i, bundle);
+        }else{
+            startActivity(i);
         }
     }
 }

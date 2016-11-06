@@ -1,10 +1,16 @@
 package com.education.online.util;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
+import com.education.online.act.SearchAct;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,6 +48,15 @@ public class ActUtil {
         SharedPreferencesUtil.setString(con, Constant.Pic_Savepath,
                 Constant.SavePath);
 
+    }
+
+    public static void startAnimActivity(Activity act, Intent intent) {
+        if(Build.VERSION.SDK_INT>=21) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(act).toBundle();
+            act.startActivity(intent, bundle);
+        }else{
+            act.startActivity(intent);
+        }
     }
 
     public static String getDate() {
