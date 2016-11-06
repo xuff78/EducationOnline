@@ -103,8 +103,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(Build.VERSION.SDK_INT>=21) {
-            getWindow().setEnterTransition(new Explode().setDuration(1000));
-            getWindow().setExitTransition(new Explode().setDuration(1000));
+            getWindow().setEnterTransition(new Explode().setDuration(600));
+            getWindow().setExitTransition(new Explode().setDuration(600));
         }
         setContentView(R.layout.search_result_act);
 
