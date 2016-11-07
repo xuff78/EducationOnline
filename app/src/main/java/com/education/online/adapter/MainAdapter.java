@@ -8,6 +8,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,12 +48,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ImageLoader imageLoader;
     private int itemWidth=0, itemHeight=0, imgHeight=0;
     private int padding10=0;
+    private boolean animaShown=false;
     private HomePageInfo info;
+    private boolean showFirst=false; //是否显示第一项
 
-    public MainAdapter(Activity act, String json)
+    public MainAdapter(Activity act, HomePageInfo info)
     {
         this.act=act;
-        info= JSON.parseObject(json, HomePageInfo.class);
+        this.info= info;
         imageLoader=ImageLoader.getInstance();
         listInflater= LayoutInflater.from(act);
         padding10=ImageUtil.dip2px(act, 10);
@@ -59,7 +66,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public int getItemCount() {
         // TODO Auto-generated method stub
-        return 9;
+        return showFirst?8:9;
     }
 
     @Override
@@ -70,6 +77,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int pos) {
+        if(!showFirst)
+            pos++;
         if(pos==0) {
             PagerHolder ivh = (PagerHolder) vh;
         }else if(pos==1) {
@@ -145,10 +154,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
+        if(!showFirst)
+            pos++;
         RecyclerView.ViewHolder vh=null;
         if(pos==0) {
             View convertView = listInflater.inflate(R.layout.viewpager_layout, null);
-            int height = (int) ((float) ScreenUtil.getWidth(act) / 640 * 240);
+            int height = (int) ((float) ScreenUtil.getWidth(act) / 640 * 300);  //240
             RecyclerView.LayoutParams alp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
             convertView.setLayoutParams(alp);
             vh = new PagerHolder(convertView);
@@ -206,8 +217,25 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 if(i%5==4||i==itemsize){
                     itemsLayout.addView(linelayout);
+                    setAnima(linelayout);
                     linelayout=new LinearLayout(act);
                 }
+            }
+            animaShown=true;
+        }
+
+        private void setAnima(LinearLayout ll){
+            if(!animaShown) {
+                AnimationSet animation = new AnimationSet(false);
+                animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.fade_in));
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1f, 1.5f, 1f, 0.5f, 0.5f);
+                scaleAnimation.setDuration(500);
+                animation.addAnimation(scaleAnimation);
+                animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.slide_in_left));
+                LayoutAnimationController lac = new LayoutAnimationController(animation);
+                lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
+                lac.setDelay(0.4f);//注意这个地方是以秒为单位，是浮点型数据，所以要加f
+                ll.setLayoutAnimation(lac);
             }
         }
 

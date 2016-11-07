@@ -2,20 +2,25 @@ package com.education.online.act.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.adapter.CommentsAdapter;
-import com.education.online.adapter.DetailsAdapter;
-import com.education.online.adapter.DirectoryAdapter;
+import com.education.online.bean.TeacherBean;
 import com.education.online.fragment.teacher.HomepageCourse;
 import com.education.online.fragment.teacher.HomepageImg;
 import com.education.online.fragment.teacher.HomepageVideo;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.SharedPreferencesUtil;
+
+import org.json.JSONException;
 
 /**
  * Created by Administrator on 2016/8/30.
@@ -31,6 +36,21 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     HomepageVideo homepageVideo=new HomepageVideo();
     HomepageCourse homepageCourse=new HomepageCourse();
     ImageButton homeBtn;
+    private HttpHandler mHandler;
+    private TeacherBean teacherBean;
+
+    private void initHandler() {
+        mHandler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getUserInfo)){
+                    teacherBean= JSON.parseObject(jsonData, TeacherBean.class);
+                    homepageImg.setData(teacherBean.getPhoto_album());
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +76,11 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
             }
         });
 
+        initHandler();
         initView();
         openFragment(R.id.frgframe, homepageImg);
+
+        mHandler.getUserInfo(SharedPreferencesUtil.getUsercode(this));
     }
 
     private void initView() {
@@ -137,5 +160,11 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                 viewcomments.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        currentFrg.onActivityResult(requestCode, resultCode, data);
     }
 }

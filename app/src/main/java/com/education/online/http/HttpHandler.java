@@ -144,6 +144,15 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getlistByDate, paramMap, true);
 	}
 
+	public void dispose(String url, String media_type, String dispose_type) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("media_type", media_type);
+		paramMap.put("dispose_type", dispose_type);
+		paramMap.put("url", url);
+		requestPostEdu(Method.dispose, paramMap, true);
+	}
+
 	public void getValidateDetails(String validate_type) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));

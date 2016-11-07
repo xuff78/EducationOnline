@@ -9,6 +9,7 @@
         android:layout_height="70dp">
         <ImageView
             android:id="@+id/teacherImg"
+            android:scaleType="centerCrop"
             android:background="@color/whitesmoke"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

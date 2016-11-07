@@ -12,6 +12,7 @@ import com.education.online.R;
 import com.education.online.bean.VideoImgItem;
 import com.education.online.inter.AdapterCallback;
 import com.education.online.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
     private ArrayList<VideoImgItem> items=null;
     private AdapterCallback cb;
     private boolean editable=false;
+    private ImageLoader imageLoader;
 
     public TeacherImgAdapter(Activity activity, ArrayList<VideoImgItem> items, boolean isVideo, AdapterCallback cb){
         this.activity = activity;
@@ -33,6 +35,7 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
         this.items=items;
         this.isVideo=isVideo;
         this.cb=cb;
+        imageLoader=ImageLoader.getInstance();
     }
 
     @Override
@@ -64,7 +67,7 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
                 vh.delBtn.setVisibility(View.VISIBLE);
             } else
                 vh.delBtn.setVisibility(View.GONE);
-            vh.teacherImg.setImageResource(0);
+            imageLoader.displayImage(ImageUtil.getImageUrl(items.get(position).getImgUrl()), vh.teacherImg);
             vh.teacherImg.setBackgroundResource(R.color.whitesmoke);
             vh.itemView.setOnClickListener(null);
             if(isVideo)

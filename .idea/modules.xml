@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CollapsingToolbarLayout/CollapsingToolbarLayout.iml" filepath="$PROJECT_DIR$/CollapsingToolbarLayout/CollapsingToolbarLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/EducationOnline.iml" filepath="$PROJECT_DIR$/EducationOnline.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

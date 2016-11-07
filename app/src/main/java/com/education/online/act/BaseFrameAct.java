@@ -1,33 +1,25 @@
 package com.education.online.act;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.ChangeTransform;
-import android.transition.Explode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.util.ImageUtil;
 
-public abstract class BaseFrameAct extends FragmentActivity {
+public abstract class BaseFrameAct extends AppCompatActivity {
 
 
 	public ImageButton btnHome, btnBack;
@@ -36,6 +28,7 @@ public abstract class BaseFrameAct extends FragmentActivity {
 	public boolean backflag;
 	private RelativeLayout rl;
 	private ClickListener listener;
+	protected Fragment currentFrg;
 
 	
 	@Override
@@ -81,6 +74,7 @@ public abstract class BaseFrameAct extends FragmentActivity {
 	}
 
 	public void openFragment(int res, Fragment frg) {
+		currentFrg=frg;
 		FragmentManager fm=getSupportFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();
 		ft.replace(res, frg);

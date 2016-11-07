@@ -32,6 +32,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.StatusBarCompat;
 
 public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
@@ -47,6 +48,8 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        StatusBarCompat.fitPage(this);
         setContentView(R.layout.main_page);
 
         _setHeaderGone();
@@ -99,21 +102,22 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        _setHeaderShown();
         if(view!=lastSelectedView) {
             lastSelectedView.setSelected(false);
             view.setSelected(true);
             lastSelectedView=view;
             switch (view.getId()) {
                 case R.id.menuBtn1:
-                    _setHeaderTitle("首页");
+                    _setHeaderGone();
                     changePage(home);
                     break;
                 case R.id.menuBtn2:
+                    _setHeaderShown();
                     _setHeaderTitle("科目");
                     changePage(selectorPage);
                     break;
                 case R.id.menuBtn3:
+                    _setHeaderShown();
                     _setHeaderTitle("发现");
                     changePage(discoveryPage);
                     break;
@@ -152,7 +156,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     mLocationClient.stop();
                     mLocationClient = null;
                 }
-                String address=location.getAddrStr();
+                String address=location.getCity();
                 SharedPreferencesUtil.setString(MainPage.this, "my_address", address);
                 LogUtil.d("totp", "addr:" + address);
                 _setLeftBackText(location.getCity(), null);

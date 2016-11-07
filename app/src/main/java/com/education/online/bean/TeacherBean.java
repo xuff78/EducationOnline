@@ -38,6 +38,15 @@ public class TeacherBean {
     private String is_edu_bg_validate=""; // 学历验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_specialty_validate=""; // 是否专业资质验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
+    private List<String> photo_album=new ArrayList<>();
+
+    public List<String> getPhoto_album() {
+        return photo_album;
+    }
+
+    public void setPhoto_album(List<String> photo_album) {
+        this.photo_album = photo_album;
+    }
 
     private ArrayList<CourseBean> course_info=new ArrayList<>();
 

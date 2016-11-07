@@ -2,7 +2,6 @@ package com.education.online.act.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,12 +13,8 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.act.FirstPage;
-import com.education.online.act.MainPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
-import com.education.online.retrofit.RCallBack;
-import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SHA;
