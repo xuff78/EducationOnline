@@ -55,6 +55,8 @@ public class HomepageImg extends BaseFragment {
     private boolean edit=false;
     private ImageLoader imageLoader;
     private HttpHandler mHandler;
+    private String imgpath="";
+    private int tobeDelPos=-1;
     private String dispose_type="add"; //1添加，0删除
     private AdapterCallback callback=new AdapterCallback() {
         @Override
@@ -69,8 +71,9 @@ public class HomepageImg extends BaseFragment {
 
         @Override
         public void delitem(View v, int i) {
-            items.remove(i);
-            adapter.notifyDataSetChanged();
+            dispose_type="delete";
+            tobeDelPos=i;
+            mHandler.dispose(items.get(i).getImgUrl(), "photo", dispose_type);
         }
     };
 
@@ -82,11 +85,13 @@ public class HomepageImg extends BaseFragment {
                 if(method.equals(Method.dispose)){
                     if(dispose_type.equals("add")){
                         VideoImgItem item=new VideoImgItem();
+                        item.setImgUrl(imgpath);
                         items.add(item);
                         adapter.notifyDataSetChanged();
                         Toast.makeText(getActivity(),"图片上传成功！",Toast.LENGTH_SHORT);
                     }else if(dispose_type.equals("delete")){
-
+                        items.remove(tobeDelPos);
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -137,7 +142,7 @@ public class HomepageImg extends BaseFragment {
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        String imgpath=result.substring(1);
+                        imgpath=result.substring(1);
                         dispose_type="add";
                         mHandler.dispose(imgpath, "photo", dispose_type);
                         LogUtil.d("Img", imgpath);
