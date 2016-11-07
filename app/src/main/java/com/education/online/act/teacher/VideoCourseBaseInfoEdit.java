@@ -32,6 +32,7 @@ import com.education.online.bean.AddClassBean;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.UploadVideoProgress;
+import com.education.online.bean.VideoImgItem;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.DialogUtil;
@@ -48,14 +49,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.tungdx.mediapicker.MediaItem;
+import vn.tungdx.mediapicker.MediaOptions;
+import vn.tungdx.mediapicker.activities.MediaPickerActivity;
+
 /**
  * Created by Administrator on 2016/9/5.
  */
 public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
 
+    private static final String TAG ="VideoCourseBaseInfoEdit";
     String phoneTxtName = "";
-    private String course="";
+    private String course = "";
     private Dialog progressDialog;
     private TextView submitCourseBtn, uploadBtn, subjectTxt, priceTxt, joinNum;
     private ImageView courseImg;
@@ -66,21 +72,24 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     private ImageLoader imageloader;
     private ListView listView;
     private AddClassBean addClassBean;
-    final int getVedioDoc=0x20;
+    final int getVedioDoc = 0x20;
     HttpHandler httpHandler;
     private View.OnClickListener listener;
     private VideoUploadProgressAdapter adapter;
 
     private final int hight = 51;
 
-    private ArrayList<UploadVideoProgress>  uploadVideoProgresses = new ArrayList<>();
+    private ArrayList<UploadVideoProgress> uploadVideoProgresses = new ArrayList<>();
+    public static final String EXTRA_MEDIA_OPTIONS = "extra_media_options";
+    ////////////////mediapicker
+    private static final int REQUEST_MEDIA = 100;
+    private List<MediaItem> mMediaSelectedList = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_course_edit);
-
         type = getIntent().getIntExtra("Type", 0);
         _setRightHomeGone();
         initView();
@@ -88,10 +97,10 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
     private void initView() {
 
-       UploadVideoProgress progress = new UploadVideoProgress();
-       uploadVideoProgresses.add(progress);
-        uploadVideoProgresses.add(progress);
-        uploadVideoProgresses.add(progress);
+     //   UploadVideoProgress progress = new UploadVideoProgress();
+       // uploadVideoProgresses.add(progress);
+       // uploadVideoProgresses.add(progress);
+       // uploadVideoProgresses.add(progress);
         listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,21 +132,36 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         }
                         break;
                     case R.id.uploadBtn:
+
+
+                        MediaOptions.Builder builder = new MediaOptions.Builder();
+                        MediaOptions options = null;
+                        options = builder.selectVideo().canSelectMultiVideo(true).build();
+                        if (options != null) {
+                            // clearImages();
+                            MediaPickerActivity.open(VideoCourseBaseInfoEdit.this, REQUEST_MEDIA, options);
+                        }
+
                         // selectPicDialog.show();
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        if(type==1)
-                            intent.setType("video/*");
-                        else intent.setType("*/*");
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        startActivityForResult(intent,getVedioDoc);
+                        // Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        // if(type==1)
+                        //     intent.setType("video/*");
+                        // else intent.setType("*/*");
+                        // intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        // startActivityForResult(intent,getVedioDoc);
+
+
                         break;
                     case R.id.delete:
+
                         int pos = (int) v.getTag();
                         uploadVideoProgresses.remove(pos);
                         int num = uploadVideoProgresses.size();
-                        listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ImageUtil.dip2px(VideoCourseBaseInfoEdit.this,(hight*num))));
+                        listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ImageUtil.dip2px(VideoCourseBaseInfoEdit.this, (hight * num))));
                         adapter.notifyDataSetChanged();
                         break;
+
+
                     case R.id.open:
                         int pos2 = (int) v.getTag();
                         break;
@@ -163,11 +187,11 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
         findViewById(R.id.courseImgLayout).setOnClickListener(listener);
         addClassBean = new AddClassBean();
         selectPicDialog = new SelectPicDialog(this);
-        listView= (ListView) findViewById(R.id.uploadview);
+        listView = (ListView) findViewById(R.id.uploadview);
 
-        adapter=new VideoUploadProgressAdapter(this,listener,uploadVideoProgresses);
+        adapter = new VideoUploadProgressAdapter(this, listener, uploadVideoProgresses);
         int num = uploadVideoProgresses.size();
-        listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ImageUtil.dip2px(VideoCourseBaseInfoEdit.this,(hight*num))));
+        listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ImageUtil.dip2px(VideoCourseBaseInfoEdit.this, (hight * num))));
         listView.setAdapter(adapter);
 
 
@@ -207,8 +231,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         progressDialog.dismiss();
                         course = result.substring(1);
                         LogUtil.d("Img", course);
-                       // imageloader.displayImage(ImageUtil.getImageUrl(course), courseImg);
-                        Toast.makeText(VideoCourseBaseInfoEdit.this,"图片上传成功！",Toast.LENGTH_SHORT);
+                        // imageloader.displayImage(ImageUtil.getImageUrl(course), courseImg);
+                        Toast.makeText(VideoCourseBaseInfoEdit.this, "图片上传成功！", Toast.LENGTH_SHORT);
                     }
 
                     @Override
@@ -217,12 +241,12 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         progressDialog.dismiss();
                         // mFaceImagePath.delete();
                     }
-                }).execute(file, "course/"+phoneTxtName + ".png");
+                }).execute(file, "course/" + phoneTxtName + ".png");
             }
             Bitmap photo = BitmapFactory.decodeFile(file.toString());
             if (photo != null) {
                 courseImg.setImageBitmap(photo);
-                addClassBean.setImg("course/"+phoneTxtName + ".png");
+                addClassBean.setImg("course/" + phoneTxtName + ".png");
 
             } else
                 ToastUtils.displayTextShort(VideoCourseBaseInfoEdit.this, "找不到文件");
@@ -234,10 +258,10 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 0x11) {
             SubjectBean subjectBean = (SubjectBean) data.getSerializableExtra(SubjectBean.Name);
-           // addClassBean.setName(subjectBean.getSubject_name());
+            // addClassBean.setName(subjectBean.getSubject_name());
             addClassBean.setSubject_id(subjectBean.getSubject_id());
             subjectTxt.setText(subjectBean.getSubject_name());
-        }else if (resultCode==0x14){
+        } else if (resultCode == 0x14) {
 
             finish();
         } else if (resultCode == 0x12) {
@@ -276,17 +300,37 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                     handler.sendEmptyMessage(0);
                 }
             }.start();
+        }else if (requestCode == REQUEST_MEDIA) {
+            if (resultCode == RESULT_OK) {
+                mMediaSelectedList = MediaPickerActivity
+                        .getMediaItemSelected(data);
+                if (mMediaSelectedList != null) {
+                    for (MediaItem mediaItem : mMediaSelectedList) {
+                        Additem(mediaItem);
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.e(TAG, "Error to get media, NULL");
+                }
+            }
         }
     }
-    public void initiHandler(){
-        httpHandler = new HttpHandler(this, new CallBack(this)
-        {
+private void Additem(MediaItem mediaItem){
+    UploadVideoProgress uploadVideoProgress =new UploadVideoProgress();
+    uploadVideoProgress.setUri(mediaItem.getUriOrigin());
+    uploadVideoProgresses.add(uploadVideoProgress);
+    int num = uploadVideoProgresses.size();
+    listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ImageUtil.dip2px(VideoCourseBaseInfoEdit.this, (hight * num))));
+}
+
+    public void initiHandler() {
+        httpHandler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void onSuccess(String method, String jsonMessage) throws JSONException {
                 super.onSuccess(method, jsonMessage);
                 Intent intent = new Intent();
-                intent.putExtra("success",true);
-                setResult(0x14,intent);
+                intent.putExtra("success", true);
+                setResult(0x14, intent);
                 finish();
             }
 

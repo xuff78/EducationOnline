@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.bean.UploadVideoProgress;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,7 @@ public class VideoUploadProgressAdapter extends BaseAdapter {
         TextView delete = (TextView) convertView.findViewById(R.id.delete);
         TextView open = (TextView) convertView.findViewById(R.id.open);
         ImageView videoImage = (ImageView) convertView.findViewById(R.id.videoImage);
+        ImageLoader.getInstance().displayImage(uploadVideoProgresses.get(position).getUri().toString(), videoImage);
         ProgressBar progress = (ProgressBar) convertView.findViewById(R.id.progress);
         EditText resourseName = (EditText) convertView.findViewById(R.id.resourseName);
             delete.setTag(position);

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/CollapsingToolbarLayout/CollapsingToolbarLayout.iml" filepath="$PROJECT_DIR$/CollapsingToolbarLayout/CollapsingToolbarLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/EducationOnline.iml" filepath="$PROJECT_DIR$/EducationOnline.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mediapicker/mediapicker.iml" filepath="$PROJECT_DIR$/mediapicker/mediapicker.iml" />
     </modules>
   </component>
 </project>

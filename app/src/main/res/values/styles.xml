@@ -96,7 +96,13 @@
         <item name="android:shadowRadius">12.0</item>
     </style>
 
-
+    <style name="MediaPickerTheme" parent="Theme.AppCompat">
+        <!-- Support library compatibility -->
+        <item name="windowActionBarOverlay">true</item>
+        <item name="actionMenuTextColor">@color/picker_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:divider">@android:color/white</item>
+    </style>
 
 
     <style name="SwitchButtonStyle">

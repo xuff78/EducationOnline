@@ -1,10 +1,15 @@
 package com.education.online.act.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +19,15 @@ import android.widget.Toast;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.order.GetVeriCode;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.utils.SMSLog;
+
+import static com.mob.tools.utils.R.getStringRes;
 
 /**
  * Created by 可爱的蘑菇 on 2016/8/11.
@@ -28,7 +42,17 @@ public class RegisterPage1 extends BaseFrameAct {
     private Intent intent;
     private String phoneNum;
     private String veriCode;
-private boolean getvericode =false;
+    private boolean getvericode = false;
+
+    private String country = "";
+    private boolean ready;
+    private static String APPKEY = "15f145e9e78f6";
+    // 填写从短信SDK应用后台注册得到的APPSECRET
+    private static String APPSECRET = "0c1852e998a892b469a9d61d8835bb66";
+
+    private Handler handler;
+    private EventHandler eventHandler;
+    private final String DEFAULT_COUNTRY_ID = "42";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +76,8 @@ private boolean getvericode =false;
             public void onClick(View view) {
                 UserMobile.setError(null);
                 ValidVeriCode.setError(null);
-                String Num = UserMobile.getText().toString();
-                String vericode = ValidVeriCode.getText().toString();
+                String Num = UserMobile.getText().toString().trim().replaceAll("\\s*", "");
+                String vericode = ValidVeriCode.getText().toString().trim();
                 if (TextUtils.isEmpty(vericode) && TextUtils.isEmpty(Num)) {
                     ValidVeriCode.setError(getString(R.string.enter_valid_vericode));
                     UserMobile.setError(getString(R.string.enter_valid_phone));
@@ -61,20 +85,14 @@ private boolean getvericode =false;
                 } else if (TextUtils.isEmpty(vericode)) {
                     ValidVeriCode.setError(getString(R.string.enter_valid_vericode));
                     ValidVeriCode.requestFocus();
-                } else if(!getvericode){
+                } else if (!getvericode) {
                     ValidVeriCode.setError("请获取验证码");
                     ValidVeriCode.requestFocus();
-                }
-                else if (getvericode&& phoneNum.equals(Num)) {//此处验证验证码是否正确
-                    timecounter.onFinish();
+                } else if (getvericode && phoneNum.equals(Num)) {//此处验证验证码是否正确
+                    //  timecounter.onFinish();
                     UserMobile.setError(null);
                     ValidVeriCode.setError(null);
-                    GetVertiCode.setText("获取验证码");
-                    GetVertiCode.setClickable(true);
-                    intent = new Intent();
-                    intent.putExtra("phone", phoneNum);
-                    intent.setClass(RegisterPage1.this, RegisterPage2.class);
-                    startActivity(intent);
+                    SMSSDK.submitVerificationCode("86", Num, vericode);
                     // }
                 } else {
                     Toast.makeText(RegisterPage1.this, R.string.faliure_wrong_vericode, Toast.LENGTH_SHORT).show();
@@ -93,13 +111,77 @@ private boolean getvericode =false;
                     UserMobile.setError(getString(R.string.enter_valid_phone));
                     UserMobile.requestFocus();
                 } else {
-                    getvericode=true;
+                    getvericode = true;
                     phoneNum = UserMobile.getText().toString();
+                    SMSSDK.getVerificationCode("+86", phoneNum, null);
                     timecounter.start();
+
                 }
             }
         });
+        initSDK();
+        handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                return false;
+            }
+        });
+        EventHandler eventHandler = new EventHandler() {
+            public void afterEvent(final int event, final int result, final Object data) {
+                //回调完成
 
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功
+                        startActivity(new Intent(RegisterPage1.this, RegisterPage2.class));
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                        Toast.makeText(RegisterPage1.this, "获取验证码成功", Toast.LENGTH_SHORT).show();
+                        //获取验证码成功
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                        //返回支持发送验证码的国家列表
+                    }
+                } else {
+                    ((Throwable) data).printStackTrace();
+                    Throwable throwable = (Throwable) data;
+                    // 根据服务器返回的网络错误，给toast提示
+                    int status = 0;
+                    try {
+                        JSONObject object = new JSONObject(throwable.getMessage());
+                        String des = object.optString("detail");
+                        status = object.optInt("status");
+                        if (!TextUtils.isEmpty(des)) {
+                            Toast.makeText(RegisterPage1.this, des, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        SMSLog.getInstance().w(e);
+                    }
+                    // / 如果木有找到资源，默认提示
+                    int resId = 0;
+                    if(status >= 400) {
+                        resId = getStringRes(RegisterPage1.this,
+                                "smssdk_error_desc_"+status);
+                    } else {
+                        resId = getStringRes(RegisterPage1.this,
+                                "smssdk_network_error");
+                    }
+                    if (resId > 0) {
+                        Toast.makeText(RegisterPage1.this, resId, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        };
+
+    }
+
+    ;
+
+    private void initSDK() {
+        // 初始化短信SDK
+        SMSSDK.initSDK(RegisterPage1.this, APPKEY, APPSECRET, true);
+        SMSSDK.registerEventHandler(eventHandler);
+        ready = true;
     }
 
     private boolean isPhoneNumValid(String num) {
@@ -127,5 +209,32 @@ private boolean getvericode =false;
             GetVertiCode.setTextColor(getResources().getColor(R.color.white));
 
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SMSSDK.registerEventHandler(eventHandler);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SMSSDK.unregisterEventHandler(eventHandler);
+    }
+
+
+    protected void onDestroy() {
+        if (ready) {
+            // 销毁回调监听接口
+            SMSSDK.unregisterAllEventHandler();
+        }
+        super.onDestroy();
     }
 }

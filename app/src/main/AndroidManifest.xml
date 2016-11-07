@@ -36,23 +36,22 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 锁屏权限 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
+        android:name=".act.EduApplication"
         android:allowBackup="true"
         android:icon="@mipmap/applogo"
         android:label="@string/app_name"
-        android:name=".act.EduApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:name=".act.FirstPage"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -120,175 +119,243 @@
             android:name=".act.order.WalletRecharge"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
-        <activity android:name=".act.CourseMainPage"
+        <activity
+            android:name=".act.CourseMainPage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.VideoMainPage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.VideoMainPage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherInfoEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.TeacherInfoEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.AuthMenu"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.AuthMenu"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.MyOrders"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.MyOrders"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherHomePage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.TeacherHomePage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherInformationPage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.TeacherInformationPage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.MyRatePage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.MyRatePage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherAuthPage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.TeacherAuthPage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherAuthIdentity"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.TeacherAuthIdentity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.TeacherAuthOthers"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.TeacherAuthOthers"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
-        <activity android:name=".act.teacher.TeacherCourseStart"
+        <activity
+            android:name=".act.teacher.TeacherCourseStart"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.CourseBaseInfoEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.CourseBaseInfoEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.LiveCourseEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.LiveCourseEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.CourseMemberEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.CourseMemberEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.CoursePriceEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.CoursePriceEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.CourseBaseInfoEdit2"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.CourseBaseInfoEdit2"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.CourseTimeSet"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.CourseTimeSet"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.AddSerialClass"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.AddSerialClass"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.PersonalInfo"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.PersonalInfo"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyWalletCharge"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyWalletCharge"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.HelpandFeedback"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.HelpandFeedback"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.IllegalReport"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.IllegalReport"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.Settings"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.Settings"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.SuggestionAndFeedback"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.SuggestionAndFeedback"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyWallet"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyWallet"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyWalletHistory"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyWalletHistory"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.UserInfoEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.UserInfoEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyEvaluation"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyEvaluation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.UserOrderDetail"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.UserOrderDetail"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
-        <activity android:name=".act.Mine.MyQuestion"
+        <activity
+            android:name=".act.Mine.MyQuestion"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.AskAndAnswer"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.AskAndAnswer"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.EvaluationEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.EvaluationEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyOrderUser"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyOrderUser"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyInteresting"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyInteresting"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.Mine.MyCourseMuti"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.Mine.MyCourseMuti"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.order.GetVeriCode"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.order.GetVeriCode"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.order.SetPayPwd"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.order.SetPayPwd"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.discovery.MyAnswers"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.discovery.MyAnswers"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.discovery.QuestionDetails"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.discovery.QuestionDetails"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.discovery.IwantToAnswer"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.discovery.IwantToAnswer"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.discovery.AskAndSpeedAnswer"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.discovery.AskAndSpeedAnswer"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.discovery.GrowingSpace"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.discovery.GrowingSpace"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
 
-        <activity android:name=".act.discovery.ChatPage"
+        <activity
+            android:name=".act.discovery.ChatPage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.ChatSetting"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.ChatSetting"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.DiscoverMap"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.DiscoverMap"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.InvitePage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.InvitePage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.MessageMain"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.MessageMain"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.SignEveryday"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.SignEveryday"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.StudentIntroduction"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.StudentIntroduction"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.MyFavoriteList"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.MyFavoriteList"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.discovery.SystemMessagePage"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.discovery.SystemMessagePage"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.video.Comment"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.video.Comment"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
-        <activity android:name=".act.teacher.VideoCourseBaseInfoEdit"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.teacher.VideoCourseBaseInfoEdit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"  />
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+
+            android:name="vn.tungdx.mediapicker.activities.MediaPickerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MediaPickerTheme"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="keUx4VsbXGW0ITj8dwKmtDGMiz6biN6r" />
+
     </application>
 
 </manifest>
