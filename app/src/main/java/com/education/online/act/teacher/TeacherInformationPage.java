@@ -57,9 +57,12 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                     teacher= JSON.parseObject(jsonData, TeacherBean.class);
                     adapter=new TeacherMainAdapter(TeacherInformationPage.this, teacher, evaluations, TeacherInformationPage.this);
                     recyclerViewList.setAdapter(adapter);
+                    handler.getEvaluate(usercode, null, page);
                 }else if(method.equals(Method.getEvaluate)){
                     page++;
                     String average = JsonUtil.getString(jsonData, "average");
+                    if(average.length()==0)
+                        average="0";
                     adapter.setAverage(average);
                     String info= JsonUtil.getString(jsonData, "evaluate_details");
                     EvaluatePage page=JSON.parseObject(info, EvaluatePage.class);
@@ -87,7 +90,6 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
             findViewById(R.id.bottomlayout).setVisibility(View.GONE);
         }
         handler.getUserInfo(usercode);
-        handler.getEvaluate(usercode, null, page);
     }
 
     private void InitView() {

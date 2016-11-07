@@ -67,6 +67,8 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
                 vh.delBtn.setVisibility(View.VISIBLE);
             } else
                 vh.delBtn.setVisibility(View.GONE);
+
+            vh.teacherImg.setPadding(0, 0, 0, 0);
             imageLoader.displayImage(ImageUtil.getImageUrl(items.get(position).getImgUrl()), vh.teacherImg);
             vh.teacherImg.setBackgroundResource(R.color.whitesmoke);
             vh.itemView.setOnClickListener(null);

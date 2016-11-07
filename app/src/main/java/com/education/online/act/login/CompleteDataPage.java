@@ -24,6 +24,7 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.act.FirstPage;
 import com.education.online.act.MainPage;
 import com.education.online.act.upyun.UploadTask;
+import com.education.online.bean.SubjectBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
@@ -66,7 +67,7 @@ public class CompleteDataPage extends BaseFrameAct {
     private String gender="female";
     private String avatar="";
     private String nickname = "";
-    private String subject_id ="2";//temple value needmiodified
+    private String subject_id ="";//temple value needmiodified
     private String password;
     private  String phone;
     private String identity;
@@ -286,6 +287,10 @@ public class CompleteDataPage extends BaseFrameAct {
                     }
                 }).execute(file,"avatar/"+ phoneTxtName + ".png");
             }
+        }else if(requestCode == 0x33&&resultCode==0x11){
+            SubjectBean subject= (SubjectBean) data.getSerializableExtra(SubjectBean.Name);
+            subject_id=subject.getSubject_id();
+            Subject.setText(subject.getSubject_name());
         }
     }
 
