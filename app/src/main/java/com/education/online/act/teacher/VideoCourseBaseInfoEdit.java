@@ -308,6 +308,9 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                     for (MediaItem mediaItem : mMediaSelectedList) {
                         Additem(mediaItem);
                     }
+                    int num = uploadVideoProgresses.size();
+                    listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ImageUtil.dip2px(VideoCourseBaseInfoEdit.this, (hight * num))));
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.e(TAG, "Error to get media, NULL");
@@ -315,13 +318,12 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
             }
         }
     }
-private void Additem(MediaItem mediaItem){
-    UploadVideoProgress uploadVideoProgress =new UploadVideoProgress();
-    uploadVideoProgress.setUri(mediaItem.getUriOrigin());
-    uploadVideoProgresses.add(uploadVideoProgress);
-    int num = uploadVideoProgresses.size();
-    listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ImageUtil.dip2px(VideoCourseBaseInfoEdit.this, (hight * num))));
-}
+
+    private void Additem(MediaItem mediaItem){
+        UploadVideoProgress uploadVideoProgress =new UploadVideoProgress();
+        uploadVideoProgress.setUri(mediaItem.getUriOrigin());
+        uploadVideoProgresses.add(uploadVideoProgress);
+    }
 
     public void initiHandler() {
         httpHandler = new HttpHandler(this, new CallBack(this) {
