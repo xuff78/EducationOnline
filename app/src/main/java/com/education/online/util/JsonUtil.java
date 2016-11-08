@@ -166,6 +166,8 @@ public class JsonUtil {
                     courseExtm.setUrl(item.getString("url"));
                 if(!item.isNull("state"))
                     courseExtm.setState(item.getString("state"));
+                if(!item.isNull("name"))
+                    courseExtm.setName(item.getString("name"));
                 courseExtms.add(courseExtm);
 
             }

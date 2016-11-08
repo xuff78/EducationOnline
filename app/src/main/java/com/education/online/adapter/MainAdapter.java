@@ -41,32 +41,31 @@ import java.util.List;
 /**
  * Created by 可爱的蘑菇 on 2016/8/15.
  */
-public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity act;
     private LayoutInflater listInflater;
     private ImageLoader imageLoader;
-    private int itemWidth=0, itemHeight=0, imgHeight=0;
-    private int padding10=0;
-    private boolean animaShown=false;
+    private int itemWidth = 0, itemHeight = 0, imgHeight = 0;
+    private int padding10 = 0;
+    private boolean animaShown = false;
     private HomePageInfo info;
-    private boolean showFirst=false; //是否显示第一项
+    private boolean showFirst = false; //是否显示第一项
 
-    public MainAdapter(Activity act, HomePageInfo info)
-    {
-        this.act=act;
-        this.info= info;
-        imageLoader=ImageLoader.getInstance();
-        listInflater= LayoutInflater.from(act);
-        padding10=ImageUtil.dip2px(act, 10);
-        itemWidth= (ScreenUtil.getWidth(act)-2*padding10)/5; //小图片和文字的形成点击区域的边长
-        imgHeight=itemWidth-2*padding10; //小图片的边长
+    public MainAdapter(Activity act, HomePageInfo info) {
+        this.act = act;
+        this.info = info;
+        imageLoader = ImageLoader.getInstance();
+        listInflater = LayoutInflater.from(act);
+        padding10 = ImageUtil.dip2px(act, 10);
+        itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 5; //小图片和文字的形成点击区域的边长
+        imgHeight = itemWidth - 2 * padding10; //小图片的边长
     }
 
     @Override
     public int getItemCount() {
         // TODO Auto-generated method stub
-        return showFirst?8:9;
+        return showFirst ? 8 : 9;
     }
 
     @Override
@@ -77,105 +76,105 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int pos) {
-        if(!showFirst)
+        if (!showFirst)
             pos++;
-        if(pos==0) {
+        if (pos == 0) {
             PagerHolder ivh = (PagerHolder) vh;
-        }else if(pos==1) {
+        } else if (pos == 1) {
             SubjectHolder ivh = (SubjectHolder) vh;
-        }else if(pos==2) {
+        } else if (pos == 2) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("直播");
-            List<LiveCourse> liveCourses=info.getLive();
-            if(liveCourses.size()>0){
-                LiveCourse live=liveCourses.get(0);
+            List<LiveCourse> liveCourses = info.getLive();
+            if (liveCourses.size() > 0) {
+                LiveCourse live = liveCourses.get(0);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                 ivh.titleTxt.setText(live.getCourse_name());
-                ivh.priceTxt.setText("¥"+live.getPrice());
+                ivh.priceTxt.setText("¥" + live.getPrice());
                 ivh.timeTxt.setText(live.getCourseware_date());
-                ivh.statusTxt.setText(live.getFollow()+"人在学习");
-            }else
+                ivh.statusTxt.setText(live.getFollow() + "人在学习");
+            } else
                 ivh.item1.setVisibility(View.INVISIBLE);
-            if(liveCourses.size()>1){
-                LiveCourse live=liveCourses.get(1);
+            if (liveCourses.size() > 1) {
+                LiveCourse live = liveCourses.get(1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
                 ivh.titleTxt2.setText(live.getCourse_name());
-                ivh.priceTxt2.setText("¥"+live.getPrice());
+                ivh.priceTxt2.setText("¥" + live.getPrice());
                 ivh.timeTxt2.setText(live.getCourseware_date());
-                ivh.statusTxt2.setText(live.getFollow()+"人在学习");
-            }else
+                ivh.statusTxt2.setText(live.getFollow() + "人在学习");
+            } else
                 ivh.item2.setVisibility(View.INVISIBLE);
-        }else if(pos==3) {
+        } else if (pos == 3) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("视频");
-            List<VideoCourse> liveCourses=info.getVideo();
-            if(liveCourses.size()>0){
-                VideoCourse live=liveCourses.get(0);
+            List<VideoCourse> liveCourses = info.getVideo();
+            if (liveCourses.size() > 0) {
+                VideoCourse live = liveCourses.get(0);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                 ivh.titleTxt.setText(live.getCourse_name());
-                ivh.priceTxt.setText("¥"+live.getPrice());
+                ivh.priceTxt.setText("¥" + live.getPrice());
                 ivh.timeTxt.setVisibility(View.GONE);
-                ivh.statusTxt.setText(live.getFollow()+"人在学习");
-            }else
+                ivh.statusTxt.setText(live.getFollow() + "人在学习");
+            } else
                 ivh.item1.setVisibility(View.INVISIBLE);
-            if(liveCourses.size()>1){
-                VideoCourse live=liveCourses.get(1);
+            if (liveCourses.size() > 1) {
+                VideoCourse live = liveCourses.get(1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
                 ivh.titleTxt2.setText(live.getCourse_name());
-                ivh.priceTxt2.setText("¥"+live.getPrice());
+                ivh.priceTxt2.setText("¥" + live.getPrice());
                 ivh.timeTxt2.setVisibility(View.GONE);
-                ivh.statusTxt2.setText(live.getFollow()+"人在学习");
-            }else
+                ivh.statusTxt2.setText(live.getFollow() + "人在学习");
+            } else
                 ivh.item2.setVisibility(View.INVISIBLE);
-        }else if(pos==4) {
+        } else if (pos == 4) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("课件");
-            List<WareCourse> liveCourses=info.getWare();
-            if(liveCourses.size()>0){
-                WareCourse live=liveCourses.get(0);
+            List<WareCourse> liveCourses = info.getWare();
+            if (liveCourses.size() > 0) {
+                WareCourse live = liveCourses.get(0);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                 ivh.titleTxt.setText(live.getCourse_name());
-                ivh.priceTxt.setText("¥"+live.getPrice());
+                ivh.priceTxt.setText("¥" + live.getPrice());
                 ivh.timeTxt.setVisibility(View.GONE);
-                ivh.statusTxt.setText(live.getFollow()+"人在学习");
-            }else
+                ivh.statusTxt.setText(live.getFollow() + "人在学习");
+            } else
                 ivh.item1.setVisibility(View.INVISIBLE);
-            if(liveCourses.size()>1){
-                WareCourse live=liveCourses.get(1);
+            if (liveCourses.size() > 1) {
+                WareCourse live = liveCourses.get(1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
                 ivh.titleTxt2.setText(live.getCourse_name());
-                ivh.priceTxt2.setText("¥"+live.getPrice());
+                ivh.priceTxt2.setText("¥" + live.getPrice());
                 ivh.timeTxt2.setVisibility(View.GONE);
-                ivh.statusTxt2.setText(live.getFollow()+"人在学习");
-            }else
+                ivh.statusTxt2.setText(live.getFollow() + "人在学习");
+            } else
                 ivh.item2.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
-        if(!showFirst)
+        if (!showFirst)
             pos++;
-        RecyclerView.ViewHolder vh=null;
-        if(pos==0) {
+        RecyclerView.ViewHolder vh = null;
+        if (pos == 0) {
             View convertView = listInflater.inflate(R.layout.viewpager_layout, null);
             int height = (int) ((float) ScreenUtil.getWidth(act) / 640 * 300);  //240
             RecyclerView.LayoutParams alp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
             convertView.setLayoutParams(alp);
             vh = new PagerHolder(convertView);
-        }else if(pos==1) {
+        } else if (pos == 1) {
             LinearLayout view = new LinearLayout(act);
             view.setOrientation(LinearLayout.VERTICAL);
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new SubjectHolder(view, pos);
-        }else if(pos==2||pos==3||pos==4) {
+        } else if (pos == 2 || pos == 3 || pos == 4) {
             View convertView = listInflater.inflate(R.layout.home_course_layout, null);
             vh = new CourseHolder(convertView, pos);
-        }else if(pos==5) {
+        } else if (pos == 5) {
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new TitleHolder(convertView);
-        }else if(pos>5) {
+        } else if (pos > 5) {
             View convertView = listInflater.inflate(R.layout.course_item_all, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CourseItemHolder(convertView);
@@ -183,8 +182,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return vh;
     }
 
-    public class PagerHolder extends RecyclerView.ViewHolder
-    {
+    public class PagerHolder extends RecyclerView.ViewHolder {
         ExtendedViewPager mViewPager;
 
         public PagerHolder(View convertView) {
@@ -195,37 +193,35 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    public class SubjectHolder extends RecyclerView.ViewHolder
-    {
+    public class SubjectHolder extends RecyclerView.ViewHolder {
         LinearLayout itemsLayout;
 
-        public SubjectHolder(View v, int position)
-        {
+        public SubjectHolder(View v, int position) {
             super(v);
-            itemsLayout= (LinearLayout) v;
-            itemsLayout.setPadding(padding10, 0, padding10, padding10*2);
-            LinearLayout.LayoutParams llpitem=new LinearLayout.LayoutParams(itemWidth, -2);
-            LinearLayout linelayout=new LinearLayout(act);
+            itemsLayout = (LinearLayout) v;
+            itemsLayout.setPadding(padding10, 0, padding10, padding10 * 2);
+            LinearLayout.LayoutParams llpitem = new LinearLayout.LayoutParams(itemWidth, -2);
+            LinearLayout linelayout = new LinearLayout(act);
             linelayout.setOrientation(LinearLayout.HORIZONTAL);
-            int itemsize=info.getSubject_list().size();
-            for(int i=0;i<itemsize+1;i++){
-                if(i==itemsize)
+            int itemsize = info.getSubject_list().size();
+            for (int i = 0; i < itemsize + 1; i++) {
+                if (i == itemsize)
                     linelayout.addView(getSubjectItemView(null), llpitem);
                 else {
-                    SubjectBean subject=info.getSubject_list().get(i);
+                    SubjectBean subject = info.getSubject_list().get(i);
                     linelayout.addView(getSubjectItemView(subject), llpitem);
                 }
-                if(i%5==4||i==itemsize){
+                if (i % 5 == 4 || i == itemsize) {
                     itemsLayout.addView(linelayout);
                     setAnima(linelayout);
-                    linelayout=new LinearLayout(act);
+                    linelayout = new LinearLayout(act);
                 }
             }
-            animaShown=true;
+            animaShown = true;
         }
 
-        private void setAnima(LinearLayout ll){
-            if(!animaShown) {
+        private void setAnima(LinearLayout ll) {
+            if (!animaShown) {
                 AnimationSet animation = new AnimationSet(false);
                 animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.fade_in));
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1f, 1.5f, 1f, 0.5f, 0.5f);
@@ -239,26 +235,26 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         }
 
-        private LinearLayout getSubjectItemView(SubjectBean subject){
-            LinearLayout.LayoutParams llpimg=new LinearLayout.LayoutParams(imgHeight, imgHeight);
-            llpimg.bottomMargin=5;
-            LinearLayout layout=new LinearLayout(act);
+        private LinearLayout getSubjectItemView(SubjectBean subject) {
+            LinearLayout.LayoutParams llpimg = new LinearLayout.LayoutParams(imgHeight, imgHeight);
+            llpimg.bottomMargin = 5;
+            LinearLayout layout = new LinearLayout(act);
             layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(padding10,padding10*2,padding10,0);
-            ImageView img=new ImageView(act);
+            layout.setPadding(padding10, padding10 * 2, padding10, 0);
+            ImageView img = new ImageView(act);
             img.setBackgroundResource(R.color.whitesmoke);
             layout.addView(img, llpimg);
-            TextView txt=new TextView(act);
+            TextView txt = new TextView(act);
             txt.setTextSize(12);
             txt.setTextColor(Color.GRAY);
             txt.setGravity(Gravity.CENTER_HORIZONTAL);
             layout.addView(txt);
-            if(subject!=null)
+            if (subject != null)
                 layout.setTag(subject.getSubject_id());
-            if(subject!=null) {
+            if (subject != null) {
                 txt.setText(subject.getSubject_name());
                 imageLoader.displayImage(ImageUtil.getImageUrl(subject.getSubject_img()), img);
-            }else {
+            } else {
                 img.setImageResource(R.mipmap.icon_menu_more);
                 txt.setText("更多");
             }
@@ -266,12 +262,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             return layout;
         }
 
-        View.OnClickListener listener=new View.OnClickListener(){
+        View.OnClickListener listener = new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Object object=view.getTag();
-                if(object!=null) {
+                Object object = view.getTag();
+                if (object != null) {
                     String id = (String) object;
                     Intent i = new Intent(act, SearchResultAct.class);
                     i.putExtra(Constant.SearchSubject, id);
@@ -281,17 +277,16 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         };
     }
 
-    public class CourseHolder extends RecyclerView.ViewHolder
-    {
+    public class CourseHolder extends RecyclerView.ViewHolder {
         TextView subjectName, titleTxt, timeTxt, priceTxt, statusTxt, titleTxt2, timeTxt2, priceTxt2, statusTxt2;
         ImageView courseImg1, courseImg2;
-        View item1,item2;
+        View item1, item2;
         View moreBtn;
-        int pos=0;
+        int pos = 0;
 
         public CourseHolder(View convertView, int pos) {
             super(convertView);
-            this.pos=pos;
+            this.pos = pos;
             subjectName = (TextView) convertView.findViewById(R.id.subjectName);
             titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
             timeTxt = (TextView) convertView.findViewById(R.id.timeTxt);
@@ -314,71 +309,73 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             moreBtn.setOnClickListener(listener);
         }
 
-        View.OnClickListener listener=new View.OnClickListener(){
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.mornBtn:
-                        if(pos==2)
+                        if (pos == 2)
                             act.startActivity(new Intent(act, LiveTelecast.class));
-                        else if(pos==3)
+                        else if (pos == 3)
                             act.startActivity(new Intent(act, VideoMain.class));
-                        else if(pos==4)
+                        else if (pos == 4)
                             act.startActivity(new Intent(act, VideoMain.class));
                         break;
                     case R.id.item1:
                         Intent intent = new Intent();
                         String course_id = info.getLive().get(0).getCourse_id();
                         intent.putExtra("course_id", course_id);
-                        if(pos==2) {
+                        if (pos == 2) {
                             intent.setClass(act, CourseMainPage.class);
                             act.startActivity(intent);
+                        } else if (pos == 3) {
+                            intent.setClass(act, VideoMainPage.class);
+                            act.startActivity(intent);
+                        } else if (pos == 4) {
+                            intent.setClass(act, VideoMainPage.class);
+                            act.startActivity(intent);
                         }
-                        else if(pos==3)
-                            act.startActivity(new Intent(act, VideoMainPage.class));
-                        else if(pos==4)
-                            act.startActivity(new Intent(act, VideoMainPage.class));
                         break;
                     case R.id.item2:
                         Intent intent2 = new Intent();
                         String course_id2 = info.getLive().get(1).getCourse_id();
                         intent2.putExtra("course_id", course_id2);
-                        if(pos==2) {
+                        if (pos == 2) {
                             intent2.setClass(act, CourseMainPage.class);
                             act.startActivity(intent2);
+                        } else if (pos == 3) {
+                            intent2.setClass(act, VideoMainPage.class);
+                            act.startActivity(intent2);
+                        } else if (pos == 4) {
+                            intent2.setClass(act, VideoMainPage.class);
+                            act.startActivity(intent2);
                         }
-                        else if(pos==3)
-                            act.startActivity(new Intent(act, VideoMainPage.class));
-                        else if(pos==4)
-                            act.startActivity(new Intent(act, VideoMainPage.class));
                         break;
                 }
-
             }
         };
     }
+    ;
 
-    public class TitleHolder extends RecyclerView.ViewHolder
-    {
-        TextView forYouTitle;
+public class TitleHolder extends RecyclerView.ViewHolder {
+    TextView forYouTitle;
 
-        public TitleHolder(View convertView) {
-            super(convertView);
-            forYouTitle = (TextView) convertView.findViewById(R.id.forYouTitle);
-        }
+    public TitleHolder(View convertView) {
+        super(convertView);
+        forYouTitle = (TextView) convertView.findViewById(R.id.forYouTitle);
     }
+}
 
-    public class CourseItemHolder extends RecyclerView.ViewHolder
-    {
-        TextView titleTxt,  statusTxt, typeTxt;
-        ImageView courseImg;
+public class CourseItemHolder extends RecyclerView.ViewHolder {
+    TextView titleTxt, statusTxt, typeTxt;
+    ImageView courseImg;
 
-        public CourseItemHolder(View convertView) {
-            super(convertView);
-            courseImg = (ImageView) convertView.findViewById(R.id.courseImg);
-            titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
-            statusTxt = (TextView) convertView.findViewById(R.id.statusTxt);
-            typeTxt = (TextView) convertView.findViewById(R.id.typeTxt);
-        }
+    public CourseItemHolder(View convertView) {
+        super(convertView);
+        courseImg = (ImageView) convertView.findViewById(R.id.courseImg);
+        titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
+        statusTxt = (TextView) convertView.findViewById(R.id.statusTxt);
+        typeTxt = (TextView) convertView.findViewById(R.id.typeTxt);
     }
+}
 }

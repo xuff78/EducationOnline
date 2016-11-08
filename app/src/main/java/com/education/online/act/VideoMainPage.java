@@ -11,11 +11,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.order.SubmitOrder;
+import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.EvaluateListBean;
+import com.education.online.bean.JsonMessage;
+import com.education.online.bean.VideoImgItem;
 import com.education.online.fragment.CoursePage;
 import com.education.online.fragment.VideoPage;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.JsonUtil;
+
+import org.json.JSONException;
 
 public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
 
@@ -25,6 +36,61 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
     private ImageView addfavorite, share, download;
     private View lastSelectedView=null;
     private VideoPage videopage = new VideoPage();
+
+    private CourseDetailBean courseDetailBean;
+    private EvaluateListBean evaluateListBean;
+    private String course_id;
+    private boolean flag=false;
+    Intent intent;
+    HttpHandler httpHandler;
+    public void initiHandler(){
+        httpHandler = new HttpHandler(this, new CallBack(this)
+        {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getCourseDtail)) {
+                    courseDetailBean = JsonUtil.getCourseDetail(jsonData);
+                    _setHeaderTitle(courseDetailBean.getCourse_name());
+                    if (courseDetailBean.getIs_collection().equals("0"))
+                    {
+                        flag=false;
+                        addfavorite.setSelected(false);
+
+                    }else{
+                        flag=true;
+                        addfavorite.setSelected(true);
+                    }
+                    httpHandler.getEvaluateList(course_id,"1","10","1");
+
+                }else if(method.equals(Method.getEvaluateList)){
+                    evaluateListBean = JsonUtil.getEvaluateList(jsonData);
+                    //   Toast.makeText(CourseMainPage.this,"success",Toast.LENGTH_SHORT).show();
+
+                    videopage = new VideoPage();
+                    videopage.setCourseDetailBean(courseDetailBean);
+                    videopage.setEvaluateListBean(evaluateListBean);
+                    changePage(videopage);
+                }
+                else if (method.equals(Method.addCollection)){
+                    if(flag)
+                        Toast.makeText(VideoMainPage.this,"收藏成功！",Toast.LENGTH_SHORT).show();
+
+                    else
+                        Toast.makeText(VideoMainPage.this,"取消收藏成功！",Toast.LENGTH_SHORT).show();
+                }
+
+                //  DialogUtil.showInfoDailog(CourseMainPage.this, "提示", "发布课程成功!");
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+                super.onFailure(method, jsonMessage);
+                //
+            }
+        });
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +103,13 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
     }
 
     private void initView() {
+        intent = getIntent();
+        course_id = intent.getStringExtra("course_id");
+        initiHandler();
+        httpHandler.getCourseDetail(course_id);
+
+
+
         addfavorite = (ImageView) findViewById(R.id.addfavorite);
         share = (ImageView) findViewById(R.id.share);
         download = (ImageView) findViewById(R.id.download);
@@ -54,8 +127,6 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
 
 
         videopage.setPaidStatus(true);
-        changePage(videopage);
-
 
     }
 
@@ -72,9 +143,18 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
             switch (view.getId()) {
                 case R.id.addfavoritelayout:
 
-                    addfavorite.setImageResource(R.mipmap.icon_star_red);
-
+                    if (!flag) {
+                        addfavorite.setSelected(true);
+                        flag=true;
+                    }
+                    else {
+                        addfavorite.setSelected(false);
+                        flag=false;
+                    }
+                    httpHandler.addCollection(course_id);
                     break;
+
+
                 case R.id.sharelayout:
                     //do sth;
 

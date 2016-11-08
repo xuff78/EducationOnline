@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.EvaluateListBean;
+import com.education.online.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -18,10 +22,13 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private Activity act;
     private LayoutInflater listInflater;
+    private CourseDetailBean courseDetailBean;
+    private ImageLoader imageLoader;
 
 
-    public DetailsAdapter(Activity act, String jason) {
+    public DetailsAdapter(Activity act, CourseDetailBean courseDetailBean) {
         this.act = act;
+        this.courseDetailBean = courseDetailBean;
         listInflater = LayoutInflater.from(act);
     }
 
@@ -50,11 +57,21 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
-        if (pos == 0){
+      if (pos == 0) {
             CourseInfoHolder vh = (CourseInfoHolder) holder;
-        }else{
-            TeacherInfoHolder vh = (TeacherInfoHolder) holder;
-        }
+            vh.courseName.setText(courseDetailBean.getCourse_name());
+            vh.courseBrief.setText(courseDetailBean.getIntroduction());
+            vh.coursePrice.setText(courseDetailBean.getPrice());
+        }   else if (pos == 1) {
+          TeacherInfoHolder vh = (TeacherInfoHolder) holder;
+          vh.teacherName.setText(courseDetailBean.getUser_info().getUser_name());
+          vh.teacherTitles.setText(courseDetailBean.getUser_info().getIntroduction());
+          if(courseDetailBean.getUser_info().getAvatar().length()!=0) {
+              imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getUser_info().getAvatar()), vh.teacherPotrait);
+          }
+          vh.teacherScore.setText(courseDetailBean.getUser_info().getAverage() + "分");
+          vh.teacherComments.setText("评论" + courseDetailBean.getUser_info().getEvaluate_count());
+      }
 
 
 
@@ -79,15 +96,19 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             teacherTitles= (TextView) v.findViewById(R.id.teacherTitles);
             teacherComments = (TextView) v. findViewById(R.id.teacherComments);
             viewbottom = v.findViewById(R.id.bottomview);
-
             viewbottom.setMinimumHeight(100);
         }
     }
     //课程信息项
     public class CourseInfoHolder extends RecyclerView.ViewHolder {
 
+        TextView courseName,coursePrice,courseBrief;
+
         public CourseInfoHolder(View v, int pos) {
             super(v);
+            courseName= (TextView) v.findViewById(R.id.courseName);
+            coursePrice= (TextView) v.findViewById(R.id.coursePrice);
+            courseBrief= (TextView) v.findViewById(R.id.courseBrief);
         }
     }
 
