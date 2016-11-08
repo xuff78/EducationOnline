@@ -52,7 +52,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 if(method.equals(Method.getCourseDtail)) {
                     courseDetailBean = JsonUtil.getCourseDetail(jsonData);
                     _setHeaderTitle(courseDetailBean.getCourse_name());
-                    if (courseDetailBean.getIs_collection().length()==0)
+                    if (courseDetailBean.getIs_collection().equals("0"))
                     {
                         flag=false;
                         addfavorite.setImageResource(R.mipmap.icon_star);

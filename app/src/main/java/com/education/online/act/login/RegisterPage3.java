@@ -39,6 +39,9 @@ public class RegisterPage3 extends BaseFrameAct {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page3);
+
+
+        _setHeaderTitle("注册");
        init();
 
     }

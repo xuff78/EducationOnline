@@ -71,6 +71,11 @@
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
 
+
+        <activity
+            android:name=".act.VideoPlay"
+            android:configChanges="orientation|keyboard|screenSize"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
         <activity
             android:name=".act.video.VideoMain"
             android:screenOrientation="portrait"

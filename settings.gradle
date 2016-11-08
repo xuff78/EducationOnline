@@ -1,2 +1,1 @@
-include ':app', ':mediapicker'
-include ':CollapsingToolbarLayout'
+include ':app', ':mediapicker', ':ijkplayer-java', ':upplayer'

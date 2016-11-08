@@ -47,6 +47,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                 if(method.equals(Method.getUserInfo)){
                     teacherBean= JSON.parseObject(jsonData, TeacherBean.class);
                     homepageImg.setData(teacherBean.getPhoto_album());
+                    homepageVideo.setData(teacherBean.getVideo());
                 }
             }
         });

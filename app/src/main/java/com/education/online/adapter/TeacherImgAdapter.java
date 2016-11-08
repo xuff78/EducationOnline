@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.education.online.R;
 import com.education.online.bean.VideoImgItem;
 import com.education.online.inter.AdapterCallback;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.VideoThumbnailLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -69,27 +71,41 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
                 vh.delBtn.setVisibility(View.GONE);
 
             vh.teacherImg.setPadding(0, 0, 0, 0);
-            imageLoader.displayImage(ImageUtil.getImageUrl(items.get(position).getImgUrl()), vh.teacherImg);
-            vh.teacherImg.setBackgroundResource(R.color.whitesmoke);
+            vh.teacherImg.setImageResource(R.color.whitesmoke);
             vh.itemView.setOnClickListener(null);
-            if(isVideo)
+            vh.delBtn.setOnClickListener(listener);
+            vh.delBtn.setTag(position);
+            vh.teacherImg.setOnClickListener(listener);
+            vh.teacherImg.setTag(position);
+            if(isVideo) {
                 vh.imgMask.setVisibility(View.VISIBLE);
-            else
+                VideoThumbnailLoader.getIns().display(activity, ImageUtil.getImageUrl(items.get(position).getVideoUrl()),vh.teacherImg,
+                        100, 100, new VideoThumbnailLoader.ThumbnailListener(){
+                            @Override
+                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
+                                if(bitmap!=null)
+                                    iv.setImageBitmap(bitmap);
+                            }
+                        });
+            }else {
                 vh.imgMask.setVisibility(View.GONE);
+                imageLoader.displayImage(ImageUtil.getImageUrl(items.get(position).getImgUrl()), vh.teacherImg);
+            }
         }else{
             ImgHolder vh = (ImgHolder) holder;
             vh.teacherImg.setBackgroundResource(R.drawable.shape_add_icon_bg);
             vh.teacherImg.setImageResource(R.mipmap.icon_x);
             int padding=ImageUtil.dip2px(activity, 15);
             vh.teacherImg.setPadding(padding, padding, padding, padding);
-            vh.itemView.setOnClickListener(new View.OnClickListener() {
+            vh.delBtn.setVisibility(View.GONE);
+            vh.imgMask.setVisibility(View.GONE);
+            vh.delBtn.setOnClickListener(null);
+            vh.teacherImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     cb.additem();
                 }
             });
-            vh.delBtn.setVisibility(View.GONE);
-            vh.imgMask.setVisibility(View.GONE);
         }
     }
 
@@ -107,12 +123,22 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
             teacherImg = (ImageView) v.findViewById(R.id.teacherImg);
             imgMask = (ImageView) v.findViewById(R.id.imgMask);
             delBtn = (ImageView) v.findViewById(R.id.delBtn);
-            delBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cb.delitem(view, position);
-                }
-            });
         }
     }
+
+    View.OnClickListener listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int pos=(int)view.getTag();
+            switch (view.getId()){
+                case R.id.delBtn:
+                    cb.delitem(view, pos);
+                    break;
+                case R.id.teacherImg:
+                    cb.onClick(view, pos);
+                    break;
+            }
+        }
+    };
+
 }

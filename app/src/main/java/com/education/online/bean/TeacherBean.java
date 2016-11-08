@@ -39,6 +39,15 @@ public class TeacherBean {
     private String is_specialty_validate=""; // 是否专业资质验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
     private List<String> photo_album=new ArrayList<>();
+    private List<String> video=new ArrayList<>();
+
+    public List<String> getVideo() {
+        return video;
+    }
+
+    public void setVideo(List<String> video) {
+        this.video = video;
+    }
 
     public List<String> getPhoto_album() {
         return photo_album;

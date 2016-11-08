@@ -20,6 +20,8 @@ public class RegisterPage2 extends BaseFrameAct {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page2);
+
+        _setHeaderTitle("注册");
         Confirmbtn = (Button) findViewById(R.id. Confirmbtn);
         InitPwd = (EditText) findViewById(R.id.InitPwd);
         ConfirmPwd = (EditText) findViewById(R.id.ConfirmPwd);

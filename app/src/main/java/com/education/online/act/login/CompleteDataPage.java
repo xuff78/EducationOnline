@@ -81,6 +81,8 @@ public class CompleteDataPage extends BaseFrameAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullfilldata_page);
         imageloader=ImageLoader.getInstance();
+
+        _setHeaderTitle("完善资料");
         _setLeftBackGone();
         initView();
     }

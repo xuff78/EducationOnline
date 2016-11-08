@@ -200,6 +200,7 @@ public class HomepageImg extends BaseFragment {
             item.setImgUrl(data.get(i));
             items.add(item);
         }
-        adapter.notifyDataSetChanged();
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
     }
 }

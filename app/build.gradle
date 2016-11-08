@@ -67,4 +67,5 @@ dependencies {
     compile files('libs/SMSSDK-2.1.2.jar')
     compile 'com.edmodo:cropper:1.0.1'
     compile project(':mediapicker')
+    compile project(path: ':upplayer')
 }

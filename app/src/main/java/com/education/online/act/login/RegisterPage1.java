@@ -59,7 +59,7 @@ public class RegisterPage1 extends BaseFrameAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page1);
 
-        // _setHeaderTitle("注 册");
+         _setHeaderTitle("注 册");
         initView();
     }
 
@@ -123,13 +123,10 @@ public class RegisterPage1 extends BaseFrameAct {
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-                return false;
-            }
-        });
-        EventHandler eventHandler = new EventHandler() {
-            public void afterEvent(final int event, final int result, final Object data) {
-                //回调完成
-
+                Bundle b=msg.getData();
+                int event=b.getInt("event");
+                final int result=b.getInt("result");
+                final String data=b.getString("data");
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
@@ -142,17 +139,13 @@ public class RegisterPage1 extends BaseFrameAct {
                         //返回支持发送验证码的国家列表
                     }
                 } else {
-                    ((Throwable) data).printStackTrace();
-                    Throwable throwable = (Throwable) data;
-                    // 根据服务器返回的网络错误，给toast提示
-                    int status = 0;
+                    int status=-1;
                     try {
-                        JSONObject object = new JSONObject(throwable.getMessage());
+                        JSONObject object = new JSONObject(data);
                         String des = object.optString("detail");
                         status = object.optInt("status");
                         if (!TextUtils.isEmpty(des)) {
                             Toast.makeText(RegisterPage1.this, des, Toast.LENGTH_SHORT).show();
-                            return;
                         }
                     } catch (JSONException e) {
                         SMSLog.getInstance().w(e);
@@ -170,6 +163,22 @@ public class RegisterPage1 extends BaseFrameAct {
                         Toast.makeText(RegisterPage1.this, resId, Toast.LENGTH_SHORT).show();
                     }
                 }
+                return false;
+            }
+        });
+        eventHandler = new EventHandler() {
+            public void afterEvent(final int event, final int result, final Object data) {
+                //回调完成
+                Message msg=new Message();
+                Bundle b=new Bundle();
+                b.putInt("event", event);
+                b.putInt("result", result);
+                if(result!=SMSSDK.RESULT_COMPLETE){
+                    ((Throwable) data).printStackTrace();
+                    b.putString("data", ((Throwable) data).getMessage());
+                }
+                msg.setData(b);
+                handler.sendMessage(msg);
             }
         };
 
