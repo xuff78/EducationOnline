@@ -10,6 +10,15 @@ public class CourseExtm {
     private String time_len = "";
     private String url = "";
     private String state = "";
+    private String name ="";
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getCourseware_date() {
         return courseware_date;

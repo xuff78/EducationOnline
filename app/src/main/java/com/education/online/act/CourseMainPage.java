@@ -55,11 +55,11 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     if (courseDetailBean.getIs_collection().equals("0"))
                     {
                         flag=false;
-                        addfavorite.setImageResource(R.mipmap.icon_star);
+                        addfavorite.setSelected(false);
 
                     }else{
                         flag=true;
-                        addfavorite.setImageResource(R.mipmap.icon_star_red);
+                        addfavorite.setSelected(true);
                     }
                     httpHandler.getEvaluateList(course_id,"1","10","1");
 
@@ -147,12 +147,13 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
        //     view.setSelected(true);
             switch (view.getId()) {
                 case R.id.addfavoritelayout:
+
                     if (!flag) {
-                        addfavorite.setImageResource(R.mipmap.icon_star_red);
+                        addfavorite.setSelected(true);
                         flag=true;
                     }
                     else {
-                        addfavorite.setImageResource(R.mipmap.icon_star);
+                        addfavorite.setSelected(false);
                         flag=false;
                     }
                     httpHandler.addCollection(course_id);

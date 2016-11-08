@@ -19,6 +19,8 @@ import com.education.online.adapter.CommentsAdapter;
 import com.education.online.adapter.CourseAdapter;
 import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
+import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.EvaluateListBean;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -37,8 +39,19 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     private int lastSelectedPosition;
     private RelativeLayout videorelated;
 
+    private CourseDetailBean courseDetailBean;
+    private EvaluateListBean evaluateListBean;
+
     private SeekBar seekbar;
     private ImageView playBtn, expandBtn;
+
+
+    public void setCourseDetailBean(CourseDetailBean courseDetailBean) {
+        this.courseDetailBean = courseDetailBean;
+    }
+    public void setEvaluateListBean(EvaluateListBean evaluateListBean) {
+        this.evaluateListBean = evaluateListBean;
+    }
 
     @Nullable
     @Override
@@ -46,7 +59,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.course_detail_main, container, false);
 
         initView(view);
-        recyclerList.setAdapter(new DetailsAdapter(getActivity(), ""));
+        recyclerList.setAdapter(new DetailsAdapter(getActivity(), courseDetailBean));
         return view;
     }
 
@@ -132,14 +145,14 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
             setStatusFalse(lastSelectedPosition);
             switch (view.getId()) {
                 case R.id.details:
-                    recyclerList.setAdapter(new DetailsAdapter(getActivity(), ""));
+                    recyclerList.setAdapter(new DetailsAdapter(getActivity(), courseDetailBean));
                     lastSelectedview= details;
                     lastSelectedPosition=0;
                     textdetails.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewdetails.setVisibility(View.VISIBLE);
                     break;
                 case R.id.directory:
-                    recyclerList.setAdapter(new DirectoryAdapter(getActivity(), ""));
+                    recyclerList.setAdapter(new DirectoryAdapter(getActivity(), courseDetailBean));
                     lastSelectedview= directory;
                     lastSelectedPosition=1;
                     textdirectory.setTextColor(getResources().getColor(R.color.dark_orange));
@@ -147,7 +160,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
 
                     break;
                 case R.id.comments:
-                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), ""));
+                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
                     lastSelectedview= comments;
                     lastSelectedPosition=2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
