@@ -336,7 +336,7 @@ public class HttpHandler extends Handle {
 	public void addAttention (String user_code){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
-		paraMap.put("user_code",user_code);
+		paraMap.put("usercode",user_code);
 		requestPostEdu(Method.addAttention,paraMap,true);
 	}
 	public void evaluate(String course_id,String star,String evaluate_info,String is_secret ){

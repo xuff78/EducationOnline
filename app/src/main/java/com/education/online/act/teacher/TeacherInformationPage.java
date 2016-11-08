@@ -96,7 +96,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         consultingLayout = (LinearLayout) findViewById(R.id.consultingLayout);
         consultingLayout.setOnClickListener(this);
         addToFavoriteLayout = (LinearLayout) findViewById(R.id.addToFavoriteLayout);
-        consultingLayout.setOnClickListener(this);
+        addToFavoriteLayout.setOnClickListener(this);
         recyclerViewList = (RecyclerView) findViewById(R.id.recyclerViewList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(TeacherInformationPage.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -115,9 +115,9 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
 
     @Override
     public void onClick(View view) {
-        if(consultingLayout==view){
+        if(R.id.consultingLayout==view.getId()){
 
-        }else if(addToFavoriteLayout==view){
+        }else if(R.id.addToFavoriteLayout==view.getId()){
             handler.addAttention(usercode);
         }
     }
