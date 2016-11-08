@@ -7,9 +7,9 @@ import java.io.File;
 
 public class UploadTask extends AsyncTask<Object, String, String> {
 
-	private static final String TEST_API_KEY = "EnpdhpTAVSaOaqMkWoJ+mVp+zTA="; // 测试使用的表单api验证密钥
-	private static final String BUCKET = "longforlearn"; // 存储空间
-	private static final long EXPIRATION = System.currentTimeMillis() / 1000 + 1000 * 5 * 10; // 过期时间，必须大于当前时间
+	public static final String TEST_API_KEY = "EnpdhpTAVSaOaqMkWoJ+mVp+zTA="; // 测试使用的表单api验证密钥
+	public static final String BUCKET = "longforlearn"; // 存储空间
+	public static final long EXPIRATION = System.currentTimeMillis() / 1000 + 1000 * 5 * 10; // 过期时间，必须大于当前时间
 	public static final String UPLOAD_URL = "http://longforlearn.b0.upaiyun.com";
 	public static final String THUMBNAIL = "!infopic140";
 

@@ -42,12 +42,20 @@ import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.upyun.library.common.Params;
+import com.upyun.library.common.UploadManager;
+import com.upyun.library.listener.SignatureListener;
+import com.upyun.library.listener.UpCompleteListener;
+import com.upyun.library.listener.UpProgressListener;
+import com.upyun.library.utils.UpYunUtils;
 
 import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vn.tungdx.mediapicker.MediaItem;
 import vn.tungdx.mediapicker.MediaOptions;
@@ -76,6 +84,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     HttpHandler httpHandler;
     private View.OnClickListener listener;
     private VideoUploadProgressAdapter adapter;
+    private List<UpProgressListener> progressListeners=new ArrayList<>();
+    private List<UpCompleteListener> upCompleteListeners=new ArrayList<>();
 
     private final int hight = 51;
 
@@ -84,6 +94,16 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     ////////////////mediapicker
     private static final int REQUEST_MEDIA = 100;
     private List<MediaItem> mMediaSelectedList = new ArrayList<>();
+    final Map<String, Object> paramsMap = new HashMap<>();
+    SignatureListener signatureListener = new SignatureListener() {
+        @Override
+        public String getSignature(String raw) {
+            return UpYunUtils.md5(raw + UploadTask.TEST_API_KEY);
+        }
+    };
+
+    public VideoCourseBaseInfoEdit() {
+    }
 
 
     @Override
@@ -96,6 +116,10 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     }
 
     private void initView() {
+
+        paramsMap.put(Params.BUCKET, UploadTask.BUCKET);
+        paramsMap.put(Params.SAVE_KEY, "/video/");
+        paramsMap.put(Params.RETURN_URL, "httpbin.org/post");
 
      //   UploadVideoProgress progress = new UploadVideoProgress();
        // uploadVideoProgresses.add(progress);
@@ -306,7 +330,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         .getMediaItemSelected(data);
                 if (mMediaSelectedList != null) {
                     for (MediaItem mediaItem : mMediaSelectedList) {
-                        Additem(mediaItem);
+                        uploadVideo(mediaItem);
                     }
                     int num = uploadVideoProgresses.size();
                     listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -319,10 +343,29 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
         }
     }
 
-    private void Additem(MediaItem mediaItem){
+    private void uploadVideo(MediaItem item) {
         UploadVideoProgress uploadVideoProgress =new UploadVideoProgress();
-        uploadVideoProgress.setUri(mediaItem.getUriOrigin());
+        uploadVideoProgress.setUri(item.getUriOrigin());
         uploadVideoProgresses.add(uploadVideoProgress);
+
+        File file=new File(item.getUriOrigin().getPath());
+        UpProgressListener upProgressListener=new UpProgressListener() {
+            @Override
+            public void onRequestProgress(long bytesWrite, long contentLength) {
+//                uploadProgress.setProgress((int) ((100 * bytesWrite) / contentLength));
+//                textView.setText((100 * bytesWrite) / contentLength + "%");
+                Log.e(TAG, (100 * bytesWrite) / contentLength + "%");
+            }
+        };
+        progressListeners.add(upProgressListener);
+        UpCompleteListener upCompleteListener=new UpCompleteListener() {
+            @Override
+            public void onComplete(boolean isSuccess, String result) {
+
+            }
+        };
+        upCompleteListeners.add(upCompleteListener);
+        UploadManager.getInstance().formUpload(file, paramsMap, UploadTask.TEST_API_KEY, upCompleteListener, upProgressListener);
     }
 
     public void initiHandler() {

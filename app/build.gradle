@@ -68,4 +68,6 @@ dependencies {
     compile 'com.edmodo:cropper:1.0.1'
     compile project(':mediapicker')
     compile project(path: ':upplayer')
+    compile files('libs/upyun-lib-1.0.2.jar')
+    compile files('libs/okio-1.7.0.jar')
 }
