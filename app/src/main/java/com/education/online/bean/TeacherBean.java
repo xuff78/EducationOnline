@@ -30,6 +30,7 @@ public class TeacherBean {
     private String message="";
     private String attention_count = "";  // 粉丝数量
     private String student_count = "";  // 学生数量
+    private String is_attention="";
     private String good_evaluate_ratio = "";  // 好评率（自行转成百分数）
     private String is_validate="";
     private String is_ext_validate=""; // 用户资料验证 0-待审核,1-通过,2-拒绝,3-未提交
@@ -40,6 +41,14 @@ public class TeacherBean {
     private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
     private List<String> photo_album=new ArrayList<>();
     private List<String> video=new ArrayList<>();
+
+    public String getIs_attention() {
+        return is_attention;
+    }
+
+    public void setIs_attention(String is_attention) {
+        this.is_attention = is_attention;
+    }
 
     public List<String> getVideo() {
         return video;

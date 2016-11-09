@@ -30,6 +30,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.act = act;
         this.courseDetailBean = courseDetailBean;
         listInflater = LayoutInflater.from(act);
+        imageLoader=ImageLoader.getInstance();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.education.online.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.education.online.bean.HomePageInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;
+import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.view.ExtendedViewPager;
@@ -40,8 +42,10 @@ public class HomePage extends BaseFragment {
     private HttpHandler handler;
     private String jsonStr;
     private MainAdapter adapter;
-    private ExtendedViewPager mViewPager;
+//    private ExtendedViewPager mViewPager;
     private HomePageInfo info;
+    private int firstItemHeight;
+    private int listScrollY=0;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
@@ -52,8 +56,8 @@ public class HomePage extends BaseFragment {
                 info= JSON.parseObject(jsonData, HomePageInfo.class);
                 adapter=new MainAdapter(getActivity(), info);
                 recyclerList.setAdapter(adapter);
-                mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
-                mViewPager.startAutoScroll();
+//                mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
+//                mViewPager.startAutoScroll();
             }
         });
     }
@@ -64,13 +68,14 @@ public class HomePage extends BaseFragment {
         View view = inflater.inflate(R.layout.homepage_fragment, container, false);
 
         initView(view);
+        firstItemHeight= ImageUtil.dip2px(getActivity(), 200);
         if(jsonStr==null) {
             initHandler();
             handler.getHomepage();
         }else{
             recyclerList.setAdapter(adapter);
-            mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
-            mViewPager.startAutoScroll();
+//            mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
+//            mViewPager.startAutoScroll();
         }
         return view;
     }
@@ -88,24 +93,35 @@ public class HomePage extends BaseFragment {
             }
         });
 
-        mViewPager = (ExtendedViewPager) v.findViewById(R.id.galleryImgs);
-        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        mViewPager = (ExtendedViewPager) v.findViewById(R.id.galleryImgs);
+//        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+//        toolbar.setTitle("");
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         recyclerList=(RecyclerView)v.findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
         final View headerLayout=v.findViewById(R.id.headerLayout);
-
-        AppBarLayout appBarLayout= (AppBarLayout) v.findViewById(R.id.appbarLayout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        recyclerList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                float alpha=Math.abs(Float.valueOf(i))/appBarLayout.getTotalScrollRange();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                listScrollY+=dy;
+                float alpha=Math.abs(Float.valueOf(listScrollY))/firstItemHeight;
                 headerLayout.setAlpha(alpha);
-                LogUtil.i("test", "toolbar alpha: "+alpha);
+
+                LogUtil.i("test", "listScrollY: "+listScrollY);
             }
         });
+
+//        AppBarLayout appBarLayout= (AppBarLayout) v.findViewById(R.id.appbarLayout);
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+//                float alpha=Math.abs(Float.valueOf(i))/appBarLayout.getTotalScrollRange();
+//                headerLayout.setAlpha(alpha);
+//                LogUtil.i("test", "toolbar alpha: "+alpha);
+//            }
+//        });
     }
 }

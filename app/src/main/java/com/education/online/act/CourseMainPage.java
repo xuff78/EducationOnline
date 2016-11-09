@@ -61,7 +61,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                         flag=true;
                         addfavorite.setSelected(true);
                     }
-                    httpHandler.getEvaluateList(course_id,"1","10","1");
+                    httpHandler.getEvaluateList(course_id,null,"10","1");
 
                 }else if(method.equals(Method.getEvaluateList)){
                     evaluateListBean = JsonUtil.getEvaluateList(jsonData);

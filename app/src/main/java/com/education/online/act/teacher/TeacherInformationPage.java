@@ -46,6 +46,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     private TeacherMainAdapter adapter;
     private List<EvaluateBean> evaluations=new ArrayList<>();
     private String usercode="";
+    private ImageView starIcon;
     private int page=1;
 
     private void initHandler() {
@@ -57,6 +58,10 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                     teacher= JSON.parseObject(jsonData, TeacherBean.class);
                     adapter=new TeacherMainAdapter(TeacherInformationPage.this, teacher, evaluations, TeacherInformationPage.this);
                     recyclerViewList.setAdapter(adapter);
+                    if(teacher.getIs_attention().equals("0"))
+                        starIcon.setImageResource(R.mipmap.icon_star);
+                    else if(teacher.getIs_attention().equals("1"))
+                        starIcon.setImageResource(R.mipmap.icon_star_red);
                     handler.getEvaluate(usercode, null, page);
                 }else if(method.equals(Method.getEvaluate)){
                     page++;
@@ -69,7 +74,15 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                     evaluations.addAll(page.getEvaluate());
                     adapter.notifyDataSetChanged();
                 }else if(method.equals(Method.addAttention)){
-                    ToastUtils.displayTextShort(TeacherInformationPage.this, "成功关注");
+                    if(teacher.getIs_attention().equals("0")) {
+                        starIcon.setImageResource(R.mipmap.icon_star_red);
+                        teacher.setIs_attention("1");
+                        ToastUtils.displayTextShort(TeacherInformationPage.this, "成功关注");
+                    }else if(teacher.getIs_attention().equals("1")) {
+                        starIcon.setImageResource(R.mipmap.icon_star);
+                        teacher.setIs_attention("0");
+                        ToastUtils.displayTextShort(TeacherInformationPage.this, "取消关注");
+                    }
                 }
             }
         });
@@ -97,6 +110,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         consultingLayout.setOnClickListener(this);
         addToFavoriteLayout = (LinearLayout) findViewById(R.id.addToFavoriteLayout);
         addToFavoriteLayout.setOnClickListener(this);
+        starIcon= (ImageView) findViewById(R.id.starIcon);
         recyclerViewList = (RecyclerView) findViewById(R.id.recyclerViewList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(TeacherInformationPage.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

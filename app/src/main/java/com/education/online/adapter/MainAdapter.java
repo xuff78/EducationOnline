@@ -50,7 +50,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int padding10 = 0;
     private boolean animaShown = false;
     private HomePageInfo info;
-    private boolean showFirst = false; //是否显示第一项
+    private boolean showFirst = true; //是否显示第一项
 
     public MainAdapter(Activity act, HomePageInfo info) {
         this.act = act;

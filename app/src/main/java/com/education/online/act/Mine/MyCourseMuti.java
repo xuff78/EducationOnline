@@ -8,15 +8,27 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
+import com.education.online.bean.TeacherWithCourse;
 import com.education.online.fragment.CourseVideoList;
 import com.education.online.fragment.OnlineCoursePage;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.inter.CourseUpdate;
+import com.education.online.util.JsonUtil;
 import com.education.online.view.MenuPopup;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/17.
@@ -29,7 +41,27 @@ public class MyCourseMuti extends BaseFrameAct {
     private int type=0; //0:课程  1:收藏  2:下载
     private OnlineCoursePage onlinecoursePage = new OnlineCoursePage();
     private CourseVideoList courseVideoList = new CourseVideoList();
+    private CourseVideoList coursewareList = new CourseVideoList();
+    private int page=1;
+    private CourseUpdate currentCourseFrg;
+    private HttpHandler handler;
+    private List<CourseBean> items=new ArrayList<>();
+    private String courseType="live";
 
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getCourseCollections)){
+                    String courseInfo= JsonUtil.getString(jsonData, "collection_info");
+                    items = JSON.parseObject(courseInfo, new TypeReference<List<CourseBean>>() {});
+                    currentCourseFrg.addCourses(items, page==1?true:false);
+                    page++;
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +80,11 @@ public class MyCourseMuti extends BaseFrameAct {
                 _setHeaderTitle("我的下载");
                 break;
         }
+        initHandler();
         initView();
         initFrgment();
         addListFragment(onlinecoursePage);
+        handler.getCourseCollections(courseType, page);
     }
 
     private void initFrgment() {
@@ -62,7 +96,8 @@ public class MyCourseMuti extends BaseFrameAct {
         b.putSerializable(FilterAll.Name, filter);
     }
 
-    private void addListFragment(Fragment page) {
+    private void addListFragment(CourseUpdate page) {
+        currentCourseFrg=page;
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         ft.replace(R.id.fragment_list, page);
@@ -89,15 +124,20 @@ public class MyCourseMuti extends BaseFrameAct {
                 selectTypeView = txt;
                 switch (view.getId()) {
                     case R.id.courseTypeTxt1:
+                        courseType="live";
                         addListFragment(onlinecoursePage);
                         break;
                     case R.id.courseTypeTxt2:
+                        courseType="video";
                         addListFragment(courseVideoList);
                         break;
                     case R.id.courseTypeTxt3:
-                        addListFragment(courseVideoList);
+                        courseType="courseware";
+                        addListFragment(coursewareList);
                         break;
                 }
+                page=1;
+                handler.getCourseCollections(courseType, page);
             }
         }
     };

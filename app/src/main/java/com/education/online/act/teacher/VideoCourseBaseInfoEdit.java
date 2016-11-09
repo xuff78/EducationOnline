@@ -374,6 +374,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         ProgressBar progressBar = (ProgressBar) childView.getTag();
                         progressBar.setProgress(100);
                         LogUtil.i(TAG, "upload complete!! result: " + result);
+                        //在这里解析result把视频url设置好吧
                     }
                 }
             }

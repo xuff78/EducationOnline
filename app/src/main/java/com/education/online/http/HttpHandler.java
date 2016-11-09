@@ -316,12 +316,23 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getCourseDtail,paraMap,true);
 	}
 
+	public void getCourseCollections( String course_type, int page)
+	{
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("course_type",course_type);
+		paraMap.put("page_size","20");
+		paraMap.put("page",page+"");
+		requestPostEdu(Method.getCourseCollections,paraMap,true);
+	}
+
 	public void getEvaluateList(String course_id,String star, String page_size,String page)
 	{
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paraMap.put("course_id",course_id);
-		paraMap.put("star",star);
+		if(star!=null&&star.length()>0)
+			paraMap.put("star",star);
 		paraMap.put("page_size",page_size);
 		paraMap.put("page",page);
 		requestPostEdu(Method.getEvaluateList,paraMap,true);
