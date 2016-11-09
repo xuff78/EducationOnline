@@ -74,6 +74,7 @@ public class VideoUploadProgressAdapter extends BaseAdapter {
             open.setTag(position);
         open.setOnClickListener(listener);
         delete.setOnClickListener(listener);
+        convertView.setTag(progress);
         return convertView;
     }
 
