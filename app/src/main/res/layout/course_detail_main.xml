@@ -9,6 +9,7 @@
         android:layout_height="200dp"
         android:background="@color/bg_gray">
 
+
         <ImageView
             android:id="@+id/roundLeftBack"
             android:layout_width="60dp"
@@ -18,7 +19,17 @@
             android:padding="15dp"
             android:src="@mipmap/icon_round_back" />
 
+        <com.upyun.upplayer.widget.UpVideoView
+            android:id="@+id/upVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:src="@mipmap/icon_video_play"
+            android:visibility="gone" />
+
         <ImageView
+            android:id="@+id/video_play"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="@dimen/activity_horizontal_margin"

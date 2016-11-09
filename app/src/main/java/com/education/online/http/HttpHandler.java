@@ -289,20 +289,36 @@ public class HttpHandler extends Handle {
 	public void addClass(AddClassBean addClassBean){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+
+		if(addClassBean.getName().length()>0)
 		paraMap.put("name",addClassBean.getName());
+		if(addClassBean.getCourse_type().length()>0)
 		paraMap.put("course_type",addClassBean.getCourse_type());
+		if(addClassBean.getSubject_id().length()>0)
 		paraMap.put("subject_id",addClassBean.getSubject_id());
+		if(addClassBean.getOriginal_price().length()>0)
 		paraMap.put("original_price",addClassBean.getOriginal_price());
+		if(addClassBean.getPrice().length()>0)
 		paraMap.put("price",addClassBean.getPrice());
+		if(addClassBean.getImg().length()>0)
 		paraMap.put("img",addClassBean.getImg());
+		if(addClassBean.getCourse_url().length()>0)
 		paraMap.put("course_url",addClassBean.getCourse_url());
+		if(addClassBean.getIntroduction().length()>0)
 		paraMap.put("introduction",addClassBean.getIntroduction());
+		if(addClassBean.getMin_follow().length()>0)
 		paraMap.put("min_follow",addClassBean.getMin_follow());
+		if(addClassBean.getMax_follow().length()>0)
 		paraMap.put("max_follow",addClassBean.getMax_follow());
+		if(addClassBean.getRefund().length()>0)
 		paraMap.put("refund",addClassBean.getRefund());
+		if(addClassBean.getTransfer().length()>0)
 		paraMap.put("transfer",addClassBean.getTransfer());
+		if(addClassBean.getPlan().length()>0)
 		paraMap.put("plan",addClassBean.getPlan());
+		if(addClassBean.getCourseware_time().length()>0)
 		paraMap.put("courseware_time",addClassBean.getCourseware_time());
+		if(addClassBean.getTime_len().length()>0)
 		paraMap.put("time_len",addClassBean.getTime_len());
 		requestPostEdu(Method.addClass,paraMap,true);
 
@@ -333,7 +349,9 @@ public class HttpHandler extends Handle {
 		paraMap.put("course_id",course_id);
 		if(star!=null&&star.length()>0)
 			paraMap.put("star",star);
+		if(page_size.length()>0)
 		paraMap.put("page_size",page_size);
+		if(page.length()>0)
 		paraMap.put("page",page);
 		requestPostEdu(Method.getEvaluateList,paraMap,true);
 	}
@@ -347,15 +365,21 @@ public class HttpHandler extends Handle {
 	public void addAttention (String user_code){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(user_code.length()>0)
 		paraMap.put("usercode",user_code);
 		requestPostEdu(Method.addAttention,paraMap,true);
 	}
 	public void evaluate(String course_id,String star,String evaluate_info,String is_secret ){
 		HashMap<String, String > paraMap =new HashMap<>();
+
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(course_id.length()>0)
 		paraMap.put("course_id",course_id);
+		if(star.length()>0)
 		paraMap.put("star",star);
+		if(evaluate_info.length()>0)
 		paraMap.put("evaluate_info",evaluate_info);
+		if(is_secret.length()>0)
 		paraMap.put("is_secret",is_secret);
 		requestPostEdu(Method.evaluate,paraMap,true);
 

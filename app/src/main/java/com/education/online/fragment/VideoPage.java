@@ -1,13 +1,17 @@
 package com.education.online.fragment;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +25,7 @@ import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.EvaluateListBean;
+import com.upyun.upplayer.widget.UpVideoView;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -41,10 +46,11 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
 
     private CourseDetailBean courseDetailBean;
     private EvaluateListBean evaluateListBean;
-
+    String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    private UpVideoView upVideoView;
     private SeekBar seekbar;
-    private ImageView playBtn, expandBtn;
-
+    private ImageView playBtn, expandBtn,video_play;
+    RelativeLayout.LayoutParams mVideoParams;
 
     public void setCourseDetailBean(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
@@ -91,24 +97,49 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
 
         videorelated = (RelativeLayout)v.findViewById(R.id.videorelated);
         playBtn = (ImageView)v.findViewById(R.id.playBtn);
+        playBtn.setOnClickListener(this);
         expandBtn = (ImageView)v.findViewById(R.id.expandBtn);
+        expandBtn.setOnClickListener(this);
         seekbar = (SeekBar) v.findViewById(R.id.seekbar);
 
-        // get layout Manager
+        upVideoView = (UpVideoView) v.findViewById(R.id.upVideoView);
+        video_play= (ImageView) v.findViewById(R.id.video_play);
+        video_play.setOnClickListener(this);
 
+        // get layout Manager
+        String ispaid = courseDetailBean.getIs_buy();
         //set Status
-        if (Ispaid == false) {
+        if (ispaid.equals("0")) {//没买
             //do sth
             payBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //do sth
+                    //do sth跳转到购买课程页面
                 }
             });
         } else {
+            video_play.setVisibility(View.VISIBLE);
             videorelated.setVisibility(View.VISIBLE);
             paytips.setVisibility(View.INVISIBLE);
             payBtn.setVisibility(View.INVISIBLE);
+            String path = courseDetailBean.getCourse_extm().get(0).getUrl();
+            if(path.length()>0)
+            //设置背景图片
+//        upVideoView.setImage(R.drawable.dog);
+            //设置播放地址
+            {
+                upVideoView.setVideoPath(path);
+
+                //开始播放
+                upVideoView.start();
+                //暂停看风景
+                upVideoView.pause();
+            }//else
+          //  {
+              //  playBtn.setClickable(false);
+              //  video_play.setClickable(false);
+              //  expandBtn.setClickable(false);
+          //  }
         }
 
     //
@@ -135,6 +166,25 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                 viewcomments.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+
+
+
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        upVideoView.release(true);
     }
 
 
@@ -166,7 +216,40 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewcomments.setVisibility(View.VISIBLE);
                     break;
+                case R.id.video_play:
+                case R.id.playBtn:
+                    if (upVideoView.isPlaying()) {
+
+                        //暂停播放
+                        upVideoView.pause();
+                        video_play.setVisibility(View.VISIBLE);
+
+                    } else {
+
+                        //开始播放
+                        upVideoView.start();
+                        video_play.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case R.id.expandBtn:
+                    if (getActivity().getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    }
+                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    getActivity(). getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
+                    mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
+                    upVideoView.setLayoutParams(params);
+                    upVideoView.getTrackInfo();
+                    break;
+
+
+
+
             }
         }
     }
+
 }

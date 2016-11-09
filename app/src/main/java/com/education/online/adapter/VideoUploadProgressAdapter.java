@@ -70,11 +70,13 @@ public class VideoUploadProgressAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(uploadVideoProgresses.get(position).getUri().toString(), videoImage);
         ProgressBar progress = (ProgressBar) convertView.findViewById(R.id.progress);
         EditText resourseName = (EditText) convertView.findViewById(R.id.resourseName);
+        progress.setProgress(uploadVideoProgresses.get(position).getProgress());
             delete.setTag(position);
             open.setTag(position);
         open.setOnClickListener(listener);
         delete.setOnClickListener(listener);
-        convertView.setTag(progress);
+        convertView.setTag(R.id.tag_progress_value1,progress);
+        convertView.setTag(R.id.tag_videodescription,resourseName);
         return convertView;
     }
 

@@ -14,6 +14,7 @@ import com.education.online.R;
 import com.upyun.upplayer.widget.UpVideoView;
 
 public class VideoPlay extends Activity {
+    ////////////I am a marker
 
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
 //    String path = "rtmp://rtmptest.b0.upaiyun.com/live/default4demo33596ad21e01c659489973d38c4d2c56d9mic";

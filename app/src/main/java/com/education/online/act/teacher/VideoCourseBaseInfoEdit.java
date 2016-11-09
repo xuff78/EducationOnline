@@ -40,6 +40,7 @@ import com.education.online.inter.CourseUpdate;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
@@ -53,6 +54,7 @@ import com.upyun.library.listener.UpProgressListener;
 import com.upyun.library.utils.UpYunUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ import vn.tungdx.mediapicker.activities.MediaPickerActivity;
 public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
 
-    private static final String TAG ="VideoCourseBaseInfoEdit";
+    private static final String TAG = "VideoCourseBaseInfoEdit";
     String phoneTxtName = "";
     private String course = "";
     private Dialog progressDialog;
@@ -87,8 +89,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     HttpHandler httpHandler;
     private View.OnClickListener listener;
     private VideoUploadProgressAdapter adapter;
-    private List<CourseUpdateListener> progressListeners=new ArrayList<>();
-
+    private List<CourseUpdateListener> progressListeners = new ArrayList<>();
     private final int hight = 51;
 
     private ArrayList<UploadVideoProgress> uploadVideoProgresses = new ArrayList<>();
@@ -118,10 +119,10 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
     private void initView() {
 
-     //   UploadVideoProgress progress = new UploadVideoProgress();
-       // uploadVideoProgresses.add(progress);
-       // uploadVideoProgresses.add(progress);
-       // uploadVideoProgresses.add(progress);
+        //   UploadVideoProgress progress = new UploadVideoProgress();
+        // uploadVideoProgresses.add(progress);
+        // uploadVideoProgresses.add(progress);
+        // uploadVideoProgresses.add(progress);
         listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,14 +143,45 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         addClassBean.setIntroduction(courseDesc.getText().toString().trim());
                         addClassBean.setName(subjectTxt.getText().toString());
                         if (addClassBean.getName().length() == 0 || addClassBean.getIntroduction().length() == 0 || addClassBean.getCourse_type().length() == 0 || addClassBean.getSubject_id().length() == 0
-                                || addClassBean.getOriginal_price().length() == 0 || addClassBean.getPrice().length() == 0 || addClassBean.getMin_follow().length() == 0
-                                || addClassBean.getMax_follow().length() == 0 || addClassBean.getImg().length() == 0) {
+                                || addClassBean.getOriginal_price().length() == 0 || addClassBean.getPrice().length() == 0|| addClassBean.getImg().length() == 0) {
                             Toast.makeText(VideoCourseBaseInfoEdit.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            addClassBean.setName(courseName.getText().toString());
-                            httpHandler.addClass(addClassBean);
+                            boolean iscompeleteupload = false;
+                            for (int i = 0; i < progressListeners.size(); i++) {
+                                String url = uploadVideoProgresses.get(i).getUrl();
+                                if (url.length() == 0) {
+                                    iscompeleteupload = false;
+                                    break;
+                                }
+                                iscompeleteupload = true;
+                            }
 
+                            if (!iscompeleteupload) {
+                                Toast.makeText(VideoCourseBaseInfoEdit.this, "请等待文件上传完成！", Toast.LENGTH_SHORT).show();
+                            } else {
+                                String description_url = "";
+                                for (int i = 0; i < progressListeners.size(); i++) {
+                                    View childView = listView.getChildAt(i);
+                                    if (childView != null) {
+                                        EditText editText = (EditText) childView.getTag(R.id.tag_videodescription);
+                                        String url = uploadVideoProgresses.get(i).getUrl();
+                                        String description = editText.getText().toString();
+                                        if (i != progressListeners.size() - 1) {
+
+                                            description_url = description_url + description + "_" + url + ",";
+                                        } else
+                                            description_url = description_url + description + "_" + url;
+
+
+                                    }
+                                    addClassBean.setCourse_url(description_url);
+                                    addClassBean.setName(courseName.getText().toString());
+                                    httpHandler.addClass(addClassBean);
+                                }
+
+
+                            }
                         }
                         break;
                     case R.id.uploadBtn:
@@ -178,9 +210,9 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         int pos = (int) v.getTag();
                         uploadVideoProgresses.remove(pos);
                         progressListeners.get(pos).setPos(1000);
-                        for (int i=pos+1;i<progressListeners.size();i++){
-                            CourseUpdateListener progress=progressListeners.get(i);
-                            progress.setPos(progress.getPos()-1);
+                        for (int i = pos + 1; i < progressListeners.size(); i++) {
+                            CourseUpdateListener progress = progressListeners.get(i);
+                            progress.setPos(progress.getPos() - 1);
                         }
                         progressListeners.remove(pos);
                         int num = uploadVideoProgresses.size();
@@ -327,7 +359,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                     handler.sendEmptyMessage(0);
                 }
             }.start();
-        }else if (requestCode == REQUEST_MEDIA) {
+        } else if (requestCode == REQUEST_MEDIA) {
             if (resultCode == RESULT_OK) {
                 mMediaSelectedList = MediaPickerActivity
                         .getMediaItemSelected(data);
@@ -347,34 +379,45 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     }
 
     private void uploadVideo(MediaItem item) {
-        UploadVideoProgress uploadVideoProgress =new UploadVideoProgress();
+        final UploadVideoProgress uploadVideoProgress = new UploadVideoProgress();
         uploadVideoProgress.setUri(item.getUriOrigin());
         uploadVideoProgresses.add(uploadVideoProgress);
 
-        File file=new File(SelectVideoDialog.getPath(this, item.getUriOrigin()));
-        CourseUpdateListener upProgressListener=new CourseUpdateListener(progressListeners.size()) {
+        File file = new File(SelectVideoDialog.getPath(this, item.getUriOrigin()));
+        CourseUpdateListener upProgressListener = new CourseUpdateListener(progressListeners.size()) {
             @Override
             public void onRequestProgress(long bytesWrite, long contentLength) {
-                if(getPos()<listView.getChildCount()) {
-                    View childView=listView.getChildAt(getPos());
-                    if(childView!=null) {
-                        ProgressBar progressBar = (ProgressBar) childView.getTag();
+                if (getPos() < listView.getChildCount()) {
+                    View childView = listView.getChildAt(getPos());
+                    if (childView != null) {
+                        ProgressBar progressBar = (ProgressBar) childView.getTag(R.id.tag_progress_value1);
                         progressBar.setProgress((int) ((100 * bytesWrite) / contentLength));
+                        uploadVideoProgresses.get(getPos()).setProgress((int) ((100 * bytesWrite) / contentLength));
                     }
 //                textView.setText((100 * bytesWrite) / contentLength + "%");
                 }
-                LogUtil.i(TAG, "pos: "+getPos()+"   pogress:  " +(100 * bytesWrite) / contentLength + "%");
+                LogUtil.i(TAG, "pos: " + getPos() + "   pogress:  " + (100 * bytesWrite) / contentLength + "%");
             }
 
             @Override
             public void onComplete(boolean isSuccess, String result) {
-                if(getPos()<listView.getChildCount()) {
-                    View childView=listView.getChildAt(getPos());
-                    if(childView!=null) {
-                        ProgressBar progressBar = (ProgressBar) childView.getTag();
+                if (getPos() < listView.getChildCount()) {
+                    View childView = listView.getChildAt(getPos());
+                    if (childView != null) {
+                        ProgressBar progressBar = (ProgressBar) childView.getTag(R.id.tag_progress_value1);
                         progressBar.setProgress(100);
                         LogUtil.i(TAG, "upload complete!! result: " + result);
-                        //在这里解析result把视频url设置好吧
+                        String url="";
+                        try {
+                            JSONObject json=new JSONObject(result);
+                            if(!json.isNull("url"))
+                            url = json.getString("url");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        uploadVideoProgress.setUrl(url);
+                        //在这里解析result把视频url设置好吧//done!
                     }
                 }
             }
@@ -382,7 +425,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put(Params.BUCKET, UploadTask.BUCKET);
-        paramsMap.put(Params.SAVE_KEY, "video/"+file.getName());
+        paramsMap.put(Params.SAVE_KEY, "video/" + file.getName());
         paramsMap.put(Params.RETURN_URL, "httpbin.org/post");
         progressListeners.add(upProgressListener);
         UploadManager.getInstance().formUpload(file, paramsMap, UploadTask.TEST_API_KEY, upProgressListener, upProgressListener);
@@ -407,9 +450,9 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
         });
     }
 
-    public class CourseUpdateListener implements UpCompleteListener, UpProgressListener{
+    public class CourseUpdateListener implements UpCompleteListener, UpProgressListener {
 
-        private int pos=-1;
+        private int pos = -1;
 
         public CourseUpdateListener(int pos) {
             this.pos = pos;

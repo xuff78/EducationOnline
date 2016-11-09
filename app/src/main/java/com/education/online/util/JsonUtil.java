@@ -154,6 +154,9 @@ public class JsonUtil {
             if (!jsonObject1.isNull("average"))
                 creatUserInfo.setAverage(jsonObject1.getString("average"));
             courseDetailBean.setUser_info(creatUserInfo);
+            if (!jsonObject1.isNull("is_buy"))
+                creatUserInfo.setAverage(jsonObject1.getString("is_buy"));
+            courseDetailBean.setUser_info(creatUserInfo);
         }
         if (!jsonObject.isNull("course_extm"))
         {

@@ -2,4 +2,6 @@
 <resources>
 	<item type="id" name="tag_value1" />
 	<item type="id" name="tag_value2" />
+	<item type="id" name="tag_progress_value1" />
+	<item type="id" name="tag_videodescription" />
 </resources>
