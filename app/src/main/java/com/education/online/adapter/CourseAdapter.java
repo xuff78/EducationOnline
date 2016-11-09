@@ -91,7 +91,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.coursePrice.setText("￥" + courseDetailBean.getPrice());
             vh.studentNum.setText("班级人数" + courseDetailBean.getMax_follow() + "人，已报名" + courseDetailBean.getFollow() + "人");
-            vh.praisePercent.setText(courseDetailBean.getAverage() + "/5分");
+            vh.praisePercent.setText((int)(Float.valueOf(courseDetailBean.getUser_info().getAverage())/5*100) + "%好评");
             vh.totalSerial.setText("共" + courseDetailBean.getCourse_extm().size() + "次课");
             DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
@@ -108,7 +108,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             vh.teacherName.setText(courseDetailBean.getUser_info().getUser_name());
             vh.teacherTitles.setText(courseDetailBean.getUser_info().getIntroduction());
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getUser_info().getAvatar()), vh.teacherPotrait);
-            vh.teacherScore.setText((int)(Float.valueOf(courseDetailBean.getUser_info().getAverage())/5*100) + "%好评");
+            vh.teacherScore.setText(courseDetailBean.getUser_info().getAverage() + "分");
             vh.teacherComments.setText("评论" + courseDetailBean.getUser_info().getEvaluate_count());
         } else if (pos == 2) {
             CourseDetailsHolder vh = (CourseDetailsHolder) holder;
