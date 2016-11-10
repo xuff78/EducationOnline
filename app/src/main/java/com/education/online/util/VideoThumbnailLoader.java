@@ -81,10 +81,7 @@ public class VideoThumbnailLoader {
                         }
                     } else {
                         bitmap = ImageUtil.createVideoThumbnail(url, width, height);
-                        if (null==bitmap) {
-                            bitmap = ImageUtil.createVideoThumbnail(url, width, height);
-                            FileUtil.saveBitmap(bitmap, filename, act);
-                        }
+                        FileUtil.saveBitmap(bitmap, filename, act);
                     }
 
                     if (null != bitmap) {
