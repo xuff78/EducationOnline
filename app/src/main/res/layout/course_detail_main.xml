@@ -22,11 +22,8 @@
         <com.upyun.upplayer.widget.UpVideoView
             android:id="@+id/upVideoView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:padding="10dp"
-            android:src="@mipmap/icon_video_play"
-            android:visibility="gone" />
+            android:layout_height="200dp"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/video_play"

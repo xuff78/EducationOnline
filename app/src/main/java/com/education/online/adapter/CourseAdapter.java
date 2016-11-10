@@ -96,12 +96,15 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
             Date date = null;
-            try {
-                date = format1.parse(courseDetailBean.getCourse_extm().get(0).getCourseware_date());
-            } catch (ParseException e) {
-                e.printStackTrace();
+            String datestring =courseDetailBean.getCourse_extm().get(0).getCourseware_date();
+            if(datestring.length()>0) {
+                try {
+                    date = format1.parse(datestring);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                vh.courseTime.setText(formatter.format(date) + "开课");
             }
-            vh.courseTime.setText(formatter.format(date) + "开课");
 
         } else if (pos == 1) {
             TeacherInfoHolder vh = (TeacherInfoHolder) holder;

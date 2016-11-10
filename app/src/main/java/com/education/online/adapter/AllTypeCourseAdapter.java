@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
@@ -90,7 +91,10 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
                     Intent intent = new Intent();
                     String course_id = course.getCourse_id();
                     intent.putExtra("course_id", course_id);
+                    if(course_id=="3")
                     intent.setClass(act, CourseMainPage.class);
+                    else
+                    intent.setClass(act, VideoMainPage.class);
                     act.startActivity(intent);
                 }
             });

@@ -1,6 +1,7 @@
 package com.education.online.act;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import com.upyun.upplayer.widget.UpVideoView;
 public class VideoPlay extends Activity {
     ////////////I am a marker
 
-    String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    String path = "";
 //    String path = "rtmp://rtmptest.b0.upaiyun.com/live/default4demo33596ad21e01c659489973d38c4d2c56d9mic";
 //    String path = "http://rtmptest.b0.upaiyun.com/live/default4demo33596ad21e01c659489973d38c4d2c56d9mic.m3u8";
     //String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
@@ -42,8 +43,13 @@ public class VideoPlay extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mPathEt = (EditText) findViewById(R.id.editText);
+        Intent intent = getIntent();
+        if(null!=(intent.getStringExtra("Url")))
+        path = intent.getStringExtra("Url");
 
-        path = getIntent().getStringExtra("Url");
+        if(null!=(intent.getStringExtra("Uri"))) {
+            path = intent.getStringExtra("Uri");
+        }
 
         upVideoView = (UpVideoView) findViewById(R.id.uvv_vido);
 

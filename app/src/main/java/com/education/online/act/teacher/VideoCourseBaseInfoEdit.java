@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.VideoPlay;
 import com.education.online.act.login.SubjectSelector;
 import com.education.online.act.upyun.UploadTask;
 import com.education.online.adapter.VideoUploadProgressAdapter;
@@ -43,6 +44,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
+import com.education.online.util.UriUtil;
 import com.education.online.view.SelectPicDialog;
 import com.education.online.view.SelectVideoDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -167,6 +169,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                                         EditText editText = (EditText) childView.getTag(R.id.tag_videodescription);
                                         String url = uploadVideoProgresses.get(i).getUrl();
                                         String description = editText.getText().toString();
+                                        if(description.length()==0)
+                                            description = "视频"+(i+1);
                                         if (i != progressListeners.size() - 1) {
 
                                             description_url = description_url + description + "_" + url + ",";
@@ -223,6 +227,11 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
                     case R.id.open:
                         int pos2 = (int) v.getTag();
+                        Intent intent=new Intent(VideoCourseBaseInfoEdit.this, VideoPlay.class);
+                        String Uri = UriUtil.getRealFilePath(VideoCourseBaseInfoEdit.this,uploadVideoProgresses.get(pos2).getUri());
+                        intent.putExtra("Uri",Uri);
+                        startActivity(intent);
+
                         break;
                 }
             }
