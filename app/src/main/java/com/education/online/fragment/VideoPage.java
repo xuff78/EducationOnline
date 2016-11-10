@@ -27,6 +27,7 @@ import com.education.online.adapter.DirectoryAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.util.Constant;
+import com.education.online.util.ScreenUtil;
 import com.education.online.util.VideoUtil;
 import com.upyun.upplayer.widget.UpVideoView;
 
@@ -57,6 +58,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     private SeekBar seekbar;
     private ImageView playBtn, expandBtn, video_play;
     RelativeLayout.LayoutParams mVideoParams;
+    RelativeLayout relativelayout1;
 
     public void setCourseDetailBean(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
@@ -101,7 +103,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         viewdetails = v.findViewById(R.id.viewdetails);
         viewdirectory = v.findViewById(R.id.viewdirectory);
         viewcomments = v.findViewById(R.id.viewcomments);
-
+        relativelayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout1);
         videorelated = (RelativeLayout) v.findViewById(R.id.videorelated);
         playBtn = (ImageView) v.findViewById(R.id.playBtn);
         playBtn.setOnClickListener(this);
@@ -110,6 +112,12 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         seekbar = (SeekBar) v.findViewById(R.id.seekbar);
 
         upVideoView = (UpVideoView) v.findViewById(R.id.upVideoView);
+        int width = ScreenUtil.getWidth(getActivity());
+        int height = (int)(((float)width)*9/16);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width,height);
+      //  relativelayout1.setLayoutParams(params);
+        relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+        upVideoView.setLayoutParams(params);
         ///播放完成时动作
         upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override

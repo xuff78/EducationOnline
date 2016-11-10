@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/bg_gray">
@@ -28,8 +29,8 @@
         <ImageView
             android:id="@+id/video_play"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_height="60dp"
+            android:layout_marginTop="60dp"
             android:padding="10dp"
             android:src="@mipmap/icon_video_play"
             android:visibility="gone" />
@@ -110,6 +111,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:paddingLeft="20dp"
