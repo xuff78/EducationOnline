@@ -94,6 +94,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     private List<CourseUpdateListener> progressListeners = new ArrayList<>();
     private final int hight = 51;
 
+
     private ArrayList<UploadVideoProgress> uploadVideoProgresses = new ArrayList<>();
     public static final String EXTRA_MEDIA_OPTIONS = "extra_media_options";
     ////////////////mediapicker

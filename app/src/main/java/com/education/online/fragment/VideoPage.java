@@ -264,9 +264,6 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                     mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
                     upVideoView.setLayoutParams(params);
                     upVideoView.getTrackInfo();
-                    break;
-
-
             }
         }
     }
