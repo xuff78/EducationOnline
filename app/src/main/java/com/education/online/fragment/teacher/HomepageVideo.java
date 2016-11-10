@@ -76,7 +76,7 @@ public class HomepageVideo extends BaseFragment {
         public void delitem(View v, int i) {
             dispose_type="delete";
             tobeDelPos=i;
-            mHandler.dispose(items.get(i).getImgUrl(), "video", dispose_type);
+            mHandler.dispose(items.get(i).getVideoUrl(), "video", dispose_type);
         }
     };
 
