@@ -135,8 +135,8 @@ public class JsonUtil {
             courseDetailBean.setHot(jsonObject.getString("hot"));
         if(!jsonObject.isNull("course_type"))
             courseDetailBean.setCourse_type(jsonObject.getString("course_type"));
-        if(!jsonObject.isNull("user_code"))
-            courseDetailBean.setUsercode(jsonObject.getString("user_code"));
+        if(!jsonObject.isNull("usercode"))
+            courseDetailBean.setUsercode(jsonObject.getString("usercode"));
         if(!jsonObject.isNull("average"))
             courseDetailBean.setAverage(jsonObject.getString("average"));
         if(!jsonObject.isNull("is_collection"))

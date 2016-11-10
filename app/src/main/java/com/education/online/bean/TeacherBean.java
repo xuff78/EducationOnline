@@ -1,12 +1,13 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/19.
  */
-public class TeacherBean {
+public class TeacherBean implements Serializable{
 
     public TeacherBean() {
     }

@@ -12,6 +12,14 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/icon_round_back" />
 
     <LinearLayout
         android:id="@+id/bottomlayout"

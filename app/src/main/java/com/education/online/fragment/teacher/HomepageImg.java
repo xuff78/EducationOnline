@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
+import com.education.online.act.ViewerActivity;
 import com.education.online.act.upyun.UploadTask;
 import com.education.online.adapter.TeacherImgAdapter;
 import com.education.online.bean.CourseBean;
@@ -29,6 +30,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.AdapterCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
@@ -60,8 +62,15 @@ public class HomepageImg extends BaseFragment {
     private String dispose_type="add"; //1添加，0删除
     private AdapterCallback callback=new AdapterCallback() {
         @Override
-        public void onClick(View v, int i) {
-
+        public void onClick(View v, int pos) {
+            Intent i=new Intent(getActivity(), ViewerActivity.class);
+            ArrayList<String> images=new ArrayList<>();
+            for(VideoImgItem item:items){
+                images.add(item.getImgUrl());
+            }
+            i.putStringArrayListExtra("Images", images);
+            i.putExtra("pos", pos);
+            ActUtil.startAnimActivity(getActivity(), i, v, "imgbig");
         }
 
         @Override

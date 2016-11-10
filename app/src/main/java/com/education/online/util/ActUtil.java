@@ -6,13 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.education.online.act.SearchAct;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -53,6 +58,16 @@ public class ActUtil {
     public static void startAnimActivity(Activity act, Intent intent) {
         if(Build.VERSION.SDK_INT>=21) {
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(act).toBundle();
+            act.startActivity(intent, bundle);
+        }else{
+            act.startActivity(intent);
+        }
+    }
+
+    public static void startAnimActivity(Activity act, Intent intent, View view, String transitionName) {
+        if(Build.VERSION.SDK_INT>=21) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(act, Pair.create(view, transitionName));
+            Bundle bundle = options.toBundle();
             act.startActivity(intent, bundle);
         }else{
             act.startActivity(intent);
@@ -159,5 +174,28 @@ public class ActUtil {
         }else
             courseType.setVisibility(View.GONE);
         return txt;
+    }
+
+    public static <T> T updateInfo(Class<T> clazz, T oldbean, T newbean) {
+        try {
+            Method[] methods = clazz.getMethods();
+            for (Method method:methods){
+                String methodName=method.getName();
+                if(methodName.startsWith("get")){
+                    if(method.getReturnType()==String.class||method.getReturnType()==Boolean.class||method.getReturnType()==Integer.class) {
+                        Method method2 = clazz.getMethod(methodName.replace("get", "set"), method.getReturnType());
+                        method2.invoke(oldbean, method.invoke(newbean));
+                    }else{
+//                        String methodname=method.getReturnType().getName();
+//                        ParameterizedType type = (ParameterizedType) method.getGenericReturnType();
+//                        Type[] types=type.getActualTypeArguments();
+//                        Class genericClazz = (Class)types[0];
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return oldbean;
     }
 }

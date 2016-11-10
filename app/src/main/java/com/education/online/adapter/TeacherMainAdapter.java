@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.ViewerActivity;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.TeacherBean;
@@ -211,7 +213,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 vh.totallength.setVisibility(View.VISIBLE);
                 vh.followNum.setText(courseBean.getFollow()+"人报名");
             }else if (i==4){
-                if(pos<evaluations.size()-1) {
+                if(pos<getItemCount()-1) {
                     CommentsHolder vh = (CommentsHolder) holder;
                     EvaluateBean evaluateBean = evaluations.get(pos - 2);
                     vh.ratingbar.setStar(Float.valueOf(evaluateBean.getStar()));
@@ -256,11 +258,9 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private View viewbrief, viewsubjects, viewphotoalbum, viewteachercomments;
         private View lastSelectedview;
         private int lastSelectedPosition;
-        private ImageView backBtn;
 
         public MainHolder(View v) {
             super(v);
-            backBtn = (ImageView) v.findViewById(R.id.backBtn);
             teacherpotrait = (ImageView) v.findViewById(R.id.teacherpotrait);
             teacherSexual = (TextView) v.findViewById(R.id.teacherSexual);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
@@ -271,12 +271,6 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             fansNum = (TextView) v.findViewById(R.id.fansNum);
             studentNum = (TextView) v.findViewById(R.id.studentNum);
             praisePercent = (TextView) v.findViewById(R.id.praisePercent);
-            backBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    act.finish();
-                }
-            });
 
             brief = (LinearLayout) v.findViewById(R.id.brief);
             brief.setOnClickListener(this);
@@ -407,12 +401,12 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             itemsLayout = (LinearLayout) itemView;
             itemsLayout.setPadding(padding10, 0, padding10, padding10 * 2);
             LinearLayout.LayoutParams llpitem = new LinearLayout.LayoutParams(itemWidth, -2);
-            int itemsize = 15;
             LinearLayout linelayout = new LinearLayout(act);
             linelayout.setOrientation(LinearLayout.HORIZONTAL);
-            for (int i = 0; i < itemsize + 1; i++) {
-                linelayout.addView(getSubjectItemView(""), llpitem);
-                if (i % 4 == 3 || i == itemsize) {
+            List<String> imgs=teacherBean.getPhoto_album();
+            for (int i = 0; i < imgs.size(); i++) {
+                linelayout.addView(getSubjectItemView(imgs.get(i), i), llpitem);
+                if (i % 4 == 3 || i == imgs.size()-1) {
                     itemsLayout.addView(linelayout);
                     linelayout = new LinearLayout(act);
 
@@ -420,7 +414,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         }
 
-        private LinearLayout getSubjectItemView(String imgUrl) {
+        private LinearLayout getSubjectItemView(String imgUrl, int pos) {
             LinearLayout.LayoutParams llpimg = new LinearLayout.LayoutParams(imgHeight, imgHeight);
             llpimg.bottomMargin = 5;
             LinearLayout layout = new LinearLayout(act);
@@ -428,9 +422,25 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             layout.setPadding(padding10, padding10 * 2, padding10, 0);
             ImageView img = new ImageView(act);
             img.setBackgroundResource(R.color.whitesmoke);
+            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            img.setOnClickListener(listener);
+            img.setTag(pos);
+            imageLoader.displayImage(ImageUtil.getImageUrl(imgUrl), img);
             layout.addView(img, llpimg);
             return layout;
         }
+
+        View.OnClickListener listener=new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(act, ViewerActivity.class);
+                ArrayList<String> images=new ArrayList<>();
+                images.addAll(teacherBean.getPhoto_album());
+                i.putStringArrayListExtra("Images", images);
+                i.putExtra("pos", (int)view.getTag());
+                ActUtil.startAnimActivity(act, i, view, "imgbig");
+            }
+        };
     }
 
 

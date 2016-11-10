@@ -1,8 +1,10 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.act.video.Comment;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CourseEvaluate;
@@ -18,6 +21,8 @@ import com.education.online.bean.CourseExtm;
 import com.education.online.bean.CreatUserInfo;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
+import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.RatingBar;
@@ -43,7 +48,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private CourseDetailBean courseDetailBean;
     private EvaluateListBean evaluateListBean;
     private ImageLoader imageLoader;
-
+    private ImageView teacherIcon;
 
     public CourseAdapter(Activity act, CourseDetailBean courseDetailBean, EvaluateListBean evaluateListBean) {
         this.act = act;
@@ -166,24 +171,32 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             praisePercent = (TextView) v.findViewById(R.id.praisePercent);
             studentNum = (TextView) v.findViewById(R.id.studentNum);
         }
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.commnetLayout:
-                        Intent intent = new Intent();
-                        intent.setClass(act, Comment.class);
-                        intent.putExtra("courseImg", courseDetailBean.getImg());
-                        intent.putExtra("courseName", courseDetailBean.getCourse_name());
-                        intent.putExtra("courseIntroduction", courseDetailBean.getIntroduction());
-                        intent.putExtra("course_id", courseDetailBean.getCourse_id());
-                        act.startActivity(intent);
-                        break;
-                }
-            }
-        };
     }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent();
+            switch (v.getId()) {
+                case R.id.commnetLayout:
+                    intent.setClass(act, Comment.class);
+                    intent.putExtra("courseImg", courseDetailBean.getImg());
+                    intent.putExtra("courseName", courseDetailBean.getCourse_name());
+                    intent.putExtra("courseIntroduction", courseDetailBean.getIntroduction());
+                    intent.putExtra("course_id", courseDetailBean.getCourse_id());
+                    act.startActivity(intent);
+                    break;
+                case R.id.teacherLayout:
+                    intent.setClass(act, TeacherInformationPage.class);
+                    CreatUserInfo teacher=courseDetailBean.getUser_info();
+                    intent.putExtra("Avatar", teacher.getAvatar());
+                    intent.putExtra("Name", teacher.getUser_name());
+                    intent.putExtra(Constant.UserCode, courseDetailBean.getUsercode());
+                    act.startActivity(intent);
+                    break;
+            }
+        }
+    };
 
     public class TeacherInfoHolder extends RecyclerView.ViewHolder {
 
@@ -194,11 +207,13 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TeacherInfoHolder(View v, int pos) {
             super(v);
             teacherPotrait = (ImageView) v.findViewById(R.id.teacherpotrait);
+            teacherIcon=teacherPotrait;
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             teacherScore = (TextView) v.findViewById(R.id.teacherScore);
             teacherTitles = (TextView) v.findViewById(R.id.teacherTitles);
             teacherComments = (TextView) v.findViewById(R.id.teacherComments);
             viewbottom = v.findViewById(R.id.bottomview);
+            v.findViewById(R.id.teacherLayout).setOnClickListener(listener);
         }
     }
 
