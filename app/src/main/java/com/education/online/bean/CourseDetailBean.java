@@ -27,6 +27,8 @@ public class CourseDetailBean implements Serializable{
     private String is_collection = "";
     private String average="";
 
+    public static String Name="CourseDetailBean";
+
     private String is_buy = "";
     private CreatUserInfo user_info = new CreatUserInfo();
     private List<CourseExtm> course_extm = new ArrayList<>();

@@ -1,9 +1,11 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/10/26.
  */
-public class EvaluateBean {
+public class EvaluateBean implements Serializable{
 
     public EvaluateBean() {
     }

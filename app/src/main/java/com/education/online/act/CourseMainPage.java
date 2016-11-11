@@ -166,7 +166,9 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     break;
                 case R.id.addorbuy:
                     //do sth;
-                    startActivity(new Intent(CourseMainPage.this, SubmitOrder.class));
+                    Intent i=new Intent(CourseMainPage.this, SubmitOrder.class);
+                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                    startActivity(i);
                     break;
             }
         }

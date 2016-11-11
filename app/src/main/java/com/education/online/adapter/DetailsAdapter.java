@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.CreatUserInfo;
 import com.education.online.bean.EvaluateListBean;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -98,6 +102,18 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             teacherComments = (TextView) v. findViewById(R.id.teacherComments);
             viewbottom = v.findViewById(R.id.bottomview);
             viewbottom.setMinimumHeight(100);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent();
+                    intent.setClass(act, TeacherInformationPage.class);
+                    CreatUserInfo teacher=courseDetailBean.getUser_info();
+                    intent.putExtra("Avatar", teacher.getAvatar());
+                    intent.putExtra("Name", teacher.getUser_name());
+                    intent.putExtra(Constant.UserCode, courseDetailBean.getUsercode());
+                    act.startActivity(intent);
+                }
+            });
         }
     }
     //课程信息项

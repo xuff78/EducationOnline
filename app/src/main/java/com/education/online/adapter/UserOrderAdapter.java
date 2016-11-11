@@ -11,9 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.bean.OrderDetailBean;
+import com.education.online.inter.SimpleAdapterCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/17.
@@ -23,13 +31,18 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     private LayoutInflater inflater;
     private int imgLength=0;
     private LinearLayout.LayoutParams llp;
+    private SimpleAdapterCallback cb;
+    private List<OrderDetailBean> orders=new ArrayList<>();
+    private ImageLoader imageLoader=ImageLoader.getInstance();
 
-    public UserOrderAdapter(Activity activity){
+    public UserOrderAdapter(Activity activity, List<OrderDetailBean> orders, SimpleAdapterCallback cb){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         imgLength= (ScreenUtil.getWidth(activity)- ImageUtil.dip2px(activity, 70))/4; //左右边距40， 中间3*10
         llp=new LinearLayout.LayoutParams(imgLength, imgLength);
         llp.rightMargin=ImageUtil.dip2px(activity, 10);
+        this.orders=orders;
+        this.cb=cb;
     }
 
     @Override
@@ -50,12 +63,20 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     @Override
     //绑定数据源
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        CourseItemHolder courseHolder= (CourseItemHolder) holder;
+        OrderDetailBean bean=orders.get(position);
+        imageLoader.displayImage(ImageUtil.getImageUrl(bean.getImg()), courseHolder.CourseImage);
+        courseHolder.CourseName.setText(bean.getCourse_name());
+        courseHolder.teacherName.setText(bean.getUser_name());
+        courseHolder.typeName.setText(bean.getSubject_name());
+        ActUtil.getCourseTypeTxt(bean.getCourse_type(), courseHolder.CoursePrice);
+        courseHolder.CoursePrice.setText(courseHolder.CoursePrice.getText().toString()+"   "+bean.getPrice());
+        courseHolder.statusImg.setImageResource(ActUtil.getOrderStatsImgRes(bean.getState()));
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return orders.size();
     }
 
     public class CourseItemHolder extends RecyclerView.ViewHolder
@@ -63,7 +84,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         ImageView CourseImage, statusImg;
         TextView teacherName, typeName, CoursePrice, CourseName;
         LinearLayout imgsLayout;
-        public CourseItemHolder(View v, int position)
+        public CourseItemHolder(final View v, final int position)
         {
             super(v);
             CourseImage = (ImageView) v.findViewById(R.id.CourseImage);
@@ -75,7 +96,8 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    activity.startActivity(new Intent(activity, UserOrderDetail.class));
+                    if(cb!=null)
+                        cb.onClick(v, position);
                 }
             });
         }

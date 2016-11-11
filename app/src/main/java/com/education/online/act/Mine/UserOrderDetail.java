@@ -7,8 +7,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.OrderDetailBean;
 import com.education.online.view.SelectPicDialog;
 
 /**
@@ -20,7 +22,7 @@ public class UserOrderDetail extends BaseFrameAct {
     private ImageView teacherImg;
     private TextView payMoney, orderId, createTime, teacherName, courseTitle, courseNum, priceTxt, payTxt, labelTxt;
     private LinearLayout courseLayout;
-
+    private OrderDetailBean orderDetailBean;
 
 
     @Override
@@ -28,6 +30,7 @@ public class UserOrderDetail extends BaseFrameAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_order_detail);
 
+        orderDetailBean= JSON.parseObject(getIntent().getStringExtra("jsonData"), OrderDetailBean.class);
         _setHeaderTitle("订单详情");
         initView();
     }

@@ -1,12 +1,13 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Great Gao on 2016/10/24.
  */
-public class CourseEvaluate {
+public class CourseEvaluate implements Serializable{
     public CourseEvaluate() {
     }
 

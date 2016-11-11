@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.education.online.R;
 import com.education.online.act.SearchAct;
 
 import java.lang.reflect.Method;
@@ -197,5 +198,32 @@ public class ActUtil {
             e.printStackTrace();
         }
         return oldbean;
+    }
+
+    public static int getOrderStatsImgRes(String state) {
+        int res=0;
+        if(state!=null&&state.length()>0){
+            switch (Integer.valueOf(state)){
+                case 1:
+                    res= R.mipmap.icon_status_topay;
+                    break;
+                case 2:
+                    res= R.mipmap.icon_status_finished;
+                    break;
+                case 3:
+                    res= R.mipmap.icon_status_complain;
+                    break;
+                case 4:
+                    res= R.mipmap.icon_status_payback;
+                    break;
+                case 5:
+                    res= R.mipmap.icon_status_to_be_ev;
+                    break;
+                case 6:
+                    res= R.mipmap.icon_status_finished;
+                    break;
+            }
+        }
+        return res;
     }
 }

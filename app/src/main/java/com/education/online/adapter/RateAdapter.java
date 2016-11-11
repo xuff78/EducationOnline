@@ -10,10 +10,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.bean.EvaluateBean;
+import com.education.online.bean.EvaluatePage;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.inter.AdapterCallback;
+import com.education.online.util.ImageUtil;
 import com.education.online.view.RatingBar;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/2.
@@ -23,12 +29,16 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
     private Activity activity;
     private LayoutInflater inflater;
     private int listType=0;
+    private String average="0", total="0";
+    private List<EvaluateBean> evaluations=new ArrayList<>();
+    private ImageLoader imageLoader=ImageLoader.getInstance();
+    private AdapterCallback cb;
 
-    public RateAdapter(Activity activity){
+    public RateAdapter(Activity activity, List<EvaluateBean> evaluations, AdapterCallback cb){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
-
-
+        this.evaluations=evaluations;
+        this.cb=cb;
     }
 
     @Override
@@ -59,16 +69,30 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
         if(pos==0){
             TopRateHolder vh = (TopRateHolder) holder;
+            vh.rateTxt.setText(average);
+            vh.numTxt.setText("共"+total+"人评价");
+            vh.ratingBar.setStar(Float.valueOf(average));
         }else if(pos==1){
             MenuHolder vh = (MenuHolder) holder;
         }else {
             CommentsHolder vh = (CommentsHolder) holder;
+            EvaluateBean evaluateBean = evaluations.get(pos-2);
+            vh.ratingbar.setStar(Float.valueOf(evaluateBean.getStar()));
+            vh.commentDate.setText(evaluateBean.getEvaluate_date());
+            imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
+            vh.userName.setText(evaluateBean.getUser_name());
+            vh.userComments.setText(evaluateBean.getInfo());
         }
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 2+evaluations.size();
+    }
+
+    public void setOtherInfo(String average, int total) {
+        this.average=average;
+        this.total=total+"";
     }
 
     public class TopRateHolder extends RecyclerView.ViewHolder {
@@ -101,13 +125,19 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
 
         public MenuHolder(View v) {
             super(v);
+            txts.clear();
             txts.add((TextView)v.findViewById(R.id.rateMenu1));
             txts.add((TextView) v.findViewById(R.id.rateMenu2));
             txts.add((TextView) v.findViewById(R.id.rateMenu3));
             txts.add((TextView) v.findViewById(R.id.rateMenu4));
             txts.add((TextView) v.findViewById(R.id.rateMenu5));
             txts.add((TextView) v.findViewById(R.id.rateMenu6));
+
             for (int i=0;i<txts.size();i++){
+                if(i==listType)
+                    txts.get(i).setTextColor(activity.getResources().getColor(R.color.normal_blue));
+                else
+                    txts.get(listType).setTextColor(activity.getResources().getColor(R.color.normal_gray));
                 txts.get(i).setOnClickListener(listener);
                 txts.get(i).setTag(i);
             }
@@ -119,9 +149,9 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             public void onClick(View view) {
                 int tag= (int) view.getTag();
                 if(tag!=listType){
-                    txts.get(tag).setTextColor(activity.getResources().getColor(R.color.normal_blue));
-                    txts.get(listType).setTextColor(activity.getResources().getColor(R.color.normal_gray));
                     listType=tag;
+                    if(cb!=null)
+                        cb.onClick(view, tag);
                 }
             }
         };

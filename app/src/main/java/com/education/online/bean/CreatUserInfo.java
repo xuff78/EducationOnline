@@ -1,9 +1,11 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Great Gao on 2016/10/24.
  */
-public class CreatUserInfo {
+public class CreatUserInfo implements Serializable{
     public CreatUserInfo(){}
     private String user_name = "";
     private String introduction = "";

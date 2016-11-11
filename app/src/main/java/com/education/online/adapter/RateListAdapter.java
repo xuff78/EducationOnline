@@ -12,9 +12,13 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.Mine.EvaluationEdit;
+import com.education.online.bean.EvaluateBean;
+import com.education.online.util.ImageUtil;
 import com.education.online.view.RatingBar;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/16.
@@ -24,12 +28,13 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     private Activity activity;
     private LayoutInflater inflater;
     private int listType=0;
+    private List<EvaluateBean> evaluations=new ArrayList<>();
+    private ImageLoader imageLoader=ImageLoader.getInstance();
 
-    public RateListAdapter(Activity activity){
+    public RateListAdapter(Activity activity, List<EvaluateBean> evaluations){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
-
-
+        this.evaluations=evaluations;
     }
 
     @Override
@@ -52,11 +57,17 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
 
         CommentsHolder vh = (CommentsHolder) holder;
+        EvaluateBean evaluateBean = evaluations.get(pos);
+        vh.ratingbar.setStar(Float.valueOf(evaluateBean.getStar()));
+        vh.commentDate.setText(evaluateBean.getEvaluate_date());
+        imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
+        vh.userName.setText(evaluateBean.getUser_name());
+        vh.userComments.setText(evaluateBean.getInfo());
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return evaluations.size();
     }
 
     public class CommentsHolder extends RecyclerView.ViewHolder {

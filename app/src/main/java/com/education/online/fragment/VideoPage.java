@@ -108,7 +108,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         playBtn = (ImageView) v.findViewById(R.id.playBtn);
         playBtn.setOnClickListener(this);
         expandBtn = (ImageView) v.findViewById(R.id.expandBtn);
-        expandBtn.setOnClickListener(this);
+//        expandBtn.setOnClickListener(this);
         seekbar = (SeekBar) v.findViewById(R.id.seekbar);
 
         upVideoView = (UpVideoView) v.findViewById(R.id.upVideoView);

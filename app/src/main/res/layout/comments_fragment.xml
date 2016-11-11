@@ -58,7 +58,7 @@
         android:maxLines="4"
         android:textColor="@color/normal_gray"
         android:textSize="13sp"
-        android:text="在高有仙则不在高有仙则则名" />
+        android:text="就是测试啊" />
 
     <LinearLayout
         android:layout_marginTop="10dp"

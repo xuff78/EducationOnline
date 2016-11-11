@@ -144,6 +144,35 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getlistByDate, paramMap, true);
 	}
 
+	public void submitOrder(String course_id, String remark) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("course_id", course_id);
+		if(remark!=null&&remark.length()>0)
+			paramMap.put("remark", remark);
+		requestPostEdu(Method.submitOrder, paramMap, true);
+	}
+
+	public void getOrderDetail(String order_number) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("order_number", order_number);
+		requestPostEdu(Method.getOrderDetail, paramMap, true);
+	}
+
+	public void getOrderList(String course_type, int page, String status) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(course_type!=null)
+			paramMap.put("course_type", course_type);
+		if(status!=null)
+			paramMap.put("status", status);
+		paramMap.put("page_size","20");
+		paramMap.put("page",page+"");
+		requestPostEdu(Method.getOrderList, paramMap, true);
+	}
+
+
 	public void dispose(String url, String media_type, String dispose_type) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
@@ -249,11 +278,11 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getEvaluate,paraMap,false);
 	}
 
-	public  void getEvaluateOthers(String page){
+	public  void getEvaluateOthers(int page){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paraMap.put("page_size","20");
-		paraMap.put("page",page);
+		paraMap.put("page",page+"");
 		requestPostEdu(Method.getEvaluateOthers,paraMap,true);
 	}
 

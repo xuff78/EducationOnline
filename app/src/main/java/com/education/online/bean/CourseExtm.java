@@ -1,9 +1,11 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Great Gao on 2016/10/24.
  */
-public class CourseExtm {
+public class CourseExtm implements Serializable{
     public CourseExtm() {
     }
     private String courseware_date = "";

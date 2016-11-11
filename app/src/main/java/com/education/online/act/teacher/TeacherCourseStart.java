@@ -67,6 +67,12 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
         initView();
 
         initHandler();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         CourseFilter filter=new CourseFilter();
         filter.setCourse_type(null);
         filter.setUsercode(SharedPreferencesUtil.getUsercode(this));
