@@ -1,5 +1,6 @@
 package com.education.online.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -25,13 +26,19 @@ import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.EvaluateListBean;
+import com.education.online.util.Constant;
+import com.education.online.util.ScreenUtil;
+import com.education.online.util.VideoUtil;
 import com.upyun.upplayer.widget.UpVideoView;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  * Created by Administrator on 2016/8/25.
  */
 
 public class VideoPage extends BaseFragment implements View.OnClickListener {
+
 
     private boolean Ispaid = false;
     private TextView paytips, payBtn;
@@ -46,15 +53,17 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
 
     private CourseDetailBean courseDetailBean;
     private EvaluateListBean evaluateListBean;
-    String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks/";
     private UpVideoView upVideoView;
     private SeekBar seekbar;
-    private ImageView playBtn, expandBtn,video_play;
+    private ImageView playBtn, expandBtn, video_play;
     RelativeLayout.LayoutParams mVideoParams;
+    RelativeLayout relativelayout1;
 
     public void setCourseDetailBean(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
     }
+
     public void setEvaluateListBean(EvaluateListBean evaluateListBean) {
         this.evaluateListBean = evaluateListBean;
     }
@@ -88,22 +97,36 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         roundLeftBack = (ImageView) v.findViewById(R.id.roundLeftBack);
 
         textdetails = (TextView) v.findViewById(R.id.textdetails);
-        textdirectory = (TextView) v. findViewById(R.id.textdirectory);
+        textdirectory = (TextView) v.findViewById(R.id.textdirectory);
         textcomments = (TextView) v.findViewById(R.id.textcomments);
 
         viewdetails = v.findViewById(R.id.viewdetails);
-        viewdirectory = v. findViewById(R.id.viewdirectory);
+        viewdirectory = v.findViewById(R.id.viewdirectory);
         viewcomments = v.findViewById(R.id.viewcomments);
-
-        videorelated = (RelativeLayout)v.findViewById(R.id.videorelated);
-        playBtn = (ImageView)v.findViewById(R.id.playBtn);
+        relativelayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout1);
+        videorelated = (RelativeLayout) v.findViewById(R.id.videorelated);
+        playBtn = (ImageView) v.findViewById(R.id.playBtn);
         playBtn.setOnClickListener(this);
-        expandBtn = (ImageView)v.findViewById(R.id.expandBtn);
+        expandBtn = (ImageView) v.findViewById(R.id.expandBtn);
         expandBtn.setOnClickListener(this);
         seekbar = (SeekBar) v.findViewById(R.id.seekbar);
 
         upVideoView = (UpVideoView) v.findViewById(R.id.upVideoView);
-        video_play= (ImageView) v.findViewById(R.id.video_play);
+        int width = ScreenUtil.getWidth(getActivity());
+        int height = (int)(((float)width)*9/16);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width,height);
+      //  relativelayout1.setLayoutParams(params);
+        relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+        upVideoView.setLayoutParams(params);
+        ///播放完成时动作
+        upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(IMediaPlayer mp) {
+                video_play.setVisibility(View.VISIBLE);
+                video_play.setClickable(true);
+            }
+        });
+        video_play = (ImageView) v.findViewById(R.id.video_play);
         video_play.setOnClickListener(this);
 
         // get layout Manager
@@ -119,15 +142,24 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
             });
         } else {
             video_play.setVisibility(View.VISIBLE);
+            video_play.setClickable(false);
             videorelated.setVisibility(View.VISIBLE);
             paytips.setVisibility(View.INVISIBLE);
             payBtn.setVisibility(View.INVISIBLE);
-            String path = courseDetailBean.getCourse_extm().get(0).getUrl();
-            if(path.length()>0)
+            payBtn.setClickable(false);
+            expandBtn.setClickable(false);
+           String relativepath = courseDetailBean.getCourse_extm().get(0).getUrl();
+            path= VideoUtil.getVideoUrl(relativepath);
+
+            if (relativepath.length() > 0)
             //设置背景图片
 //        upVideoView.setImage(R.drawable.dog);
             //设置播放地址
             {
+                video_play.setClickable(true);
+                payBtn.setClickable(true);
+                expandBtn.setClickable(true);
+                upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
 
                 //开始播放
@@ -135,24 +167,24 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                 //暂停看风景
                 upVideoView.pause();
             }//else
-          //  {
-              //  playBtn.setClickable(false);
-              //  video_play.setClickable(false);
-              //  expandBtn.setClickable(false);
-          //  }
+            //  {
+            //  playBtn.setClickable(false);
+            //  video_play.setClickable(false);
+            //  expandBtn.setClickable(false);
+            //  }
         }
 
-    //
+        //
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
         lastSelectedview = details;
-        lastSelectedPosition=0;
+        lastSelectedPosition = 0;
 
     }
-    public void setStatusFalse(int pos){
-        switch (pos)
-        {
+
+    public void setStatusFalse(int pos) {
+        switch (pos) {
             case 0:
                 textdetails.setTextColor(getResources().getColor(R.color.light_gray));
                 viewdetails.setVisibility(View.INVISIBLE);
@@ -169,16 +201,12 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     }
 
 
-
-
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         }
         super.onConfigurationChanged(newConfig);
     }
-
 
 
     @Override
@@ -188,7 +216,6 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     }
 
 
-
     @Override
     public void onClick(View view) {
         if (view != lastSelectedview) {
@@ -196,23 +223,23 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
             switch (view.getId()) {
                 case R.id.details:
                     recyclerList.setAdapter(new DetailsAdapter(getActivity(), courseDetailBean));
-                    lastSelectedview= details;
-                    lastSelectedPosition=0;
+                    lastSelectedview = details;
+                    lastSelectedPosition = 0;
                     textdetails.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewdetails.setVisibility(View.VISIBLE);
                     break;
                 case R.id.directory:
                     recyclerList.setAdapter(new DirectoryAdapter(getActivity(), courseDetailBean));
-                    lastSelectedview= directory;
-                    lastSelectedPosition=1;
+                    lastSelectedview = directory;
+                    lastSelectedPosition = 1;
                     textdirectory.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewdirectory.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.comments:
                     recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
-                    lastSelectedview= comments;
-                    lastSelectedPosition=2;
+                    lastSelectedview = comments;
+                    lastSelectedPosition = 2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewcomments.setVisibility(View.VISIBLE);
                     break;
@@ -229,25 +256,23 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                         //开始播放
                         upVideoView.start();
                         video_play.setVisibility(View.INVISIBLE);
+
                     }
                     break;
                 case R.id.expandBtn:
-                    if (getActivity().getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    Activity act=getActivity();
+                    if (act.getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                        act.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     }
-                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    act.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     DisplayMetrics metrics = new DisplayMetrics();
-                    getActivity(). getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                    act.getWindowManager().getDefaultDisplay().getMetrics(metrics);
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
                     mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
                     upVideoView.setLayoutParams(params);
                     upVideoView.getTrackInfo();
                     break;
-
-
-
-
             }
         }
     }
