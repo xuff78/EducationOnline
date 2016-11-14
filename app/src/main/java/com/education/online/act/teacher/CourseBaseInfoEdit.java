@@ -208,6 +208,7 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
             Log.i("Upload", "最终选择的图片=" + picPath);
             if (picPath == null) {
                 ToastUtils.displayTextShort(this, "获取图片失败");
+                progressDialog.dismiss();
                 return;
             }
             final Bitmap newResizeBmp = ImageUtil.getSmallBitmap(picPath);

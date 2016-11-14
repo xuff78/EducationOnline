@@ -180,6 +180,7 @@ public class HomepageImg extends BaseFragment {
             Log.i("Upload", "最终选择的图片=" + picPath);
             if (picPath == null) {
                 ToastUtils.displayTextShort(getActivity(), "获取图片失败");
+                progressDialog.dismiss();
                 return;
             }
             final Bitmap newResizeBmp = ImageUtil.getSmallBitmap(picPath);
