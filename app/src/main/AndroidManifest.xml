@@ -13,6 +13,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 访问精确位置的权限 -->
@@ -71,6 +72,11 @@
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
 
+
+        <activity
+            android:name=".act.pushlive.LiveCameraPage"
+            android:configChanges="orientation|keyboard|screenSize"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".act.VideoPlay"

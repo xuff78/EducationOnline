@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.order.SubmitOrder;
+import com.education.online.act.pushlive.LiveCameraPage;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
@@ -125,7 +126,12 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
         download_layout = (LinearLayout) findViewById(R.id.downloadlayout);
         download_layout.setOnClickListener(this);
 
-        textaddorbuy.setText("立即报名");
+        if(getIntent().hasExtra("Edit"))
+            textaddorbuy.setText("开始直播");
+        else if(courseDetailBean.getIs_buy().equals("1"))
+            textaddorbuy.setText("进入课程");
+        else
+            textaddorbuy.setText("立即报名");
         share.setImageResource(R.mipmap.icon_telphone);
         textshare.setText("咨询");
         textdownload.setVisibility(View.INVISIBLE);
@@ -166,9 +172,17 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     break;
                 case R.id.addorbuy:
                     //do sth;
-                    Intent i=new Intent(CourseMainPage.this, SubmitOrder.class);
-                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
-                    startActivity(i);
+                    if(getIntent().hasExtra("Edit")){
+                        Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
+                        i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                        startActivity(i);
+                    } else if(courseDetailBean.getIs_buy().equals("1")){
+
+                    }else {
+                        Intent i = new Intent(CourseMainPage.this, SubmitOrder.class);
+                        i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                        startActivity(i);
+                    }
                     break;
             }
         }

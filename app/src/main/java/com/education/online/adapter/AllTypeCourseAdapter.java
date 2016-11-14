@@ -89,6 +89,7 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
+                    intent.putExtra("Edit", true);
                     if(course.getCourse_type().equals("3"))
                         intent.setClass(act, CourseMainPage.class);
                     else

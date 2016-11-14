@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+        <!--<SurfaceView-->
+        <!--android:id="@+id/sv_camera"-->
+        <!--android:layout_width="720px"-->
+        <!--android:layout_height="1280px"-->
+        <!--android:layout_gravity="center"/>-->
+
+        <com.education.online.act.pushlive.SurfaceRenderView
+            android:id="@+id/sv_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/btn_flashlight_switch"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/selector_switchflash" />
+
+            <ImageView
+                android:id="@+id/btn_camera_switch"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/selector_rewardcamera" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:background="@color/light_trans_black"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/bt_toggle"
+            android:src="@mipmap/record_controller_normal"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="startPush" />
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_marginLeft="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/bt_toggle"
+            android:id="@+id/bt_setting"
+            android:src="@android:mipmap/sym_def_app_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</RelativeLayout>
