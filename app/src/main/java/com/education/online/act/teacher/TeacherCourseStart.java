@@ -129,7 +129,7 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
                     startActivity(i);
                     break;
                 case 2:
-                    i.setClass(TeacherCourseStart.this, VideoCourseBaseInfoEdit.class);
+                    i.setClass(TeacherCourseStart.this, CourseWareBaseInfoEdit.class);
                     i.putExtra("Type", 0);
                     startActivity(i);
                     break;
