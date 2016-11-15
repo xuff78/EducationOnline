@@ -72,14 +72,12 @@ public class SelectorPage extends BaseFragment {
                                     long arg3) {
                 pressPos=position;
                 menuAdapter.notifyDataSetChanged();
-                if(position>0) {
-                    subjectList = new SelectorRightAdapter(getActivity(), cates.get(position - 1).getChild_subject(), listener);
-                    recyclerList.setAdapter(subjectList);
-                }
+                subjectList = new SelectorRightAdapter(getActivity(), cates.get(position).getChild_subject(), listener);
+                recyclerList.setAdapter(subjectList);
             }
         });
-        if(pressPos>0) {
-            subjectList = new SelectorRightAdapter(getActivity(), cates.get(pressPos - 1).getChild_subject(), listener);
+        if(cates.size()>0) {
+            subjectList = new SelectorRightAdapter(getActivity(), cates.get(0).getChild_subject(), listener);
             recyclerList.setAdapter(subjectList);
         }
     }
@@ -124,7 +122,7 @@ public class SelectorPage extends BaseFragment {
 
         @Override
         public int getCount() {
-            return cates.size()+1;
+            return cates.size();
         }
 
         @Override
@@ -158,9 +156,8 @@ public class SelectorPage extends BaseFragment {
             }
             if(position==0){
                 holder.title.setTextColor(Color.RED);
-                holder.title.setText("热门推荐");
-            }else
-                holder.title.setText(cates.get(position-1).getSubject_name());
+            }
+            holder.title.setText(cates.get(position).getSubject_name());
 
             return convertView;
         }

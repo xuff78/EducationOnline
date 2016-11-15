@@ -46,22 +46,28 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Activity act;
     private LayoutInflater listInflater;
     private CourseDetailBean courseDetailBean;
-    private EvaluateListBean evaluateListBean;
     private ImageLoader imageLoader;
     private ImageView teacherIcon;
+    private List<EvaluateBean> evaluateList;
+    private String loadingHint="";
 
-    public CourseAdapter(Activity act, CourseDetailBean courseDetailBean, EvaluateListBean evaluateListBean) {
+    public CourseAdapter(Activity act, CourseDetailBean courseDetailBean, List<EvaluateBean> evaluateList) {
         this.act = act;
         listInflater = LayoutInflater.from(act);
         imageLoader = ImageLoader.getInstance();
         this.courseDetailBean = courseDetailBean;
-        this.evaluateListBean = evaluateListBean;
+        this.evaluateList = evaluateList;
     }
 
     @Override
     public int getItemViewType(int position) {
         // TODO Auto-generated method stub
-        return position;
+        return getItemCount()-1>position?position:-1;
+    }
+
+    public void setLoadingHint(String hint){
+        loadingHint=hint;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -82,6 +88,10 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View view = listInflater.inflate(R.layout.comments_fragment, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CommentsHolder(view, pos);
+        } else if (pos == -1) {
+            View view = listInflater.inflate(R.layout.footer_layout, null);
+            view.setLayoutParams(new RecyclerView.LayoutParams(-1, ImageUtil.dip2px(act, 45)));
+            vh = new FooterViewHolder(view);
         }
         return vh;
     }
@@ -90,6 +100,10 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
 
+        if(holder instanceof FooterViewHolder) {
+            FooterViewHolder fvh = (FooterViewHolder) holder;
+            fvh.footerHint.setText(loadingHint);
+        }else
         if (pos == 0) {
             CourseHolder vh = (CourseHolder) holder;
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg);
@@ -98,17 +112,9 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             vh.studentNum.setText("班级人数" + courseDetailBean.getMax_follow() + "人，已报名" + courseDetailBean.getFollow() + "人");
             vh.praisePercent.setText((int)(Float.valueOf(courseDetailBean.getUser_info().getAverage())/5*100) + "%好评");
             vh.totalSerial.setText("共" + courseDetailBean.getCourse_extm().size() + "次课");
-            DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
-            Date date = null;
-            String datestring =courseDetailBean.getCourse_extm().get(0).getCourseware_date();
-            if(datestring.length()>0) {
-                try {
-                    date = format1.parse(datestring);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                vh.courseTime.setText(formatter.format(date) + "开课");
+            if(courseDetailBean.getCourse_extm().size()>0) {
+                String datestring = courseDetailBean.getCourse_extm().get(0).getCourseware_date();
+                vh.courseTime.setText(ActUtil.getDataTime(datestring) + "开课");
             }
 
         } else if (pos == 1) {
@@ -123,36 +129,20 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             vh.courseDetail.setText(courseDetailBean.getIntroduction());
             vh.courseArrangement.setText(courseDetailBean.getPlan());
             vh.courseArrangement.setText(courseDetailBean.getPlan());
-        } else {
+        } else if (pos > 2) {
             CommentsHolder vh = (CommentsHolder) holder;
-            for (int i = 0; i < evaluateListBean.getEvaluateList().size(); i++) {
-                vh.userName.setText(evaluateListBean.getEvaluateList().get(i).getUser_name());
-                DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm");
-                Date date = new Date();
-                try {
-                    date = format1.parse(evaluateListBean.getEvaluateList().get((i)).getEvaluate_date());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                vh.userComments.setText(evaluateListBean.getEvaluateList().get(i).getInfo());
-                vh.commentTime.setText(formatter1.format(date));
-                vh.commentDate.setText(formatter.format(date));
-                vh.ratingBar.setStar(Float.parseFloat(evaluateListBean.getEvaluateList().get(i).getStar()));
-                imageLoader.displayImage(ImageUtil.getImageUrl(evaluateListBean.getEvaluateList().get(i).getAvatar()), vh.potrait);
-            }
-
+            EvaluateBean evaluateBean=evaluateList.get(pos-3);
+            vh.userName.setText(evaluateBean.getUser_name());
+            vh.userComments.setText(evaluateBean.getInfo());
+            vh.commentDate.setText(ActUtil.getDataTime(evaluateBean.getEvaluate_date()));
+            vh.ratingBar.setStar(Float.parseFloat(evaluateBean.getStar()));
+            imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
         }
-
-
     }
 
     @Override
     public int getItemCount() {
-        List<EvaluateBean> list = evaluateListBean.getEvaluateList();
-        return (3 + list.size());
-        //return 4;
+        return 3 + evaluateList.size()+1;
     }
 
 

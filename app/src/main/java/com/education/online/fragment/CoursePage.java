@@ -58,6 +58,6 @@ public class CoursePage extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-        recyclerList.setAdapter(new CourseAdapter(getActivity(), courseDetailBean,evaluateListBean));
+//        recyclerList.setAdapter(new CourseAdapter(getActivity(), courseDetailBean,evaluateListBean));
     }
 }

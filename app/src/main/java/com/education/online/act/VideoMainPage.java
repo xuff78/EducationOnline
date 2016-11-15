@@ -8,8 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +16,6 @@ import com.education.online.act.order.SubmitOrder;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
-import com.education.online.bean.VideoImgItem;
-import com.education.online.fragment.CoursePage;
 import com.education.online.fragment.VideoPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -37,7 +33,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
     private View lastSelectedView=null;
     private VideoPage videopage = new VideoPage();
 
-    private CourseDetailBean courseDetailBean;
+    private CourseDetailBean courseDetailBean=new CourseDetailBean();
     private EvaluateListBean evaluateListBean;
     private String course_id;
     private boolean flag=false;
@@ -50,7 +46,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener{
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getCourseDtail)) {
-                    courseDetailBean = JsonUtil.getCourseDetail(jsonData);
+                    JsonUtil.getCourseDetail(jsonData, courseDetailBean);
                     _setHeaderTitle(courseDetailBean.getCourse_name());
                     if (courseDetailBean.getIs_collection().equals("0"))
                     {

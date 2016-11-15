@@ -382,7 +382,7 @@ public class HttpHandler extends Handle {
 		paraMap.put("page_size",page_size);
 		if(page.length()>0)
 		paraMap.put("page",page);
-		requestPostEdu(Method.getEvaluateList,paraMap,true);
+		requestPostEdu(Method.getEvaluateList,paraMap,false);
 	}
 	public void addCollection (String course_id){
 		HashMap<String, String > paraMap =new HashMap<>();

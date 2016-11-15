@@ -17,6 +17,8 @@ import com.education.online.act.SearchAct;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -105,6 +107,20 @@ public class ActUtil {
         String dateTxt = formatter.format(curDate);
         LogUtil.i("Date", "change date: "+dateTxt);
         return dateTxt;
+    }
+
+    public static String getDataTime(String dateStr) {
+        if(dateStr.length()>0) {
+            DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+            try {
+                Date date = format1.parse(dateStr);
+                return formatter.format(date);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
     }
 
     public static String getWeekDay(int i) {

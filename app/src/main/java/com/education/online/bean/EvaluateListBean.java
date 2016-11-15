@@ -9,8 +9,8 @@ public class EvaluateListBean {
 
     private String average = "";
     private String total = "";
-    private String pagetotal = "";
-    private String current_page = "";
+    private int pagetotal = 0;
+    private int current_page = 0;
     private List<EvaluateBean> evaluateList;
 
     public String getTotal() {
@@ -21,19 +21,19 @@ public class EvaluateListBean {
         this.total = total;
     }
 
-    public String getPagetotal() {
+    public int getPagetotal() {
         return pagetotal;
     }
 
-    public void setPagetotal(String pagetotal) {
+    public void setPagetotal(int pagetotal) {
         this.pagetotal = pagetotal;
     }
 
-    public String getCurrent_page() {
+    public int getCurrent_page() {
         return current_page;
     }
 
-    public void setCurrent_page(String current_page) {
+    public void setCurrent_page(int current_page) {
         this.current_page = current_page;
     }
 

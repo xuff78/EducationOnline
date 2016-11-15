@@ -25,7 +25,7 @@ public class CourseDetailBean implements Serializable{
     private String course_type = "";
     private String usercode = "";
     private String is_collection = "";
-    private String average="";
+    private String average="5";
 
     public static String Name="CourseDetailBean";
 

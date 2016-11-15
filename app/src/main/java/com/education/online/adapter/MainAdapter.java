@@ -29,6 +29,7 @@ import com.education.online.bean.LiveCourse;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.VideoCourse;
 import com.education.online.bean.WareCourse;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
@@ -137,6 +138,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ivh.priceTxt.setText("¥" + live.getPrice());
                 ivh.timeTxt.setVisibility(View.GONE);
                 ivh.statusTxt.setText(live.getFollow() + "人在学习");
+                ivh.imgMask1.setVisibility(View.GONE);
             } else
                 ivh.item1.setVisibility(View.INVISIBLE);
             if (liveCourses.size() > 1) {
@@ -146,6 +148,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ivh.priceTxt2.setText("¥" + live.getPrice());
                 ivh.timeTxt2.setVisibility(View.GONE);
                 ivh.statusTxt2.setText(live.getFollow() + "人在学习");
+                ivh.imgMask2.setVisibility(View.GONE);
             } else
                 ivh.item2.setVisibility(View.INVISIBLE);
         }
@@ -279,7 +282,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class CourseHolder extends RecyclerView.ViewHolder {
         TextView subjectName, titleTxt, timeTxt, priceTxt, statusTxt, titleTxt2, timeTxt2, priceTxt2, statusTxt2;
-        ImageView courseImg1, courseImg2;
+        ImageView courseImg1, courseImg2, imgMask1, imgMask2;
         View item1, item2;
         View moreBtn;
         int pos = 0;
@@ -299,6 +302,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             statusTxt2 = (TextView) convertView.findViewById(R.id.statusTxt2);
             courseImg1 = (ImageView) convertView.findViewById(R.id.courseImg1);
             courseImg2 = (ImageView) convertView.findViewById(R.id.courseImg2);
+            imgMask1 = (ImageView) convertView.findViewById(R.id.imgMask1);
+            imgMask2 = (ImageView) convertView.findViewById(R.id.imgMask2);
 
             item1 = convertView.findViewById(R.id.item1);
             item2 = convertView.findViewById(R.id.item2);
@@ -322,33 +327,33 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             act.startActivity(new Intent(act, VideoMain.class));
                         break;
                     case R.id.item1:
+                    case R.id.item2:
                         Intent intent = new Intent();
-                        String course_id = info.getLive().get(0).getCourse_id();
-                        intent.putExtra("course_id", course_id);
                         if (pos == 2) {
+                            LiveCourse course=new LiveCourse();
+                            if(view.getId()==R.id.item1)
+                                course=info.getLive().get(0);
+                            else if(view.getId()==R.id.item2)
+                                course=info.getLive().get(1);
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("course_img", course.getCourse_img());
+                            intent.putExtra("course_id", course.getCourse_id());
                             intent.setClass(act, CourseMainPage.class);
                             act.startActivity(intent);
                         } else if (pos == 3) {
+                            VideoCourse course=new VideoCourse();
+                            if(view.getId()==R.id.item1)
+                                course=info.getVideo().get(0);
+                            else if(view.getId()==R.id.item2)
+                                course=info.getVideo().get(1);
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("course_img", course.getCourse_img());
+                            intent.putExtra("course_id", course.getCourse_id());
                             intent.setClass(act, VideoMainPage.class);
                             act.startActivity(intent);
                         } else if (pos == 4) {
                             intent.setClass(act, VideoMainPage.class);
                             act.startActivity(intent);
-                        }
-                        break;
-                    case R.id.item2:
-                        Intent intent2 = new Intent();
-                        String course_id2 = info.getLive().get(1).getCourse_id();
-                        intent2.putExtra("course_id", course_id2);
-                        if (pos == 2) {
-                            intent2.setClass(act, CourseMainPage.class);
-                            act.startActivity(intent2);
-                        } else if (pos == 3) {
-                            intent2.setClass(act, VideoMainPage.class);
-                            act.startActivity(intent2);
-                        } else if (pos == 4) {
-                            intent2.setClass(act, VideoMainPage.class);
-                            act.startActivity(intent2);
                         }
                         break;
                 }

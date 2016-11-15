@@ -98,8 +98,7 @@ public class JsonUtil {
         return data;
     }
 
-    public static CourseDetailBean getCourseDetail (String jsonStr) throws JSONException {
-        CourseDetailBean courseDetailBean = new CourseDetailBean();
+    public static CourseDetailBean getCourseDetail (String jsonStr, CourseDetailBean courseDetailBean) throws JSONException {
         List<CourseExtm> courseExtms = new ArrayList<>();
         CourseEvaluate courseEvaluate = new CourseEvaluate();
         CreatUserInfo creatUserInfo = new CreatUserInfo();
@@ -224,11 +223,11 @@ public class JsonUtil {
         if(!jsonObject.isNull("evaluate_details")) {
             JSONObject jsonObject1 = jsonObject.getJSONObject("evaluate_details");
             if(!jsonObject1.isNull("page_total"))
-                evaluateListBean.setPagetotal(jsonObject1.getString("page_total"));
+                evaluateListBean.setPagetotal(jsonObject1.getInt("page_total"));
             if (!jsonObject1.isNull("total"))
                 evaluateListBean.setTotal(jsonObject1.getString("total"));
             if(!jsonObject1.isNull("current_page"))
-                evaluateListBean.setCurrent_page(jsonObject1.getString("current_page"));
+                evaluateListBean.setCurrent_page(jsonObject1.getInt("current_page"));
             if (!jsonObject1.isNull("evaluate"))
             {
                 JSONArray jsonArray = jsonObject1.getJSONArray("evaluate");

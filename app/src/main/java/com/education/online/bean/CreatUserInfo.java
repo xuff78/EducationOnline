@@ -11,7 +11,7 @@ public class CreatUserInfo implements Serializable{
     private String introduction = "";
     private String avatar = "";
     private String evaluate_count = "";
-    private String average = "";
+    private String average = "5";
 
     public String getUser_name() {
         return user_name;
