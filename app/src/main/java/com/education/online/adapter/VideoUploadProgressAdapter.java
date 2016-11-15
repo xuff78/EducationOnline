@@ -30,8 +30,8 @@ import java.util.logging.LogRecord;
 public class VideoUploadProgressAdapter extends BaseAdapter {
     private Activity act;
     private LayoutInflater inflater;
-    private View.OnClickListener listener;
     private ArrayList<UploadVideoProgress>  uploadVideoProgresses;
+    private View.OnClickListener listener;
    /*传入参数:视频的uri在本Adapter中获取缩略图；
    进度条回调函数；
     */

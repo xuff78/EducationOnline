@@ -185,7 +185,8 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     intent.putExtra("Avatar", teacher.getAvatar());
                     intent.putExtra("Name", teacher.getUser_name());
                     intent.putExtra(Constant.UserCode, courseDetailBean.getUsercode());
-                    act.startActivity(intent);
+                    ActUtil.startAnimActivity(act, intent, v.findViewById(R.id.teacherpotrait), "headIcon");
+//                    act.startActivity(intent);
                     break;
             }
         }

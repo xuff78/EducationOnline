@@ -28,9 +28,11 @@ import com.education.online.inter.AdapterCallback;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
+import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 
@@ -54,6 +56,14 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     private int page=1;
     private LinearLayoutManager layoutManager;
 
+    private ImageView teacherpotrait;
+    private TextView teacherSexual, teacherName, teacherTitles, teachingExperience, identityConfirmed, fansNum, studentNum, praisePercent;
+    private LinearLayout brief, subjects, photoalbum, teachercomments;
+    private TextView textbrief, textsubjects, textphotoalbum, textteachercomments;
+    private View viewbrief, viewsubjects, viewphotoalbum, viewteachercomments;
+    private View lastSelectedview;
+    private int lastSelectedPosition;
+
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
@@ -62,6 +72,8 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                 if(method.equals(Method.getUserInfo)){
                     TeacherBean teacherInfo= JSON.parseObject(jsonData, TeacherBean.class);
                     ActUtil.updateInfo(TeacherBean.class, teacher, teacherInfo);
+                    
+                    inittData();
                     teacher.setPhoto_album(teacherInfo.getPhoto_album());
                     teacher.setCourse_info(teacherInfo.getCourse_info());
                     adapter.notifyDataSetChanged();
@@ -94,6 +106,25 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                 }
             }
         });
+    }
+
+    private void inittData() {
+        ImageLoader.getInstance().displayImage(ImageUtil.getImageUrl(teacher.getAvatar()), teacherpotrait);
+        if(teacher.getGender().equals("1")){
+            teacherSexual.setText("男");
+        }else if(teacher.getGender().equals("0")){
+            teacherSexual.setText("女");
+        }
+        teacherName.setText(teacher.getName());
+        teacherTitles.setText(teacher.getSpecialty());
+        teachingExperience.setText(teacher.getWork_time()+"年教龄");
+        if(teacher.getIs_validate().equals("1"))
+            identityConfirmed.setText("已认证");
+        else
+            identityConfirmed.setText("未认证");
+        fansNum.setText(teacher.getAttention_count());
+        studentNum.setText(teacher.getStudent_count());
+        praisePercent.setText(teacher.getGood_evaluate_ratio());
     }
 
     @Override
@@ -137,6 +168,27 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         layoutManager = new LinearLayoutManager(TeacherInformationPage.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewList.setLayoutManager(layoutManager);
+
+        teacherpotrait = (ImageView) findViewById(R.id.teacherpotrait);
+        teacherSexual = (TextView) findViewById(R.id.teacherSexual);
+        teacherName = (TextView) findViewById(R.id.teacherName);
+        teacherTitles = (TextView) findViewById(R.id.teacherTitles);
+        teachingExperience = (TextView) findViewById(R.id.teachingExperience);
+        identityConfirmed = (TextView) findViewById(R.id.identityConfirmed);
+
+        fansNum = (TextView) findViewById(R.id.fansNum);
+        studentNum = (TextView) findViewById(R.id.studentNum);
+        praisePercent = (TextView) findViewById(R.id.praisePercent);
+
+        textbrief = (TextView) findViewById(R.id.textbrief);
+        textsubjects = (TextView) findViewById(R.id.textsubjects);
+        textphotoalbum = (TextView) findViewById(R.id.textphotoalbum);
+        textteachercomments = (TextView) findViewById(R.id.textteachercomments);
+
+        viewbrief = findViewById(R.id.viewbrief);
+        viewsubjects = findViewById(R.id.viewsubjects);
+        viewphotoalbum = findViewById(R.id.viewphotoalbum);
+        viewteachercomments = findViewById(R.id.viewteachercomments);
     }
 
     @Override
