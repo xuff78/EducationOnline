@@ -4,4 +4,8 @@
     <dimen name="activity_vertical_margin">25dp</dimen>
     <dimen name="user_icon_w">20dp</dimen>
     <dimen name="padding_left">20dp</dimen>
+
+    <dimen name="image_width">120dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 </resources>
