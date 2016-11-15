@@ -192,15 +192,156 @@
                         </LinearLayout>
 
                     </LinearLayout>
-
                 </RelativeLayout>
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
+                    app:layout_collapseMode="pin">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </LinearLayout>
+                </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
+            <LinearLayout
+                app:layout_scrollFlags="scroll|snap"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+
+            <LinearLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/imagelayout"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:id="@+id/brief"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textbrief"
+                        android:layout_width="50dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="简介"
+                        android:textColor="@color/dark_orange"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/viewbrief"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:background="@color/dark_orange"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/subjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textsubjects"
+                        android:layout_width="50dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="课程"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/viewsubjects"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:background="@color/dark_orange"
+                        android:gravity="center"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/photoalbum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textphotoalbum"
+                        android:layout_width="50dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="相册"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/viewphotoalbum"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:background="@color/dark_orange"
+                        android:gravity="center"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/teachercomments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textteachercomments"
+                        android:layout_width="50dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="评价"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:id="@+id/viewteachercomments"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:background="@color/dark_orange"
+                        android:gravity="center"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px" />
+            </LinearLayout>
         </android.support.design.widget.AppBarLayout>
 
 
@@ -217,8 +358,8 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:padding="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:src="@mipmap/icon_round_back" />
 
     <LinearLayout

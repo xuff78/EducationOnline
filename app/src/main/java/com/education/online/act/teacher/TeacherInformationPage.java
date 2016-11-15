@@ -176,6 +176,15 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         teachingExperience = (TextView) findViewById(R.id.teachingExperience);
         identityConfirmed = (TextView) findViewById(R.id.identityConfirmed);
 
+        brief = (LinearLayout) findViewById(R.id.brief);
+        brief.setOnClickListener(menuListener);
+        subjects = (LinearLayout) findViewById(R.id.subjects);
+        subjects.setOnClickListener(menuListener);
+        photoalbum = (LinearLayout) findViewById(R.id.photoalbum);
+        photoalbum.setOnClickListener(menuListener);
+        teachercomments = (LinearLayout) findViewById(R.id.teachercomments);
+        teachercomments.setOnClickListener(menuListener);
+
         fansNum = (TextView) findViewById(R.id.fansNum);
         studentNum = (TextView) findViewById(R.id.studentNum);
         praisePercent = (TextView) findViewById(R.id.praisePercent);
@@ -207,6 +216,68 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
 
         }else if(R.id.addToFavoriteLayout==view.getId()){
             handler.addAttention(usercode);
+        }
+    }
+
+    View.OnClickListener menuListener=new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            if (view != lastSelectedview) {
+                setStatusFalse(lastSelectedPosition);
+                switch (view.getId()) {
+                    case R.id.brief:
+                        lastSelectedview = brief;
+                        lastSelectedPosition = 0;
+                        textbrief.setTextColor(textbrief.getResources().getColor(R.color.dark_orange));
+                        viewbrief.setVisibility(View.VISIBLE);
+                        adapter.setItemType(1);
+                        break;
+                    case R.id.subjects:
+                        lastSelectedview = subjects;
+                        lastSelectedPosition = 1;
+                        textsubjects.setTextColor(textbrief.getResources().getColor(R.color.dark_orange));
+                        viewsubjects.setVisibility(View.VISIBLE);
+                        adapter.setItemType(2);
+                        break;
+                    case R.id.photoalbum:
+
+                        lastSelectedview = photoalbum;
+                        lastSelectedPosition = 2;
+                        textphotoalbum.setTextColor(textbrief.getResources().getColor(R.color.dark_orange));
+                        viewphotoalbum.setVisibility(View.VISIBLE);
+                        adapter.setItemType(3);
+                        break;
+                    case R.id.teachercomments:
+                        lastSelectedview = teachercomments;
+                        lastSelectedPosition = 3;
+                        textteachercomments.setTextColor(textteachercomments.getResources().getColor(R.color.dark_orange));
+                        viewteachercomments.setVisibility(View.VISIBLE);
+                        adapter.setItemType(4);
+                        break;
+                }
+            }
+        }
+    };
+
+    public void setStatusFalse(int pos) {
+        switch (pos) {
+            case 0:
+                textbrief.setTextColor(textbrief.getResources().getColor(R.color.light_gray));
+                viewbrief.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                textsubjects.setTextColor(textsubjects.getResources().getColor(R.color.light_gray));
+                viewsubjects.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                textphotoalbum.setTextColor(textphotoalbum.getResources().getColor(R.color.light_gray));
+                viewphotoalbum.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                textteachercomments.setTextColor(textteachercomments.getResources().getColor(R.color.light_gray));
+                viewteachercomments.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 }

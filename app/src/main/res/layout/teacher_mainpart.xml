@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/imagelayout"
         android:layout_width="wrap_content"
         android:layout_height="300dp">

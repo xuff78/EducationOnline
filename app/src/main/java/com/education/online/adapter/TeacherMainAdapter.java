@@ -71,19 +71,20 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
         int i = getItemType();
-        if (position == 0) {
-            return 1;
-        }else if(position ==1){
+//        if (position == 0) {
+//            return 1;
+//        }else
+        if(position ==0){
             if (i==1) {
                 return 2;
             } else if(i==2) {
                 return 3;
             }else if (i==3) {
-            return 4;
+                return 4;
             }else if (i==4){
                 return 5;
             }
-        } else if (position>1){
+        } else if (position>0){
             if (i==2){
                 return 3;
             }else if (i==4){
@@ -101,10 +102,10 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         RecyclerView.ViewHolder vh = null;
         View view;
         switch (viewType) {
-            case 1:
-                view = inflater.inflate(R.layout.teacher_mainpart, null);//主要部分
-                vh = new MainHolder(view);
-                break;
+//            case 1:
+//                view = inflater.inflate(R.layout.teacher_mainpart, null);//主要部分
+//                vh = new MainHolder(view);
+//                break;
             case 2:
                 view = inflater.inflate(R.layout.teacher_brief, null);//简介
                 vh = new BriefHolder(view);
@@ -145,25 +146,26 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
         int i = getItemType();
-        if (pos == 0) {
-            MainHolder vh = (MainHolder) holder;
-            imageLoader.displayImage(ImageUtil.getImageUrl(teacherBean.getAvatar()), vh.teacherpotrait);
-            if(teacherBean.getGender().equals("1")){
-                vh.teacherSexual.setText("男");
-            }else if(teacherBean.getGender().equals("0")){
-                vh.teacherSexual.setText("女");
-            }
-            vh.teacherName.setText(teacherBean.getName());
-            vh.teacherTitles.setText(teacherBean.getSpecialty());
-            vh.teachingExperience.setText(teacherBean.getWork_time()+"年教龄");
-            if(teacherBean.getIs_validate().equals("1"))
-                vh.identityConfirmed.setText("已认证");
-            else
-                vh.identityConfirmed.setText("未认证");
-            vh.fansNum.setText(teacherBean.getAttention_count());
-            vh.studentNum.setText(teacherBean.getStudent_count());
-            vh.praisePercent.setText(teacherBean.getGood_evaluate_ratio());
-        } else if (pos == 1 ){
+//        if (pos == 0) {
+//            MainHolder vh = (MainHolder) holder;
+//            imageLoader.displayImage(ImageUtil.getImageUrl(teacherBean.getAvatar()), vh.teacherpotrait);
+//            if(teacherBean.getGender().equals("1")){
+//                vh.teacherSexual.setText("男");
+//            }else if(teacherBean.getGender().equals("0")){
+//                vh.teacherSexual.setText("女");
+//            }
+//            vh.teacherName.setText(teacherBean.getName());
+//            vh.teacherTitles.setText(teacherBean.getSpecialty());
+//            vh.teachingExperience.setText(teacherBean.getWork_time()+"年教龄");
+//            if(teacherBean.getIs_validate().equals("1"))
+//                vh.identityConfirmed.setText("已认证");
+//            else
+//                vh.identityConfirmed.setText("未认证");
+//            vh.fansNum.setText(teacherBean.getAttention_count());
+//            vh.studentNum.setText(teacherBean.getStudent_count());
+//            vh.praisePercent.setText(teacherBean.getGood_evaluate_ratio());
+//        } else
+        if (pos == 0){
             if(i==1){
                 BriefHolder vh =(BriefHolder) holder;
                 String identityDetail="";
@@ -202,10 +204,10 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 if(evaluations.size()==0)
                     callback.requestData();
             }
-        }else if (pos > 1){
+        }else if (pos > 0){
             if (i==2) {
                 CourseHolder vh = (CourseHolder) holder;
-                CourseBean courseBean=teacherBean.getCourse_info().get(pos-2);
+                CourseBean courseBean=teacherBean.getCourse_info().get(pos-1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), vh.teacherImage);
                 vh.coursePrice.setText(ActUtil.getPrice(courseBean.getPrice()));
                 vh.courseName.setText(courseBean.getCourse_name());
@@ -215,7 +217,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }else if (i==4){
                 if(pos<getItemCount()-1) {
                     CommentsHolder vh = (CommentsHolder) holder;
-                    EvaluateBean evaluateBean = evaluations.get(pos - 2);
+                    EvaluateBean evaluateBean = evaluations.get(pos - 1);
                     vh.ratingbar.setStar(Float.valueOf(evaluateBean.getStar()));
                     vh.commentDate.setText(evaluateBean.getEvaluate_date());
                     imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
@@ -232,13 +234,13 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         int i = getItemType();
         switch (i) {
             case 1:
-                return 2;
+                return 1;
             case 2:
-                return 1+teacherBean.getCourse_info().size();
+                return teacherBean.getCourse_info().size();
             case 3:
-                return 2;
+                return 1;
             case 4:
-                return 3+evaluations.size();
+                return 2+evaluations.size();
         }
         return 2;
     }
