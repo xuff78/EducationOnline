@@ -60,7 +60,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     private int page=1;
     private LinearLayoutManager layoutManager;
 
-    private ImageView teacherpotrait;
+    private ImageView teacherpotrait, headIcon2;
     private TextView teacherSexual, teacherName, teacherTitles, teachingExperience, identityConfirmed, fansNum, studentNum, praisePercent;
     private LinearLayout brief, subjects, photoalbum, teachercomments;
     private TextView textbrief, textsubjects, textphotoalbum, textteachercomments;
@@ -118,6 +118,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     private void inittData() {
         String imgUrl=ImageUtil.getImageUrl(teacher.getAvatar());
         ImageLoader.getInstance().displayImage(imgUrl, teacherpotrait);
+        ImageLoader.getInstance().displayImage(imgUrl, headIcon2);
         if(teacher.getGender().equals("1")){
             teacherSexual.setText("男");
         }else if(teacher.getGender().equals("0")){
@@ -170,7 +171,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
         consultingLayout = (LinearLayout) findViewById(R.id.consultingLayout);
@@ -183,6 +184,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewList.setLayoutManager(layoutManager);
 
+        headIcon2 = (ImageView) findViewById(R.id.headIcon2);
         teacherpotrait = (ImageView) findViewById(R.id.teacherpotrait);
         teacherSexual = (TextView) findViewById(R.id.teacherSexual);
         teacherName = (TextView) findViewById(R.id.teacherName);

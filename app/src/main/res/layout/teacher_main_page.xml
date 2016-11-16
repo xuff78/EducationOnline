@@ -202,6 +202,13 @@
                             android:src="@mipmap/icon_black_arrow_left"
                             android:layout_width="40dp"
                             android:layout_height="40dp" />
+                        <ImageView
+                            android:id="@+id/headIcon2"
+                            android:layout_marginLeft="31dp"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/icon_head"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
                         <TextView
                             android:layout_centerVertical="true"
                             android:id="@+id/main.textview.title"
