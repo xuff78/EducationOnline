@@ -4,11 +4,13 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.ChangeImageTransform;
 import android.transition.Fade;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -43,7 +46,8 @@ import java.util.List;
  * Created by Administrator on 2016/9/1.
  */
 
-public class TeacherInformationPage extends BaseFrameAct implements TeacherMainAdapter.EvaluateCallback, View.OnClickListener {
+public class TeacherInformationPage extends BaseFrameAct implements TeacherMainAdapter.EvaluateCallback, View.OnClickListener,
+        AppBarLayout.OnOffsetChangedListener {
 
     private LinearLayout consultingLayout, addToFavoriteLayout;
     private RecyclerView recyclerViewList;
@@ -63,6 +67,9 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     private View viewbrief, viewsubjects, viewphotoalbum, viewteachercomments;
     private View lastSelectedview;
     private int lastSelectedPosition;
+    private AppBarLayout mAppBarLayout;
+    private View mTitleContainer, toolBarLayout;
+    private TextView mTitle;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -109,13 +116,15 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     }
 
     private void inittData() {
-        ImageLoader.getInstance().displayImage(ImageUtil.getImageUrl(teacher.getAvatar()), teacherpotrait);
+        String imgUrl=ImageUtil.getImageUrl(teacher.getAvatar());
+        ImageLoader.getInstance().displayImage(imgUrl, teacherpotrait);
         if(teacher.getGender().equals("1")){
             teacherSexual.setText("男");
         }else if(teacher.getGender().equals("0")){
             teacherSexual.setText("女");
         }
         teacherName.setText(teacher.getName());
+        mTitle.setText(teacher.getName());
         teacherTitles.setText(teacher.getSpecialty());
         teachingExperience.setText(teacher.getWork_time()+"年教龄");
         if(teacher.getIs_validate().equals("1"))
@@ -148,10 +157,15 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         adapter=new TeacherMainAdapter(TeacherInformationPage.this, teacher, evaluations, TeacherInformationPage.this);
         recyclerViewList.setAdapter(adapter);
         handler.getUserInfo(usercode);
+        startAlphaAnimation(toolBarLayout, 0, View.INVISIBLE);
     }
 
     private void InitView() {
-
+        mTitle          = (TextView) findViewById(R.id.main_textview_title);
+        toolBarLayout = findViewById(R.id.toolBarLayout);
+        mTitleContainer = findViewById(R.id.imagelayout);
+        mAppBarLayout   = (AppBarLayout) findViewById(R.id.appbarLayout);
+        mAppBarLayout.addOnOffsetChangedListener(this);
         backBtn = (ImageView) findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,5 +293,71 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                 viewteachercomments.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
+
+    private boolean mIsTheTitleVisible          = false;
+    private boolean mIsTheTitleContainerVisible = true;
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(offset) / (float) maxScroll;
+
+        LogUtil.i("appbar", "appbar offset:  "+offset+ "   percentage:  "+percentage);
+//        handleAlphaOnTitle(percentage);
+        percentage=percentage-0.5f+percentage/2;
+        if(percentage<0)
+            percentage=0;
+        toolBarLayout.setAlpha(percentage);
+        backBtn.setAlpha(1-percentage);
+//        handleToolbarTitleVisibility(percentage);
+    }
+
+    private void handleToolbarTitleVisibility(float percentage) {
+        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
+
+            if(!mIsTheTitleVisible) {
+                startAlphaAnimation(toolBarLayout, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleVisible = true;
+                LogUtil.i("appbar", "setVisiable");
+            }
+        } else {
+
+            if (mIsTheTitleVisible) {
+                startAlphaAnimation(toolBarLayout, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleVisible = false;
+                LogUtil.i("appbar", "setInvisiable");
+            }
+        }
+    }
+
+    private void handleAlphaOnTitle(float percentage) {
+        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
+            if(mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleContainerVisible = false;
+            }
+
+        } else {
+
+            if (!mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleContainerVisible = true;
+            }
+        }
+    }
+
+    public static void startAlphaAnimation (View v, long duration, int visibility) {
+        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
+                ? new AlphaAnimation(0f, 1f)
+                : new AlphaAnimation(1f, 0f);
+
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setFillAfter(true);
+        v.startAnimation(alphaAnimation);
     }
 }

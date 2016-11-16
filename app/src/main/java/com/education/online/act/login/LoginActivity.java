@@ -50,8 +50,12 @@ public class LoginActivity extends BaseFrameAct {
         userName = (EditText) findViewById(R.id.userName);
         userPsd = (EditText) findViewById(R.id.userPsd);
         String loginName=SharedPreferencesUtil.getString(this, Constant.UserName);//保存用户名在本地
+        String psw=SharedPreferencesUtil.getString(this, Constant.UserPSW);//保存用户名在本地
         if(!loginName.equals(SharedPreferencesUtil.FAILURE_STRING)){//有数据时自动填写
             userName.setText(loginName);
+        }
+        if(!psw.equals(SharedPreferencesUtil.FAILURE_STRING)){//有数据时自动填写
+            userPsd.setText(psw);
         }
         userPsd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -142,6 +146,7 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);//保存sessionid
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserPSW, userPsd.getText().toString());
 
                 finish();
             }
