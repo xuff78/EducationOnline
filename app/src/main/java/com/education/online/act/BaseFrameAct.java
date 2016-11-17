@@ -67,8 +67,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 			if (id == R.id.back_home_imagebtn) {
 //				ActUtil.showHome(BaseFrameAct.this);
 			} else if (id == R.id.back_imagebtn) {
-				KeyBoardCancle();
-				finish();
+				onBackPressed();
 			}
 		}
 	}

@@ -19,6 +19,7 @@ public class Constant {
     public static final String SearchSubject="SearchSubject";
     public static final String UserInfo="UserInfo";
     public static final String UserName="UserName";
+    public static final String UserPSW="UserPSW";
     public static final String UserCode="UserCode";
     public static final String UserIdentity="user_identity";
     public static final String SavePath = Environment.getExternalStorageDirectory().getAbsolutePath()
