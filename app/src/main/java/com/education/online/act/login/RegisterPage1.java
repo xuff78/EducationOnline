@@ -211,6 +211,8 @@ public class RegisterPage1 extends BaseFrameAct {
             GetVertiCode.setClickable(false);
             GetVertiCode.setText("重新获取验证码（" + totaltime / 1000 + ")s");
             GetVertiCode.setTextColor(getResources().getColor(R.color.white));
+            GetVertiCode.setBackgroundColor(getResources().getColor(R.color.light_gray));
+
         }
 
         @Override
@@ -218,6 +220,7 @@ public class RegisterPage1 extends BaseFrameAct {
             GetVertiCode.setClickable(true);
             GetVertiCode.setText("获取验证码");
             GetVertiCode.setTextColor(getResources().getColor(R.color.white));
+            GetVertiCode.setBackgroundColor(getResources().getColor(R.color.normal_orange));
 
         }
     }

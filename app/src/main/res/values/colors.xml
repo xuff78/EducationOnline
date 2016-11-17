@@ -12,6 +12,7 @@
 
     <color name="normal_red">#F95850</color>
     <color name="dark_orange">#fe5900</color>
+    <color name="normal_orange">#f96450</color>
     <color name="headerbg">#364e5e</color>
     <color name="hard_blue">#0173b1</color>
     <color name="light_trans_white">#22ffffff</color><!--高亮灰 -->
