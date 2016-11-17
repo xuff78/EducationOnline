@@ -61,11 +61,7 @@ public class LoginActivity extends BaseFrameAct {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) {
-                    try {
-                        attemptLogin();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    }
+                    attemptLogin();
                     return true;
                 }
                 return false;
@@ -76,11 +72,7 @@ public class LoginActivity extends BaseFrameAct {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    attemptLogin();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
+                attemptLogin();
             }
         });
         findViewById(R.id.registerBtn).setOnClickListener(new OnClickListener() {
@@ -92,7 +84,7 @@ public class LoginActivity extends BaseFrameAct {
     }
 
 
-    private void attemptLogin() throws NoSuchAlgorithmException {
+    private void attemptLogin() {
 
 
 //        startActivity(new Intent(LoginActivity.this, MainPage.class));

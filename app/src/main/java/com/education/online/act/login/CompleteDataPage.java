@@ -143,12 +143,7 @@ public class CompleteDataPage extends BaseFrameAct {
                         Toast.makeText(CompleteDataPage.this, "请选择教学科目", Toast.LENGTH_SHORT).show();
                     }else {
                         name = RealName.getText().toString();
-                        String SHApassword="";
-                        try {
-                            SHApassword = SHA.getSHA(password);
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        }
+                        String SHApassword = SHA.getSHA(password);
                         httphandler.regist(phone,SHApassword,identity,name,gender,avatar,subject_id);
 
                     }
@@ -200,7 +195,7 @@ public class CompleteDataPage extends BaseFrameAct {
 
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
-
+    private String path="";
     /**
      * 收缩图片
      *
@@ -208,15 +203,14 @@ public class CompleteDataPage extends BaseFrameAct {
      */
     public void startPhotoZoom(Uri uri) {
         Bitmap bmp=null;
-        String str="";
         try{
             bmp= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            str= MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "", "");
+            path= MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "", "");
         }catch (Exception e){
             e.printStackTrace();
         }
         Intent intent = new Intent("com.android.camera.action.CROP");// 调用Android系统自带的一个图片剪裁页面,
-        intent.setDataAndType(Uri.parse(str), IMAGE_UNSPECIFIED);
+        intent.setDataAndType(Uri.parse(path), IMAGE_UNSPECIFIED);
         intent.putExtra("crop", "true");// 进行修剪
         // aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX", 1);
@@ -226,6 +220,7 @@ public class CompleteDataPage extends BaseFrameAct {
         intent.putExtra("outputY", 350);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
+        intent.putExtra("return-data", true);
         startActivityForResult(intent, 0x22);
     }
 
@@ -266,7 +261,16 @@ public class CompleteDataPage extends BaseFrameAct {
             }.start();
         }else if(requestCode == 0x22){
             File file = FileUtil.getFile(phoneTxtName + ".png", CompleteDataPage.this);
-            Bitmap photo= BitmapFactory.decodeFile(file.toString());
+            Bitmap photo=null;
+            if(data!=null) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    photo = extras.getParcelable("data");
+                }
+            }
+            if(photo==null){
+                photo = BitmapFactory.decodeFile(SelectPicDialog.getPath(this, Uri.parse(path)));
+            }
             if(photo!=null) {
 //                progressDialog.show();
                 final Bitmap output = ImageUtil.createCircleImage(photo, Math.min(photo.getHeight(), photo.getWidth()));

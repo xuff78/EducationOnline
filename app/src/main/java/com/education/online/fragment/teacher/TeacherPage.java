@@ -22,6 +22,7 @@ import com.education.online.bean.CategoryBean;
 import com.education.online.bean.LoginInfo;
 import com.education.online.bean.UserInfo;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -92,7 +93,8 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), TeacherCourseStart.class));
                 break;
             case R.id.teacherImg:
-                startActivity(new Intent(getActivity(), TeacherInformationPage.class));
+                Intent intent=new Intent(getActivity(), TeacherInformationPage.class);
+                ActUtil.startAnimActivity(getActivity(), intent, view, "headIcon");
                 break;
         }
     }

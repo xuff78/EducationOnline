@@ -193,7 +193,7 @@ public class UserInfoEdit extends BaseFrameAct {
     };
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
-
+    private String path="";
     /**
      * 收缩图片
      *
@@ -201,15 +201,14 @@ public class UserInfoEdit extends BaseFrameAct {
      */
     public void startPhotoZoom(Uri uri) {
         Bitmap bmp=null;
-        String str="";
         try{
             bmp= MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            str= MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "", "");
+            path= MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "", "");
         }catch (Exception e){
             e.printStackTrace();
         }
         Intent intent = new Intent("com.android.camera.action.CROP");// 调用Android系统自带的一个图片剪裁页面,
-        intent.setDataAndType(Uri.parse(str), IMAGE_UNSPECIFIED);
+        intent.setDataAndType(Uri.parse(path), IMAGE_UNSPECIFIED);
         intent.putExtra("crop", "true");// 进行修剪
         // aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX", 1);
@@ -259,7 +258,16 @@ public class UserInfoEdit extends BaseFrameAct {
             }.start();
         }else if(requestCode == 0x22){
             File file = FileUtil.getFile(phoneTxtName + ".png", UserInfoEdit.this);
-            Bitmap photo= BitmapFactory.decodeFile(file.toString());
+            Bitmap photo=null;
+            if(data!=null) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    photo = extras.getParcelable("data");
+                }
+            }
+            if(photo==null){
+                photo = BitmapFactory.decodeFile(SelectPicDialog.getPath(this, Uri.parse(path)));
+            }
             if(photo!=null) {
 //                progressDialog.show();
                 final Bitmap output = ImageUtil.createCircleImage(photo, Math.min(photo.getHeight(), photo.getWidth()));

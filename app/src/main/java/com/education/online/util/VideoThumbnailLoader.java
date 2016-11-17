@@ -71,7 +71,7 @@ public class VideoThumbnailLoader {
 
                 if (bitmap == null||bitmap.isRecycled()) {
 
-                    String filename=SHA.digesPSW(url);
+                    String filename=SHA.getSHA(url);
                     File file = FileUtil.getFile(filename+".png", act);//创建文件,这里由于项目原因,我就随便写一个,实际情况不是这样,大家留意一下
                     if (null != file && file.exists()) {//去磁盘缓存取
                         bitmap = BitmapFactory.decodeFile(file.getPath());
