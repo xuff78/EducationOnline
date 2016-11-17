@@ -131,7 +131,9 @@ public class RegisterPage1 extends BaseFrameAct {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        startActivity(new Intent(RegisterPage1.this, RegisterPage2.class));
+                        Intent intent = new Intent(RegisterPage1.this,RegisterPage2.class);
+                        intent.putExtra("phone",phoneNum);
+                        startActivity(intent);
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(RegisterPage1.this, "获取验证码成功", Toast.LENGTH_SHORT).show();
                         //获取验证码成功
