@@ -177,27 +177,16 @@ public class CourseWareBaseInfoEdit extends BaseFrameAct {
 
 
                                     }
-                                    addClassBean.setCourse_url(description_url);
-                                    addClassBean.setName(courseName.getText().toString());
-                                    httpHandler.addClass(addClassBean);
-                                }
 
+                                }
+                                addClassBean.setCourse_url(description_url);
+                                addClassBean.setName(courseName.getText().toString());
+                                httpHandler.addClass(addClassBean);
 
                             }
                         }
                         break;
                     case R.id.uploadBtn:
-
-
-                        // MediaOptions.Builder builder = new MediaOptions.Builder();
-                        // MediaOptions options = null;
-                        //  options = builder.selectVideo().canSelectMultiVideo(true).build();
-                        // if (options != null) {
-                        // clearImages();
-                        //    MediaPickerActivity.open(CourseWareBaseInfoEdit.this, REQUEST_MEDIA, options);
-                        //  }
-
-                        // selectPicDialog.show();
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         // if(type==1)
                         //     intent.setType("video/*");

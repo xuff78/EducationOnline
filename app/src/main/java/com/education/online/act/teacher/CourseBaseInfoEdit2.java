@@ -132,8 +132,6 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
 
                 }
 
-
-
                 break;
             case R.id.insert1Text:
                 insert1Text.setTextColor(getResources().getColor(R.color.normal_red));

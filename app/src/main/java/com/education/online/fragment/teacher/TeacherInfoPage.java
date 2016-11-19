@@ -13,17 +13,24 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.adapter.CommentsAdapter;
+import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.fragment.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Great Gao on 2016/11/8.
  */
 public  class TeacherInfoPage extends BaseFragment implements View.OnClickListener {
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
+    private List<EvaluateBean> evaluateList = new ArrayList<>();
     ImageView teacherpotrait;
     TextView teacherSexual, teacherName, teacherTitles, teachingExperience,identityConfirmed,fansNum,studentNum,praisePercent;
     RecyclerView recyclerList ;
+    private CourseDetailBean courseDetailBean = new CourseDetailBean();
     LinearLayout addToFavoriteLayout, consultingLayout,brief, subjects, photoalbum,teachercomments ;
     View viewbrief, viewsubjects, viewphotoalbum, viewteachercomments;
     TextView textbrief, textsubjects, textphotoalbum, textteachercomments;
@@ -39,7 +46,7 @@ public  class TeacherInfoPage extends BaseFragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.teacher_main_page, container, false);
 
         initView(view);
-        recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
+        recyclerList.setAdapter(new CommentsAdapter(getActivity(),courseDetailBean ,evaluateList));
         return view;
     }
 
@@ -85,6 +92,7 @@ public  class TeacherInfoPage extends BaseFragment implements View.OnClickListen
         recyclerList.setLayoutManager(layoutManager);
         lastSelectedview = brief;
         lastSelectedPosition=0;
+        evaluateList.addAll(evaluateListBean.getEvaluateList());
 
     }
     public void setStatusFalse(int pos){
@@ -118,14 +126,14 @@ public  class TeacherInfoPage extends BaseFragment implements View.OnClickListen
             setStatusFalse(lastSelectedPosition);
             switch (view.getId()) {
                 case R.id.brief:
-                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
+                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), courseDetailBean,evaluateList));
                     lastSelectedview= brief;
                     lastSelectedPosition=0;
                     textbrief.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewbrief.setVisibility(View.VISIBLE);
                     break;
                 case R.id.subjects:
-                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
+                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), courseDetailBean,evaluateList));
                     lastSelectedview= subjects;
                     lastSelectedPosition=1;
                     textsubjects.setTextColor(getResources().getColor(R.color.dark_orange));
@@ -133,14 +141,14 @@ public  class TeacherInfoPage extends BaseFragment implements View.OnClickListen
 
                     break;
                 case R.id.photoalbum:
-                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
+                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), courseDetailBean,evaluateList));
                     lastSelectedview= photoalbum;
                     lastSelectedPosition=2;
                     textphotoalbum.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewphotoalbum.setVisibility(View.VISIBLE);
                     break;
                 case R.id.teachercomments:
-                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
+                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), courseDetailBean,evaluateList));
                     lastSelectedview= teachercomments;
                     lastSelectedPosition=2;
                     textteachercomments.setTextColor(getResources().getColor(R.color.dark_orange));

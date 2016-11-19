@@ -15,6 +15,7 @@ import com.education.online.act.Mine.HelpandFeedback;
 import com.education.online.act.Mine.MyCourseMuti;
 import com.education.online.act.Mine.MyEvaluation;
 import com.education.online.act.Mine.MyOrderUser;
+import com.education.online.act.Mine.MyQuestion;
 import com.education.online.act.Mine.MyWallet;
 import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
@@ -100,7 +101,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
             case R.id.mySchoolLayout:
                 break;
             case R.id.myQuestionLayout:
-                startActivity(new Intent(getActivity(), AskAndAnswer.class));
+                startActivity(new Intent(getActivity(), MyQuestion.class));
                 break;
             case R.id.myCollectionLayout:
                 i.setClass(getActivity(), MyCourseMuti.class);

@@ -95,6 +95,26 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getCourseList, paramMap, true);
 	}
 
+	public void AskOrAnswer(String qa_type,String subject_id,String name,String introduction, String img,String integral,String question_id ){
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(qa_type!=null)
+			paramMap.put("qa_type",qa_type);
+		if(qa_type!=null)
+			paramMap.put("subject_id",subject_id);
+		if(qa_type!=null)
+			paramMap.put("name",name);
+		if(qa_type!=null)
+			paramMap.put("introduction",introduction);
+		if(qa_type!=null)
+			paramMap.put("img",img);
+		if(qa_type!=null)
+			paramMap.put("integral",integral);
+		if(qa_type!=null)
+			paramMap.put("question_id",question_id);
+		requestPostEdu(Method.askOrAnswer, paramMap, true);
+	}
+
 	public void getCourseList(CourseFilter filter){
 
 		try {
@@ -412,6 +432,36 @@ public class HttpHandler extends Handle {
 		paraMap.put("is_secret",is_secret);
 		requestPostEdu(Method.evaluate,paraMap,true);
 
+	}
+	public  void getQuestionList(String query_type,String status,String subject_id,String page_size,String page){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(query_type.length()>0)
+			paraMap.put("query_type",query_type);
+		if(status.length()>0)
+			paraMap.put("status",status);
+		if(subject_id.length()>0)
+			paraMap.put("subject_id",subject_id);
+		if(page_size.length()>0)
+			paraMap.put("page_size",page_size);
+		if(page.length()>0)
+			paraMap.put("page",page);
+		requestPostEdu(Method.getQuestionList,paraMap,true);
+
+	}
+
+	public  void getAnswerList(String question_id,String page_size,String page){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(question_id.length()>0)
+			paraMap.put("question_id",question_id);
+		if(page_size.length()>0)
+			paraMap.put("page_size",page_size);
+		if(page.length()>0)
+			paraMap.put("page",page);
+		requestPostEdu(Method.getAnswerList,paraMap,true);
 	}
 
 

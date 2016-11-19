@@ -146,7 +146,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         addClassBean.setIntroduction(courseDesc.getText().toString().trim());
                         addClassBean.setName(subjectTxt.getText().toString());
                         if (addClassBean.getName().length() == 0 || addClassBean.getIntroduction().length() == 0 || addClassBean.getCourse_type().length() == 0 || addClassBean.getSubject_id().length() == 0
-                                || addClassBean.getOriginal_price().length() == 0 || addClassBean.getPrice().length() == 0|| addClassBean.getImg().length() == 0) {
+                                || addClassBean.getOriginal_price().length() == 0 || addClassBean.getPrice().length() == 0 || addClassBean.getImg().length() == 0) {
                             Toast.makeText(VideoCourseBaseInfoEdit.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
 
                         } else {
@@ -170,8 +170,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                                         EditText editText = (EditText) childView.getTag(R.id.tag_videodescription);
                                         String url = uploadVideoProgresses.get(i).getUrl();
                                         String description = editText.getText().toString();
-                                        if(description.length()==0)
-                                            description = "视频"+(i+1);
+                                        if (description.length() == 0)
+                                            description = "视频" + (i + 1);
                                         if (i != progressListeners.size() - 1) {
 
                                             description_url = description_url + description + "_" + url + ",";
@@ -180,12 +180,10 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
 
                                     }
-                                    addClassBean.setCourse_url(description_url);
-                                    addClassBean.setName(courseName.getText().toString());
-                                    httpHandler.addClass(addClassBean);
                                 }
-
-
+                                addClassBean.setCourse_url(description_url);
+                                addClassBean.setName(courseName.getText().toString());
+                                httpHandler.addClass(addClassBean);
                             }
                         }
                         break;
@@ -228,9 +226,9 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
 
                     case R.id.open:
                         int pos2 = (int) v.getTag();
-                        Intent intent=new Intent(VideoCourseBaseInfoEdit.this, VideoPlay.class);
-                        String Uri = UriUtil.getRealFilePath(VideoCourseBaseInfoEdit.this,uploadVideoProgresses.get(pos2).getUri());
-                        intent.putExtra("Uri",Uri);
+                        Intent intent = new Intent(VideoCourseBaseInfoEdit.this, VideoPlay.class);
+                        String Uri = UriUtil.getRealFilePath(VideoCourseBaseInfoEdit.this, uploadVideoProgresses.get(pos2).getUri());
+                        intent.putExtra("Uri", Uri);
                         startActivity(intent);
 
                         break;
@@ -418,11 +416,11 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         ProgressBar progressBar = (ProgressBar) childView.getTag(R.id.tag_progress_value1);
                         progressBar.setProgress(100);
                         LogUtil.i(TAG, "upload complete!! result: " + result);
-                        String url="";
+                        String url = "";
                         try {
-                            JSONObject json=new JSONObject(result);
-                            if(!json.isNull("url"))
-                            url = json.getString("url");
+                            JSONObject json = new JSONObject(result);
+                            if (!json.isNull("url"))
+                                url = json.getString("url");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

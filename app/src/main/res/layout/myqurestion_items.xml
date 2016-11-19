@@ -43,12 +43,13 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_corner_orangeline"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
                 android:text="设计"
                 android:textColor="@color/dark_orange"
                 android:textSize="12sp" />
             <TextView
+                android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/design"
                 android:layout_height="wrap_content"
@@ -59,6 +60,7 @@
                 android:text="08月4日"
                 android:textSize="13sp" />
             <TextView
+                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/questiondate"
                 android:id="@+id/questiontime"
@@ -92,16 +94,35 @@
             android:gravity="center_vertical"
             android:text="PHOTOSHOP基础工具机+唯美图片合成"
             android:textSize="14sp" />
-
-        <TextView
-            android:layout_marginTop="8dp"
-            android:id="@+id/answerNum"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="已有56人回答"
-            android:textColor="@color/light_gray"
-            android:textSize="13sp" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/answerNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="已有56人回答"
+                android:layout_centerVertical="true"
+                android:textColor="@color/light_gray"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/isfinished"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
+                android:textColor="@android:color/holo_blue_dark"
+                />
+
+        </RelativeLayout>
+
+
 
 
     </LinearLayout>

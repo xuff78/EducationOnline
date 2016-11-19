@@ -134,6 +134,11 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 		right_text.setOnClickListener(listener);
 	}
 
+	protected void _setRightHomeTextColor(int resourseid){
+		TextView right_text= (TextView) findViewById(R.id.right_text);
+		right_text.setTextColor(resourseid);
+	}
+
 	protected void _setLeftBackText(String name, OnClickListener listener) {
 		btnBack.setVisibility(View.GONE);
 		TextView left_text= (TextView) findViewById(R.id.left_text);

@@ -38,7 +38,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/headIcon"
-            android:text="Adobe万晨曦"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -53,20 +52,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="2016.08.22 12:40"
                 android:textColor="@color/what_gray"
                 android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/design"
-                android:layout_width="40dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shape_red_with_corner"
                 android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
 
-                android:text="设计"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -74,17 +73,16 @@
     </RelativeLayout>
 
     <View
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_below="@+id/tablayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:background="@color/light_gray" />
 
     <TextView
-        android:text="什么看乱七八糟的问题，我都答得有模有样，什么问题最擅长金箍棒！"
         android:id="@+id/questiondetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,34 +91,31 @@
         android:paddingRight="20dp"
         android:textSize="14sp" />
 
-    <RelativeLayout
-        android:layout_marginBottom="10dp"
+
+    <ImageView
         android:layout_marginTop="10dp"
+        android:id="@+id/questionpicture"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="20dp"
+      />
+
+    <TextView
+        android:id="@+id/answerNum"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/normal_blue"
+        android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/questionpicture"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@mipmap/icon_teacher" />
-
-        <TextView
-            android:id="@+id/answerNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="问题已解决"
-            android:textColor="@color/normal_blue"
-            android:textSize="14sp" />
-    </RelativeLayout>
     <View
-
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_below="@+id/tablayout"
+        android:layout_marginTop="10dp"
         android:background="@color/light_gray" />
 </LinearLayout>

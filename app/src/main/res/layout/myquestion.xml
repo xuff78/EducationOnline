@@ -25,9 +25,9 @@
             android:gravity="center"
             android:textSize="16sp"
             android:layout_marginTop="15dp"
-            android:layout_width="160dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_corner_orangeline"/>
+            android:background="@drawable/shape_smallcorner_orangeline"/>
     </RelativeLayout>
 </RelativeLayout>

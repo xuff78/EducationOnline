@@ -25,11 +25,15 @@ import com.education.online.adapter.CourseAdapter;
 import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
 import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.util.Constant;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.VideoUtil;
 import com.upyun.upplayer.widget.UpVideoView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
@@ -50,7 +54,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     private View lastSelectedview;
     private int lastSelectedPosition;
     private RelativeLayout videorelated;
-
+    private List<EvaluateBean> evaluateList = new ArrayList<>();
     private CourseDetailBean courseDetailBean;
     private EvaluateListBean evaluateListBean;
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks/";
@@ -74,6 +78,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.course_detail_main, container, false);
 
         initView(view);
+        evaluateList.addAll(evaluateListBean.getEvaluateList());
         recyclerList.setAdapter(new DetailsAdapter(getActivity(), courseDetailBean));
         return view;
     }
@@ -237,7 +242,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
 
                     break;
                 case R.id.comments:
-                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), evaluateListBean));
+                    recyclerList.setAdapter(new CommentsAdapter(getActivity(), courseDetailBean,evaluateList));
                     lastSelectedview = comments;
                     lastSelectedPosition = 2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));

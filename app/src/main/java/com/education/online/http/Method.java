@@ -37,5 +37,8 @@ public class Method {
     public static final String addCollection ="education/course/collection" ;
     public static final String addAttention ="education/user/attention";
     public static final String evaluate ="education/course/evaluate";
+    public static final String askOrAnswer="education/discovery/addQa";
+    public static final String getAnswerList= "education/discovery/aList";
+    public static final String getQuestionList= "education/discovery/qList";
 
 }

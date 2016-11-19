@@ -31,7 +31,7 @@ public class WheelDateSelectorDialog extends Dialog implements View.OnClickListe
 	private WheelView startdatetime, enddatetime;
 	private ArrayList<String> dateArray=new ArrayList<>();
 	private ArrayList<String> dateTxtArray=new ArrayList<>();
-	private CourseTimeBean bean=null;
+	private CourseTimeBean bean=new CourseTimeBean();
 	private int padding=0;
 	private boolean flag = false;
 

@@ -352,6 +352,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             intent.setClass(act, VideoMainPage.class);
                             act.startActivity(intent);
                         } else if (pos == 4) {
+                            WareCourse course=new WareCourse();
+                            if(view.getId()==R.id.item1)
+                                course=info.getWare().get(0);
+                            else if(view.getId()==R.id.item2)
+                                course=info.getWare().get(1);
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("course_img", course.getCourse_img());
+                            intent.putExtra("course_id", course.getCourse_id());
                             intent.setClass(act, VideoMainPage.class);
                             act.startActivity(intent);
                         }

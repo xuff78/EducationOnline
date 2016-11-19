@@ -237,6 +237,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             userName = (TextView) v.findViewById(R.id.userName);
             potrait = (ImageView) v.findViewById(R.id.potrait);
             ratingBar = (RatingBar) v.findViewById(R.id.ratingbar);
+            ratingBar.setmClickable(false);
             userComments = (TextView) v.findViewById(R.id.userComments);
             commentDate = (TextView) v.findViewById(R.id.commentDate);
             commentTime = (TextView) v.findViewById(R.id.commentTime);

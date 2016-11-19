@@ -3,6 +3,7 @@ package com.education.online.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.ImageReader;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.bean.UploadVideoProgress;
+import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -67,7 +69,9 @@ public class VideoUploadProgressAdapter extends BaseAdapter {
         TextView delete = (TextView) convertView.findViewById(R.id.delete);
         TextView open = (TextView) convertView.findViewById(R.id.open);
         ImageView videoImage = (ImageView) convertView.findViewById(R.id.videoImage);
+
         ImageLoader.getInstance().displayImage(uploadVideoProgresses.get(position).getUri().toString(), videoImage);
+
         ProgressBar progress = (ProgressBar) convertView.findViewById(R.id.progress);
         EditText resourseName = (EditText) convertView.findViewById(R.id.resourseName);
         progress.setProgress(uploadVideoProgresses.get(position).getProgress());

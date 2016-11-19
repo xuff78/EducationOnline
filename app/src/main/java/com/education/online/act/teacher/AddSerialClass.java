@@ -59,7 +59,8 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_serial_class);
         _setHeaderTitle("添加多次课");
-        _setLeftBackListener(new View.OnClickListener() {
+        _setRightHomeTextColor(getResources().getColor(R.color.normal_red));
+        _setRightHomeText("完成", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isDateSet && isTimeSet && isWeekdaySet) {
@@ -95,6 +96,7 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
         Format dateShow = new SimpleDateFormat("MM月dd日");
         Date date = new Date(System.currentTimeMillis());
         cal.setTime(date);//获取当前时间
+        cal.add(Calendar.DATE, startdatetime);
         int length = enddatetime - startdatetime + 1;
         String stringtemp;//计算上结束当天
         for (int i = 0; i < length; i++) {
@@ -192,7 +194,7 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
                 Calendar cal = Calendar.getInstance();
                 Date date = new Date(System.currentTimeMillis());
                 cal.setTime(date);//获取当前时间
-                cal.add(Calendar.DATE,startdatetime);
+                cal.add(Calendar.DATE,startdatetime+1);
                 String starttemp = dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));
                 cal.add(Calendar.DATE,enddatetime-startdatetime);
                 String endtemp = dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));

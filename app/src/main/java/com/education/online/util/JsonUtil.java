@@ -2,6 +2,8 @@ package com.education.online.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.education.online.bean.AnswerInfoBean;
+import com.education.online.bean.AnswerListHolder;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CourseEvaluate;
 import com.education.online.bean.CourseExtm;
@@ -9,6 +11,8 @@ import com.education.online.bean.CreatUserInfo;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
+import com.education.online.bean.QuestionInfoBean;
+import com.education.online.bean.QuestionListHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -254,7 +258,102 @@ public class JsonUtil {
         return evaluateListBean;
 
     }
+    public static QuestionListHolder getQuestionListHolder(String jsonStr) throws JSONException {
+        QuestionListHolder questionListHolder = new QuestionListHolder();
+        List<QuestionInfoBean> questionInfoBeans = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if(!jsonObject.isNull("total"))
+            questionListHolder.setTotal(jsonObject.getString("total"));
+        if(!jsonObject.isNull("page_total"))
+            questionListHolder.setPage_total(jsonObject.getString("page_total"));
+        if(!jsonObject.isNull("current_page"))
+            questionListHolder.setCurrent_page(jsonObject.getString("current_page"));
+        if(!jsonObject.isNull("question_info")){
+            JSONArray jsonArray = jsonObject.getJSONArray("question_info");
+            for (int i=0;i<jsonArray.length();i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                QuestionInfoBean questionInfoBean = new QuestionInfoBean();
+                if (!item.isNull("question_id"))
+                    questionInfoBean.setQuestion_id(item.getString("question_id"));
+                if (!item.isNull("name"))
+                    questionInfoBean.setName(item.getString("name"));
+                if (!item.isNull("avatar"))
+                    questionInfoBean.setAvatar(item.getString("avatar"));
+                if (!item.isNull("answer_count"))
+                    questionInfoBean.setAnswer_count(item.getString("answer_count"));
+                if (!item.isNull("created_at"))
+                    questionInfoBean.setCreated_at(item.getString("created_at"));
+                if (!item.isNull("img"))
+                    questionInfoBean.setImg(item.getString("img"));
+                if (!item.isNull("integral"))
+                    questionInfoBean.setIntegral(item.getString("integral"));
+                if (!item.isNull("introduction"))
+                    questionInfoBean.setIntroduction(item.getString("introduction"));
+                if (!item.isNull("is_finished"))
+                    questionInfoBean.setIs_finished(item.getString("is_finished"));
+                if (!item.isNull("subject_id"))
+                    questionInfoBean.setSubject_id(item.getString("subject_id"));
+                if (!item.isNull("user_name"))
+                    questionInfoBean.setUser_name(item.getString("user_name"));
+                if (!item.isNull("usercode"))
+                    questionInfoBean.setUsercode(item.getString("usercode"));
+                if (!item.isNull("subject_name"))
+                    questionInfoBean.setSubject_name(item.getString("subject_name"));
 
+                questionInfoBeans.add(questionInfoBean);
+            }
+            questionListHolder.setQuestion_infos(questionInfoBeans);
+
+
+        }
+        return questionListHolder;
+
+
+    }
+
+    public static AnswerListHolder getAnswerListHolder(String jsonStr) throws JSONException {
+        AnswerListHolder answerListHolder = new AnswerListHolder();
+        List<AnswerInfoBean> answerInfoBeans = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if(!jsonObject.isNull("total"))
+            answerListHolder.setTotal(jsonObject.getString("total"));
+        if(!jsonObject.isNull("page_total"))
+            answerListHolder.setPage_total(jsonObject.getString("page_total"));
+        if(!jsonObject.isNull("current_page"))
+            answerListHolder.setCurrent_page(jsonObject.getString("current_page"));
+        if(!jsonObject.isNull("answer_info")){
+            JSONArray jsonArray = jsonObject.getJSONArray("answer_info");
+            for (int i=0;i<jsonArray.length();i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                AnswerInfoBean answerInfoBean = new AnswerInfoBean();
+                if (!item.isNull("answer_id"))
+                    answerInfoBean.setAvatar(item.getString("answer_id"));
+                if (!item.isNull("introduction"))
+                    answerInfoBean.setIntroduction(item.getString("introduction"));
+                if (!item.isNull("created_at"))
+                    answerInfoBean.setCreated_at(item.getString("created_at"));
+                if (!item.isNull("img"))
+                    answerInfoBean.setImg(item.getString("img"));
+                if (!item.isNull("is_correct"))
+                    answerInfoBean.setImg(item.getString("is_correct"));
+                if (!item.isNull("user_name"))
+                    answerInfoBean.setUser_name(item.getString("user_name"));
+                if (!item.isNull("avatar"))
+                    answerInfoBean.setAvatar(item.getString("avatar"));
+                if (!item.isNull("usercode"))
+                    answerInfoBean.setUsercode(item.getString("usercode"));
+                if (!item.isNull("user_identity"))
+                    answerInfoBean.setUser_identity(item.getString("user_identity"));
+                answerInfoBeans.add(answerInfoBean);
+            }
+            answerListHolder.setAnswer_infos(answerInfoBeans);
+
+
+        }
+        return answerListHolder;
+
+
+    }
 //    public static ArrayList<RainBean> getRainInfo(String jsonStr) {
 //        ArrayList<RainBean> infos=new ArrayList<>();
 //        try {
