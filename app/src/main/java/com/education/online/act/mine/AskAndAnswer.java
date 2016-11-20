@@ -48,6 +48,7 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
     String phoneTxtName = "";
     private String course = "";
 
+    private String coursename="";
     private String introduction = "";
     private String qa_type= "question";
     private String img="";
@@ -76,7 +77,7 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
             public void onClick(View view) {
                 introduction = enterquestion.getText().toString().trim();
 
-                if (course.length() == 0 || introduction.length() == 0) {
+                if (coursename.length() == 0 || introduction.length() == 0) {
                     ToastUtils.displayTextShort(AskAndAnswer.this, "请填写完整提问信息");
 
                 } else {
@@ -95,6 +96,8 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
             public void onSuccess(String method, String jsonMessage) throws JSONException {
                 super.onSuccess(method, jsonMessage);
                 ToastUtils.displayTextShort(AskAndAnswer.this,"提交成功！");
+                setResult(0x10);
+                finish();
             }
 
             @Override
@@ -153,6 +156,7 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
             SubjectBean subjectBean = (SubjectBean) data.getSerializableExtra(SubjectBean.Name);
             // addClassBean.setName(subjectBean.getSubject_name());
             subject.setText(subjectBean.getSubject_name());
+            coursename = subjectBean.getSubject_name();
             subject_id = subjectBean.getSubject_id();
         } else if (resultCode == RESULT_OK && (requestCode == SelectPicDialog.SELECT_PIC_BY_TACK_PHOTO ||
                 requestCode == SelectPicDialog.SELECT_PIC_BY_PICK_PHOTO)) {
@@ -212,12 +216,12 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
                         progressDialog.dismiss();
                         // mFaceImagePath.delete();
                     }
-                }).execute(file, "course/" + phoneTxtName + ".png");
+                }).execute(file, "question/" + phoneTxtName + ".png");
             }
             Bitmap photo = BitmapFactory.decodeFile(file.toString());
             if (photo != null) {
                 questionImage.setImageBitmap(photo);
-                img = "course/"+phoneTxtName + ".png";
+                img = "question/"+phoneTxtName + ".png";
 
             } else
                 ToastUtils.displayTextShort(AskAndAnswer.this, "找不到文件");

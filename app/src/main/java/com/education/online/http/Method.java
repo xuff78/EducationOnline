@@ -40,5 +40,6 @@ public class Method {
     public static final String askOrAnswer="education/discovery/addQa";
     public static final String getAnswerList= "education/discovery/aList";
     public static final String getQuestionList= "education/discovery/qList";
+    public static final String finishQuestion= "education/discovery/finishQa";
 
 }

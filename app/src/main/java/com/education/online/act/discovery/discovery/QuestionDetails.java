@@ -19,6 +19,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
 
@@ -42,6 +43,9 @@ public class QuestionDetails extends BaseFrameAct {
     private String pageSize = "10";
     private AnswerListHolder answerListHolder = new AnswerListHolder();
     private List<AnswerInfoBean> answerInfoBeen = new ArrayList<>();
+    private View.OnClickListener listener;
+
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +58,39 @@ public class QuestionDetails extends BaseFrameAct {
 
     }
 
+
+
+
     public void init() {
+_setLeftBackListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        setResult(0x10);
+        finish();
+    }
+});
+        listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String answer_id = (String) v.getTag();
+                switch (v.getId())
+                {
+                    case R.id.isadopted:
+                        httpHandler.finishQuestion(questionInfoBean.getQuestion_id(),answer_id);
+
+                        break;
+                }
+            }
+        };
         intent = getIntent();
         layoutManager = new LinearLayoutManager(this);
         questionInfoBean = (QuestionInfoBean) intent.getSerializableExtra("questionInfoBean");
+        flag = intent.getBooleanExtra("flag",false);
         recycleList = (RecyclerView) findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(QuestionDetails.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleList.setLayoutManager(layoutManager);
-        adapter = new QuestionDetailsitemAdapter(this, questionInfoBean,answerListHolder,answerInfoBeen);
+        adapter = new QuestionDetailsitemAdapter(this, questionInfoBean,answerListHolder,answerInfoBeen,listener, flag);
         recycleList.setAdapter(adapter);
         recycleList.addOnScrollListener(srcollListener);
         linearLayout = (LinearLayout) findViewById(R.id.layout1);
@@ -70,9 +98,19 @@ public class QuestionDetails extends BaseFrameAct {
             @Override
             public void onClick(View view) {
                 intent.setClass(QuestionDetails.this, IwantToAnswer.class);
-                startActivity(intent);
+                startActivityForResult(intent,0x10);
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==0x10){
+            if(requestCode==0x10){
+                page=1;
+                answerInfoBeen.clear();
+                httpHandler.getAnswerList(questionInfoBean.getQuestion_id(), pageSize, String.valueOf(page));
+            }
+        }
     }
 
     private void initHandler() {
@@ -90,6 +128,12 @@ public class QuestionDetails extends BaseFrameAct {
                     adapter.notifyDataSetChanged();
                     page++;
                 }
+                if(method.equals(Method.finishQuestion)){
+                    answerInfoBeen.clear();
+                    page=1;
+                    questionInfoBean.setIs_finished("1");
+                    httpHandler.getAnswerList(questionInfoBean.getQuestion_id(), pageSize, String.valueOf(page));
+                }
             }
 
             @Override
@@ -100,7 +144,9 @@ public class QuestionDetails extends BaseFrameAct {
                     adapter.setLoadingHint("加载失败");
 
                 }
-            }
+                if(method.equals(Method.finishQuestion)){
+                    ToastUtils.displayTextShort(QuestionDetails.this,"回答采纳失败！");
+                }}
 
             @Override
             public void onHTTPException(String method, String jsonMessage) {

@@ -63,7 +63,7 @@ public class AskAndSpeedAnswer extends BaseFrameAct implements View.OnClickListe
         _setRightHomeText("我的回答", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AskAndSpeedAnswer.this, MyAnswers.class));
+                startActivityForResult(new Intent(AskAndSpeedAnswer.this, MyAnswers.class),0x10);
             }
         });
 
@@ -146,6 +146,12 @@ public class AskAndSpeedAnswer extends BaseFrameAct implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x10) {
+            if (resultCode == 0x10) {
+                reset();
+                httphandler.getQuestionList(query_type, status, subject_id, pageSize, String.valueOf(page));
+            }
+        }
         if (resultCode == 0x11) {
             SubjectBean subjectBean = (SubjectBean) data.getSerializableExtra(SubjectBean.Name);
             // addClassBean.setName(subjectBean.getSubject_name());
@@ -161,7 +167,7 @@ public class AskAndSpeedAnswer extends BaseFrameAct implements View.OnClickListe
             case R.id.recentquestion:
                 recentquestion.setTextColor(getResources().getColor(R.color.dark_orange));
                 compeletequestion.setTextColor(getResources().getColor(R.color.normal));
-                status = "uncompleted";
+                status = "";
                 reset();
                 httphandler.getQuestionList(query_type, status, subject_id, pageSize, String.valueOf(page));
                 break;

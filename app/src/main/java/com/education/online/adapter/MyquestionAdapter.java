@@ -99,11 +99,12 @@ public class MyquestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             vh.bonus.setText(questionInfoBean.getIntegral()+"积分");
            if(questionInfoBean.getImg().length()>0){
                imageLoader.displayImage(ImageUtil.getImageUrl(questionInfoBean.getImg()),vh.CourseImage);
-           }else{
-               vh.CourseImage.setVisibility(View.GONE);
-           }
+           }//else{
+           //    vh.CourseImage.setVisibility(View.GONE);
+         //  }
             vh.questiondate.setText(questionInfoBean.getCreated_at());
-            vh.CourseName.setText(questionInfoBean.getSubject_name());
+            vh.design.setText(questionInfoBean.getSubject_name());
+            vh.CourseName.setText(questionInfoBean.getIntroduction());
         if(questionInfoBean.getIs_finished()=="1")
         {
             vh.isfinished.setText("已完结");
@@ -132,12 +133,13 @@ public class MyquestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class MyquestionitemHolder extends RecyclerView.ViewHolder {
 
-        TextView questiondate, bonus, CourseName, answerNum,isfinished;
+        TextView questiondate, bonus, CourseName, answerNum,isfinished,design;
 
         ImageView CourseImage;
 
         MyquestionitemHolder(View v, int pos) {
             super(v);
+            design= (TextView) v.findViewById(R.id.design);
             questiondate = (TextView) v.findViewById(R.id.questiondate);
             bonus = (TextView) v.findViewById(R.id.bonus);
             CourseName = (TextView) v.findViewById(R.id.CourseName);

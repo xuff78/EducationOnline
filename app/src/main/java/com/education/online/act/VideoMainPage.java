@@ -99,6 +99,10 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                         //do sth
                         paytips.setVisibility(View.VISIBLE);
                        payBtn.setVisibility(View.VISIBLE);
+                        video_play.setVisibility(View.INVISIBLE);
+                        video_play.setClickable(false);
+                        videorelated.setVisibility(View.INVISIBLE);
+                        roundLeftBack.setVisibility(View.INVISIBLE);
 
                         textaddorbuy.setOnClickListener(VideoMainPage.this);
                         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,8 +117,8 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.VISIBLE);
                         roundLeftBack.setVisibility(View.VISIBLE);
-                     //   paytips.setVisibility(View.INVISIBLE);
-                     //   payBtn.setVisibility(View.INVISIBLE);
+                        paytips.setVisibility(View.INVISIBLE);
+                        payBtn.setVisibility(View.INVISIBLE);
                         payBtn.setClickable(false);
                         expandBtn.setClickable(false);
                     }

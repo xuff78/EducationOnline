@@ -464,6 +464,17 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getAnswerList,paraMap,true);
 	}
 
+	public  void finishQuestion(String question_id,String answer_id){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(question_id.length()>0)
+			paraMap.put("question_id",question_id);
+		if(question_id.length()>0)
+			paraMap.put("answer_id",answer_id);
+		requestPostEdu(Method.finishQuestion,paraMap,true);
+
+	}
 
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看

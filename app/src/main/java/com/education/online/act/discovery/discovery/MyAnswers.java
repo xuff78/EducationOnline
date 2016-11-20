@@ -58,7 +58,7 @@ public class MyAnswers extends BaseFrameAct {
     private void initView() {
         intent = new Intent();
         recycleList = (RecyclerView) findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleList.setLayoutManager(layoutManager);
         adapter = new AnswersAdapter(this, questionListHolder, questionList);
@@ -138,6 +138,8 @@ public class MyAnswers extends BaseFrameAct {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+            int totalItemCount = layoutManager.getItemCount();
+            if(totalItemCount>0)
             lastVisibleItem = layoutManager.findLastVisibleItemPosition();
         }
     };

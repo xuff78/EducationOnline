@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -67,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp" />
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/createTime"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:layout_marginTop="10dp"
@@ -123,6 +126,8 @@
         android:layout_height="1px"
         android:background="@color/light_gray"/>
 
+
+
     <RelativeLayout
         android:id="@+id/addpicturelayout"
         android:orientation="horizontal"
@@ -149,5 +154,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitesmoke"/>
-
+    <RelativeLayout
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:background="@color/strage_gray"
+        android:layout_height="60dp"
+        >
+        <TextView
+            android:id="@+id/askbtn"
+            android:padding="5dp"
+            android:text="提    交"
+            android:textColor="@color/normal_red"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_smallcorner_orangeline"/>
+    </RelativeLayout>
 </LinearLayout>
+
+
+
+    </ScrollView>

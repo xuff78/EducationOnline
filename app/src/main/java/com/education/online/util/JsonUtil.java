@@ -172,6 +172,8 @@ public class JsonUtil {
                 courseExtm.setCourseware_date(item.getString("courseware_date"));
                 if(!item.isNull("url"))
                     courseExtm.setUrl(item.getString("url"));
+                if(!item.isNull("time_len"))
+                    courseExtm.setTime_len(item.getString("time_len"));
                 if(!item.isNull("state"))
                     courseExtm.setState(item.getString("state"));
                 if(!item.isNull("name"))
@@ -327,7 +329,7 @@ public class JsonUtil {
                 JSONObject item = jsonArray.getJSONObject(i);
                 AnswerInfoBean answerInfoBean = new AnswerInfoBean();
                 if (!item.isNull("answer_id"))
-                    answerInfoBean.setAvatar(item.getString("answer_id"));
+                    answerInfoBean.setAnswer_id(item.getString("answer_id"));
                 if (!item.isNull("introduction"))
                     answerInfoBean.setIntroduction(item.getString("introduction"));
                 if (!item.isNull("created_at"))
@@ -335,7 +337,7 @@ public class JsonUtil {
                 if (!item.isNull("img"))
                     answerInfoBean.setImg(item.getString("img"));
                 if (!item.isNull("is_correct"))
-                    answerInfoBean.setImg(item.getString("is_correct"));
+                    answerInfoBean.setIs_correct(item.getString("is_correct"));
                 if (!item.isNull("user_name"))
                     answerInfoBean.setUser_name(item.getString("user_name"));
                 if (!item.isNull("avatar"))
