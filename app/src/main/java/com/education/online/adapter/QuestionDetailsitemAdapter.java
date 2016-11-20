@@ -88,7 +88,7 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
             QuestionAnswerHolder vh = (QuestionAnswerHolder) holder;
             AnswerInfoBean answerInfoBean = answerInfoBeen.get(position - 1);
             vh.answer.setText(answerInfoBean.getIntroduction());
-            vh.answerwhatquesttion.setText(answerInfoBean.getIntroduction());
+          //  vh.answerwhatquesttion.setText(answerInfoBean.getIntroduction());
 
             vh.isadopted.setTag(answerInfoBean.getAnswer_id());
             if (flag) {
