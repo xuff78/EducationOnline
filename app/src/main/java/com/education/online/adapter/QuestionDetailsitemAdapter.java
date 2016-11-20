@@ -26,17 +26,21 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
     private ImageLoader imageLoader;
     private LayoutInflater listInflater;
     private String loadingHint = "";
+    private View.OnClickListener listener;
+    private boolean flag;
     QuestionInfoBean questionInfoBean = new QuestionInfoBean();
     private AnswerListHolder answerListHolder = new AnswerListHolder();
     private List<AnswerInfoBean> answerInfoBeen = new ArrayList<>();
 
-    public QuestionDetailsitemAdapter(Activity act, QuestionInfoBean questionInfoBean, AnswerListHolder answerListHolder, List<AnswerInfoBean> answerInfoBeen) {
+    public QuestionDetailsitemAdapter(Activity act, QuestionInfoBean questionInfoBean, AnswerListHolder answerListHolder, List<AnswerInfoBean> answerInfoBeen, View.OnClickListener listener, boolean flag) {
         this.act = act;
         this.listInflater = LayoutInflater.from(act);
         imageLoader = ImageLoader.getInstance();
         this.questionInfoBean = questionInfoBean;
         this.answerInfoBeen = answerInfoBeen;
         this.answerListHolder = answerListHolder;
+        this.flag = flag;
+        this.listener = listener;
     }
 
     public void setLoadingHint(String hint) {
@@ -48,11 +52,12 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int pos) {
         RecyclerView.ViewHolder vh = null;
-        if (pos == 0){
+        if (pos == 0) {
             View view = listInflater.inflate(R.layout.myquestiondetailsfirstitem, null);
             vh = new QuestionDetailsFirstitemHolder(view);
-        } else if (pos > 0){
+        } else if (pos > 0) {
             View view = listInflater.inflate(R.layout.myquestiondetailsitems, null);
+            //从第二项开始，先减一
             vh = new QuestionAnswerHolder(view);
         } else {
             View view = listInflater.inflate(R.layout.footer_layout, null);
@@ -81,21 +86,39 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
                 imageLoader.displayImage(ImageUtil.getImageUrl(questionInfoBean.getAvatar()), vh.headIcon);
         } else {
             QuestionAnswerHolder vh = (QuestionAnswerHolder) holder;
-            AnswerInfoBean answerInfoBean = answerInfoBeen.get(position-1);
+            AnswerInfoBean answerInfoBean = answerInfoBeen.get(position - 1);
             vh.answer.setText(answerInfoBean.getIntroduction());
             vh.answerwhatquesttion.setText(answerInfoBean.getIntroduction());
-            if(answerInfoBean.getIs_correct()=="1")
-                vh.isadopted.setVisibility(View.VISIBLE);
+
+            vh.isadopted.setTag(answerInfoBean.getAnswer_id());
+            if (flag) {
+                vh.isadopted.setOnClickListener(listener);
+            }
+            String is_finished = questionInfoBean.getIs_finished();
+
+            if (is_finished.equals("1"))//已完结
+            {
+                vh.isadopted.setClickable(false);
+                if (answerInfoBean.getIs_correct().equals("-1")) {
+                    vh.isadopted.setText("已采纳");
+                } else {
+                    vh.isadopted.setVisibility(View.INVISIBLE);
+                }
+
+            }
             String temp;
-            if(answerInfoBean.getUser_identity()=="2") {
+            if (answerInfoBean.getUser_identity().equals("2")) {
                 temp = "老师";
             } else {
                 temp = "学生";
             }
-            vh.name.setText(answerInfoBean.getUser_name()+"("+temp+")");
-            if(answerInfoBean.getAvatar().length()>0)
+            vh.name.setText(answerInfoBean.getUser_name() + "(" + temp + ")");
+
+            if (answerInfoBean.getAvatar().length() > 0)
                 imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getAvatar()), vh.headIcon);
             vh.time.setText(answerInfoBean.getCreated_at());
+            if (answerInfoBean.getImg().length() > 0)
+                imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getAvatar()), vh.answerpicture);
         }
 
     }
@@ -132,12 +155,13 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
 
     public class QuestionAnswerHolder extends RecyclerView.ViewHolder {
 
-        ImageView headIcon;
-        TextView name, answerwhatquesttion, answer, time,isadopted;
+        ImageView headIcon, answerpicture;
+        TextView name, answerwhatquesttion, answer, time, isadopted;
 
         public QuestionAnswerHolder(View itemView) {
             super(itemView);
 
+            answerpicture = (ImageView) itemView.findViewById(R.id.answerpicture);
             headIcon = (ImageView) itemView.findViewById(R.id.headIcon);
             isadopted = (TextView) itemView.findViewById(R.id.isadopted);
             name = (TextView) itemView.findViewById(R.id.name);

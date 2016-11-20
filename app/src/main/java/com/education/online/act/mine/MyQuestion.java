@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.education.online.R;
 
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.discovery.discovery.QuestionDetails;
 import com.education.online.adapter.MyquestionAdapter;
 import com.education.online.bean.AnswerInfoBean;
 import com.education.online.bean.AnswerListHolder;
@@ -42,12 +43,13 @@ public class MyQuestion extends BaseFrameAct {
     private RecyclerView recyclerList;
     private int page = 1;
     private String pageSize = "10";
-    private String qurey_type="question";
-    private String status="";
-    private String subject_id="";
+    private String qurey_type = "question";
+    private String status = "";
+    private String subject_id = "";
+    private boolean flag = true;
 
     private QuestionListHolder questionListHolder = new QuestionListHolder();
-    private List<QuestionInfoBean> questionInfoBeens  = new ArrayList<>();
+    private List<QuestionInfoBean> questionInfoBeens = new ArrayList<>();
 
     private MyquestionAdapter adapter;
 
@@ -60,7 +62,7 @@ public class MyQuestion extends BaseFrameAct {
         _setHeaderTitle("我的提问");
         initHandler();
         init();
-        httpHandler.getQuestionList(qurey_type,status,subject_id,pageSize,String.valueOf(page));
+        httpHandler.getQuestionList(qurey_type, status, subject_id, pageSize, String.valueOf(page));
     }
 
     private void init() {
@@ -71,22 +73,39 @@ public class MyQuestion extends BaseFrameAct {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MyQuestion.this, AskAndAnswer.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0x10);
             }
         });
         recyclerList = (RecyclerView) findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MyQuestion.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-        adapter=new MyquestionAdapter(MyQuestion.this,questionListHolder , questionInfoBeens);
+        adapter = new MyquestionAdapter(MyQuestion.this, questionListHolder, questionInfoBeens);
         adapter.setOnItemClickListener(new MyquestionAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view) {
-
-                ////////////do sth;
+                int i = (int) view.getTag();
+                Intent intent= new Intent();
+                intent.putExtra("questionInfoBean",questionInfoBeens.get(i));
+                intent.putExtra("flag",flag);
+                intent.setClass(MyQuestion.this, QuestionDetails.class);
+                startActivityForResult(intent,0x10);////////////do sth;
             }
         });
         recyclerList.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x10) {
+            if (resultCode == 0x10) {
+                questionInfoBeens.clear();
+                page =1;
+                httpHandler.getQuestionList(qurey_type, status, subject_id, pageSize, String.valueOf(page));
+            }
+        }
+
     }
 
     public void initHandler() {
@@ -95,7 +114,7 @@ public class MyQuestion extends BaseFrameAct {
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 if (method.equals(Method.getQuestionList)) {
-                    Log.d("getAnswerList", "获取我的列表成功");
+                    Log.d("getAnswerList", "获取问题列表成功");
                     questionListHolder = JsonUtil.getQuestionListHolder(jsonData);
                     questionInfoBeens.addAll(questionListHolder.getQuestion_infos());
                     adapter.notifyDataSetChanged();

@@ -55,16 +55,6 @@
                 android:gravity="center_vertical"
                 android:text="8月3日~8月24日"
                 android:textColorHighlight="@color/hard_gray" />
-
-            <TextView
-                android:id="@+id/coursetime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/coursedate"
-                android:gravity="center"
-                android:text="09:05开课~10:50结课"
-                android:textColorHighlight="@color/hard_gray" />
         </RelativeLayout>
 
         <View

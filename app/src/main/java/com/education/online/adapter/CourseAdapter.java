@@ -32,8 +32,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private ImageLoader imageLoader;
     private ImageView teacherIcon;
     private List<EvaluateBean> evaluateList;
-    private String loadingHint="";
+    private String loadingHint = "";
 
     public CourseAdapter(Activity act, CourseDetailBean courseDetailBean, List<EvaluateBean> evaluateList) {
         this.act = act;
@@ -62,11 +64,11 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemViewType(int position) {
         // TODO Auto-generated method stub
-        return getItemCount()-1>position?position:-1;
+        return getItemCount() - 1 > position ? position : -1;
     }
 
-    public void setLoadingHint(String hint){
-        loadingHint=hint;
+    public void setLoadingHint(String hint) {
+        loadingHint = hint;
         notifyDataSetChanged();
     }
 
@@ -100,19 +102,18 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
 
-        if(holder instanceof FooterViewHolder) {
+        if (holder instanceof FooterViewHolder) {
             FooterViewHolder fvh = (FooterViewHolder) holder;
             fvh.footerHint.setText(loadingHint);
-        }else
-        if (pos == 0) {
+        } else if (pos == 0) {
             CourseHolder vh = (CourseHolder) holder;
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg);
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.coursePrice.setText("￥" + courseDetailBean.getPrice());
             vh.studentNum.setText("班级人数" + courseDetailBean.getMax_follow() + "人，已报名" + courseDetailBean.getFollow() + "人");
-            vh.praisePercent.setText((int)(Float.valueOf(courseDetailBean.getUser_info().getAverage())/5*100) + "%好评");
+            vh.praisePercent.setText((int) (Float.valueOf(courseDetailBean.getUser_info().getAverage()) / 5 * 100) + "%好评");
             vh.totalSerial.setText("共" + courseDetailBean.getCourse_extm().size() + "次课");
-            if(courseDetailBean.getCourse_extm().size()>0) {
+            if (courseDetailBean.getCourse_extm().size() > 0) {
                 String datestring = courseDetailBean.getCourse_extm().get(0).getCourseware_date();
                 vh.courseTime.setText(ActUtil.getDataTime(datestring) + "开课");
             }
@@ -127,11 +128,49 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (pos == 2) {
             CourseDetailsHolder vh = (CourseDetailsHolder) holder;
             vh.courseDetail.setText(courseDetailBean.getIntroduction());
-            vh.courseArrangement.setText(courseDetailBean.getPlan());
-            vh.courseArrangement.setText(courseDetailBean.getPlan());
+            if(courseDetailBean.getPlan().length()>0)
+            vh.coursedate.setText(courseDetailBean.getPlan());
+            else
+            vh.courseDetail.setText("暂无详细安排");
+
+            String temp = "";
+            String tail = "\n";
+            SimpleDateFormat dateData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat timeData = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat dayDate = new SimpleDateFormat("yyyy年MM月dd日");
+            Calendar cal = Calendar.getInstance();
+            Date currenttime = new Date(System.currentTimeMillis());
+
+            try {
+                for (int i = 0; i < courseDetailBean.getCourse_extm().size(); i++) {
+                    CourseExtm courseExtm = courseDetailBean.getCourse_extm().get(i);
+                    String datestring = courseExtm.getCourseware_date();
+                    Date date1 = dateData.parse(datestring);
+                    cal.setTime(date1);
+                    String startdate = dayDate.format(date1);
+                    String starttime = timeData.format(date1);
+                    String endtime = "";
+                    if(courseExtm.getTime_len().length()>0) {
+                        cal.add(Calendar.MINUTE, Integer.parseInt(courseExtm.getTime_len()));
+                        endtime = timeData.format(cal.getTime());
+                    }
+                    if (date1.before(currenttime)) {//直播已结束
+                        temp = temp + startdate + starttime + "~" + endtime + " 已结束" + tail;
+
+                    } else {
+                        temp = temp + startdate + starttime + "~" + endtime + tail;
+                    }
+
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            vh.courseArrangement.setText(temp);
+
+
         } else if (pos > 2) {
             CommentsHolder vh = (CommentsHolder) holder;
-            EvaluateBean evaluateBean=evaluateList.get(pos-3);
+            EvaluateBean evaluateBean = evaluateList.get(pos - 3);
             vh.userName.setText(evaluateBean.getUser_name());
             vh.userComments.setText(evaluateBean.getInfo());
             vh.commentDate.setText(ActUtil.getDataTime(evaluateBean.getEvaluate_date()));
@@ -142,7 +181,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return 3 + evaluateList.size()+1;
+        return 3 + evaluateList.size() + 1;
     }
 
 
@@ -181,7 +220,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     break;
                 case R.id.teacherLayout:
                     intent.setClass(act, TeacherInformationPage.class);
-                    CreatUserInfo teacher=courseDetailBean.getUser_info();
+                    CreatUserInfo teacher = courseDetailBean.getUser_info();
                     intent.putExtra("Avatar", teacher.getAvatar());
                     intent.putExtra("Name", teacher.getUser_name());
                     intent.putExtra(Constant.UserCode, courseDetailBean.getUsercode());
@@ -201,7 +240,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TeacherInfoHolder(View v, int pos) {
             super(v);
             teacherPotrait = (ImageView) v.findViewById(R.id.teacherpotrait);
-            teacherIcon=teacherPotrait;
+            teacherIcon = teacherPotrait;
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             teacherScore = (TextView) v.findViewById(R.id.teacherScore);
             teacherTitles = (TextView) v.findViewById(R.id.teacherTitles);
@@ -220,7 +259,6 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             courseDetail = (TextView) v.findViewById(R.id.courseDetail);
             coursedate = (TextView) v.findViewById(R.id.coursedate);
-            coursetime = (TextView) v.findViewById(R.id.coursetime);
             courseArrangement = (TextView) v.findViewById(R.id.courseArrangement);
         }
 

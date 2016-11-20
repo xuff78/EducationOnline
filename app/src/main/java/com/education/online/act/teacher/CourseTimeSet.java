@@ -74,7 +74,7 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
 
 
 
-        _setLeftBackListener(new View.OnClickListener() {
+        _setRightHomeText("完成",new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String temp = "";
@@ -98,6 +98,7 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
                 finish();
             }
         });
+        _setRightHomeTextColor(getResources().getColor(R.color.normal_red));
     }
 
     @Override
