@@ -54,12 +54,22 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getCourseDtail)) {
                     JsonUtil.getCourseDetail(jsonData, courseDetailBean);
-                    if(intent.hasExtra("Edit"))
-                        textaddorbuy.setText("开始直播");
-                    else if(courseDetailBean.getIs_buy().equals("1"))
+                    if(intent.hasExtra("Edit")) {
+                        if(intent.getStringExtra("status").equals("1")) {
+                            textaddorbuy.setText("开始直播");
+                            textaddorbuy.setOnClickListener(CourseMainPage.this);
+                        }else if(intent.getStringExtra("status").equals("0")) {
+                            textaddorbuy.setText("待审核");
+                        }else if(intent.getStringExtra("status").equals("2")) {
+                            textaddorbuy.setText("已拒绝");
+                        }
+                    }else if(courseDetailBean.getIs_buy().equals("1")) {
                         textaddorbuy.setText("进入课程");
-                    else
+                        textaddorbuy.setOnClickListener(CourseMainPage.this);
+                    }else {
                         textaddorbuy.setText("立即报名");
+                        textaddorbuy.setOnClickListener(CourseMainPage.this);
+                    }
                     _setHeaderTitle(courseDetailBean.getCourse_name());
                     adapter.notifyDataSetChanged();
                     if (courseDetailBean.getIs_collection().equals("0"))
@@ -126,7 +136,6 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
         textshare = (TextView) findViewById(R.id.textShare);
         textdownload = (TextView) findViewById(R.id.textDownload);
         textaddorbuy = (TextView) findViewById(R.id.addorbuy);
-        textaddorbuy.setOnClickListener(this);
         addfavorite_layout = (LinearLayout) findViewById(R.id.addfavoritelayout);
         addfavorite_layout.setOnClickListener(this);
         share_layout = (LinearLayout) findViewById(R.id.sharelayout);

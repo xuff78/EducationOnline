@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.LoginInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.Constant;
@@ -136,6 +138,10 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserIdentity, user_identity);
                 SharedPreferencesUtil.setUsercode(LoginActivity.this, usercode);
                 SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);//保存sessionid
+
+                LoginInfo user= JSON.parseObject(jsonData, LoginInfo.class);
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.Avatar, user.getAvatar());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.NickName, user.getNickname());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserPSW, userPsd.getText().toString());

@@ -53,6 +53,7 @@ public class VideoPlay extends Activity {
 
         upVideoView = (UpVideoView) findViewById(R.id.uvv_vido);
 
+        upVideoView.setBufferSize(10 * 1024 * 1024);
         //设置背景图片
 //        upVideoView.setImage(R.drawable.dog);
 

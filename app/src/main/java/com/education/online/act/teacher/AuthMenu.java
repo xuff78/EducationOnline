@@ -38,27 +38,7 @@ import java.util.ArrayList;
  */
 public class AuthMenu extends BaseFrameAct {
 
-
-
-
-    HttpHandler handler;
-
-    private void initHandler() {
-        handler = new HttpHandler(this, new CallBack(this) {
-            @Override
-            public void doSuccess(String method, String jsonData) throws JSONException {
-                super.doSuccess(method, jsonData);
-                if(method.equals(Method.getValidateView)){
-
-                    Intent i=new Intent(AuthMenu.this, TeacherAuthPage.class);
-                    i.putExtra("jsonData", jsonData);
-                    startActivity(i);
-                }else if(method.equals(Method.updateTeacher)){
-
-                }
-            }
-        });
-    }
+    private TeacherAuth status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +46,12 @@ public class AuthMenu extends BaseFrameAct {
         setContentView(R.layout.teacher_auth_menu);
 
         _setHeaderTitle("生效成为老师");
-        initHandler();
+        status= JSON.parseObject(getIntent().getStringExtra("jsonData"), TeacherAuth.class);
         initView();
     }
 
     private void initView() {
+
         findViewById(R.id.baseInfoLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,14 +61,52 @@ public class AuthMenu extends BaseFrameAct {
         findViewById(R.id.degreeLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handler.getValidateView();
+                Intent i=getIntent();
+                i.setClass(AuthMenu.this, TeacherAuthPage.class);
+                startActivity(i);
             }
         });
+        setInfo(((TextView)findViewById(R.id.hintTxt1)), status.getIs_ext_validate());
+        TextView hintTxt2=(TextView)findViewById(R.id.hintTxt2);
+        if(status.getIs_edu_bg_validate().equals("1")&&status.getIs_id_validate().equals("1")&&status.getIs_specialty_validate().equals("1")
+                &&status.getIs_tc_validate().equals("1")&&status.getIs_unit_validate().equals("1"))
+            hintTxt2.setText("通过");
+        else
+            hintTxt2.setText("去完善");
     }
 
-    /**
-     * Created by Administrator on 2016/8/25.
-     */
+    private void setInfo(TextView txt, String status) {
+        if(status.equals("3")){
 
+        }else {
+            txt.setTextColor(getResources().getColor(R.color.normal_red));
+            txt.setBackgroundResource(R.drawable.shape_normalredline_with_corner);
+            if (status.equals("0")) {
+                txt.setText("待审核");
+            }else if (status.equals("1")) {
+                txt.setText("通过");
+            }else if (status.equals("2")) {
+                txt.setText("拒绝");
+            }else
+                txt.setText("去完善");
+        }
+    }
+
+    View.OnClickListener listener=new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.baseInfoLayout:
+                    startActivity(new Intent(AuthMenu.this, TeacherInfoEdit.class));
+                    break;
+                case R.id.degreeLayout:
+                    Intent i=getIntent();
+                    i.setClass(AuthMenu.this, TeacherAuthPage.class);
+                    startActivity(i);
+                    break;
+            }
+        }
+    };
 
 }

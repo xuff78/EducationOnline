@@ -45,6 +45,8 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 
     private HttpHandler handler;
     private ImageLoader imageLoader;
+    private ImageView teacherImg;
+    private TextView nameTxt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,11 +73,15 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.helpLayout).setOnClickListener(this);
         v.findViewById(R.id.myCommentLayout).setOnClickListener(this);
 
-        LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), LoginInfo.class);
-        ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
-        imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), teacherImg);
-        TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
-        nameTxt.setText(user.getNickname());
+        teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
+        nameTxt= (TextView) v.findViewById(R.id.nameTxt);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        imageLoader.displayImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(getActivity(), Constant.Avatar)), teacherImg);
+        nameTxt.setText(SharedPreferencesUtil.getString(getActivity(), Constant.NickName));
     }
 
     @Override

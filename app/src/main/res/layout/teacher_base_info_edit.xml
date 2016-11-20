@@ -205,6 +205,7 @@
         android:text="老师介绍"
         style="@style/txt_gray_12" />
     <EditText
+        android:maxLength="300"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:id="@+id/introduce"
@@ -226,6 +227,7 @@
         android:text="简介"
         style="@style/txt_gray_12" />
     <EditText
+        android:maxLength="300"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:id="@+id/descTxt"
@@ -247,6 +249,7 @@
         android:text="经历"
         style="@style/txt_gray_12" />
     <EditText
+        android:maxLength="300"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:id="@+id/experienceTxt"

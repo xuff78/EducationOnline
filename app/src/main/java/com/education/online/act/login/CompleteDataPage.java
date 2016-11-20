@@ -19,11 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.FirstPage;
 import com.education.online.act.MainPage;
 import com.education.online.act.upyun.UploadTask;
+import com.education.online.bean.LoginInfo;
 import com.education.online.bean.SubjectBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -183,9 +185,14 @@ public class CompleteDataPage extends BaseFrameAct {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     String sessionid = jsonObject.getString("sessionid");
                     String user_identity = JsonUtil.getString(jsonData, "user_identity");
+
+                    LoginInfo user= JSON.parseObject(jsonData, LoginInfo.class);
+                    SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.Avatar, user.getAvatar());
+                    SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.NickName, user.getNickname());
                     SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserIdentity, user_identity);
                     SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserInfo, jsonData);
-                    SharedPreferencesUtil.setSessionid(CompleteDataPage.this, sessionid);}
+                    SharedPreferencesUtil.setSessionid(CompleteDataPage.this, sessionid);
+                }
                     Intent intent = new Intent(CompleteDataPage.this, FirstPage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

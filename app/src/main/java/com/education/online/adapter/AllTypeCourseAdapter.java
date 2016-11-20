@@ -96,6 +96,7 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
                         intent.setClass(act, VideoMainPage.class);
                     String course_id = course.getCourse_id();
                     intent.putExtra("course_id", course_id);
+                    intent.putExtra("status", course.getStatus());
                     act.startActivity(intent);
                 }
             });

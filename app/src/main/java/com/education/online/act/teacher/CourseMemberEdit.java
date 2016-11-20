@@ -43,7 +43,7 @@ public class CourseMemberEdit  extends BaseFrameAct {
                 i.putExtra("min", minTxt);
                 i.putExtra("max", maxTxt);
                 setResult(0x13, i);
-                finish();
+                onBackPressed();
             }
         });
         initView();
@@ -54,5 +54,9 @@ public class CourseMemberEdit  extends BaseFrameAct {
         right_text.setTextColor(getResources().getColor(R.color.normal_red));
         minNum= (EditText) findViewById(R.id.minNum);
         maxNum= (EditText) findViewById(R.id.maxNum);
+        if(getIntent().hasExtra("Max_follow"))
+            maxNum.setText(getIntent().getStringExtra("Max_follow"));
+        if(getIntent().hasExtra("Min_follow"))
+            minNum.setText(getIntent().getStringExtra("Min_follow"));
     }
 }

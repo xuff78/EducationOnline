@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.education.online.adapter.ActivityTopGalleryAdapter;
 import com.education.online.adapter.MainAdapter;
 import com.education.online.bean.CategoryBean;
 import com.education.online.bean.HomePageInfo;
+import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.ActUtil;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/8/16.
  */
-public class HomePage extends BaseFragment {
+public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView recyclerList;
     private HttpHandler handler;
@@ -46,6 +48,7 @@ public class HomePage extends BaseFragment {
     private HomePageInfo info;
     private int firstItemHeight;
     private int listScrollY=0;
+    private SwipeRefreshLayout mSwipeLayout;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
@@ -58,6 +61,19 @@ public class HomePage extends BaseFragment {
                 recyclerList.setAdapter(adapter);
 //                mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
 //                mViewPager.startAutoScroll();
+                mSwipeLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+                super.onFailure(method, jsonMessage);
+                mSwipeLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onHTTPException(String method, String jsonMessage) {
+                super.onHTTPException(method, jsonMessage);
+                mSwipeLayout.setRefreshing(false);
             }
         });
     }
@@ -72,6 +88,7 @@ public class HomePage extends BaseFragment {
         if(jsonStr==null) {
             initHandler();
             handler.getHomepage();
+            mSwipeLayout.setRefreshing(true);
         }else{
             recyclerList.setAdapter(adapter);
 //            mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
@@ -81,6 +98,12 @@ public class HomePage extends BaseFragment {
     }
 
     private void initView(View v) {
+
+        mSwipeLayout = (SwipeRefreshLayout)v.findViewById(R.id.id_swipe_ly);
+
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_blue_dark,
+                android.R.color.holo_green_light);
         TextView toolbarTxtRight= (TextView) v.findViewById(R.id.toolbarTxtRight);
         String city=SharedPreferencesUtil.getString(getActivity(), "my_address");
         if(!toolbarTxtRight.equals(SharedPreferencesUtil.FAILURE_STRING)){
@@ -123,5 +146,10 @@ public class HomePage extends BaseFragment {
 //                LogUtil.i("test", "toolbar alpha: "+alpha);
 //            }
 //        });
+    }
+
+    @Override
+    public void onRefresh() {
+        handler.getHomepage();
     }
 }

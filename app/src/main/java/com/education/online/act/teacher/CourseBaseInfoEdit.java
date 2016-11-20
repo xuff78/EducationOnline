@@ -107,15 +107,22 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        Intent i=new Intent();
         switch (view.getId()) {
             case R.id.joinNumLayout:
-                startActivityForResult(new Intent(CourseBaseInfoEdit.this, CourseMemberEdit.class), 0x10);
+                i.setClass(CourseBaseInfoEdit.this, CourseMemberEdit.class);
+                i.putExtra("Max_follow", addClassBean.getMax_follow());
+                i.putExtra("Min_follow", addClassBean.getMin_follow());
+                startActivityForResult(i, 0x10);
                 break;
             case R.id.subjectLayout:
                 startActivityForResult(new Intent(CourseBaseInfoEdit.this, SubjectSelector.class), 0x10);
                 break;
             case R.id.priceLayout:
-                startActivityForResult(new Intent(CourseBaseInfoEdit.this, CoursePriceEdit.class), 0x10);
+                i.setClass(CourseBaseInfoEdit.this, CoursePriceEdit.class);
+                i.putExtra("Price", addClassBean.getPrice());
+                i.putExtra("Original_price", addClassBean.getOriginal_price());
+                startActivityForResult(i, 0x10);
                 break;
             case R.id.courseImgLayout://选择图片层
                 selectPicDialog.show();

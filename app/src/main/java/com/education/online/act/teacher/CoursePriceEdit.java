@@ -43,7 +43,7 @@ public class CoursePriceEdit  extends BaseFrameAct {
                 i.putExtra("cp", cprice);
                 i.putExtra("op", oprice);
                 setResult(0x12, i);
-                finish();
+                onBackPressed();
             }
         });
         initView();
@@ -54,5 +54,9 @@ public class CoursePriceEdit  extends BaseFrameAct {
         right_text.setTextColor(getResources().getColor(R.color.normal_red));
         cPrice= (EditText) findViewById(R.id.cPrice);
         oPrice= (EditText) findViewById(R.id.oPrice);
+        if(getIntent().hasExtra("Price"))
+            cPrice.setText(getIntent().getStringExtra("Price"));
+        if(getIntent().hasExtra("Original_price"))
+            oPrice.setText(getIntent().getStringExtra("Original_price"));
     }
 }

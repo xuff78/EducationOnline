@@ -3,7 +3,9 @@ package com.education.online.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.VideoPlay;
 import com.education.online.act.ViewerActivity;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.EvaluateBean;
@@ -21,9 +25,11 @@ import com.education.online.bean.TeacherBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.view.RatingBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -414,11 +420,60 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 }
             }
+
+            List<String> videos=teacherBean.getVideo();
+            if(videos.size()>0){
+                if(imgs.size()>0) {
+                    View v=new View(act);
+                    LinearLayout.LayoutParams lineLP = new LinearLayout.LayoutParams(-1, 1);
+                    lineLP.topMargin=padding10;
+                    v.setBackgroundResource(R.color.light_gray);
+                    itemsLayout.addView(v, lineLP);
+                }
+                for (int i = 0; i < videos.size(); i++) {
+                    linelayout.addView(getSubjectVideoView(videos.get(i), i), llpitem);
+                    if (i % 4 == 3 || i == videos.size()-1) {
+                        itemsLayout.addView(linelayout);
+                        linelayout = new LinearLayout(act);
+
+                    }
+                }
+            }
+        }
+
+        private RelativeLayout getSubjectVideoView(String videoUrl, int pos) {
+
+            RelativeLayout.LayoutParams llpimg = new RelativeLayout.LayoutParams(imgHeight, imgHeight);
+            llpimg.bottomMargin = 5;
+            RelativeLayout layout = new RelativeLayout(act);
+            layout.setPadding(padding10, padding10 * 2, padding10, 0);
+            ImageView img = new ImageView(act);
+            img.setBackgroundResource(R.color.whitesmoke);
+            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            img.setOnClickListener(videolistener);
+            img.setTag(pos);
+            VideoThumbnailLoader.getIns().display(act, ImageUtil.getImageUrl(videoUrl),img,
+                    100, 100, new VideoThumbnailLoader.ThumbnailListener(){
+                        @Override
+                        public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
+                            if(bitmap!=null)
+                                iv.setImageBitmap(bitmap);
+                        }
+                    });
+            layout.addView(img, llpimg);
+
+            int padding=padding10*8;
+            ImageView imgMask = new ImageView(act);
+            imgMask.setBackgroundResource(R.color.light_trans_black);
+            imgMask.setImageResource(R.mipmap.icon_video_play);
+            imgMask.setPadding(padding, padding, padding, padding);
+            layout.addView(imgMask, llpimg);
+            return layout;
         }
 
         private LinearLayout getSubjectItemView(String imgUrl, int pos) {
             LinearLayout.LayoutParams llpimg = new LinearLayout.LayoutParams(imgHeight, imgHeight);
-            llpimg.bottomMargin = 5;
+            llpimg.bottomMargin = padding10;
             LinearLayout layout = new LinearLayout(act);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(padding10, padding10 * 2, padding10, 0);
@@ -441,6 +496,19 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 i.putStringArrayListExtra("Images", images);
                 i.putExtra("pos", (int)view.getTag());
                 ActUtil.startAnimActivity(act, i, view, "imgbig");
+            }
+        };
+
+        View.OnClickListener videolistener=new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(act, VideoPlay.class);
+                intent.putExtra("Url", ImageUtil.getImageUrl(teacherBean.getVideo().get((int)view.getTag())));
+                act.startActivity(intent);
+
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setDataAndType(Uri.parse(ImageUtil.getImageUrl(teacherBean.getVideo().get((int)view.getTag()))), "video/mp4");
+//                act.startActivity(intent);
             }
         };
     }

@@ -14,6 +14,7 @@ import com.education.online.R;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.act.teacher.MyOrders;
 import com.education.online.act.teacher.MyRatePage;
+import com.education.online.act.teacher.TeacherAuthPage;
 import com.education.online.act.teacher.TeacherCourseStart;
 import com.education.online.act.teacher.TeacherHomePage;
 import com.education.online.act.teacher.TeacherInfoEdit;
@@ -22,11 +23,16 @@ import com.education.online.bean.CategoryBean;
 import com.education.online.bean.LoginInfo;
 import com.education.online.bean.UserInfo;
 import com.education.online.fragment.BaseFragment;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -36,12 +42,31 @@ import java.util.ArrayList;
 public class TeacherPage extends BaseFragment implements View.OnClickListener{
 
     private ImageLoader imageLoader;
+    HttpHandler handler;
+
+    private void initHandler() {
+        handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getValidateView)){
+
+                    Intent i=new Intent(getActivity(), AuthMenu.class);
+                    i.putExtra("jsonData", jsonData);
+                    startActivity(i);
+                }else if(method.equals(Method.updateTeacher)){
+
+                }
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.teacher_page, container, false);
         imageLoader=ImageLoader.getInstance();
+        initHandler();
         initView(view);
         return view;
     }
@@ -57,11 +82,15 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
         LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(getActivity(), Constant.UserInfo), LoginInfo.class);
         ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
         teacherImg.setOnClickListener(this);
-        imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), teacherImg);
+        imageLoader.displayImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(getActivity(), Constant.Avatar)), teacherImg);
         TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
         nameTxt.setText(user.getUsername());
         TextView descTxt= (TextView) v.findViewById(R.id.descTxt);
-        descTxt.setText("未生效");
+
+        if(user.getIs_validate().equals("1"))
+            descTxt.setText("已认证");
+        else
+            descTxt.setText("未认证");
         TextView sexTxt= (TextView) v.findViewById(R.id.sexTxt);
         if(user.getGender().equals("1")){
             sexTxt.setText("男");
@@ -81,7 +110,7 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), MyOrders.class));
                 break;
             case R.id.authLayout:
-                startActivity(new Intent(getActivity(), AuthMenu.class));
+                handler.getValidateView();
                 break;
             case R.id.commentLayout:
                 startActivity(new Intent(getActivity(), MyRatePage.class));

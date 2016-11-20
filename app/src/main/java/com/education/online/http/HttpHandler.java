@@ -228,7 +228,7 @@ public class HttpHandler extends Handle {
 
 	public void getHomepage() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
-		requestPostEdu(Method.getHomePage, paramMap, true);
+		requestPostEdu(Method.getHomePage, paramMap, false);
 	}
 
 	public void getInterestList() {

@@ -29,6 +29,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
@@ -72,6 +73,10 @@ public class UserInfoEdit extends BaseFrameAct {
                     userinfo= JSON.parseObject(jsonData, UserInfo.class);
                     setFormData();
                 }else if(method.equals(Method.Update)){
+
+                    if(avatar!=null&&avatar.length()>0)
+                        SharedPreferencesUtil.setString(UserInfoEdit.this, Constant.Avatar, avatar);
+                    SharedPreferencesUtil.setString(UserInfoEdit.this, Constant.NickName, nickName.getText().toString());
                     DialogUtil.showInfoDialog(UserInfoEdit.this, "提示", "修改成功", new DialogInterface.OnClickListener(){
 
                         @Override
@@ -124,6 +129,7 @@ public class UserInfoEdit extends BaseFrameAct {
     private void setFormData() {
         nickName.setText(userinfo.getNickname());
         userBirthday.setText(userinfo.getBirthday());
+        avatar=userinfo.getAvatar();
         imageloader.displayImage(ImageUtil.getImageUrl(userinfo.getAvatar()), headIcon);
         userPhone.setText(userinfo.getPhone());
         userName.setText(userinfo.getName());

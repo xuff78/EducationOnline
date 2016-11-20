@@ -100,6 +100,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                         paytips.setVisibility(View.VISIBLE);
                        payBtn.setVisibility(View.VISIBLE);
 
+                        textaddorbuy.setOnClickListener(VideoMainPage.this);
                         payBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -107,6 +108,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                             }
                         });
                     } else {
+                        textaddorbuy.setOnClickListener(VideoMainPage.this);
                         video_play.setVisibility(View.VISIBLE);
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.VISIBLE);
@@ -115,6 +117,16 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                      //   payBtn.setVisibility(View.INVISIBLE);
                         payBtn.setClickable(false);
                         expandBtn.setClickable(false);
+                    }
+                    if(intent.hasExtra("Edit")) {
+                        if(intent.getStringExtra("status").equals("1")) {
+                            textaddorbuy.setText("已审核");
+                        }else if(intent.getStringExtra("status").equals("0")) {
+                            textaddorbuy.setText("待审核");
+                        }else if(intent.getStringExtra("status").equals("2")) {
+                            textaddorbuy.setText("已拒绝");
+                        }
+                        textaddorbuy.setOnClickListener(null);
                     }
 
                     _setHeaderTitle(courseDetailBean.getCourse_name());
@@ -219,7 +231,6 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
         textshare = (TextView) findViewById(R.id.textShare);
         textdownload = (TextView) findViewById(R.id.textDownload);
         textaddorbuy = (TextView) findViewById(R.id.addorbuy);
-        textaddorbuy.setOnClickListener(this);
         addfavorite_layout = (LinearLayout) findViewById(R.id.addfavoritelayout);
         addfavorite_layout.setOnClickListener(this);
         share_layout = (LinearLayout) findViewById(R.id.sharelayout);

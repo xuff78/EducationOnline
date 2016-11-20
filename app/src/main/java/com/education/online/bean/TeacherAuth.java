@@ -13,6 +13,15 @@ public class TeacherAuth {
     private String is_edu_bg_validate = ""; // 学历验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_specialty_validate = ""; // 专业资质验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_unit_validate = ""; // 单位验证0-待审核,1-通过,2-拒绝,3-未提交
+    private String is_ext_validate = ""; // 基本资料验证0-待审核,1-通过,2-拒绝,3-未提交
+
+    public String getIs_ext_validate() {
+        return is_ext_validate;
+    }
+
+    public void setIs_ext_validate(String is_ext_validate) {
+        this.is_ext_validate = is_ext_validate;
+    }
 
     public String getIs_id_validate() {
         return is_id_validate;

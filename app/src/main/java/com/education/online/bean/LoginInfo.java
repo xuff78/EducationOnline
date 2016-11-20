@@ -25,6 +25,16 @@ public class LoginInfo {
     private String nickname="";
     private String visit="0";
 
+    public String getIs_validate() {
+        return is_validate;
+    }
+
+    public void setIs_validate(String is_validate) {
+        this.is_validate = is_validate;
+    }
+
+    private String is_validate="";
+
     public String getVisit() {
         return visit;
     }

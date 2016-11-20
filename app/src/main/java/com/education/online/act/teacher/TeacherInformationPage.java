@@ -82,6 +82,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                     
                     inittData();
                     teacher.setPhoto_album(teacherInfo.getPhoto_album());
+                    teacher.setVideo(teacherInfo.getVideo());
                     teacher.setCourse_info(teacherInfo.getCourse_info());
                     adapter.notifyDataSetChanged();
 

@@ -137,7 +137,11 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                         startActivityForResult(new Intent(VideoCourseBaseInfoEdit.this, SubjectSelector.class), 0x10);
                         break;
                     case R.id.priceLayout:
-                        startActivityForResult(new Intent(VideoCourseBaseInfoEdit.this, CoursePriceEdit.class), 0x10);
+                        Intent intent2=getIntent();
+                        intent2.setClass(VideoCourseBaseInfoEdit.this, CoursePriceEdit.class);
+                        intent2.putExtra("Price", addClassBean.getPrice());
+                        intent2.putExtra("Original_price", addClassBean.getOriginal_price());
+                        startActivityForResult(intent2, 0x10);
                         break;
                     case R.id.courseImgLayout://选择图片层
                         selectPicDialog.show();
