@@ -135,7 +135,7 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
             list = (ArraryCourseTimeBean) data.getSerializableExtra("TimeListArray") ;
             temp = list.getTimelist();
             courses.addAll(temp);
-            courses= (ArrayList<CourseTimeBean>) removeDuplicateWithOrder(courses);
+//            courses= (ArrayList<CourseTimeBean>) removeDuplicateWithOrder(courses);
             //courses 去重
             adapter.notifyDataSetChanged();//通知列表更新
         }
