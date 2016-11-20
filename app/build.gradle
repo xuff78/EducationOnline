@@ -17,6 +17,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -36,6 +37,13 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/maven/com.squareup.picasso/picasso/pom.properties'
+        exclude 'META-INF/maven/com.squareup.picasso/picasso/pom.xml'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -47,6 +55,13 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+
+    compile 'cn.leancloud.android:avoscloud-sdk:v3.13.+'
+    compile ('cn.leancloud.android:avoscloud-push:v3.13.+@aar'){transitive = true}
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'cn.leancloud.android:chatkit:1.0.2'
+
     compile 'com.android.support:appcompat-v7:23.+'
     compile 'com.android.support:design:23.+'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
@@ -55,7 +70,7 @@ dependencies {
     compile 'com.kyleduo.switchbutton:library:1.4.4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
-    compile 'com.alibaba:fastjson:1.2.17'
+//    compile 'com.alibaba:fastjson:1.2.17'
     compile files('libs/alipaySdk-20160516.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
