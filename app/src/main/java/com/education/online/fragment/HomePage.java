@@ -104,11 +104,11 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_blue_dark,
                 android.R.color.holo_green_light);
-        TextView toolbarTxtRight= (TextView) v.findViewById(R.id.toolbarTxtRight);
-        String city=SharedPreferencesUtil.getString(getActivity(), "my_address");
-        if(!toolbarTxtRight.equals(SharedPreferencesUtil.FAILURE_STRING)){
-            toolbarTxtRight.setText(city);
-        }
+//        TextView toolbarTxtRight= (TextView) v.findViewById(R.id.toolbarTxtRight);
+//        String city=SharedPreferencesUtil.getString(getActivity(), "my_address");
+//        if(!city.equals(SharedPreferencesUtil.FAILURE_STRING)){
+//            toolbarTxtRight.setText(city);
+//        }
         v.findViewById(R.id.toolbarIconRight).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

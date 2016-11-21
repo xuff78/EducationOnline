@@ -19,6 +19,7 @@ import com.education.online.fragment.dialog.SelectorPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
@@ -46,11 +47,13 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
                     teacher= JSON.parseObject(jsonData, TeacherBean.class);
                     setFormData();
                 }else if(method.equals(Method.updateTeacher)){
+                    SharedPreferencesUtil.setString(TeacherInfoEdit.this, Constant.SubjectName, teachSubjectTxt.getText().toString());
+                    SharedPreferencesUtil.setString(TeacherInfoEdit.this, Constant.SubjectId, subject.getSubject_id());
                     DialogUtil.showInfoDialog(TeacherInfoEdit.this, "提示", "修改成功", new DialogInterface.OnClickListener(){
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
+                            onBackPressed();
                         }
                     });
                 }

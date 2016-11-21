@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.VideoPlay;
@@ -32,17 +33,20 @@ import com.education.online.act.upyun.UploadTask;
 import com.education.online.adapter.VideoUploadProgressAdapter;
 import com.education.online.bean.AddClassBean;
 import com.education.online.bean.JsonMessage;
+import com.education.online.bean.LoginInfo;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.UploadVideoProgress;
 import com.education.online.bean.VideoImgItem;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.inter.CourseUpdate;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.util.UriUtil;
 import com.education.online.view.SelectPicDialog;
@@ -259,6 +263,13 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
         addClassBean = new AddClassBean();
         selectPicDialog = new SelectPicDialog(this);
         listView = (ListView) findViewById(R.id.uploadview);
+
+        String subjectName= SharedPreferencesUtil.getString(this, Constant.SubjectName);
+        String subjectId= SharedPreferencesUtil.getString(this, Constant.SubjectId);
+        if(subjectName.length()>0&&subjectId.length()>0){
+            subjectTxt.setText(subjectName);
+            addClassBean.setSubject_id(subjectId);
+        }
 
         adapter = new VideoUploadProgressAdapter(this, listener, uploadVideoProgresses);
         int num = uploadVideoProgresses.size();

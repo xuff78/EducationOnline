@@ -71,11 +71,13 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
 
     private void initView() {
 
+        addClassBean = new AddClassBean();
         subjectTxt = (TextView) findViewById(R.id.subjectTxt);
-        LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(this, Constant.UserInfo), LoginInfo.class);
-        if(user.getSubject_id().length()>0&&user.getSubject_name().length()>0){
-            subjectTxt.setText(user.getSubject_name());
-            addClassBean.setSubject_id(user.getSubject_id());
+        String subjectName= SharedPreferencesUtil.getString(this, Constant.SubjectName);
+        String subjectId= SharedPreferencesUtil.getString(this, Constant.SubjectId);
+        if(subjectName.length()>0&&subjectId.length()>0){
+            subjectTxt.setText(subjectName);
+            addClassBean.setSubject_id(subjectId);
         }
         priceTxt = (TextView) findViewById(R.id.priceTxt);
         courseImg = (ImageView) findViewById(R.id.courseImg);
@@ -92,7 +94,6 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
         findViewById(R.id.subjectLayout).setOnClickListener(this);
         findViewById(R.id.priceLayout).setOnClickListener(this);
         findViewById(R.id.courseImgLayout).setOnClickListener(this);
-        addClassBean = new AddClassBean();
         selectPicDialog = new SelectPicDialog(this);
 
 

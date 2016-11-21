@@ -159,7 +159,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                 String address=location.getCity();
                 SharedPreferencesUtil.setString(MainPage.this, "my_address", address);
                 LogUtil.d("totp", "addr:" + address);
-                _setLeftBackText(location.getCity(), null);
+//                _setLeftBackText(location.getCity(), null);
             }
 
         });

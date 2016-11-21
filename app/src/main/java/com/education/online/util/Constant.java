@@ -26,6 +26,8 @@ public class Constant {
     public static final String UserIdentity="user_identity";
     public static final String SavePath = Environment.getExternalStorageDirectory().getAbsolutePath()
             + "/EduOL";
+    public static final String SubjectId="SubjectId";
+    public static final String SubjectName="SubjectName";
 
     public static final String TypeTeacher="teacher";
     public static final String TypeCourse="course";

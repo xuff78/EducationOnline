@@ -145,6 +145,8 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserPSW, userPsd.getText().toString());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectId, user.getSubject_id());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectName, user.getSubject_name());
 
                 finish();
             }

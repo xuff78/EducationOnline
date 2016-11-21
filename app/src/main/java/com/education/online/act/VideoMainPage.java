@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +41,7 @@ import com.education.online.util.OpenfileUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.VideoUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.upyun.upplayer.widget.UpVideoView;
 
 import org.json.JSONException;
@@ -301,6 +304,12 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
         //  relativelayout1.setLayoutParams(params);
         relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         upVideoView.setLayoutParams(params);
+//        imageLoader.loadImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), new SimpleImageLoadingListener(){
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                upVideoView.setImage(new BitmapDrawable(loadedImage));
+//            }
+//        });
         ///播放完成时动作
         upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override
