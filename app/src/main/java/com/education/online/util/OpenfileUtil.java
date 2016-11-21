@@ -21,9 +21,9 @@ public class OpenfileUtil {
 		/* 依扩展名的类型决定MimeType */
         if(end.equals("m4a")||end.equals("mp3")||end.equals("mid")||
                 end.equals("xmf")||end.equals("ogg")||end.equals("wav")){
-            return getVideoFileIntent(filePath);
-        }else if(end.equals("3gp")||end.equals("mp4")){
             return getAudioFileIntent(filePath);
+        }else if(end.equals("3gp")||end.equals("mp4")){
+            return getVideoFileIntent(filePath);
         }else if(end.equals("jpg")||end.equals("gif")||end.equals("png")||
                 end.equals("jpeg")||end.equals("bmp")){
             return getImageFileIntent(filePath);
