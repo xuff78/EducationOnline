@@ -9,6 +9,8 @@ import java.io.File;
  * Created by Great Gao on 2016/11/14.
  */
 public class OpenfileUtil {
+
+
     public static Intent openFile(String filePath){
 
         File file = new File(filePath);
@@ -43,7 +45,18 @@ public class OpenfileUtil {
             return getAllIntent(filePath);
         }
     }
-
+    public static String getFiletype(String filePath){
+        int dotIndex = filePath.lastIndexOf(".");
+        String end=filePath.substring(filePath.lastIndexOf(".") + 1,filePath.length()).toLowerCase();
+        if(dotIndex<0)
+            return "other";
+        if(end.equals("3gp")||end.equals("mp4")||end.equals("mov")||end.equals("avi")||end.equals("mov")||end.equals("rm")){
+            return "video";
+        }else if(end.equals("jpg")||end.equals("gif")||end.equals("png")||
+                end.equals("jpeg")||end.equals("bmp")){
+            return "image";
+        }else return "other";
+    }
     //Android获取一个用于打开APK文件的intent
     public static Intent getAllIntent( String param ) {
 

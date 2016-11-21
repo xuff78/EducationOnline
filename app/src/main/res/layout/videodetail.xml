@@ -14,6 +14,12 @@
         android:layout_height="200dp"
         android:background="@color/bg_gray">
 
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/background"/>
+
 
         <ImageView
             android:visibility="invisible"
