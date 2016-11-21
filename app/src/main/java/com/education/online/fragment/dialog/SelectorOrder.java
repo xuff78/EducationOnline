@@ -25,13 +25,13 @@ public class SelectorOrder extends BaseFragment {
 
     private ImageView pressView=null;
     private int pressPos=0;
-    private String[] names=new String[]{"智能排序","人气最高","评价最高","价格最低"};
+    private String[] names;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selector_byorder,container,false);
-
+        names=getArguments().getStringArray("Names");
         initView(view);
 
         return view;

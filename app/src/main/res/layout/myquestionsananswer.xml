@@ -52,7 +52,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
-
+    <View
+        android:id="@+id/transblackBg"
+        android:visibility="gone"
+        android:layout_above="@+id/fragment_frame"
+        android:background="@color/hard_trans_black"
+        android:layout_marginBottom="-85dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <FrameLayout
+        android:visibility="gone"
+        android:layout_above="@+id/layout2"
+        android:id="@+id/fragment_frame"
+        android:paddingTop="85dp"
+        android:layout_width="match_parent"
+        android:minHeight="280dp"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:id="@+id/layout2"

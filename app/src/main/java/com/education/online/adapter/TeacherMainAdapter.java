@@ -462,7 +462,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     });
             layout.addView(img, llpimg);
 
-            int padding=padding10*8;
+            int padding=padding10*5;
             ImageView imgMask = new ImageView(act);
             imgMask.setBackgroundResource(R.color.light_trans_black);
             imgMask.setImageResource(R.mipmap.icon_video_play);

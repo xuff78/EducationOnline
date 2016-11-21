@@ -10,7 +10,6 @@ import android.view.View;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.AnswersAdapter;
-import com.education.online.adapter.MyAnswersAdapter;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.QuestionInfoBean;
 import com.education.online.bean.QuestionListHolder;
@@ -18,7 +17,6 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
-import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
 
@@ -52,7 +50,7 @@ public class MyAnswers extends BaseFrameAct {
         _setHeaderTitle("我的回答");
         initHandler();
         initView();
-        httphandler.getQuestionList(query_type, status, subject_id, pageSize, String.valueOf(page));
+        httphandler.getQuestionList(query_type, status, subject_id, pageSize, String.valueOf(page), "");
     }
 
     private void initView() {

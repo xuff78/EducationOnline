@@ -16,18 +16,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.login.SubjectSelector;
 import com.education.online.act.upyun.UploadTask;
 import com.education.online.bean.AddClassBean;
+import com.education.online.bean.LoginInfo;
 import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.http.HttpHandler;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectCourseTypeDialog;
 import com.education.online.view.SelectPicDialog;
@@ -68,6 +72,11 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
     private void initView() {
 
         subjectTxt = (TextView) findViewById(R.id.subjectTxt);
+        LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(this, Constant.UserInfo), LoginInfo.class);
+        if(user.getSubject_id().length()>0&&user.getSubject_name().length()>0){
+            subjectTxt.setText(user.getSubject_name());
+            addClassBean.setSubject_id(user.getSubject_id());
+        }
         priceTxt = (TextView) findViewById(R.id.priceTxt);
         courseImg = (ImageView) findViewById(R.id.courseImg);
         courseName = (EditText) findViewById(R.id.courseName);

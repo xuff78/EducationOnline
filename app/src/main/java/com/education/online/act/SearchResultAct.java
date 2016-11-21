@@ -74,6 +74,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private List<CourseBean> items=new ArrayList<>();
     private List<TeacherWithCourse> teacheritems=new ArrayList<>();
     private CourseUpdate currentCourseFrg;
+    private String[] names=new String[]{"智能排序","人气最高","评价最高","价格最低"};
 //    private String query_type=Constant.TypeCourse;
 
     private void initHandler() {
@@ -172,6 +173,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         selectorByOrder=new SelectorOrder();
         Bundle b2=new Bundle();
         b2.putInt("type", type);
+        b2.putStringArray("Names", names);
         selectorByOrder.setArguments(b2);
     }
 

@@ -64,7 +64,6 @@ public class IwantToAnswer extends BaseFrameAct implements View.OnClickListener 
 
     private String introduction = "";
     private String qa_type= "answer";
-    private String img="";
     private String name = "";
     private String subject_id="";
     private String question_id = "";
@@ -81,7 +80,7 @@ public class IwantToAnswer extends BaseFrameAct implements View.OnClickListener 
         _setHeaderTitle("我要回答");
         init();
         initHandler();
-
+        name=SharedPreferencesUtil.getString(this, Constant.NickName);
     }
     private void init(){
         intent = getIntent();
@@ -206,13 +205,11 @@ public class IwantToAnswer extends BaseFrameAct implements View.OnClickListener 
                         progressDialog.dismiss();
                         // mFaceImagePath.delete();
                     }
-                }).execute(file, "answer/" + phoneTxtName + ".png");
+                }).execute(file, "question/" + phoneTxtName + ".png");
             }
             Bitmap photo = BitmapFactory.decodeFile(file.toString());
             if (photo != null) {
                 answerpicture.setImageBitmap(photo);
-                img = "answer/"+phoneTxtName + ".png";
-
             } else
                 ToastUtils.displayTextShort(IwantToAnswer.this, "找不到文件");
         }
@@ -226,7 +223,7 @@ public class IwantToAnswer extends BaseFrameAct implements View.OnClickListener 
             case R.id.submit:
                 introduction = answer.getText().toString();
                 if(introduction.length()>0) {
-                    httpHandler.AskOrAnswer(qa_type, subject_id, name, introduction, img, String.valueOf(integral), question_id);
+                    httpHandler.AskOrAnswer(qa_type, subject_id, name, introduction, course, String.valueOf(integral), question_id);
                 }else
                 {ToastUtils.displayTextShort(IwantToAnswer.this,"请给出您的回答哦~");}
                 break;

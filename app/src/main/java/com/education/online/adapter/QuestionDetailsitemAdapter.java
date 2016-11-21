@@ -118,7 +118,7 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
                 imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getAvatar()), vh.headIcon);
             vh.time.setText(answerInfoBean.getCreated_at());
             if (answerInfoBean.getImg().length() > 0)
-                imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getAvatar()), vh.answerpicture);
+                imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getImg()), vh.answerpicture);
         }
 
     }

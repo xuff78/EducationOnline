@@ -5,6 +5,7 @@
 package com.education.online.http;
 
 import android.app.Activity;
+import android.widget.LinearLayout;
 
 import com.education.online.bean.AddClassBean;
 import com.education.online.bean.CourseFilter;
@@ -433,7 +434,7 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.evaluate,paraMap,true);
 
 	}
-	public  void getQuestionList(String query_type,String status,String subject_id,String page_size,String page){
+	public  void getQuestionList(String query_type, String status, String subject_id, String page_size, String page, String sort){
 		HashMap<String, String > paraMap =new HashMap<>();
 
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
@@ -447,6 +448,8 @@ public class HttpHandler extends Handle {
 			paraMap.put("page_size",page_size);
 		if(page.length()>0)
 			paraMap.put("page",page);
+		if(sort.length()>0)
+			paraMap.put("sort",sort);
 		requestPostEdu(Method.getQuestionList,paraMap,true);
 
 	}

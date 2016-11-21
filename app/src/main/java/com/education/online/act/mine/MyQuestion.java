@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.education.online.R;
 
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.discovery.discovery.QuestionDetails;
 import com.education.online.adapter.MyquestionAdapter;
-import com.education.online.bean.AnswerInfoBean;
-import com.education.online.bean.AnswerListHolder;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.QuestionInfoBean;
 import com.education.online.bean.QuestionListHolder;
@@ -23,7 +20,6 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
-import com.education.online.util.VideoUtil;
 
 import org.json.JSONException;
 
@@ -62,7 +58,7 @@ public class MyQuestion extends BaseFrameAct {
         _setHeaderTitle("我的提问");
         initHandler();
         init();
-        httpHandler.getQuestionList(qurey_type, status, subject_id, pageSize, String.valueOf(page));
+        httpHandler.getQuestionList(qurey_type, status, subject_id, pageSize, String.valueOf(page), "");
     }
 
     private void init() {
@@ -102,7 +98,7 @@ public class MyQuestion extends BaseFrameAct {
             if (resultCode == 0x10) {
                 questionInfoBeens.clear();
                 page =1;
-                httpHandler.getQuestionList(qurey_type, status, subject_id, pageSize, String.valueOf(page));
+                httpHandler.getQuestionList(qurey_type, status, subject_id, pageSize, String.valueOf(page), "");
             }
         }
 
