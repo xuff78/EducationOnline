@@ -51,7 +51,7 @@ import java.util.List;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoMainPage extends BaseFrameAct implements View.OnClickListener {
+public class VideoMainPage extends BaseFrameAct {
 
     int currentPos = 0;
     private LinearLayout addfavorite_layout, share_layout, download_layout;
@@ -91,6 +91,8 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
     private CommentsAdapter commentsAdapter;
     private DirectoryAdapter directoryAdapter;
     private DetailsAdapter detailsAdapter;
+private View.OnClickListener listener;
+
 
     public void initiHandler() {
         httpHandler = new HttpHandler(this, new CallBack(this) {
@@ -111,7 +113,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                         videorelated.setVisibility(View.INVISIBLE);
                         roundLeftBack.setVisibility(View.INVISIBLE);
 
-                        textaddorbuy.setOnClickListener(VideoMainPage.this);
+                        textaddorbuy.setOnClickListener(listener);
                         payBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -119,7 +121,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                             }
                         });
                     } else {
-                        textaddorbuy.setOnClickListener(VideoMainPage.this);
+                        textaddorbuy.setOnClickListener(listener);
                         video_play.setVisibility(View.VISIBLE);
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.VISIBLE);
@@ -144,49 +146,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                     detailsAdapter.notifyDataSetChanged();
                     directoryAdapter.notifyDataSetChanged();
                     if (courseDetailBean.getCourse_extm().size() > 0) {
-                        String relativepath = courseDetailBean.getCourse_extm().get(0).getUrl();
-                        if (relativepath != null)
-                            path = VideoUtil.getVideoUrl(relativepath);
-
-                        if (relativepath.length() > 0)
-                        //设置背景图片
-//        upVideoView.setImage(R.drawable.dog);
-                        //设置播放地址
-                        {
-                            String type = "";
-                            type = OpenfileUtil.getFiletype(relativepath);
-                            if (type == "image") {
-                                video_play.setVisibility(View.INVISIBLE);
-                                upVideoView.setVisibility(View.INVISIBLE);
-                                background.setVisibility(View.VISIBLE);
-                                imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
-                                videorelated.setVisibility(View.INVISIBLE);
-                            } else if (type == "video") {
-                                video_play.setClickable(true);
-                                payBtn.setClickable(true);
-                                expandBtn.setClickable(true);
-                                roundLeftBack.setClickable(true);
-                                upVideoView.setVisibility(View.VISIBLE);
-                                upVideoView.setVideoPath(path);
-
-                                //开始播放
-                                upVideoView.start();
-                                //暂停看风景
-                                upVideoView.pause();
-                            } else {
-                                upVideoView.setVisibility(View.INVISIBLE);
-                                video_play.setVisibility(View.INVISIBLE);
-                                background.setVisibility(View.VISIBLE);
-                                imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
-                                videorelated.setVisibility(View.INVISIBLE);
-                            }
-                        } else{
-                            video_play.setVisibility(View.INVISIBLE);
-                            upVideoView.setVisibility(View.INVISIBLE);
-                            videorelated.setVisibility(View.INVISIBLE);
-                            background.setVisibility(View.VISIBLE);
-                            imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
-                    }
+                        SetplayerOrImageState(0);//初始化状态
                         //  }
                     }
                     if (courseDetailBean.getIs_collection().equals("0")) {
@@ -238,6 +198,60 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
                 //
     }
 
+    private void SetplayerOrImageState(int i){
+        String relativepath = courseDetailBean.getCourse_extm().get(i).getUrl();
+        if (relativepath != null)
+            path = VideoUtil.getVideoUrl(relativepath);
+
+        if (relativepath.length() > 0)
+        //设置背景图片
+//        upVideoView.setImage(R.drawable.dog);
+        //设置播放地址
+        {
+            String type = "";
+            type = OpenfileUtil.getFiletype(relativepath);
+            if (type == "image") {
+               if(upVideoView.isPlaying()) {
+                   upVideoView.pause();
+               }
+                video_play.setVisibility(View.INVISIBLE);
+                upVideoView.setVisibility(View.INVISIBLE);
+                background.setVisibility(View.VISIBLE);
+                imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
+                videorelated.setVisibility(View.INVISIBLE);
+            } else if (type == "video") {
+                video_play.setClickable(true);
+                video_play.setVisibility(View.INVISIBLE);
+                payBtn.setClickable(true);
+                expandBtn.setClickable(true);
+                roundLeftBack.setClickable(true);
+         //       upVideoView.pause();
+                upVideoView.setVisibility(View.VISIBLE);
+                upVideoView.setVideoPath(path);
+                upVideoView.start();
+                //暂停看风景
+                //upVideoView.pause();
+            } else {
+                if(upVideoView.isPlaying()) {
+                    upVideoView.pause();
+                }
+                upVideoView.setVisibility(View.INVISIBLE);
+                video_play.setVisibility(View.INVISIBLE);
+                background.setVisibility(View.VISIBLE);
+                imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
+                videorelated.setVisibility(View.INVISIBLE);
+            }
+        } else{
+            if(upVideoView.isPlaying()) {
+                upVideoView.pause();
+            }
+            video_play.setVisibility(View.INVISIBLE);
+            upVideoView.setVisibility(View.INVISIBLE);
+            videorelated.setVisibility(View.INVISIBLE);
+            background.setVisibility(View.VISIBLE);
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,6 +267,107 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
 
     private void initView() {
 
+        listener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.addfavoritelayout:
+
+                        if (!flag) {
+                            addfavorite.setSelected(true);
+                            flag = true;
+                        } else {
+                            addfavorite.setSelected(false);
+                            flag = false;
+                        }
+                        httpHandler.addCollection(course_id);
+                        break;
+
+
+                    case R.id.sharelayout:
+                        //do sth;
+
+                        break;
+                    case R.id.downloadlayout:
+                        //do sth;
+
+                        break;
+                    case R.id.addorbuy:
+                        //do sth;
+                        Intent i = new Intent(VideoMainPage.this, SubmitOrder.class);
+                        i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                        startActivity(i);
+                        break;
+                    case R.id.details:
+                        recyclerList.setAdapter(detailsAdapter);
+                        if(view!=lastSelectedView)
+                            setStatusFalse(lastSelectedPosition);
+                        lastSelectedview = details;
+                        lastSelectedPosition = 0;
+                        textdetails.setTextColor(getResources().getColor(R.color.dark_orange));
+                        viewdetails.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.directory:
+                        recyclerList.setAdapter(directoryAdapter);
+                        if(view!=lastSelectedView)
+                            setStatusFalse(lastSelectedPosition);
+                        lastSelectedview = directory;
+                        lastSelectedPosition = 1;
+                        textdirectory.setTextColor(getResources().getColor(R.color.dark_orange));
+                        viewdirectory.setVisibility(View.VISIBLE);
+
+                        break;
+                    case R.id.comments:
+                        recyclerList.setAdapter(commentsAdapter);
+                        if(view!=lastSelectedView)
+                            setStatusFalse(lastSelectedPosition);
+                        lastSelectedview = comments;
+                        lastSelectedPosition = 2;
+                        textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
+                        viewcomments.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.video_play:
+                    case R.id.playBtn:
+                        if (upVideoView.isPlaying()) {
+
+                            //暂停播放
+                            upVideoView.pause();
+                            video_play.setVisibility(View.VISIBLE);
+
+                        } else {
+
+                            //开始播放
+                            upVideoView.start();
+                            video_play.setVisibility(View.INVISIBLE);
+
+                        }
+                        break;
+                    case R.id.expandBtn:
+                        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        }
+                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        DisplayMetrics metrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
+                        mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
+                        upVideoView.setLayoutParams(params);
+                        upVideoView.getTrackInfo();
+                        break;
+                    case R.id. roundLeftBack:
+
+                        finish();
+                        break;
+                    case R.id.textholder:
+                        int pos = (int) view.getTag();
+                        SetplayerOrImageState(pos);
+                }
+
+            }
+        };
+
         imageLoader = ImageLoader.getInstance();
         intent = getIntent();
         course_id = intent.getStringExtra("course_id");
@@ -264,24 +379,24 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
         textdownload = (TextView) findViewById(R.id.textDownload);
         textaddorbuy = (TextView) findViewById(R.id.addorbuy);
         addfavorite_layout = (LinearLayout) findViewById(R.id.addfavoritelayout);
-        addfavorite_layout.setOnClickListener(this);
+        addfavorite_layout.setOnClickListener(listener);
         share_layout = (LinearLayout) findViewById(R.id.sharelayout);
-        share_layout.setOnClickListener(this);
+        share_layout.setOnClickListener(listener);
         download_layout = (LinearLayout) findViewById(R.id.downloadlayout);
-        download_layout.setOnClickListener(this);
+        download_layout.setOnClickListener(listener);
 
         recyclerList = (RecyclerView) findViewById(R.id.courseRecycleView);
         details = (LinearLayout) findViewById(R.id.details);
-        details.setOnClickListener(this);
+        details.setOnClickListener(listener);
         directory = (LinearLayout) findViewById(R.id.directory);
-        directory.setOnClickListener(this);
+        directory.setOnClickListener(listener);
         comments = (LinearLayout) findViewById(R.id.comments);
-        comments.setOnClickListener(this);
+        comments.setOnClickListener(listener);
         background = (ImageView) findViewById(R.id.background);
         paytips = (TextView) findViewById(R.id.payTips);
         payBtn = (TextView) findViewById(R.id.payBtn);
         roundLeftBack = (ImageView) findViewById(R.id.roundLeftBack);
-        roundLeftBack.setOnClickListener(this);
+        roundLeftBack.setOnClickListener(listener);
         textdetails = (TextView) findViewById(R.id.textdetails);
         textdirectory = (TextView) findViewById(R.id.textdirectory);
         textcomments = (TextView) findViewById(R.id.textcomments);
@@ -292,7 +407,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
         relativelayout1 = (RelativeLayout) findViewById(R.id.relativelayout1);
         videorelated = (RelativeLayout) findViewById(R.id.videorelated);
         playBtn = (ImageView) findViewById(R.id.playBtn);
-        playBtn.setOnClickListener(this);
+        playBtn.setOnClickListener(listener);
         expandBtn = (ImageView) findViewById(R.id.expandBtn);
 //        expandBtn.setOnClickListener(this);
         seekbar = (SeekBar) findViewById(R.id.seekbar);
@@ -319,7 +434,7 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
             }
         });
         video_play = (ImageView) findViewById(R.id.video_play);
-        video_play.setOnClickListener(this);
+        video_play.setOnClickListener(listener);
 
         //
          layoutManager = new LinearLayoutManager(this);
@@ -330,103 +445,11 @@ public class VideoMainPage extends BaseFrameAct implements View.OnClickListener 
         lastSelectedPosition = 0;
         commentsAdapter = new CommentsAdapter(this,courseDetailBean,evaluateList);
         detailsAdapter  = new DetailsAdapter(this,courseDetailBean);
-        directoryAdapter = new DirectoryAdapter(this,courseDetailBean);
+        directoryAdapter = new DirectoryAdapter(this,courseDetailBean,listener);
         recyclerList.setAdapter(detailsAdapter);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.addfavoritelayout:
-
-                if (!flag) {
-                    addfavorite.setSelected(true);
-                    flag = true;
-                } else {
-                    addfavorite.setSelected(false);
-                    flag = false;
-                }
-                httpHandler.addCollection(course_id);
-                break;
-
-
-            case R.id.sharelayout:
-                //do sth;
-
-                break;
-            case R.id.downloadlayout:
-                //do sth;
-
-                break;
-            case R.id.addorbuy:
-                //do sth;
-                Intent i = new Intent(VideoMainPage.this, SubmitOrder.class);
-                i.putExtra(CourseDetailBean.Name, courseDetailBean);
-                startActivity(i);
-                break;
-            case R.id.details:
-                recyclerList.setAdapter(detailsAdapter);
-                if(view!=lastSelectedView)
-                    setStatusFalse(lastSelectedPosition);
-                lastSelectedview = details;
-                lastSelectedPosition = 0;
-                textdetails.setTextColor(getResources().getColor(R.color.dark_orange));
-                viewdetails.setVisibility(View.VISIBLE);
-                break;
-            case R.id.directory:
-                recyclerList.setAdapter(directoryAdapter);
-                if(view!=lastSelectedView)
-                    setStatusFalse(lastSelectedPosition);
-                lastSelectedview = directory;
-                lastSelectedPosition = 1;
-                textdirectory.setTextColor(getResources().getColor(R.color.dark_orange));
-                viewdirectory.setVisibility(View.VISIBLE);
-
-                break;
-            case R.id.comments:
-                recyclerList.setAdapter(commentsAdapter);
-                if(view!=lastSelectedView)
-                    setStatusFalse(lastSelectedPosition);
-                lastSelectedview = comments;
-                lastSelectedPosition = 2;
-                textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
-                viewcomments.setVisibility(View.VISIBLE);
-                break;
-            case R.id.video_play:
-            case R.id.playBtn:
-                if (upVideoView.isPlaying()) {
-
-                    //暂停播放
-                    upVideoView.pause();
-                    video_play.setVisibility(View.VISIBLE);
-
-                } else {
-
-                    //开始播放
-                    upVideoView.start();
-                    video_play.setVisibility(View.INVISIBLE);
-
-                }
-                break;
-            case R.id.expandBtn:
-                if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                }
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                DisplayMetrics metrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
-                mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
-                upVideoView.setLayoutParams(params);
-                upVideoView.getTrackInfo();
-                break;
-            case R.id. roundLeftBack:
-
-                finish();
-        }
 
     }
+
 
     public void setStatusFalse(int pos) {
         switch (pos) {

@@ -63,7 +63,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
     private ImageView playBtn, expandBtn, video_play;
     RelativeLayout.LayoutParams mVideoParams;
     RelativeLayout relativelayout1;
-
+private View.OnClickListener listener;
     public void setCourseDetailBean(CourseDetailBean courseDetailBean) {
         this.courseDetailBean = courseDetailBean;
     }
@@ -185,6 +185,12 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
         recyclerList.setLayoutManager(layoutManager);
         lastSelectedview = details;
         lastSelectedPosition = 0;
+        listener =  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
 
     }
 
@@ -234,7 +240,7 @@ public class VideoPage extends BaseFragment implements View.OnClickListener {
                     viewdetails.setVisibility(View.VISIBLE);
                     break;
                 case R.id.directory:
-                    recyclerList.setAdapter(new DirectoryAdapter(getActivity(), courseDetailBean));
+                    recyclerList.setAdapter(new DirectoryAdapter(getActivity(), courseDetailBean,listener));
                     lastSelectedview = directory;
                     lastSelectedPosition = 1;
                     textdirectory.setTextColor(getResources().getColor(R.color.dark_orange));

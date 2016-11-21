@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -23,12 +24,14 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     private Activity act;
     private LayoutInflater listInflater;
     private CourseDetailBean courseDetailBean;
+    private View.OnClickListener listener;
 
 
-    public DirectoryAdapter(Activity act, CourseDetailBean courseDetailBean) {
+    public DirectoryAdapter(Activity act, CourseDetailBean courseDetailBean, View.OnClickListener listener) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
         this.courseDetailBean = courseDetailBean;
+        this.listener = listener;
     }
 
     @Override
@@ -42,6 +45,8 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         RecyclerView.ViewHolder vh=null;
             View view=listInflater.inflate(R.layout.directorylayout, null);
             vh = new DirectoryAdapter. DirectoryHolder(view, pos);
+       // view.setTag(pos);
+
         return vh;
     }
 
@@ -50,6 +55,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
             DirectoryHolder  vh = ( DirectoryHolder ) holder;
         List<CourseExtm> list = courseDetailBean.getCourse_extm();
+        vh.textholder.setTag(pos);
         vh.directorytext.setText((pos+1)+"."+list.get(pos).getName());
     }
 
@@ -76,9 +82,12 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     public class DirectoryHolder extends RecyclerView.ViewHolder{
 
         TextView directorytext;
+        LinearLayout textholder;
         public DirectoryHolder(View v, int pos) {
             super(v);
             directorytext = (TextView) v.findViewById(R.id.textdirectory);
+            textholder = (LinearLayout) v.findViewById(R.id.textholder);
+            textholder.setOnClickListener(listener);
             String information = directorytext .getText().toString();
         }
     }

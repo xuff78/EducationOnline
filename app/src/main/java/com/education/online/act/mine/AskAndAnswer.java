@@ -95,7 +95,7 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
             @Override
             public void onSuccess(String method, String jsonMessage) throws JSONException {
                 super.onSuccess(method, jsonMessage);
-            //    ToastUtils.displayTextShort(AskAndAnswer.this,"提交成功！");
+                ToastUtils.displayTextShort(AskAndAnswer.this,"提交成功！");//////////////为什么不变蓝
                 setResult(0x10);
                 finish();
             }

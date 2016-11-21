@@ -188,11 +188,11 @@ public class JsonUtil {
         {
             JSONObject jsonObject1 = jsonObject.getJSONObject("course_evaluate");
             if(!jsonObject1.isNull("total"))
-                courseEvaluate.setTotal("total");
+                courseEvaluate.setTotal(jsonObject.getString("total"));
             if(!jsonObject1.isNull("page_total"))
-                courseEvaluate.setPage_total("page-total");
+                courseEvaluate.setPage_total(jsonObject.getString("page_total"));
             if(!jsonObject1.isNull("current_page"))
-                courseEvaluate.setCurrent_page("current_page");
+                courseEvaluate.setCurrent_page(jsonObject.getString("current_page"));
             if(!jsonObject1.isNull("evaluate")){
                 JSONArray jsonArray = jsonObject1.getJSONArray("evaluate");
                 for (int i = 0; i < jsonArray.length(); i++) {
