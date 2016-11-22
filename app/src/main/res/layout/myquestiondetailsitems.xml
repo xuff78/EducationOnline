@@ -45,15 +45,15 @@
 
                 <TextView
                     android:id="@+id/isadopted"
-                    android:textColor="@color/comment_gray"
+                    android:textColor="@color/lcim_common_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:text="采纳"
-                    android:background="@drawable/shape_grayline_with_corner"
+                    android:background="@drawable/shape_corner_blackline"
                     android:textSize="13sp" />
             </RelativeLayout>
 

@@ -67,22 +67,7 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
                     returnresult();
                     finish();//全都设置了就回传数据结束应用
                 } else {
-                    //弹出对话框
-                    new AlertDialog.Builder(AddSerialClass.this, AlertDialog.THEME_HOLO_LIGHT)
-                            .setTitle("信息不全是否仍然退出？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            AddSerialClass.this.finish();
-                        }
-                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    }).show();
-
-                    Toast.makeText(AddSerialClass.this, "信息不全", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddSerialClass.this, "请填写完整信息！", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -171,41 +156,47 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
         selectWeekdayDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                ArrayList<String> weekdaylisttemp =  new ArrayList<>();
-                weekdaylisttemp.addAll(tempstringlist);
-                weekdaylisttemp.retainAll(weekdaylist);
-                if (weekdaylisttemp.size() > 0) {
-                    String temp = "每周";
-                    for (int i = 0; i < weekdaylisttemp.size(); i++) {
-                        if (i == 0) {
-                            temp = temp + weekdaylisttemp.get(i);
-                        } else {
-                            temp = temp + " 、" + weekdaylisttemp.get(i);
+                if (isWeekdaySet) {
+                    ArrayList<String> weekdaylisttemp = new ArrayList<>();
+                    weekdaylisttemp.addAll(tempstringlist);
+                    weekdaylisttemp.retainAll(weekdaylist);
+                    if (weekdaylisttemp.size() > 0) {
+                        String temp = "每周";
+                        for (int i = 0; i < weekdaylisttemp.size(); i++) {
+                            if (i == 0) {
+                                temp = temp + weekdaylisttemp.get(i);
+                            } else {
+                                temp = temp + " 、" + weekdaylisttemp.get(i);
+                            }
                         }
+                        textfrequency.setText(temp + "上课");
                     }
-                    textfrequency.setText(temp+"上课");
                 }
             }
         });
         wheelDateSelectorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                Format dateShow = new SimpleDateFormat("MM月dd日");
-                Calendar cal = Calendar.getInstance();
-                Date date = new Date(System.currentTimeMillis());
-                cal.setTime(date);//获取当前时间
-                cal.add(Calendar.DATE,startdatetime+1);
-                String starttemp = dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));
-                cal.add(Calendar.DATE,enddatetime-startdatetime);
-                String endtemp = dateShow.format(cal.getTime())+" "+ ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));
-                textstartendtime.setText(starttemp+" 开始——"+endtemp+" 结束");
+                if (isDateSet) {
+                    Format dateShow = new SimpleDateFormat("MM月dd日");
+                    Calendar cal = Calendar.getInstance();
+                    Date date = new Date(System.currentTimeMillis());
+                    cal.setTime(date);//获取当前时间
+                    cal.add(Calendar.DATE, startdatetime + 1);
+                    String starttemp = dateShow.format(cal.getTime()) + " " + ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));
+                    cal.add(Calendar.DATE, enddatetime - startdatetime);
+                    String endtemp = dateShow.format(cal.getTime()) + " " + ActUtil.getWeekDay(cal.get(Calendar.DAY_OF_WEEK));
+                    textstartendtime.setText(starttemp + " 开始——" + endtemp + " 结束");
+                }
             }
         });
 
         wheelTimeSelectorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                textduration.setText("课程由"+hour +"时"+min+"分开始，时长"+longtime+"小时");
+                if(isTimeSet) {
+                    textduration.setText("课程由" + hour + "时" + min + "分开始，时长" + longtime + "小时");
+                }
             }
         });
     }

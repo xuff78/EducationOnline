@@ -17,6 +17,7 @@ import com.education.online.bean.CourseTimeBean;
 import com.education.online.http.HttpHandler;
 import com.education.online.inter.WhellCallback;
 import com.education.online.util.LogUtil;
+import com.education.online.util.ToastUtils;
 import com.education.online.view.WheelAddressSelectorDialog;
 
 import java.io.Serializable;
@@ -77,25 +78,29 @@ public class CourseTimeSet extends BaseFrameAct implements View.OnClickListener,
         _setRightHomeText("完成",new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String temp = "";
-                String temp2="";
-                for(int i=0;i< courses.size();i++)
-                {
-                    CourseTimeBean course=courses.get(i);
-                    if (i==courses.size()-1) {
-                        temp = temp + course.getDatetime() + " " + course.getHour() + ":" + course.getMin();
-                    }else {
-                        temp = temp + course.getDatetime() + " " + course.getHour() + ":" + course.getMin() + ",";
+                if(courses.size()>0) {
+                    String temp = "";
+                    String temp2 = "";
+                    for (int i = 0; i < courses.size(); i++) {
+                        CourseTimeBean course = courses.get(i);
+                        if (i == courses.size() - 1) {
+                            temp = temp + course.getDatetime() + " " + course.getHour() + ":" + course.getMin();
+                        } else {
+                            temp = temp + course.getDatetime() + " " + course.getHour() + ":" + course.getMin() + ",";
+                        }
+                        temp2 = course.getLongtime();
                     }
-                    temp2=course.getLongtime();
+                    intent.putExtra("courseware_time", temp);
+                    intent.putExtra("time_len", temp2);
+                    ArraryCourseTimeBean arraryCourseTimeBean = new ArraryCourseTimeBean();
+                    arraryCourseTimeBean.setTimelist(courses);
+                    intent.putExtra("arrayCourseTimeBean", arraryCourseTimeBean);
+                    setResult(0x11, intent);
+                    finish();
                 }
-                intent.putExtra("courseware_time",temp);
-                intent.putExtra("time_len",temp2);
-                ArraryCourseTimeBean arraryCourseTimeBean = new ArraryCourseTimeBean();
-                arraryCourseTimeBean.setTimelist(courses);
-                intent.putExtra("arrayCourseTimeBean",arraryCourseTimeBean);
-                setResult(0x11,intent);
-                finish();
+                else{
+                    ToastUtils.displayTextShort(CourseTimeSet.this,"请设置时间");
+                }
             }
         });
         _setRightHomeTextColor(getResources().getColor(R.color.normal_red));

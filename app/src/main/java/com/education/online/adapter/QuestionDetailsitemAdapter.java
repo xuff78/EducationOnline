@@ -13,6 +13,7 @@ import com.education.online.bean.AnswerInfoBean;
 import com.education.online.bean.AnswerListHolder;
 import com.education.online.bean.QuestionInfoBean;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
     private Activity act;
+    private String my_usercode;
     private ImageLoader imageLoader;
     private LayoutInflater listInflater;
     private String loadingHint = "";
@@ -41,6 +43,7 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
         this.answerListHolder = answerListHolder;
         this.flag = flag;
         this.listener = listener;
+        this.my_usercode = SharedPreferencesUtil.getUsercode(act);
     }
 
     public void setLoadingHint(String hint) {
@@ -88,11 +91,14 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
             QuestionAnswerHolder vh = (QuestionAnswerHolder) holder;
             AnswerInfoBean answerInfoBean = answerInfoBeen.get(position - 1);
             vh.answer.setText(answerInfoBean.getIntroduction());
-          //  vh.answerwhatquesttion.setText(answerInfoBean.getIntroduction());
+            //  vh.answerwhatquesttion.setText(answerInfoBean.getIntroduction());
 
             vh.isadopted.setTag(answerInfoBean.getAnswer_id());
-            if (flag) {
+            if (my_usercode.equals(questionInfoBean.getUsercode())) {//是我的问题
+
                 vh.isadopted.setOnClickListener(listener);
+            }else{
+                vh.isadopted.setVisibility(View.INVISIBLE);
             }
             String is_finished = questionInfoBean.getIs_finished();
 
@@ -101,9 +107,10 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
                 vh.isadopted.setClickable(false);
                 if (answerInfoBean.getIs_correct().equals("-1")) {
                     vh.isadopted.setText("已采纳");
-                } else {
-                    vh.isadopted.setVisibility(View.INVISIBLE);
-                }
+                    vh.isadopted.setVisibility(View.VISIBLE);
+                } //else {
+                 //   vh.isadopted.setVisibility(View.INVISIBLE);
+             //   }
 
             }
             String temp;
@@ -113,12 +120,14 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
                 temp = "学生";
             }
             vh.name.setText(answerInfoBean.getUser_name() + "(" + temp + ")");
-
+            vh.time.setText(answerInfoBean.getCreated_at());
             if (answerInfoBean.getAvatar().length() > 0)
                 imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getAvatar()), vh.headIcon);
-            vh.time.setText(answerInfoBean.getCreated_at());
+            else vh.headIcon.setVisibility(View.INVISIBLE);
+
             if (answerInfoBean.getImg().length() > 0)
                 imageLoader.displayImage(ImageUtil.getImageUrl(answerInfoBean.getImg()), vh.answerpicture);
+            else vh.answerpicture.setVisibility(View.GONE);
         }
 
     }
