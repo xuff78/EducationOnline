@@ -18,6 +18,7 @@ import com.education.online.bean.CourseTimeBean;
 import com.education.online.inter.WheelTimeSelectorCallback;
 import com.education.online.inter.weekdayDialogCallback;
 import com.education.online.util.ActUtil;
+import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectWeekdayDialog;
 import com.education.online.inter.WheelDateSelecterdCallback;
 import com.education.online.view.WheelDateSelectorDialog;
@@ -65,7 +66,7 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
             public void onClick(View view) {
                 if (isDateSet && isTimeSet && isWeekdaySet) {
                     returnresult();
-                    finish();//全都设置了就回传数据结束应用
+                   //全都设置了就回传数据结束应用
                 } else {
                     Toast.makeText(AddSerialClass.this, "请填写完整信息！", Toast.LENGTH_SHORT).show();
                 }
@@ -98,12 +99,18 @@ public class AddSerialClass extends BaseFrameAct implements View.OnClickListener
                 }
             }
         }
-        Bundle bundle = new Bundle();
-        ArraryCourseTimeBean list = new ArraryCourseTimeBean();
-        list.setTimelist(timelist);
-        bundle.putSerializable("TimeListArray", list);
-        intent.putExtras(bundle);
-        setResult(0x11, intent);
+        if(timelist.size()>0) {
+            Bundle bundle = new Bundle();
+            ArraryCourseTimeBean list = new ArraryCourseTimeBean();
+            list.setTimelist(timelist);
+            bundle.putSerializable("TimeListArray", list);
+            intent.putExtras(bundle);
+            setResult(0x11, intent);
+            finish();
+        }else
+        {
+            ToastUtils.displayTextShort(AddSerialClass.this,"当前时间选择内并无有效课程时间！");
+        }
     }
 
     private void initi() {
