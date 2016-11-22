@@ -55,7 +55,7 @@ public class ImageUtil {
 //						.defaultDisplayImageOptions(ImageUtil.getImageOptions())
 						.discCacheFileNameGenerator(new Md5FileNameGenerator())
 						.tasksProcessingOrder(QueueProcessingType.LIFO)
-						.defaultDisplayImageOptions(getImageOption(R.mipmap.icon_user_defalut))
+						.defaultDisplayImageOptions(getImageOption(R.color.whitesmoke))
 						.build();
 				ImageLoader.getInstance().init(config);
 			}

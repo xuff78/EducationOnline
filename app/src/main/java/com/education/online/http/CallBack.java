@@ -44,7 +44,9 @@ public class CallBack {
 			doSuccess(method, JsonUtil.getJsonData(jsonMessage));
 		else if(msg.getCode().equals("-232030")) {
 			ToastUtils.displayTextShort(mContext, "会话失效，请重新登录");
-			mContext.startActivity(new Intent(mContext, FirstPage.class));
+			Intent i=new Intent(mContext, LoginActivity.class);
+			i.putExtra("TimeOut", true);
+			mContext.startActivity(i);
 		}else{
 			onFailure(method, msg);
 		}

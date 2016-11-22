@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.UriUtil;
 
 /**
  * Created by Administrator on 2016/11/8.
@@ -166,7 +167,8 @@ public class SelectVideoDialog extends Dialog implements View.OnClickListener {
                 return null;
             }
         }
-        String picPath=getPath(act, photoUri);
+//        String picPath=getPath(act, photoUri);
+        String picPath= getPath(act, photoUri);
         Log.i(TAG, "videoPath = "+picPath);
         if(picPath != null )
         {
