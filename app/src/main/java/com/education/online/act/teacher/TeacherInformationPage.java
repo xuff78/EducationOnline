@@ -22,6 +22,7 @@ import com.education.online.adapter.CommentsAdapter;
 import com.education.online.adapter.TeacherMainAdapter;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluatePage;
+import com.education.online.bean.LoginInfo;
 import com.education.online.bean.TeacherBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -130,6 +131,12 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         teacherTitles.setText(teacher.getSpecialty());
         teachingExperience.setText(teacher.getWork_time()+"年教龄");
         if(teacher.getIs_validate().equals("1"))
+            identityConfirmed.setText("已认证");
+        else
+            identityConfirmed.setText("未认证");
+
+        LoginInfo user= JSON.parseObject(SharedPreferencesUtil.getString(this, Constant.UserInfo), LoginInfo.class);
+        if(user.getIs_validate().equals("1"))
             identityConfirmed.setText("已认证");
         else
             identityConfirmed.setText("未认证");

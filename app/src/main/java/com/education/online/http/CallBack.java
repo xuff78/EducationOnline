@@ -2,11 +2,15 @@ package com.education.online.http;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 
+import com.education.online.act.FirstPage;
+import com.education.online.act.login.LoginActivity;
 import com.education.online.bean.JsonMessage;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
+import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
 
@@ -38,7 +42,10 @@ public class CallBack {
 			oServerException(method, jsonMessage);
 		}else if(msg.getCode().equals("0"))
 			doSuccess(method, JsonUtil.getJsonData(jsonMessage));
-		else{
+		else if(msg.getCode().equals("-232030")) {
+			ToastUtils.displayTextShort(mContext, "会话失效，请重新登录");
+			mContext.startActivity(new Intent(mContext, FirstPage.class));
+		}else{
 			onFailure(method, msg);
 		}
 	}

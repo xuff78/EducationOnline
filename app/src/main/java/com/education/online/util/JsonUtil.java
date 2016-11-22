@@ -184,7 +184,7 @@ public class JsonUtil {
             courseDetailBean.setCourse_extm(courseExtms);
 
         }
-        if(!jsonObject.isNull("course_evaluate"))
+        /*if(!jsonObject.isNull("course_evaluate"))
         {
             JSONObject jsonObject1 = jsonObject.getJSONObject("course_evaluate");
             if(!jsonObject1.isNull("total"))
@@ -215,7 +215,7 @@ public class JsonUtil {
             }
             courseDetailBean.setCourse_evaluate(courseEvaluate);
 
-        }
+        }*/
         return courseDetailBean;
 
     }

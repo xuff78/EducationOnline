@@ -49,7 +49,9 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         if(!SharedPreferencesUtil.getSessionid(this).equals(SharedPreferencesUtil.FAILURE_STRING)) {
-            startActivity(new Intent(this, MainPage.class));
+            Intent i=new Intent(this, MainPage.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
             finish();
         }
     }

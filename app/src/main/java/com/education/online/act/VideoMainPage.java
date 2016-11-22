@@ -39,6 +39,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.OpenfileUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.util.VideoUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -71,7 +72,7 @@ public class VideoMainPage extends BaseFrameAct {
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks/";
     private UpVideoView upVideoView;
     private SeekBar seekbar;
-    private ImageView playBtn, expandBtn, video_play;
+    private ImageView playBtn, expandBtn, video_play, videoMask;
     RelativeLayout.LayoutParams mVideoParams;
     RelativeLayout relativelayout1;
     private List<EvaluateBean> evaluateList=new ArrayList<>();
@@ -219,16 +220,26 @@ private View.OnClickListener listener;
                 background.setVisibility(View.VISIBLE);
                 imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
                 videorelated.setVisibility(View.INVISIBLE);
+                videoMask.setVisibility(View.GONE);
             } else if (type == "video") {
                 video_play.setClickable(true);
-                video_play.setVisibility(View.INVISIBLE);
+                video_play.setVisibility(View.VISIBLE);
                 payBtn.setClickable(true);
                 expandBtn.setClickable(true);
                 roundLeftBack.setClickable(true);
          //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
-                upVideoView.start();
+                videoMask.setVisibility(View.VISIBLE);
+                VideoThumbnailLoader.getIns().display(this, path, videoMask,
+                        100, 100, new VideoThumbnailLoader.ThumbnailListener(){
+                            @Override
+                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
+                                if(bitmap!=null)
+                                    iv.setImageBitmap(bitmap);
+                            }
+                        });
+//                upVideoView.start();
                 //暂停看风景
                 //upVideoView.pause();
             } else {
@@ -236,6 +247,7 @@ private View.OnClickListener listener;
                     upVideoView.pause();
                 }
                 upVideoView.setVisibility(View.INVISIBLE);
+                videoMask.setVisibility(View.GONE);
                 video_play.setVisibility(View.INVISIBLE);
                 background.setVisibility(View.VISIBLE);
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
@@ -330,16 +342,17 @@ private View.OnClickListener listener;
                     case R.id.video_play:
                     case R.id.playBtn:
                         if (upVideoView.isPlaying()) {
-
+                            playBtn.setImageResource(R.mipmap.icon_play);
                             //暂停播放
                             upVideoView.pause();
                             video_play.setVisibility(View.VISIBLE);
 
                         } else {
-
+                            playBtn.setImageResource(R.mipmap.icon_video_stop);
                             //开始播放
                             upVideoView.start();
                             video_play.setVisibility(View.INVISIBLE);
+                            videoMask.setVisibility(View.GONE);
 
                         }
                         break;
@@ -412,6 +425,7 @@ private View.OnClickListener listener;
 //        expandBtn.setOnClickListener(this);
         seekbar = (SeekBar) findViewById(R.id.seekbar);
 
+        videoMask = (ImageView) findViewById(R.id.videoMask);
         upVideoView = (UpVideoView) findViewById(R.id.upVideoView);
         int width = ScreenUtil.getWidth(this);
         int height = (int) (((float) width) * 9 / 16);
@@ -419,12 +433,7 @@ private View.OnClickListener listener;
         //  relativelayout1.setLayoutParams(params);
         relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         upVideoView.setLayoutParams(params);
-//        imageLoader.loadImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), new SimpleImageLoadingListener(){
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                upVideoView.setImage(new BitmapDrawable(loadedImage));
-//            }
-//        });
+
         ///播放完成时动作
         upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override

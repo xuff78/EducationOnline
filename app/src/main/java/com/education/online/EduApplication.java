@@ -2,6 +2,7 @@ package com.education.online;
 
 import android.app.Application;
 import android.os.StrictMode;
+import android.support.multidex.MultiDexApplication;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
@@ -18,7 +19,7 @@ import cn.leancloud.chatkit.LCChatKit;
 /**
  * Created by 可爱的蘑菇 on 2016/11/20.
  */
-public class EduApplication extends Application {
+public class EduApplication extends MultiDexApplication {
     public static boolean debug = true;
     public static EduApplication ctx;
 
