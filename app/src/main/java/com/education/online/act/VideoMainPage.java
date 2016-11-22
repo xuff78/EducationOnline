@@ -62,7 +62,7 @@ public class VideoMainPage extends BaseFrameAct {
     private LinearLayoutManager layoutManager;
     private TextView paytips, payBtn;
     private LinearLayout details, directory, comments;
-    private TextView textdetails, textdirectory, textcomments;
+    private TextView textdetails, textdirectory, textcomments, totalTime;
     private View viewdetails, viewdirectory, viewcomments;
     private ImageView roundLeftBack;
     private RecyclerView recyclerList;
@@ -413,6 +413,7 @@ private View.OnClickListener listener;
         textdetails = (TextView) findViewById(R.id.textdetails);
         textdirectory = (TextView) findViewById(R.id.textdirectory);
         textcomments = (TextView) findViewById(R.id.textcomments);
+        totalTime = (TextView) findViewById(R.id.totalTime);
 
         viewdetails = findViewById(R.id.viewdetails);
         viewdirectory = findViewById(R.id.viewdirectory);

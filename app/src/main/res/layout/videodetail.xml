@@ -118,6 +118,7 @@
                 android:src="@mipmap/icon_expand_screen" />
 
             <TextView
+                android:id="@+id/totalTime"
                 android:layout_width="80dp"
                 android:layout_height="20dp"
                 android:layout_alignParentBottom="true"

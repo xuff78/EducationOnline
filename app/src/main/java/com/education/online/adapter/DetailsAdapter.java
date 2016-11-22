@@ -14,6 +14,7 @@ import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CreatUserInfo;
 import com.education.online.bean.EvaluateListBean;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -111,7 +112,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     intent.putExtra("Avatar", teacher.getAvatar());
                     intent.putExtra("Name", teacher.getUser_name());
                     intent.putExtra(Constant.UserCode, courseDetailBean.getUsercode());
-                    act.startActivity(intent);
+                    ActUtil.startAnimActivity(act, intent, view.findViewById(R.id.teacherpotrait), "headIcon");
                 }
             });
         }

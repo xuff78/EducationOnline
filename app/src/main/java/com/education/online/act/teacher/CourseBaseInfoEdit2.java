@@ -176,11 +176,13 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
             arraryCourseTimeBean = (ArraryCourseTimeBean) data.getSerializableExtra("arrayCourseTimeBean");
             String temp = data.getStringExtra("courseware_time");
             String temp1 = data.getStringExtra("time_len");
-            float temp2 = Float.parseFloat(temp1);
-            int temp3 = (int)(temp2*60);
-            temp1=String.valueOf(temp3);
-            addClassBean.setTime_len(temp1);
-            addClassBean.setCourseware_time(temp);
+            if(temp1!=null&&temp1.length()>0) {
+                float temp2 = Float.parseFloat(temp1);
+                int temp3 = (int) (temp2 * 60);
+                temp1 = String.valueOf(temp3);
+                addClassBean.setTime_len(temp1);
+                addClassBean.setCourseware_time(temp);
+            }
         }
 
     }
