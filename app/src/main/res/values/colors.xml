@@ -37,5 +37,5 @@
     <color name="half_visibily">#90000000</color><!--半透明-->
     <color name="ruby_blue">#3C4E64</color><!--宝石蓝-->
     <color name="normal">#737373</color><!--正常颜色-->
-
+    <color name="black">#000000</color><!--正常颜色-->
 </resources>
