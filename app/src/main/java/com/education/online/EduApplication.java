@@ -45,9 +45,6 @@ public class EduApplication extends MultiDexApplication {
         AVObject.registerSubclass(AddRequest.class);
         AVObject.registerSubclass(UpdateInfo.class);
 
-//        AVIMMessageManager.registerAVIMMessageType(LCIMRedPacketMessage.class);
-//        AVIMMessageManager.registerAVIMMessageType(LCIMRedPacketAckMessage.class);
-//        LCChatKit.getInstance().setProfileProvider(new LeanchatUserProvider());
         LCChatKit.getInstance().init(this, appId, appKey);
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
 

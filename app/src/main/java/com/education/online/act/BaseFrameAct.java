@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.ToastUtils;
 
 public abstract class BaseFrameAct extends AppCompatActivity {
 
@@ -80,6 +81,15 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 		ft.commit();
 	}
 
+	protected boolean filterException(Exception e) {
+		if (e != null) {
+			e.printStackTrace();
+			ToastUtils.displayTextShort(this, e.getMessage());
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	protected void _setHeaderTitle(String title) {
 		TextView tv = (TextView) findViewById(R.id.header_title_tv);
