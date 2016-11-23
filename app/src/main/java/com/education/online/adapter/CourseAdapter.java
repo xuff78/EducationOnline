@@ -134,6 +134,8 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             vh.courseDetail.setText("暂无详细安排");
 
             String temp = "";
+            String begindate = "";
+            String enddate ="";
             String tail = "\n";
             SimpleDateFormat dateData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat timeData = new SimpleDateFormat("HH:mm");
@@ -143,6 +145,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             try {
                 for (int i = 0; i < courseDetailBean.getCourse_extm().size(); i++) {
+
                     CourseExtm courseExtm = courseDetailBean.getCourse_extm().get(i);
                     String datestring = courseExtm.getCourseware_date();
                     Date date1 = dateData.parse(datestring);
@@ -150,6 +153,12 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     String startdate = dayDate.format(date1);
                     String starttime = timeData.format(date1);
                     String endtime = "";
+                    if(i==0){
+                        begindate = dayDate.format(date1);
+                    }
+                    if(i==courseDetailBean.getCourse_extm().size()-1){
+                        enddate= dayDate.format(date1);
+                    }
                     if(courseExtm.getTime_len().length()>0) {
                         cal.add(Calendar.MINUTE, Integer.parseInt(courseExtm.getTime_len()));
                         endtime = timeData.format(cal.getTime());
@@ -166,6 +175,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 e.printStackTrace();
             }
             vh.courseArrangement.setText(temp);
+            vh.coursedate.setText(begindate+"~"+enddate);
 
 
         } else if (pos > 2) {

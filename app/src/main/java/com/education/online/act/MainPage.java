@@ -50,31 +50,35 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         super.onCreate(savedInstanceState);
 
 //        StatusBarCompat.fitPage(this);
-        setContentView(R.layout.main_page);
+        if(getIntent().hasExtra("Exit"))
+            finish();
+        else {
+            setContentView(R.layout.main_page);
 
-        _setHeaderGone();
-        _setHeaderTitle("首页");
-        _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActUtil.startAnimActivity(MainPage.this, new Intent(MainPage.this, SearchAct.class));
-            }
-        });
-        initView();
+            _setHeaderGone();
+            _setHeaderTitle("首页");
+            _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActUtil.startAnimActivity(MainPage.this, new Intent(MainPage.this, SearchAct.class));
+                }
+            });
+            initView();
 
-        selectorPage.setData(new SelectorPage.CourseSelector() {
-            @Override
-            public void onSelected(SubjectBean subject) {
-                Intent i=new Intent(MainPage.this, SearchResultAct.class);
+            selectorPage.setData(new SelectorPage.CourseSelector() {
+                @Override
+                public void onSelected(SubjectBean subject) {
+                    Intent i = new Intent(MainPage.this, SearchResultAct.class);
 //                i.putExtra(Constant.SearchWords, subject.getSubject_name());
-                i.putExtra(Constant.SearchSubject, subject.getSubject_id());
-                startActivity(i);
+                    i.putExtra(Constant.SearchSubject, subject.getSubject_id());
+                    startActivity(i);
+                }
+            });
+            changePage(home);
+            initLocation();
+            if (!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")) {
+                menuBtn5.setVisibility(View.GONE);
             }
-        });
-        changePage(home);
-        initLocation();
-        if(!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")){
-            menuBtn5.setVisibility(View.GONE);
         }
     }
 

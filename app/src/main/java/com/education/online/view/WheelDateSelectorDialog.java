@@ -102,6 +102,7 @@ public class WheelDateSelectorDialog extends Dialog implements View.OnClickListe
 	public void onClick(View v) {
 		int id = v.getId();
 		if (id == R.id.cancelBtn) {
+			flag = false;
 			dismiss();
 		} else if (id == R.id.confirmBtn) {
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.MainPage;
 import com.education.online.bean.LoginInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -153,5 +154,17 @@ public class LoginActivity extends BaseFrameAct {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getIntent().hasExtra("TimeOut")){
+            Intent i=new Intent(this, MainPage.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("Exit", true);
+            startActivity(i);
+            finish();
+        }else {
+            super.onBackPressed();
+        }
+    }
 }
 
