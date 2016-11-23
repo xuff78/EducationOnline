@@ -7,9 +7,11 @@ import android.support.multidex.MultiDexApplication;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.baidu.mapapi.SDKInitializer;
 import com.education.online.leanchat.AddRequest;
 import com.education.online.leanchat.LeanchatUser;
+import com.education.online.leanchat.MessageHandler;
 import com.education.online.leanchat.PushManager;
 import com.education.online.leanchat.UpdateInfo;
 import com.education.online.util.SharedPreferencesUtil;
@@ -36,23 +38,18 @@ public class EduApplication extends MultiDexApplication {
         String appId =  "V6AsD9B9FIFsF3nrpsJUJ5px-gzGzoHsz";
         String appKey = "RCycwUSj1KsLTg1HDTVYxRa9";
 
+        AVOSCloud.initialize(this, appId, appKey);
+        AVOSCloud.setLastModifyEnabled(true);
         LeanchatUser.alwaysUseSubUserClass(LeanchatUser.class);
 
         AVObject.registerSubclass(AddRequest.class);
         AVObject.registerSubclass(UpdateInfo.class);
 
-        // 节省流量
-        AVOSCloud.setLastModifyEnabled(true);
-
 //        AVIMMessageManager.registerAVIMMessageType(LCIMRedPacketMessage.class);
 //        AVIMMessageManager.registerAVIMMessageType(LCIMRedPacketAckMessage.class);
 //        LCChatKit.getInstance().setProfileProvider(new LeanchatUserProvider());
         LCChatKit.getInstance().init(this, appId, appKey);
-
-//        // 初始化红包操作
-//        RedPacket.getInstance().initContext(ctx, RPConstant.AUTH_METHOD_SIGN);
-//        //控制红包SDK中Log输出
-//        RedPacket.getInstance().setDebugMode(false);
+        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
 
         PushManager.getInstance().init(ctx);
         AVOSCloud.setDebugLogEnabled(debug);

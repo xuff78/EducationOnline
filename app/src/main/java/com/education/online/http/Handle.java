@@ -50,6 +50,6 @@ public abstract class Handle implements HttpCallback {
 			mCallBack.onHTTPException(reqUrl,result);
 		}else
 			mCallBack.onSuccess(reqUrl,result);
-		
+
 	}
 }
