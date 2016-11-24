@@ -106,7 +106,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder fvh = (FooterViewHolder) holder;
             fvh.footerHint.setText(loadingHint);
-            if(pos ==getItemCount())
+            if(evaluateList.size()==0)
             {
                 fvh.footerHint.setText("暂无评价");
             }
