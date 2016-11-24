@@ -134,6 +134,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
 
                 break;
             case R.id.insert1Text:
+                insertSelection.setVisibility(View.GONE);
                 insert1Text.setTextColor(getResources().getColor(R.color.normal_red));
                 insert1Icon.setVisibility(View.VISIBLE);
                 insert2Text.setTextColor(getResources().getColor(R.color.hard_gray));
@@ -142,6 +143,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 addClassBean.setTransfer("non");
                 break;
             case R.id.insert2Text:
+                insertSelection.setVisibility(View.GONE);
                 insert2Text.setTextColor(getResources().getColor(R.color.normal_red));
                 insert2Icon.setVisibility(View.VISIBLE);
                 insert1Text.setTextColor(getResources().getColor(R.color.hard_gray));
@@ -150,6 +152,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 addClassBean.setTransfer("always");
                 break;
             case R.id.paybackSelection1Text:
+                paybackSelection.setVisibility(View.GONE);
                 paybackSelection1Text.setTextColor(getResources().getColor(R.color.normal_red));
                 paybackSelection1Icon.setVisibility(View.VISIBLE);
                 paybackSelection2Text.setTextColor(getResources().getColor(R.color.hard_gray));
@@ -158,6 +161,7 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
                 addClassBean.setRefund("always");
                 break;
             case R.id.paybackSelection2Text:
+                paybackSelection.setVisibility(View.GONE);
                 paybackSelection2Text.setTextColor(getResources().getColor(R.color.normal_red));
                 paybackSelection2Icon.setVisibility(View.VISIBLE);
                 paybackSelection1Text.setTextColor(getResources().getColor(R.color.hard_gray));

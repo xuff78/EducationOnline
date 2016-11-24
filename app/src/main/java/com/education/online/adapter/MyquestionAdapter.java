@@ -99,9 +99,9 @@ public class MyquestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             vh.bonus.setText(questionInfoBean.getIntegral()+"积分");
            if(questionInfoBean.getImg().length()>0){
                imageLoader.displayImage(ImageUtil.getImageUrl(questionInfoBean.getImg()),vh.CourseImage);
-           }//else{
-           //    vh.CourseImage.setVisibility(View.GONE);
-         //  }
+           }else{
+               vh.CourseImage.setVisibility(View.GONE);
+          }
             vh.questiondate.setText(questionInfoBean.getCreated_at());
             vh.design.setText(questionInfoBean.getSubject_name());
             vh.CourseName.setText(questionInfoBean.getIntroduction());

@@ -3,6 +3,7 @@ package com.education.online.adapter;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -105,11 +106,17 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder fvh = (FooterViewHolder) holder;
             fvh.footerHint.setText(loadingHint);
+            if(pos ==getItemCount())
+            {
+                fvh.footerHint.setText("暂无评价");
+            }
         } else if (pos == 0) {
             CourseHolder vh = (CourseHolder) holder;
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg);
             vh.courseName.setText(courseDetailBean.getCourse_name());
-            vh.coursePrice.setText("￥" + courseDetailBean.getPrice());
+            vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
+            vh.courseoldprice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+            vh.coursePrice.setText( courseDetailBean.getPrice());
             vh.studentNum.setText("班级人数" + courseDetailBean.getMax_follow() + "人，已报名" + courseDetailBean.getFollow() + "人");
             vh.praisePercent.setText((int) (Float.valueOf(courseDetailBean.getUser_info().getAverage()) / 5 * 100) + "%好评");
             vh.totalSerial.setText("共" + courseDetailBean.getCourse_extm().size() + "次课");
@@ -198,12 +205,13 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public class CourseHolder extends RecyclerView.ViewHolder {
         ImageView courseImg;
         private LinearLayout commentlayout;
-        TextView coursePrice, courseTime, commentsNum, totalSerial, praisePercent, studentNum, courseName;
+        TextView coursePrice, courseTime, commentsNum, totalSerial, praisePercent, studentNum, courseName,courseoldprice;
 
         public CourseHolder(View v, int pos) {
             super(v);
             commentlayout = (LinearLayout) v.findViewById(R.id.commnetLayout);
             commentlayout.setOnClickListener(listener);
+            courseoldprice = (TextView) v.findViewById(R.id.courseoldprice);
             courseName = (TextView) v.findViewById(R.id.courseName);
             courseImg = (ImageView) v.findViewById(R.id.courseImg);
             coursePrice = (TextView) v.findViewById(R.id.coursePrice);

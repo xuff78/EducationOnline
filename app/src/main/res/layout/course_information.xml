@@ -2,57 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
 
     <ImageView
         android:id="@+id/courseImg"
-        android:transitionName="course_img"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:transitionName="course_img" />
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/courseName"
         android:id="@+id/courseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/courseName"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textSize="13sp" />
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
+    <RelativeLayout
         android:id="@+id/layout1"
-        android:layout_below="@+id/courseName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="25dp"
+        android:layout_below="@+id/courseName"
+        android:layout_marginTop="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:text="插班费："
-            android:textColor="@color/dark_orange"
-            android:textSize="11sp" />
+        <LinearLayout
+            android:id="@+id/pricelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/coursePrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical|left"
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|right"
+                android:text="现价：￥"
+                android:textColor="@color/dark_orange"
+                android:textSize="13sp" />
 
-            android:textColor="@color/dark_orange"
-            android:textSize="15sp" />
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:text="100"
+                android:id="@+id/coursePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/dark_orange"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/pricelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|right"
+                android:text="原价：￥"
+                android:textColor="@color/normal_gray"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:text="100"
+                android:id="@+id/courseoldprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/normal_gray"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <TextView
-        android:layout_marginTop="10dp"
         android:id="@+id/studentNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="@color/bg_gray"
         android:textSize="13sp" />
@@ -66,62 +105,69 @@
         android:background="@color/light_gray" />
 
 
-
-
     <!-- 用类似这种 -->
     <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/commnetLayout"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="90dp">
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/icon_comment" />
+
             <TextView
                 android:id="@+id/praisePercent"
+                style="@style/txt_gray_12"
                 android:layout_marginTop="10dp"
-                android:text="100%好评"
-                style="@style/txt_gray_12" />
+                android:text="100%好评" />
+
             <TextView
                 android:id="@+id/commentsNum"
+                style="@style/txt_gray_12"
                 android:layout_marginTop="3dp"
-                android:text="0条评论"
-                style="@style/txt_gray_12" />
+                android:text="0条评论" />
         </LinearLayout>
+
         <View
             android:layout_width="1px"
             android:layout_height="35dp"
             android:background="@color/light_gray" />
+
         <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="90dp">
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/icon_watch" />
+
             <TextView
                 android:id="@+id/courseTime"
-                android:layout_marginTop="10dp"
+                style="@style/txt_gray_12"
 
-                style="@style/txt_gray_12" />
+                android:layout_marginTop="10dp" />
+
             <TextView
                 android:id="@+id/totalSerial"
-                android:layout_marginTop="3dp"
+                style="@style/txt_gray_12"
 
-                style="@style/txt_gray_12" />
+                android:layout_marginTop="3dp" />
         </LinearLayout>
     </LinearLayout>
 
