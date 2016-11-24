@@ -4,6 +4,10 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avoscloud.leanchatlib.controller.ChatManager;
+import com.avoscloud.leanchatlib.controller.MessageHandler;
 import com.baidu.mapapi.SDKInitializer;
 import com.education.online.util.SharedPreferencesUtil;
 
@@ -29,10 +33,11 @@ public class EduApplication extends MultiDexApplication {
         String appKey = "RCycwUSj1KsLTg1HDTVYxRa9";
 
         AVOSCloud.initialize(this, appId, appKey);
+        ChatManager.setDebugEnabled(true);
+        ChatManager.getInstance().init(getApplicationContext());
         AVOSCloud.setLastModifyEnabled(true);
-
         AVOSCloud.setDebugLogEnabled(debug);
-//        AVAnalytics.enableCrashReport(this, !debug);
+
         if (EduApplication.debug) {
             openStrictMode();
         }

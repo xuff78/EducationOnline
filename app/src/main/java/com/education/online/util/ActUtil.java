@@ -13,12 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
+import com.avoscloud.leanchatlib.utils.LogUtils;
 import com.education.online.R;
 import com.education.online.act.CM_MessageChatAct;
 import com.education.online.act.SearchAct;
@@ -261,7 +264,20 @@ public class ActUtil {
         user.setObjectId(SharedPreferencesUtil.getString(con, "usercode"));
         AVUser.changeCurrentUser(user, true);
         AVUserCacheUtils.cacheUser(user.getObjectId(), user);
-        ChatManager.getInstance();
+
+        ChatManager chatManager=ChatManager.getInstance();
+        String usercode= AVUser.getCurrentUser().getObjectId();
+        if(usercode!=null&&usercode.length()>0) {
+            chatManager.setupManagerWithUserId(usercode);
+            chatManager.openClient(new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    if (e != null) {
+                        LogUtils.logException(e);
+                    }
+                }
+            });
+        }
     }
 
     public static void goChat(String otherid, final Context con) {
@@ -271,9 +287,10 @@ public class ActUtil {
             @Override
             public void done(AVIMConversation conversation, AVIMException e) {
                 if (e != null) {
+                    e.printStackTrace();
                     Toast.makeText(con, e.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
-                    chatManager.getRoomsTable().insertRoom(conversation.getConversationId());
+//                    chatManager.getRoomsTable().insertRoom(conversation.getConversationId());
                     Intent intent = new Intent(con, CM_MessageChatAct.class);
                     intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, conversation.getConversationId());
                     con.startActivity(intent);

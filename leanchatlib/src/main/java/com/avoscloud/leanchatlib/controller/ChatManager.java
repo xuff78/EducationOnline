@@ -65,18 +65,6 @@ public class ChatManager extends AVIMClientEventHandler {
     if (chatManager == null) {
       LogUtils.i("useCreateChatManager");
       chatManager = new ChatManager();
-      String usercode= AVUser.getCurrentUser().getObjectId();
-      if(usercode!=null&&usercode.length()>0) {
-        chatManager.setupManagerWithUserId(usercode);
-        chatManager.openClient(new AVIMClientCallback() {
-          @Override
-          public void done(AVIMClient avimClient, AVIMException e) {
-            if (e != null) {
-              LogUtils.logException(e);
-            }
-          }
-        });
-      }
     }
     return chatManager;
   }
