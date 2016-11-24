@@ -227,6 +227,25 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getValidateView, paramMap, true);
 	}
 
+	public void updateLocation(String latitude, String longitude) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("latitude", latitude);
+		paramMap.put("longitude", longitude);
+		requestPostUser(Method.updateLocation, paramMap, false);
+	}
+
+	public void nearUser(String latitude, String longitude) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("latitude", latitude);
+		paramMap.put("longitude", longitude);
+		paramMap.put("page_size", "100");
+		paramMap.put("page", "1");
+		paramMap.put("distance", "1000");
+		requestPostUser(Method.nearUser, paramMap, false);
+	}
+
 	public void getHomepage() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		requestPostEdu(Method.getHomePage, paramMap, false);

@@ -1,9 +1,11 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/10/14.
  */
-public class UserInfo {
+public class UserInfo implements Serializable{
 
     public UserInfo() {
     }
@@ -14,6 +16,42 @@ public class UserInfo {
     private String nickname =""; // 否 昵称  无
     private String birthday =""; // 否 生日
     private String phone="";
+    private Double longitude=0d;
+    private Double latitude=0d;
+    private String user_identity="";
+    private String usercode="";
+
+    public String getUsercode() {
+        return usercode;
+    }
+
+    public void setUsercode(String usercode) {
+        this.usercode = usercode;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getUser_identity() {
+        return user_identity;
+    }
+
+    public void setUser_identity(String user_identity) {
+        this.user_identity = user_identity;
+    }
 
     public String getPhone() {
         return phone;

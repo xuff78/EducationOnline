@@ -1,5 +1,6 @@
 package com.education.online.act.Mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.OrderDetailBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
@@ -58,6 +62,7 @@ public class UserOrderDetail extends BaseFrameAct {
         teacherName.setText(JsonUtil.getString(user_info, "user_name"));
         courseTitle= (TextView) findViewById(R.id.courseTitle);
         courseTitle.setText(orderDetailBean.getSubject_name()+"  -  "+orderDetailBean.getCourse_name());
+        courseTitle.setOnClickListener(listener);
         courseNum= (TextView) findViewById(R.id.courseNum);
         priceTxt= (TextView) findViewById(R.id.priceTxt);
         priceTxt.setText("￥"+orderDetailBean.getOrder_price());
@@ -67,6 +72,7 @@ public class UserOrderDetail extends BaseFrameAct {
         ActUtil.getCourseTypeTxt(orderDetailBean.getCourse_type(), labelTxt);
 
         courseLayout= (LinearLayout) findViewById(R.id.courseLayout);
+        courseLayout.setOnClickListener(listener);
         LayoutInflater inflater=LayoutInflater.from(this);
         try {
             JSONArray array=new JSONObject(jsonData).getJSONArray("course_extm");
@@ -81,21 +87,26 @@ public class UserOrderDetail extends BaseFrameAct {
             e.printStackTrace();
         }
 
-
+        findViewById(R.id.totalk).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActUtil.goChat(orderDetailBean.getUsercode(), UserOrderDetail.this);
+            }
+        });
     }
 
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.headIcon:
-                    new SelectPicDialog(UserOrderDetail.this).show();
-
-                    break;
-                case R.id.birthdayLayout:
-                    break;
-
-            }
+            Intent intent=new Intent();
+            if(orderDetailBean.getCourse_type().equals("3"))
+                intent.setClass(UserOrderDetail.this, CourseMainPage.class);
+            else
+                intent.setClass(UserOrderDetail.this, VideoMainPage.class);
+            intent.putExtra("course_name", orderDetailBean.getCourse_name());
+            intent.putExtra("course_img", orderDetailBean.getImg());
+            intent.putExtra("course_id", orderDetailBean.getCourse_id());
+            startActivity(intent);
         }
     };
 }

@@ -20,6 +20,8 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.education.online.R;
+import com.education.online.act.teacher.AuthMenu;
+import com.education.online.bean.JsonMessage;
 import com.education.online.bean.SubjectBean;
 import com.education.online.fragment.DiscoveryPage;
 import com.education.online.fragment.HomePage;
@@ -27,12 +29,17 @@ import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.mycenter.MyCenterMain;
 import com.education.online.fragment.teacher.TeacherPage;
 import com.education.online.fragment.dialog.SelectorPage;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
+
+import org.json.JSONException;
 
 public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
@@ -44,6 +51,26 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private MyCenterMain centerMain=new MyCenterMain();
     private DiscoveryPage discoveryPage=new DiscoveryPage();
     private View lastSelectedView=null;
+    private HttpHandler handler;
+
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void onSuccess(String method, String jsonData) throws JSONException {
+
+            }
+
+            @Override
+            public void onHTTPException(String method, String jsonMessage) {
+
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +82,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         else {
             setContentView(R.layout.main_page);
 
+            initHandler();
             _setHeaderGone();
             _setHeaderTitle("首页");
             _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
@@ -144,7 +172,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);// 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(500);
+        option.setScanSpan(5000);
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
         mLocationClient.registerLocationListener(new BDLocationListener() {
@@ -160,7 +188,8 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     mLocationClient.stop();
                     mLocationClient = null;
                 }
-                String address=location.getCity();
+                handler.updateLocation("" + location.getLatitude(), "" + location.getLongitude());
+                String address=location.getAddrStr();
                 SharedPreferencesUtil.setString(MainPage.this, Constant.Addr, address);
                 LogUtil.d("totp", "addr:" + address);
 //                _setLeftBackText(location.getCity(), null);

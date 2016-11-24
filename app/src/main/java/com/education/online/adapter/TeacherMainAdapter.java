@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
 import com.education.online.act.VideoPlay;
 import com.education.online.act.ViewerActivity;
 import com.education.online.bean.CourseBean;
@@ -200,6 +202,8 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 vh.totallength.setText("共"+courseBean.getCount()+"节");
                 vh.totallength.setVisibility(View.VISIBLE);
                 vh.followNum.setText(courseBean.getFollow()+"人报名");
+                vh.itemView.setTag(courseBean);
+                vh.itemView.setOnClickListener(courseListener);
             }else if (i==3){
                 AlbumHolder vh = (AlbumHolder) holder;
             }else if (i==4){
@@ -234,6 +238,22 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
     }
+
+    View.OnClickListener courseListener =new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            CourseBean course = (CourseBean) view.getTag();
+            Intent intent=new Intent();
+            if(course.getCourse_type().equals("3"))
+                intent.setClass(act, CourseMainPage.class);
+            else
+                intent.setClass(act, VideoMainPage.class);
+            intent.putExtra("course_name", course.getCourse_name());
+            intent.putExtra("course_img", course.getImg());
+            intent.putExtra("course_id", course.getCourse_id());
+            act.startActivity(intent);
+        }
+    };
 
     @Override
     public int getItemCount() {

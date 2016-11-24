@@ -8,6 +8,8 @@ public class Method {
     public static final String Login="uc/user/login";
     public static final String Regist="uc/user/register";
     public static final String Update = "uc/user/update";
+    public static final String updateLocation = "uc/user/location";
+    public static final String nearUser = "uc/user/near";
 
     public static final String updateValidate = "education/user/validate";
     public static final String getValidateView = "education/user/validateView";

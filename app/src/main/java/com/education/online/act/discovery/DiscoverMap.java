@@ -1,10 +1,15 @@
 package com.education.online.act.discovery;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -26,6 +31,21 @@ import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.UserInfo;
+import com.education.online.bean.VideoImgItem;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.Constant;
+import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
+import com.education.online.util.SharedPreferencesUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/9/29.
@@ -40,14 +60,49 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
     private BDLocationListener myListener = new MyLocationListener();// 注册定位监听，返回定位的结果
     private Marker loactionMarker;
     private Overlay roundRate=null;
+    private HttpHandler mHandler;
+    private ArrayList<UserInfo> users=new ArrayList<>();
+    private String myUsercode="";
+    private ImageLoader imageLoader;
+
+    private void initHandler() {
+        mHandler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                if(method.equals(Method.nearUser)){
+                    String json= JsonUtil.getString(jsonData, "user_info");
+                    users= JSON.parseObject(json, new TypeReference<ArrayList<UserInfo>>(){});
+                    for(final UserInfo user:users){
+                        if(!myUsercode.equals(user.getUsercode())) {
+                            final View v = inflater.inflate(R.layout.people_marker_view, null);
+                            final ImageView headIcon = (ImageView) v.findViewById(R.id.headIcon);
+                            imageLoader.loadImage(ImageUtil.getImageUrl(user.getAvatar()), new SimpleImageLoadingListener(){
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    headIcon.setImageBitmap(loadedImage);
+                                    Bundle b = new Bundle();
+                                    b.putSerializable("UserInfo", user);
+                                    LatLng ll = new LatLng(user.getLatitude(), user.getLongitude());
+                                    addMarkerToMap(ll, b, v);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.discover_map);
 
+        imageLoader=ImageLoader.getInstance();
+        initHandler();
         _setHeaderTitle("hi同学");
         inflater=LayoutInflater.from(this);
+        myUsercode=SharedPreferencesUtil.getUsercode(this);
         initView();
     }
 
@@ -63,23 +118,11 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);// 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
+        option.setScanSpan(5000);
         option.setIsNeedAddress(false);
         locationClient.setLocOption(option);
         locationClient.registerLocationListener(myListener);
         locationClient.start();
-
-
-        View v=inflater.inflate(R.layout.people_marker_view, null);
-        Bundle b=new Bundle();
-        LatLng ll=new LatLng(39.8763560000,116.3808710000);
-        addMarkerToMap(ll, b, v);
-
-        View v2=inflater.inflate(R.layout.people_marker_view, null);
-        Bundle b2=new Bundle();
-        LatLng ll2=new LatLng(39.8735860000,116.3709450000);
-        addMarkerToMap(ll2, b2, v2);
-
 
     }
 
@@ -156,18 +199,34 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                 myLocation=bdLocation;
                 LatLng ll=new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
-                View me = inflater.inflate(R.layout.people_marker_view, null);
+                final View me = inflater.inflate(R.layout.people_marker_view, null);
                 View headerBg = me.findViewById(R.id.headFrame);
+                final ImageView headIcon= (ImageView) me.findViewById(R.id.headIcon);
                 headerBg.setBackgroundResource(R.mipmap.icon_marker_me);
-                Bundle b=new Bundle();
+
+                //清除上次的点
                 if(loactionMarker!=null)
                     loactionMarker.remove();
                 else{
                     MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15);
                     baiduMap.animateMapStatus(u);
                 }
-                loactionMarker=addMarkerToMap(ll, b, me);
+
+                imageLoader.loadImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(DiscoverMap.this, Constant.Avatar)), new SimpleImageLoadingListener(){
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        headIcon.setImageBitmap(loadedImage);
+                        Bundle b = new Bundle();
+                        LatLng ll = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                        addMarkerToMap(ll, b, me);
+                        loactionMarker=addMarkerToMap(ll, b, me);
+                    }
+                });
                 showWorkingSpace();
+
+                SharedPreferencesUtil.setString(DiscoverMap.this, Constant.Lat, "" + bdLocation.getLatitude());
+                SharedPreferencesUtil.setString(DiscoverMap.this, Constant.Lon, "" + bdLocation.getLongitude());
+                mHandler.nearUser(myLocation.getLatitude()+"", myLocation.getLongitude()+"");
             }
         }
     }
@@ -176,5 +235,26 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
     protected void onStop() {
         super.onStop();
         locationClient.stop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // activity 暂停时同时暂停地图控件
+        mMapView.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // activity 恢复时同时恢复地图控件
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // activity 销毁时同时销毁地图控件
+        mMapView.onDestroy();
     }
 }
