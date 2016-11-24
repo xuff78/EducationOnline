@@ -18,6 +18,7 @@ import com.education.online.act.MainPage;
 import com.education.online.bean.LoginInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SHA;
@@ -148,6 +149,8 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserPSW, userPsd.getText().toString());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectId, user.getSubject_id());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectName, user.getSubject_name());
+
+                ActUtil.initChatUser(LoginActivity.this, user.getAvatar(), user.getNickname());
 
                 finish();
             }

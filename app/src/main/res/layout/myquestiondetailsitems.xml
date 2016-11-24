@@ -45,7 +45,7 @@
 
                 <TextView
                     android:id="@+id/isadopted"
-                    android:textColor="@color/lcim_common_gray"
+                    android:textColor="@color/normal_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

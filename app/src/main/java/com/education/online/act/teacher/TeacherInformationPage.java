@@ -233,7 +233,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     @Override
     public void onClick(View view) {
         if(R.id.consultingLayout==view.getId()){
-
+            ActUtil.goChat(teacher.getUsercode(), this);
         }else if(R.id.addToFavoriteLayout==view.getId()){
             handler.addAttention(usercode);
         }

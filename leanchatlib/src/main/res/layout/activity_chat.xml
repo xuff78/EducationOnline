@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+<!--<ScrollView
+    android:layout_below="@+id/headerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment
+            android:id="@+id/fragment_chat"
+            android:layout_below="@+id/headerLayout"
+            android:name="com.avoscloud.leanchatlib.activity.ChatFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</ScrollView>-->
+    <RelativeLayout
+        android:paddingTop="45dip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_above="@+id/fragment_chat_inputbottombar"
+                android:id="@+id/fragment_chat_srl_pullrefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fragment_chat_rv_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </android.support.v4.widget.SwipeRefreshLayout>
+    <com.avoscloud.leanchatlib.activity.InputBottomBar
+        android:id="@+id/fragment_chat_inputbottombar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</FrameLayout>

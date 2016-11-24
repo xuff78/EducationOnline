@@ -1,22 +1,12 @@
 package com.education.online;
 
-import android.app.Application;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.avos.avoscloud.AVOSCloud;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.im.v2.AVIMMessageManager;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.baidu.mapapi.SDKInitializer;
-import com.education.online.leanchat.AddRequest;
-import com.education.online.leanchat.LeanchatUser;
-import com.education.online.leanchat.MessageHandler;
-import com.education.online.leanchat.PushManager;
-import com.education.online.leanchat.UpdateInfo;
 import com.education.online.util.SharedPreferencesUtil;
 
-import cn.leancloud.chatkit.LCChatKit;
 
 /**
  * Created by 可爱的蘑菇 on 2016/11/20.
@@ -40,15 +30,7 @@ public class EduApplication extends MultiDexApplication {
 
         AVOSCloud.initialize(this, appId, appKey);
         AVOSCloud.setLastModifyEnabled(true);
-        LeanchatUser.alwaysUseSubUserClass(LeanchatUser.class);
 
-        AVObject.registerSubclass(AddRequest.class);
-        AVObject.registerSubclass(UpdateInfo.class);
-
-        LCChatKit.getInstance().init(this, appId, appKey);
-        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
-
-        PushManager.getInstance().init(ctx);
         AVOSCloud.setDebugLogEnabled(debug);
 //        AVAnalytics.enableCrashReport(this, !debug);
         if (EduApplication.debug) {

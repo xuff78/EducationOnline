@@ -154,14 +154,14 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                 // TODO Auto-generated method stub
                 if (location == null)
                     return;
-                SharedPreferencesUtil.setString(MainPage.this,"La", "" + location.getLatitude());
-                SharedPreferencesUtil.setString(MainPage.this, "Lo", "" + location.getLongitude());
+                SharedPreferencesUtil.setString(MainPage.this, Constant.Lat, "" + location.getLatitude());
+                SharedPreferencesUtil.setString(MainPage.this, Constant.Lon, "" + location.getLongitude());
                 if (mLocationClient != null && mLocationClient.isStarted()) {
                     mLocationClient.stop();
                     mLocationClient = null;
                 }
                 String address=location.getCity();
-                SharedPreferencesUtil.setString(MainPage.this, "my_address", address);
+                SharedPreferencesUtil.setString(MainPage.this, Constant.Addr, address);
                 LogUtil.d("totp", "addr:" + address);
 //                _setLeftBackText(location.getCity(), null);
             }

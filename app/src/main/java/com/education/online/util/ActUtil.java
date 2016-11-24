@@ -10,8 +10,17 @@ import android.util.Pair;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
+import com.avoscloud.leanchatlib.controller.ChatManager;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.education.online.R;
+import com.education.online.act.CM_MessageChatAct;
 import com.education.online.act.SearchAct;
 
 import java.lang.reflect.Method;
@@ -241,5 +250,35 @@ public class ActUtil {
             }
         }
         return res;
+    }
+
+    public static  void initChatUser(Context con, String imageUrl, String username){
+        LogUtil.i("Chat", "initChat");
+        LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+        if(imageUrl.length()>0)
+            user.put("avatar", imageUrl);
+        user.put("username", username);
+        user.setObjectId(SharedPreferencesUtil.getString(con, "usercode"));
+        AVUser.changeCurrentUser(user, true);
+        AVUserCacheUtils.cacheUser(user.getObjectId(), user);
+        ChatManager.getInstance();
+    }
+
+    public static void goChat(String otherid, final Context con) {
+        LogUtil.i("Chat", "openChat");
+        final ChatManager chatManager = ChatManager.getInstance();
+        chatManager.fetchConversationWithUserId(otherid, new AVIMConversationCreatedCallback() {
+            @Override
+            public void done(AVIMConversation conversation, AVIMException e) {
+                if (e != null) {
+                    Toast.makeText(con, e.getMessage(), Toast.LENGTH_LONG).show();
+                } else {
+                    chatManager.getRoomsTable().insertRoom(conversation.getConversationId());
+                    Intent intent = new Intent(con, CM_MessageChatAct.class);
+                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, conversation.getConversationId());
+                    con.startActivity(intent);
+                }
+            }
+        });
     }
 }

@@ -356,6 +356,15 @@
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
         <activity
+            android:name=".act.CM_MessageChatAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".act.CM_TargetLocationAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+
+        <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|layoutDirection"
             android:theme="@android:style/Theme.NoTitleBar"

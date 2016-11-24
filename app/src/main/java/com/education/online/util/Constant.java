@@ -29,6 +29,9 @@ public class Constant {
     public static final String SubjectId="SubjectId";
     public static final String SubjectName="SubjectName";
 
+    public static final String Lat="Lat";
+    public static final String Lon="Lon";
+
     public static final String TypeTeacher="teacher";
     public static final String TypeCourse="course";
 
@@ -38,6 +41,7 @@ public class Constant {
 
 
     public static final String API_BASE = "ih.base.";
+    public static final String Addr = "Addr";
 
     public class Method{
         public static final String init=API_BASE + "sys.init";
