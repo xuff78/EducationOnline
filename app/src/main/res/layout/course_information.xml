@@ -28,37 +28,32 @@
         android:layout_below="@+id/courseName"
         android:layout_marginTop="10dp">
 
-        <LinearLayout
-            android:id="@+id/pricelayout"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal">
+
 
             <TextView
+                android:layout_toLeftOf="@+id/coursePrice"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:gravity="center_vertical|right"
                 android:text="现价：￥"
                 android:textColor="@color/dark_orange"
                 android:textSize="13sp" />
 
             <TextView
+                android:layout_centerInParent="true"
                 android:layout_gravity="center_vertical"
                 android:text="100"
                 android:id="@+id/coursePrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/dark_orange"
                 android:textSize="16sp" />
-        </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/pricelayout"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/coursePrice"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_centerInParent="true"
