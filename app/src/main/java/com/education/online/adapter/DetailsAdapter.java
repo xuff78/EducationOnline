@@ -68,6 +68,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.courseBrief.setText(courseDetailBean.getIntroduction());
             vh.coursePrice.setText(courseDetailBean.getPrice());
+          vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
         }   else if (pos == 1) {
           TeacherInfoHolder vh = (TeacherInfoHolder) holder;
           vh.teacherName.setText(courseDetailBean.getUser_info().getUser_name());
@@ -120,10 +121,11 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     //课程信息项
     public class CourseInfoHolder extends RecyclerView.ViewHolder {
 
-        TextView courseName,coursePrice,courseBrief;
+        TextView courseName,coursePrice,courseBrief,courseoldprice;
 
         public CourseInfoHolder(View v, int pos) {
             super(v);
+            courseoldprice=(TextView) v.findViewById(R.id.courseoldprice);
             courseName= (TextView) v.findViewById(R.id.courseName);
             coursePrice= (TextView) v.findViewById(R.id.coursePrice);
             courseBrief= (TextView) v.findViewById(R.id.courseBrief);

@@ -84,6 +84,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder fvh = (FooterViewHolder) holder;
             fvh.footerHint.setText(loadingHint);
+            if(evaluateList.size()==0)
+                fvh.footerHint.setText("暂无评价");
         } else
         if (pos == 0) {
             TotalCommentsHolder vh = (TotalCommentsHolder) holder;

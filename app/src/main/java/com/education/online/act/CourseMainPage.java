@@ -22,6 +22,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.SharedPreferencesUtil;
 
 import org.json.JSONException;
 
@@ -46,6 +47,8 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     private EvaluateListBean evaluateListBean=new EvaluateListBean();
     Intent intent;
     HttpHandler httpHandler;
+
+    private String my_usercode="";
     public void initiHandler(){
         httpHandler = new HttpHandler(this, new CallBack(this)
         {
@@ -72,6 +75,15 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     }
                     _setHeaderTitle(courseDetailBean.getCourse_name());
                     adapter.notifyDataSetChanged();
+
+                    if(my_usercode.equals(courseDetailBean.getUsercode())){
+                        share.setVisibility(View.INVISIBLE);
+                        addfavorite.setVisibility(View.INVISIBLE);
+                        download.setVisibility(View.INVISIBLE);
+                        textaddfavorite.setVisibility(View.INVISIBLE);
+                        textshare.setVisibility(View.INVISIBLE);
+                        textdownload.setVisibility(View.INVISIBLE);
+                    }
                     if (courseDetailBean.getIs_collection().equals("0"))
                     {
                         flag=false;
@@ -127,6 +139,8 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     }
 
     private void initView() {
+
+        my_usercode = SharedPreferencesUtil.getUsercode(this);
         intent = getIntent();
         course_id = intent.getStringExtra("course_id");
         addfavorite = (ImageView) findViewById(R.id.addfavorite);

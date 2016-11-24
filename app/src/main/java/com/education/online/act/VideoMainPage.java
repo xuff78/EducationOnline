@@ -39,6 +39,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.OpenfileUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.util.VideoUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -57,7 +58,7 @@ public class VideoMainPage extends BaseFrameAct {
     int currentPos = 0;
     private LinearLayout addfavorite_layout, share_layout, download_layout;
     private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
-    private ImageView addfavorite, share, download,background;
+    private ImageView addfavorite, share, download, background;
     private View lastSelectedView = null;
     private LinearLayoutManager layoutManager;
     private TextView paytips, payBtn;
@@ -75,10 +76,10 @@ public class VideoMainPage extends BaseFrameAct {
     private ImageView playBtn, expandBtn, video_play, videoMask;
     RelativeLayout.LayoutParams mVideoParams;
     RelativeLayout relativelayout1;
-    private List<EvaluateBean> evaluateList=new ArrayList<>();
-    private int page=1;
-    private String pageSize="20";
-    private boolean onloading=false;
+    private List<EvaluateBean> evaluateList = new ArrayList<>();
+    private int page = 1;
+    private String pageSize = "20";
+    private boolean onloading = false;
     private ImageLoader imageLoader;
 
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
@@ -92,8 +93,8 @@ public class VideoMainPage extends BaseFrameAct {
     private CommentsAdapter commentsAdapter;
     private DirectoryAdapter directoryAdapter;
     private DetailsAdapter detailsAdapter;
-private View.OnClickListener listener;
-
+    private View.OnClickListener listener;
+    private String my_usercode = "";
 
     public void initiHandler() {
         httpHandler = new HttpHandler(this, new CallBack(this) {
@@ -108,7 +109,7 @@ private View.OnClickListener listener;
                     if (ispaid.equals("0")) {//没买
                         //do sth
                         paytips.setVisibility(View.VISIBLE);
-                       payBtn.setVisibility(View.VISIBLE);
+                        payBtn.setVisibility(View.VISIBLE);
                         video_play.setVisibility(View.INVISIBLE);
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.INVISIBLE);
@@ -132,18 +133,28 @@ private View.OnClickListener listener;
                         payBtn.setClickable(false);
                         expandBtn.setClickable(false);
                     }
-                    if(intent.hasExtra("Edit")) {
-                        if(intent.getStringExtra("status").equals("1")) {
+                    if (intent.hasExtra("Edit")) {
+                        if (intent.getStringExtra("status").equals("1")) {
                             textaddorbuy.setText("已审核");
-                        }else if(intent.getStringExtra("status").equals("0")) {
+                        } else if (intent.getStringExtra("status").equals("0")) {
                             textaddorbuy.setText("待审核");
-                        }else if(intent.getStringExtra("status").equals("2")) {
+                        } else if (intent.getStringExtra("status").equals("2")) {
                             textaddorbuy.setText("已拒绝");
                         }
                         textaddorbuy.setOnClickListener(null);
                     }
 
                     _setHeaderTitle(courseDetailBean.getCourse_name());
+
+                    if (my_usercode.equals(courseDetailBean.getUsercode())) {
+                        share.setVisibility(View.INVISIBLE);
+                        addfavorite.setVisibility(View.INVISIBLE);
+                        download.setVisibility(View.INVISIBLE);
+                        textaddfavorite.setVisibility(View.INVISIBLE);
+                        textshare.setVisibility(View.INVISIBLE);
+                        textdownload.setVisibility(View.INVISIBLE);
+                    }
+
                     detailsAdapter.notifyDataSetChanged();
                     directoryAdapter.notifyDataSetChanged();
                     if (courseDetailBean.getCourse_extm().size() > 0) {
@@ -158,10 +169,10 @@ private View.OnClickListener listener;
                         flag = true;
                         addfavorite.setSelected(true);
                     }
-                    httpHandler.getEvaluateList(course_id,null,pageSize,"1");
+                    httpHandler.getEvaluateList(course_id, null, pageSize, "1");
 
                 } else if (method.equals(Method.getEvaluateList)) {
-                    onloading=false;
+                    onloading = false;
                     evaluateListBean = JsonUtil.getEvaluateList(jsonData);
                     evaluateList.addAll(evaluateListBean.getEvaluateList());
                     commentsAdapter.notifyDataSetChanged();
@@ -181,8 +192,8 @@ private View.OnClickListener listener;
             @Override
             public void onFailure(String method, JsonMessage jsonMessage) {
                 super.onFailure(method, jsonMessage);
-                if(method.equals(Method.getEvaluateList)){
-                    onloading=false;
+                if (method.equals(Method.getEvaluateList)) {
+                    onloading = false;
                     commentsAdapter.setLoadingHint("加载失败");
                 }
             }
@@ -190,16 +201,16 @@ private View.OnClickListener listener;
             @Override
             public void onHTTPException(String method, String jsonMessage) {
                 super.onHTTPException(method, jsonMessage);
-                if(method.equals(Method.getEvaluateList)){
-                    onloading=false;
+                if (method.equals(Method.getEvaluateList)) {
+                    onloading = false;
                     commentsAdapter.setLoadingHint("加载失败");
                 }
             }
         });
-                //
+        //
     }
 
-    private void SetplayerOrImageState(int i){
+    private void SetplayerOrImageState(int i) {
         String relativepath = courseDetailBean.getCourse_extm().get(i).getUrl();
         if (relativepath != null)
             path = VideoUtil.getVideoUrl(relativepath);
@@ -212,9 +223,9 @@ private View.OnClickListener listener;
             String type = "";
             type = OpenfileUtil.getFiletype(relativepath);
             if (type == "image") {
-               if(upVideoView.isPlaying()) {
-                   upVideoView.pause();
-               }
+                if (upVideoView.isPlaying()) {
+                    upVideoView.pause();
+                }
                 video_play.setVisibility(View.INVISIBLE);
                 upVideoView.setVisibility(View.INVISIBLE);
                 background.setVisibility(View.VISIBLE);
@@ -227,15 +238,15 @@ private View.OnClickListener listener;
                 payBtn.setClickable(true);
                 expandBtn.setClickable(true);
                 roundLeftBack.setClickable(true);
-         //       upVideoView.pause();
+                //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
                 videoMask.setVisibility(View.VISIBLE);
                 VideoThumbnailLoader.getIns().display(this, path, videoMask,
-                        100, 100, new VideoThumbnailLoader.ThumbnailListener(){
+                        100, 100, new VideoThumbnailLoader.ThumbnailListener() {
                             @Override
                             public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
-                                if(bitmap!=null)
+                                if (bitmap != null)
                                     iv.setImageBitmap(bitmap);
                             }
                         });
@@ -243,7 +254,7 @@ private View.OnClickListener listener;
                 //暂停看风景
                 //upVideoView.pause();
             } else {
-                if(upVideoView.isPlaying()) {
+                if (upVideoView.isPlaying()) {
                     upVideoView.pause();
                 }
                 upVideoView.setVisibility(View.INVISIBLE);
@@ -253,8 +264,8 @@ private View.OnClickListener listener;
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
                 videorelated.setVisibility(View.INVISIBLE);
             }
-        } else{
-            if(upVideoView.isPlaying()) {
+        } else {
+            if (upVideoView.isPlaying()) {
                 upVideoView.pause();
             }
             video_play.setVisibility(View.INVISIBLE);
@@ -278,7 +289,7 @@ private View.OnClickListener listener;
     }
 
     private void initView() {
-
+        my_usercode = SharedPreferencesUtil.getUsercode(this);
         listener = new View.OnClickListener() {
 
             @Override
@@ -313,7 +324,7 @@ private View.OnClickListener listener;
                         break;
                     case R.id.details:
                         recyclerList.setAdapter(detailsAdapter);
-                        if(view!=lastSelectedView)
+                        if (view != lastSelectedView)
                             setStatusFalse(lastSelectedPosition);
                         lastSelectedview = details;
                         lastSelectedPosition = 0;
@@ -322,7 +333,7 @@ private View.OnClickListener listener;
                         break;
                     case R.id.directory:
                         recyclerList.setAdapter(directoryAdapter);
-                        if(view!=lastSelectedView)
+                        if (view != lastSelectedView)
                             setStatusFalse(lastSelectedPosition);
                         lastSelectedview = directory;
                         lastSelectedPosition = 1;
@@ -332,7 +343,7 @@ private View.OnClickListener listener;
                         break;
                     case R.id.comments:
                         recyclerList.setAdapter(commentsAdapter);
-                        if(view!=lastSelectedView)
+                        if (view != lastSelectedView)
                             setStatusFalse(lastSelectedPosition);
                         lastSelectedview = comments;
                         lastSelectedPosition = 2;
@@ -369,7 +380,7 @@ private View.OnClickListener listener;
                         upVideoView.setLayoutParams(params);
                         upVideoView.getTrackInfo();
                         break;
-                    case R.id. roundLeftBack:
+                    case R.id.roundLeftBack:
 
                         finish();
                         break;
@@ -447,15 +458,15 @@ private View.OnClickListener listener;
         video_play.setOnClickListener(listener);
 
         //
-         layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
         recyclerList.addOnScrollListener(srcollListener);
         lastSelectedview = details;
         lastSelectedPosition = 0;
-        commentsAdapter = new CommentsAdapter(this,courseDetailBean,evaluateList);
-        detailsAdapter  = new DetailsAdapter(this,courseDetailBean);
-        directoryAdapter = new DirectoryAdapter(this,courseDetailBean,listener);
+        commentsAdapter = new CommentsAdapter(this, courseDetailBean, evaluateList);
+        detailsAdapter = new DetailsAdapter(this, courseDetailBean);
+        directoryAdapter = new DirectoryAdapter(this, courseDetailBean, listener);
         recyclerList.setAdapter(detailsAdapter);
 
     }
@@ -491,21 +502,22 @@ private View.OnClickListener listener;
         super.onStop();
         upVideoView.release(true);
     }
-    RecyclerView.OnScrollListener srcollListener=new RecyclerView.OnScrollListener() {
 
-        int lastVisibleItem=0;
+    RecyclerView.OnScrollListener srcollListener = new RecyclerView.OnScrollListener() {
+
+        int lastVisibleItem = 0;
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisibleItem + 1 == commentsAdapter.getItemCount()) {
-                if(!onloading){
-                    if(evaluateListBean.getCurrent_page()<evaluateListBean.getPagetotal()){
+                if (!onloading) {
+                    if (evaluateListBean.getCurrent_page() < evaluateListBean.getPagetotal()) {
                         onloading = true;
                         httpHandler.getEvaluateList(course_id, null, pageSize, String.valueOf(page));
                         commentsAdapter.setLoadingHint("正在加载");
-                    }else
+                    } else
                         commentsAdapter.setLoadingHint("加载完成");
                 }
             }
