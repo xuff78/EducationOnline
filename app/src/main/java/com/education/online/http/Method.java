@@ -10,6 +10,7 @@ public class Method {
     public static final String Update = "uc/user/update";
     public static final String updateLocation = "uc/user/location";
     public static final String nearUser = "uc/user/near";
+    public static final String signin = "uc/user/signin";
 
     public static final String updateValidate = "education/user/validate";
     public static final String getValidateView = "education/user/validateView";

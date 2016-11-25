@@ -42,6 +42,7 @@
                     android:text="ADOBE 小方方"
                     style="@style/txt_white_12" />
                 <TextView
+                    android:id="@+id/sexTxt"
                     android:layout_marginLeft="6dp"
                     android:text="女"
                     android:textSize="10sp"
@@ -266,10 +267,12 @@
         <LinearLayout
             android:layout_weight="1"
             android:gravity="center"
+            android:id="@+id/payattentionBtn"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/starIcon"
                 android:src="@mipmap/icon_payattention"
                 android:layout_width="20dp"
                 android:layout_height="20dp" />

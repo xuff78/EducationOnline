@@ -88,6 +88,10 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                             });
                         }
                     }
+                }else if(method.equals(Method.getUserInfo)){
+                    Intent intent=new Intent(DiscoverMap.this, StudentIntroduction.class);
+                    intent.putExtra("jsonData", jsonData);
+                    startActivity(intent);
                 }
             }
         });
@@ -138,7 +142,12 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
     @Override
     public boolean onMarkerClick(Marker marker) {
         Bundle markerExtraInfo = marker.getExtraInfo();
-        startActivity(new Intent(DiscoverMap.this, StudentIntroduction.class));
+        UserInfo user= (UserInfo) markerExtraInfo.getSerializable("UserInfo");
+        if(user==null) {
+            user=new UserInfo();
+            user.setUsercode(myUsercode);
+        }
+        mHandler.getUserInfo(user.getUsercode());
         return false;
     }
 
@@ -161,7 +170,7 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
         OverlayOptions ooCircle = new CircleOptions()
                 .fillColor(0x331b93e5)
                 .center(llCircle).stroke(new Stroke(2, 0xff1b93e5))
-                .radius(1400);
+                .radius(3000);
         roundRate=baiduMap.addOverlay(ooCircle);
 
 //        OverlayOptions ooDot = new DotOptions().center(llCircle).radius(6)
@@ -218,7 +227,6 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                         headIcon.setImageBitmap(loadedImage);
                         Bundle b = new Bundle();
                         LatLng ll = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                        addMarkerToMap(ll, b, me);
                         loactionMarker=addMarkerToMap(ll, b, me);
                     }
                 });
@@ -253,8 +261,8 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
 
     @Override
     protected void onDestroy() {
+        mMapView.onDestroy();
         super.onDestroy();
         // activity 销毁时同时销毁地图控件
-        mMapView.onDestroy();
     }
 }

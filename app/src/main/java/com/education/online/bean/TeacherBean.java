@@ -20,6 +20,7 @@ public class TeacherBean implements Serializable{
     private String work_time = "";  // 工作时间
     private String specialty = "";
     private String subject_id="";
+    private String birthday="";
     private String subject = "";  // 主营科目
     private String edu_bg = "";  // 学历
     private String school = "";  // 院校
@@ -40,8 +41,34 @@ public class TeacherBean implements Serializable{
     private String is_edu_bg_validate=""; // 学历验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_specialty_validate=""; // 是否专业资质验证0-待审核,1-通过,2-拒绝,3-未提交
     private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
+    private String to_attention_count="";
+    private String interest_info="";
     private List<String> photo_album=new ArrayList<>();
     private List<String> video=new ArrayList<>();
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getInterest_info() {
+        return interest_info;
+    }
+
+    public void setInterest_info(String interest_info) {
+        this.interest_info = interest_info;
+    }
+
+    public String getTo_attention_count() {
+        return to_attention_count;
+    }
+
+    public void setTo_attention_count(String to_attention_count) {
+        this.to_attention_count = to_attention_count;
+    }
 
     public String getIs_attention() {
         return is_attention;
