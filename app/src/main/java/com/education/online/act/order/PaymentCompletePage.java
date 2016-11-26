@@ -82,6 +82,7 @@ public class PaymentCompletePage extends BaseFrameAct implements View.OnClickLis
             case R.id.toHome:
                 Intent i=new Intent();
                 i.setClass(PaymentCompletePage.this, MainPage.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 break;
         }
