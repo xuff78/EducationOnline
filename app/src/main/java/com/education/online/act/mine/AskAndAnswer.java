@@ -1,15 +1,19 @@
 package com.education.online.act.Mine;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,15 +24,19 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.auxililary.TextMoveLayout;
 import com.education.online.act.login.SubjectSelector;
 import com.education.online.act.upyun.UploadTask;
+import com.education.online.bean.IntegralInfo;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.SubjectBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.OpenfileUtil;
 import com.education.online.util.ToastUtils;
@@ -57,7 +65,7 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
     private String question_id = "";
     private int integral = 0;
     private Dialog progressDialog;
-    private TextView subject, submitbtn;
+    private TextView subject, submitbtn,text,minintegral,maxintegral;
     private RelativeLayout selectsubjectlayout;
     private SeekBar seekbar;
     private EditText enterquestion;
@@ -65,6 +73,12 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
     private LinearLayout addpicture;
     private HttpHandler httpHandler;
     private SelectPicDialog selectPicDialog;
+    private TextMoveLayout textMoveLayout;
+    private ViewGroup.LayoutParams layoutParams;
+    private float moveStep = 0;
+    private IntegralInfo integralInfo = new IntegralInfo();
+    private int width;
+    private  int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +101,7 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
         });
         initiHandler();
         initView();
+       httpHandler.getIntegral();
 
     }
 
@@ -94,9 +109,47 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
         httpHandler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonMessage) throws JSONException {
-                ToastUtils.displayTextShort(AskAndAnswer.this,"提交成功！");//////////////为什么不变蓝
-                setResult(0x10);
-                finish();
+                if(method== Method.askOrAnswer) {
+                    ToastUtils.displayTextShort(AskAndAnswer.this, "提交成功！");//////////////为什么不变蓝
+                    setResult(0x10);
+                    finish();
+                } else if (method.equals(Method.getIntegral)){
+                    integralInfo = JsonUtil.getIntegral(jsonMessage);
+                    int residual_integral =Integer.parseInt(integralInfo.getIntegral()) ;
+                    seekbar.setMax(residual_integral);
+                    seekbar.setEnabled(true);
+                    seekbar.setProgress(0);
+                    text = new TextView(AskAndAnswer.this);
+                    text.setTextColor(getResources().getColor(R.color.normal_blue));
+                    text.setTextSize(12);
+                    height = textMoveLayout.getHeight();
+                     width = textMoveLayout.getWidth();
+                    layoutParams = new ViewGroup.LayoutParams(width, height);
+                    textMoveLayout.addView(text,layoutParams);
+                    text.layout(35,0,width, height);
+                    text.setText("0");
+                    maxintegral.setText(integralInfo.getIntegral());
+                    moveStep = (float) (((float) width / (float) residual_integral) * 0.77);
+                    seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            integral = progress;
+                            text.setText(String.valueOf(progress));
+                            text.layout(35+(int) (progress*moveStep),0,width,height);
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                        }
+                    });
+
+                }
             }
         });
     }
@@ -107,27 +160,17 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
         selectsubjectlayout.setOnClickListener(this);
         subject = (TextView) findViewById(R.id.subject);
         seekbar = (SeekBar) findViewById(R.id.seekbar);
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    integral = progress;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        textMoveLayout = (TextMoveLayout) findViewById(R.id.textmovelayout);
+        maxintegral = (TextView) findViewById(R.id.maxintegral);
         enterquestion = (EditText) findViewById(R.id.enterquestion);
         addpicture = (LinearLayout) findViewById(R.id.addpicture);
         addpicture.setOnClickListener(this);
         questionImage = (ImageView) findViewById(R.id.questionImage);
+
+
+       // int residual_integral =Integer.parseInt(integralInfo.getIntegral()) ;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -197,8 +240,8 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
-                        course = result.substring(1);
-                        LogUtil.d("Img", course);
+                         img= result.substring(1);
+                        LogUtil.d("Img", img);
                         // imageloader.displayImage(ImageUtil.getImageUrl(course), courseImg);
                         Toast.makeText(AskAndAnswer.this, "图片上传成功！", Toast.LENGTH_SHORT);
                     }
@@ -214,8 +257,6 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
             Bitmap photo = BitmapFactory.decodeFile(file.toString());
             if (photo != null) {
                 questionImage.setImageBitmap(photo);
-                img = "question/"+phoneTxtName + ".png";
-
             } else
                 ToastUtils.displayTextShort(AskAndAnswer.this, "找不到文件");
         }

@@ -10,9 +10,11 @@ import com.education.online.bean.CourseExtm;
 import com.education.online.bean.CreatUserInfo;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
+import com.education.online.bean.IntegralInfo;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.QuestionInfoBean;
 import com.education.online.bean.QuestionListHolder;
+import com.education.online.bean.integralDetail;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -352,6 +354,32 @@ public class JsonUtil {
 
         }
         return answerListHolder;
+
+
+    }
+
+    public static IntegralInfo getIntegral(String jsonStr) throws JSONException {
+      IntegralInfo integralInfo = new IntegralInfo();
+        List<integralDetail> integralDetails = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if(!jsonObject.isNull("integral"))
+            integralInfo.setIntegral(jsonObject.getString("integral"));
+        if(!jsonObject.isNull("details")){
+            JSONArray jsonArray = jsonObject.getJSONArray("details");
+            for (int i=0;i<jsonArray.length();i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                integralDetail integralDetail = new integralDetail();
+                if (!item.isNull("content"))
+                    integralDetail.setContent(item.getString("content"));
+                if (!item.isNull("integral"))
+                    integralDetail.setIntergral(item.getString("integral"));
+                if (!item.isNull("residual_integral"))
+                    integralDetail.setResidual_integral(item.getString("residual_integral"));
+                integralDetails.add(integralDetail);
+            }
+            integralInfo.setIntegralDetails(integralDetails);
+        }
+        return integralInfo;
 
 
     }

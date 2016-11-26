@@ -22,14 +22,15 @@
             android:textSize="14sp"
             android:id="@+id/textView2" />
 
-        <TextView
-            android:id="@+id/text1"
+        <EditText
+            android:background="@null"
+            android:id="@+id/teacher_orgnization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:text="老师/机构"
+            android:hint="老师/机构"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -40,7 +41,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/light_gray" />
 
-    <TextView
+    <EditText
+        android:background="@null"
         android:id="@+id/courseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +50,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
-        android:text="课程名称"
+        android:hint="课程名称"
         android:textSize="14sp" />
 
     <View
@@ -156,11 +158,32 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/addpicture"
+            android:id="@+id/addpicture1"
             android:padding="8dp"
             android:background="@drawable/shape_nocorner_lightgray"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_redcross"
+            />
+        <ImageView
+            android:visibility="gone"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/addpicture2"
+            android:padding="8dp"
+            android:background="@drawable/shape_nocorner_lightgray"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/icon_redcross"
+            />
+        <ImageView
+            android:visibility="gone"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/addpicture3"
+            android:padding="8dp"
+            android:background="@drawable/shape_nocorner_lightgray"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@mipmap/icon_redcross"
             />
 
@@ -199,14 +222,15 @@
             android:textColor="@color/darkred"
             android:textSize="14sp" />
 
-        <TextView
+        <EditText
+            android:background="@null"
             android:id="@+id/setPhoneNum"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:text="186****9098"
+            android:hint="请输入您的电话号码"
             android:textSize="14sp" />
     </LinearLayout>
 

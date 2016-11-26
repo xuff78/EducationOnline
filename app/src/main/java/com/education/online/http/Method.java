@@ -11,6 +11,9 @@ public class Method {
     public static final String updateLocation = "uc/user/location";
     public static final String nearUser = "uc/user/near";
     public static final String signin = "uc/user/signin";
+    public static final String getIntegral= "uc/user/integral";
+
+
 
     public static final String updateValidate = "education/user/validate";
     public static final String getValidateView = "education/user/validateView";
@@ -44,5 +47,7 @@ public class Method {
     public static final String getAnswerList= "education/discovery/aList";
     public static final String getQuestionList= "education/discovery/qList";
     public static final String finishQuestion= "education/discovery/finishQa";
+    public static final String submitFeedback= "education/user/feedback";
+    public static final String complain= "education/user/expose";
 
 }

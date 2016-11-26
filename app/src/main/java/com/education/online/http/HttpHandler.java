@@ -503,6 +503,39 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.finishQuestion,paraMap,true);
 
 	}
+	public  void getIntegral(){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostUser(Method.getIntegral,paraMap,true);
+
+	}
+	public  void submitFeedback(String introduction){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(introduction.length()>0){
+			paraMap.put("introduction",introduction);
+		}
+		requestPostEdu(Method.submitFeedback,paraMap,true);
+	}
+public void complain(String user_name,String courses_name,String reason,String introduction,String url){
+	HashMap<String, String > paraMap =new HashMap<>();
+
+	paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+	if(user_name.length()>0)
+		paraMap.put("user_name",user_name);
+	if(courses_name.length()>0)
+		paraMap.put("courses_name",courses_name);
+	if(reason.length()>0)
+		paraMap.put("reason",reason);
+	if(introduction.length()>0)
+		paraMap.put("introduction",introduction);
+	if(url.length()>0)
+		paraMap.put("url",url);
+
+	requestPostEdu(Method.complain,paraMap,true);
+}
 
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
