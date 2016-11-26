@@ -23,10 +23,12 @@
             android:id="@+id/textView2" />
 
         <EditText
+            android:layout_marginRight="20dp"
+            android:maxLines="1"
             android:background="@null"
             android:id="@+id/teacher_orgnization"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
@@ -38,18 +40,20 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:background="@color/light_gray" />
 
     <EditText
+        android:maxLines="1"
+        android:layout_marginRight="20dp"
         android:background="@null"
         android:id="@+id/courseName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:hint="课程名称"
         android:textSize="14sp" />
 
@@ -132,6 +136,7 @@
         android:textSize="14sp" />
 
     <EditText
+        android:padding="20dp"
         android:gravity="top"
         android:id="@+id/complaintdetail"
         android:layout_width="match_parent"
@@ -161,8 +166,8 @@
             android:id="@+id/addpicture1"
             android:padding="8dp"
             android:background="@drawable/shape_nocorner_lightgray"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_redcross"
             />
@@ -222,7 +227,7 @@
             android:textColor="@color/darkred"
             android:textSize="14sp" />
 
-        <EditText
+        <TextView
             android:background="@null"
             android:id="@+id/setPhoneNum"
             android:layout_width="match_parent"
@@ -230,7 +235,6 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:hint="请输入您的电话号码"
             android:textSize="14sp" />
     </LinearLayout>
 

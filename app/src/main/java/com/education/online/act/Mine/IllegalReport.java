@@ -23,10 +23,12 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.act.upyun.UploadTask;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.MenuPopup;
 import com.education.online.view.SelectPicDialog;
@@ -44,8 +46,8 @@ import java.io.File;
 public class IllegalReport extends BaseFrameAct implements View.OnClickListener {
 
 
-    private EditText courseName, setPhoneNum, teacher_orgnization;
-    private TextView complaintreason, submitbtn;
+    private EditText courseName,  teacher_orgnization;
+    private TextView setPhoneNum,complaintreason, submitbtn;
     private EditText complaintdetail;
     private RelativeLayout complaintReasonDrop;
     private LinearLayout teacherandorg, addpictures;
@@ -83,7 +85,9 @@ public class IllegalReport extends BaseFrameAct implements View.OnClickListener 
         progressDialog = new ProgressDialog(this);
         teacherandorg = (LinearLayout) findViewById(R.id.teacherandorg);
         courseName = (EditText) findViewById(R.id.courseName);
-        setPhoneNum = (EditText) findViewById(R.id.setPhoneNum);
+        setPhoneNum = (TextView) findViewById(R.id.setPhoneNum);
+        String phone = SharedPreferencesUtil.getString(this, Constant.UserName);
+        setPhoneNum.setText(phone);
         submitbtn = (TextView) findViewById(R.id.submitbtn);
         submitbtn.setOnClickListener(this);
 

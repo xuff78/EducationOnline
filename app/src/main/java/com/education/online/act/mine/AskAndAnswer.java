@@ -123,19 +123,19 @@ public class AskAndAnswer extends BaseFrameAct implements View.OnClickListener {
                     text.setTextColor(getResources().getColor(R.color.normal_blue));
                     text.setTextSize(12);
                     height = textMoveLayout.getHeight();
-                     width = textMoveLayout.getWidth();
+                     width = seekbar.getWidth();
                     layoutParams = new ViewGroup.LayoutParams(width, height);
                     textMoveLayout.addView(text,layoutParams);
-                    text.layout(35,0,width, height);
+                    text.layout((int)0.2*width,0,width, height);
                     text.setText("0");
                     maxintegral.setText(integralInfo.getIntegral());
-                    moveStep = (float) (((float) width / (float) residual_integral) * 0.77);
+                    moveStep = (float) (((float) width / (float) residual_integral)*0.9 );
                     seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                             integral = progress;
                             text.setText(String.valueOf(progress));
-                            text.layout(35+(int) (progress*moveStep),0,width,height);
+                            text.layout((int)0.2*width+(int) (progress*moveStep),0,width,height);
                         }
 
                         @Override
