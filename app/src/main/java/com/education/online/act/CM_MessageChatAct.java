@@ -53,8 +53,12 @@ public class CM_MessageChatAct extends ChatActivity {
             }
         });
 
+        String titleTxt=getIntent().getStringExtra("Name");
         TextView title= (TextView) findViewById(R.id.header_title_tv);
-        title.setText(getIntent().getStringExtra("Name"));
+        if(titleTxt!=null&&titleTxt.length()>0)
+            title.setText(titleTxt);
+        else
+            title.setText("聊天");
 
         LeanchatUser user = (LeanchatUser) AVUser.getCurrentUser();
         String avatar= (String) user.get("avatar");

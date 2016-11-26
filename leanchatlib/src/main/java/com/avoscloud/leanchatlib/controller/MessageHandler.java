@@ -95,7 +95,7 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
       Class mLoadClass=null;
         if(isTopActivy("com.education.online", context)) {
           try {
-            mLoadClass = context.getClassLoader().loadClass("com.ih.coffee.act.CM_MessageListAct");
+            mLoadClass = context.getClassLoader().loadClass("com.education.online.act.CM_MessageChatAct");
           } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
