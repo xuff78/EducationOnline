@@ -226,7 +226,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                         httpHandler.getEvaluateList(course_id, null, pageSize, String.valueOf(page));
                         adapter.setLoadingHint("正在加载");
                     }else
-                        adapter.setLoadingHint("加载完成");
+                        adapter.setLoadingHint("共"+evaluateList.size()+"条评价");
                 }
             }
         }
