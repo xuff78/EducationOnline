@@ -25,7 +25,7 @@
         <EditText
             android:background="@null"
             android:id="@+id/teacher_orgnization"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
@@ -44,7 +44,7 @@
     <EditText
         android:background="@null"
         android:id="@+id/courseName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
