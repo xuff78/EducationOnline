@@ -177,8 +177,8 @@
             android:id="@+id/addpicture2"
             android:padding="8dp"
             android:background="@drawable/shape_nocorner_lightgray"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@mipmap/icon_redcross"
             />
         <ImageView
@@ -187,8 +187,8 @@
             android:id="@+id/addpicture3"
             android:padding="8dp"
             android:background="@drawable/shape_nocorner_lightgray"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@mipmap/icon_redcross"
             />
 
