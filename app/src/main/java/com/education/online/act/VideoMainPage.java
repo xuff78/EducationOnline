@@ -244,7 +244,7 @@ public class VideoMainPage extends BaseFrameAct {
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
                 videoMask.setVisibility(View.VISIBLE);
-                if (courseDetailBean.getIs_buy().equals("0"))
+                if (courseDetailBean.getIs_buy().equals("1"))
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
                         100, 100, new VideoThumbnailLoader.ThumbnailListener() {
                             @Override
@@ -253,6 +253,8 @@ public class VideoMainPage extends BaseFrameAct {
                                     iv.setImageBitmap(bitmap);
                             }
                         });
+                else
+                    videoMask.setVisibility(View.GONE);
 //                upVideoView.start();
                 //暂停看风景
                 //upVideoView.pause();
