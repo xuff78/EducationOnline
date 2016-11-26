@@ -253,8 +253,10 @@ public class VideoMainPage extends BaseFrameAct {
                                     iv.setImageBitmap(bitmap);
                             }
                         });
-                else
+                else {
                     videoMask.setVisibility(View.GONE);
+                    video_play.setVisibility(View.INVISIBLE);
+                }
 //                upVideoView.start();
                 //暂停看风景
                 //upVideoView.pause();
