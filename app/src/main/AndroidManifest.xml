@@ -335,7 +335,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
         <activity
-            android:name=".act.discovery.StudentIntroduction"
+            android:name=".act.discovery.Studentintroduction"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
         <activity

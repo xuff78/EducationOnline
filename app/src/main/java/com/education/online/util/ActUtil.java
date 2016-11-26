@@ -267,7 +267,7 @@ public class ActUtil {
         LogUtil.i("Chat", "initChat");
         LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
         if(imageUrl.length()>0)
-            user.put("avatar", imageUrl);
+            user.put("avatar", ImageUtil.getImageUrl(imageUrl));
         user.put("username", username);
         user.setObjectId(SharedPreferencesUtil.getString(con, "usercode"));
         AVUser.changeCurrentUser(user, true);
@@ -288,7 +288,7 @@ public class ActUtil {
         }
     }
 
-    public static void goChat(String otherid, final Context con) {
+    public static void goChat(String otherid, final Context con, final String name) {
         LogUtil.i("Chat", "openChat");
         final ChatManager chatManager = ChatManager.getInstance();
         chatManager.fetchConversationWithUserId(otherid, new AVIMConversationCreatedCallback() {
@@ -300,6 +300,7 @@ public class ActUtil {
                 } else {
 //                    chatManager.getRoomsTable().insertRoom(conversation.getConversationId());
                     Intent intent = new Intent(con, CM_MessageChatAct.class);
+                    intent.putExtra("Name", name);
                     intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, conversation.getConversationId());
                     con.startActivity(intent);
                 }

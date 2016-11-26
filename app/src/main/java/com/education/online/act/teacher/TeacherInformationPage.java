@@ -16,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVUser;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.CommentsAdapter;
@@ -233,7 +236,13 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
     @Override
     public void onClick(View view) {
         if(R.id.consultingLayout==view.getId()){
-            ActUtil.goChat(teacher.getUsercode(), this);
+            LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+            user.put("avatar", ImageUtil.getImageUrl(teacher.getAvatar()));
+            user.put("username", teacher.getName());
+            user.put("user_type ", teacher.getUser_type());
+            user.setObjectId(teacher.getUsercode());
+            AVUserCacheUtils.cacheUser(user.getObjectId(), user);
+            ActUtil.goChat(teacher.getUsercode(), this, teacher.getName());
         }else if(R.id.addToFavoriteLayout==view.getId()){
             handler.addAttention(usercode);
         }

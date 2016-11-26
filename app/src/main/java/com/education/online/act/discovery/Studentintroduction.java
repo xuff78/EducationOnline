@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.avos.avoscloud.AVUser;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.baidu.mapapi.model.LatLng;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 /**
  * Created by 可爱的蘑菇 on 2016/9/27.
  */
-public class StudentIntroduction extends BaseFrameAct implements View.OnClickListener{
+public class Studentintroduction extends BaseFrameAct implements View.OnClickListener{
 
     private HttpHandler mHandler;
     private TeacherBean teacherInfo;
@@ -53,11 +56,11 @@ public class StudentIntroduction extends BaseFrameAct implements View.OnClickLis
                     if(teacherInfo.getIs_attention().equals("0")) {
                         starIcon.setImageResource(R.mipmap.icon_star_red);
                         teacherInfo.setIs_attention("1");
-                        ToastUtils.displayTextShort(StudentIntroduction.this, "成功关注");
+                        ToastUtils.displayTextShort(Studentintroduction.this, "成功关注");
                     }else if(teacherInfo.getIs_attention().equals("1")) {
                         starIcon.setImageResource(R.mipmap.icon_star);
                         teacherInfo.setIs_attention("0");
-                        ToastUtils.displayTextShort(StudentIntroduction.this, "取消关注");
+                        ToastUtils.displayTextShort(Studentintroduction.this, "取消关注");
                     }
                 }
             }
@@ -126,8 +129,14 @@ public class StudentIntroduction extends BaseFrameAct implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.toChatBtn:
-                ActUtil.goChat(teacherInfo.getUsercode(), StudentIntroduction.this);
-//                startActivity(new Intent(StudentIntroduction.this, ChatPage.class));
+                LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+                user.put("avatar", ImageUtil.getImageUrl(teacherInfo.getAvatar()));
+                user.put("username", teacherInfo.getName());
+                user.put("user_type ", teacherInfo.getUser_type());
+                user.setObjectId(teacherInfo.getUsercode());
+                AVUserCacheUtils.cacheUser(user.getObjectId(), user);
+                ActUtil.goChat(teacherInfo.getUsercode(), Studentintroduction.this, teacherInfo.getName());
+//                startActivity(new Intent(Studentintroduction.this, ChatPage.class));
                 break;
             case R.id.myQrcode:
                 break;

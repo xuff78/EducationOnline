@@ -3,10 +3,8 @@ package com.education.online.act;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVGeoPoint;
@@ -20,6 +18,8 @@ import com.avoscloud.leanchatlib.event.InputBottomBarLocationClickEvent;
 import com.avoscloud.leanchatlib.event.LocationItemClickEvent;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.NotificationUtils;
+import com.education.online.R;
+import com.education.online.act.discovery.ChatSetting;
 import com.education.online.util.Constant;
 
 import java.util.ArrayList;
@@ -37,6 +37,24 @@ public class CM_MessageChatAct extends ChatActivity {
         super.onCreate(savedInstanceState);
 
 
+
+
+        findViewById(R.id.back_imagebtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        findViewById(R.id.back_home_imagebtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(CM_MessageChatAct.this, ChatSetting.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView title= (TextView) findViewById(R.id.header_title_tv);
+        title.setText(getIntent().getStringExtra("Name"));
 
         LeanchatUser user = (LeanchatUser) AVUser.getCurrentUser();
         String avatar= (String) user.get("avatar");

@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVUser;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.CourseMainPage;
@@ -90,7 +93,13 @@ public class UserOrderDetail extends BaseFrameAct {
         findViewById(R.id.totalk).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActUtil.goChat(orderDetailBean.getUsercode(), UserOrderDetail.this);
+                LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+//                user.put("avatar", ImageUtil.getImageUrl(orderDetailBean.getim));
+                user.put("username", orderDetailBean.getUser_name());
+                user.put("user_type ", "2");
+                user.setObjectId(orderDetailBean.getUsercode());
+                AVUserCacheUtils.cacheUser(user.getObjectId(), user);
+                ActUtil.goChat(orderDetailBean.getUsercode(), UserOrderDetail.this, orderDetailBean.getUser_name());
             }
         });
     }

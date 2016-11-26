@@ -89,7 +89,7 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                         }
                     }
                 }else if(method.equals(Method.getUserInfo)){
-                    Intent intent=new Intent(DiscoverMap.this, StudentIntroduction.class);
+                    Intent intent=new Intent(DiscoverMap.this, Studentintroduction.class);
                     intent.putExtra("jsonData", jsonData);
                     startActivity(intent);
                 }
