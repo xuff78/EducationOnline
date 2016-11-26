@@ -114,15 +114,17 @@ public class VideoMainPage extends BaseFrameAct {
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.INVISIBLE);
                         roundLeftBack.setVisibility(View.INVISIBLE);
-
                         textaddorbuy.setOnClickListener(listener);
                         payBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //do sth跳转到购买课程页面
+                                Intent i = new Intent(VideoMainPage.this, SubmitOrder.class);
+                                i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                                startActivity(i);
                             }
                         });
                     } else {
+                        textaddorbuy.setText("");
                         textaddorbuy.setOnClickListener(listener);
                         video_play.setVisibility(View.VISIBLE);
                         video_play.setClickable(false);
@@ -242,7 +244,8 @@ public class VideoMainPage extends BaseFrameAct {
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
                 videoMask.setVisibility(View.VISIBLE);
-                VideoThumbnailLoader.getIns().display(this, path, videoMask,
+                if (courseDetailBean.getIs_buy().equals("0"))
+                    VideoThumbnailLoader.getIns().display(this, path, videoMask,
                         100, 100, new VideoThumbnailLoader.ThumbnailListener() {
                             @Override
                             public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {

@@ -75,16 +75,20 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
             ImageView CourseImage=(ImageView)v.findViewById(R.id.CourseImage);
             loader.displayImage(ImageUtil.getImageUrl(course.getImg()),CourseImage);
             TextView CourseTime = (TextView) v.findViewById(R.id.CourseTime);
-            CourseTime.setText(course.getUser_name());
+            if(course.getCourse_type().equals("3"))
+                CourseTime.setText("开课时间： "+course.getCourseware_date());
+            else
+                CourseTime.setText("共"+ course.getCourse_count()+"节课");
+
             TextView CoursePrice = (TextView) v.findViewById(R.id.CoursePrice);
             CoursePrice.setText("￥"+course.getPrice());
             TextView NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
             NumApplicant.setText(course.getFollow()+"人已报名");
-            CourseName.setText(CourseName.getText().toString()+course.getSubject_name());
+            CourseName.setText(CourseName.getText().toString()+course.getCourse_name());
             TextView courseNumTxt= (TextView) v.findViewById(R.id.courseNumTxt);
-            courseNumTxt.setText("共"+course.getCourse_count()+"节课");
+            courseNumTxt.setText(ActUtil.getCourseStatusTxt(course.getStatus()));
+//            courseNumTxt.setText("共"+course.getCourse_count()+"节课");
             TextView statusTxt= (TextView) v.findViewById(R.id.statusTxt);
-            statusTxt.setText(ActUtil.getCourseStatusTxt(course.getStatus()));
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

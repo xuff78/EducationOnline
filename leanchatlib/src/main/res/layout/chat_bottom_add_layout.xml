@@ -30,7 +30,6 @@
         android:text="@string/chat_bottom_camera" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/input_bar_btn_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

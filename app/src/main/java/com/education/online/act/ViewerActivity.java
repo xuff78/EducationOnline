@@ -63,7 +63,10 @@ public class ViewerActivity extends Activity {
         @Override
         public View instantiateItem(ViewGroup container, int position) {
             final TouchImageView img = new TouchImageView(container.getContext());
-            loader.loadImage(ImageUtil.getImageUrl(imgs.get(position)), ImageUtil.getImageOption(0),
+            String url=imgs.get(position);
+            if(!url.startsWith("http"))
+                url=ImageUtil.getImageUrl(imgs.get(position));
+            loader.loadImage(url, ImageUtil.getImageOption(0),
                     new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {

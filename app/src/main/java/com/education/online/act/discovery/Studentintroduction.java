@@ -25,6 +25,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
+import com.education.online.view.QrcodeDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -139,6 +140,7 @@ public class Studentintroduction extends BaseFrameAct implements View.OnClickLis
 //                startActivity(new Intent(Studentintroduction.this, ChatPage.class));
                 break;
             case R.id.myQrcode:
+                new QrcodeDialog(Studentintroduction.this, teacherInfo.getUsercode()).show();
                 break;
             case R.id.payattentionBtn:
                 break;

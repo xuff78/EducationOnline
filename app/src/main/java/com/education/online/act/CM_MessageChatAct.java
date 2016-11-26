@@ -135,8 +135,8 @@ public class CM_MessageChatAct extends ChatActivity {
                 imgs.add(uri);
             else
                 return;
-            Intent i = new Intent(CM_MessageChatAct.this, TouchImageView.class);
-            i.putExtra("image", imgs.get(0));
+            Intent i = new Intent(CM_MessageChatAct.this, ViewerActivity.class);
+            i.putExtra("Images", imgs);
             i.putExtra("pos", 0);
             startActivity(i);
 //            ImageBrowserActivity.go(this, MessageHelper.getFilePath(imageMessage), imageMessage.getFileUrl());

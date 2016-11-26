@@ -144,6 +144,8 @@ public class JsonUtil {
             courseDetailBean.setAverage(jsonObject.getString("average"));
         if(!jsonObject.isNull("is_collection"))
             courseDetailBean.setIs_collection(jsonObject.getString("is_collection"));
+        if (!jsonObject.isNull("is_buy"))
+            courseDetailBean.setIs_buy(jsonObject.getString("is_buy"));
         if(!jsonObject.isNull("user_info")) {
             JSONObject jsonObject1 = jsonObject.getJSONObject("user_info");
             if (!jsonObject1.isNull("user_name"))
@@ -156,9 +158,6 @@ public class JsonUtil {
                 creatUserInfo.setEvaluate_count(jsonObject1.getString("evaluate_count"));
             if (!jsonObject1.isNull("average"))
                 creatUserInfo.setAverage(jsonObject1.getString("average"));
-            courseDetailBean.setUser_info(creatUserInfo);
-            if (!jsonObject1.isNull("is_buy"))
-                creatUserInfo.setAverage(jsonObject1.getString("is_buy"));
             courseDetailBean.setUser_info(creatUserInfo);
         }
         if (!jsonObject.isNull("course_extm"))

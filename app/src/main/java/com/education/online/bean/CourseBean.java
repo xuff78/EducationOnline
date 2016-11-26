@@ -23,6 +23,15 @@ public class CourseBean implements Serializable{
     private String course_type="";
     private String status="";
     private String course_count="";
+    private String courseware_date="";
+
+    public String getCourseware_date() {
+        return courseware_date;
+    }
+
+    public void setCourseware_date(String courseware_date) {
+        this.courseware_date = courseware_date;
+    }
 
     public String getCourse_count() {
         return course_count;

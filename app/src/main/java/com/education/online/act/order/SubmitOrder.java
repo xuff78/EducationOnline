@@ -12,6 +12,7 @@ import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.adapter.InterestingAdapter;
 import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.OrderDetailBean;
 import com.education.online.bean.SubjectBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -41,9 +42,21 @@ public class SubmitOrder extends BaseFrameAct implements View.OnClickListener {
                     order_number= JsonUtil.getString(jsonData, "order_number");
                     handler.getOrderDetail(order_number);
                 }else if(method.equals(Method.getOrderDetail)){
-                    Intent i=new Intent(SubmitOrder.this, OrderPay.class);
-                    i.putExtra("jsonData", jsonData);
-                    startActivity(i);
+
+                    OrderDetailBean orderDetailBean= JSON.parseObject(jsonData, OrderDetailBean.class);
+                    if(orderDetailBean.getPrice().length()>0) {
+                        double price=Double.valueOf(orderDetailBean.getPrice());
+                        if(price!=0) {
+                            Intent i = new Intent(SubmitOrder.this, OrderPay.class);
+                            i.putExtra("jsonData", jsonData);
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(SubmitOrder.this, PaymentCompletePage.class);
+                            i.putExtra("jsonData", jsonData);
+                            startActivity(i);
+                        }
+                    }
+
                 }
             }
         });

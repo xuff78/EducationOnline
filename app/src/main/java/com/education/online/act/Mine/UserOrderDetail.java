@@ -94,7 +94,8 @@ public class UserOrderDetail extends BaseFrameAct {
             @Override
             public void onClick(View view) {
                 LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
-//                user.put("avatar", ImageUtil.getImageUrl(orderDetailBean.getim));
+                String imgUrl=JsonUtil.getString(JsonUtil.getString(jsonData, "user_info"),"avatar");
+                user.put("avatar", ImageUtil.getImageUrl(imgUrl));
                 user.put("username", orderDetailBean.getUser_name());
                 user.put("user_type ", "2");
                 user.setObjectId(orderDetailBean.getUsercode());
