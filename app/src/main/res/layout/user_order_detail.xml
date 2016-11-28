@@ -19,6 +19,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp" />
         <TextView
+            android:id="@+id/orderStatus"
             android:layout_marginLeft="10dp"
             android:text="已支付"
             android:textSize="18sp"

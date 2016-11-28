@@ -263,6 +263,33 @@ public class ActUtil {
         return res;
     }
 
+    public static String getOrderStatsTxts(String state) {
+        String res="";
+        if(state!=null&&state.length()>0){
+            switch (Integer.valueOf(state)){
+                case 1:
+                    res= "待支付";
+                    break;
+                case 2:
+                    res= "已完成";
+                    break;
+                case 3:
+                    res= "申诉";
+                    break;
+                case 4:
+                    res= "退款";
+                    break;
+                case 5:
+                    res= "待评价";
+                    break;
+                case 6:
+                    res= "已完成";
+                    break;
+            }
+        }
+        return res;
+    }
+
     public static  void initChatUser(Context con, String imageUrl, String username){
         LogUtil.i("Chat", "initChat");
         LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);

@@ -74,6 +74,12 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             vh.ratingBar.setStar(Float.valueOf(average));
         }else if(pos==1){
             MenuHolder vh = (MenuHolder) holder;
+            for (int i=0;i<vh.txts.size();i++){
+                if(i==listType)
+                    vh.txts.get(i).setTextColor(activity.getResources().getColor(R.color.normal_blue));
+                else
+                    vh.txts.get(i).setTextColor(activity.getResources().getColor(R.color.normal_gray));
+            }
         }else {
             CommentsHolder vh = (CommentsHolder) holder;
             EvaluateBean evaluateBean = evaluations.get(pos-2);
@@ -125,22 +131,17 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
 
         public MenuHolder(View v) {
             super(v);
-            txts.clear();
             txts.add((TextView)v.findViewById(R.id.rateMenu1));
             txts.add((TextView) v.findViewById(R.id.rateMenu2));
             txts.add((TextView) v.findViewById(R.id.rateMenu3));
             txts.add((TextView) v.findViewById(R.id.rateMenu4));
             txts.add((TextView) v.findViewById(R.id.rateMenu5));
             txts.add((TextView) v.findViewById(R.id.rateMenu6));
-
             for (int i=0;i<txts.size();i++){
-                if(i==listType)
-                    txts.get(i).setTextColor(activity.getResources().getColor(R.color.normal_blue));
-                else
-                    txts.get(listType).setTextColor(activity.getResources().getColor(R.color.normal_gray));
                 txts.get(i).setOnClickListener(listener);
                 txts.get(i).setTag(i);
             }
+
         }
 
         View.OnClickListener listener=new View.OnClickListener(){

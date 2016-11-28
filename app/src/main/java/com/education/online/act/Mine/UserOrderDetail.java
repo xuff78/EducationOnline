@@ -35,7 +35,7 @@ public class UserOrderDetail extends BaseFrameAct {
 
 
     private ImageView teacherImg;
-    private TextView payMoney, orderId, createTime, teacherName, courseTitle, courseNum, priceTxt, payTxt, labelTxt;
+    private TextView payMoney, orderId, createTime, teacherName, courseTitle, courseNum, priceTxt, payTxt, labelTxt,orderStatus;
     private LinearLayout courseLayout;
     private OrderDetailBean orderDetailBean;
     private String jsonData="";
@@ -55,8 +55,10 @@ public class UserOrderDetail extends BaseFrameAct {
         String user_info=JsonUtil.getString(jsonData, "user_info");
         teacherImg= (ImageView) findViewById(R.id.teacherImg);
         ImageLoader.getInstance().displayImage(ImageUtil.getImageUrl(JsonUtil.getString(user_info, "avatar")), teacherImg);
+        orderStatus=(TextView) findViewById(R.id.orderStatus);
+        orderStatus.setText(ActUtil.getOrderStatsTxts(orderDetailBean.getState()));
         payMoney= (TextView) findViewById(R.id.payMoney);
-        payMoney.setText("￥"+orderDetailBean.getPrice());
+        payMoney.setText("￥"+orderDetailBean.getOrder_price());
         orderId= (TextView) findViewById(R.id.orderId);
         orderId.setText("订单编号： "+orderDetailBean.getOrder_number());
         createTime= (TextView) findViewById(R.id.createTime);
@@ -68,9 +70,9 @@ public class UserOrderDetail extends BaseFrameAct {
         courseTitle.setOnClickListener(listener);
         courseNum= (TextView) findViewById(R.id.courseNum);
         priceTxt= (TextView) findViewById(R.id.priceTxt);
-        priceTxt.setText("￥"+orderDetailBean.getOrder_price());
+        priceTxt.setText("￥"+orderDetailBean.getPrice());
         payTxt= (TextView) findViewById(R.id.payTxt);
-        payTxt.setText("￥"+orderDetailBean.getPrice());
+        payTxt.setText("￥"+orderDetailBean.getOrder_price());
         labelTxt= (TextView) findViewById(R.id.labelTxt);
         ActUtil.getCourseTypeTxt(orderDetailBean.getCourse_type(), labelTxt);
 

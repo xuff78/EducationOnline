@@ -50,11 +50,13 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
                         average="0";
                     String info= JsonUtil.getString(jsonData, "evaluate_details");
                     EvaluatePage pageEvluate= JSON.parseObject(info, EvaluatePage.class);
-                    evaluations.addAll(pageEvluate.getEvaluate());
                     if(page==1){
+                        evaluations.clear();
+                        evaluations.addAll(pageEvluate.getEvaluate());
+                        adapter.notifyDataSetChanged();
                         adapter.setOtherInfo(average, pageEvluate.getTotal());
-                        recyclerList.setAdapter(adapter);
                     }else {
+                        evaluations.addAll(pageEvluate.getEvaluate());
                         adapter.notifyDataSetChanged();
                     }
                     page++;

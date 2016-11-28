@@ -106,7 +106,7 @@ public class VideoMainPage extends BaseFrameAct {
                     // get layout Manager
                     String ispaid = courseDetailBean.getIs_buy();
                     //set Status
-                    if (ispaid.equals("0")) {//没买
+                    if (ispaid.equals("0")&&!my_usercode.equals(courseDetailBean.getUsercode())) {//没买
                         //do sth
                         paytips.setVisibility(View.VISIBLE);
                         payBtn.setVisibility(View.VISIBLE);
@@ -124,6 +124,16 @@ public class VideoMainPage extends BaseFrameAct {
                             }
                         });
                     } else {
+                        if (intent.hasExtra("Edit")) {
+                            if (intent.getStringExtra("status").equals("1")) {
+                                textaddorbuy.setText("已审核");
+                            } else if (intent.getStringExtra("status").equals("0")) {
+                                textaddorbuy.setText("待审核");
+                            } else if (intent.getStringExtra("status").equals("2")) {
+                                textaddorbuy.setText("已拒绝");
+                            }
+                            textaddorbuy.setOnClickListener(null);
+                        }
                         textaddorbuy.setText("");
                         textaddorbuy.setOnClickListener(listener);
                         video_play.setVisibility(View.VISIBLE);
@@ -134,16 +144,6 @@ public class VideoMainPage extends BaseFrameAct {
                         payBtn.setVisibility(View.INVISIBLE);
                         payBtn.setClickable(false);
                         expandBtn.setClickable(false);
-                    }
-                    if (intent.hasExtra("Edit")) {
-                        if (intent.getStringExtra("status").equals("1")) {
-                            textaddorbuy.setText("已审核");
-                        } else if (intent.getStringExtra("status").equals("0")) {
-                            textaddorbuy.setText("待审核");
-                        } else if (intent.getStringExtra("status").equals("2")) {
-                            textaddorbuy.setText("已拒绝");
-                        }
-                        textaddorbuy.setOnClickListener(null);
                     }
 
                     _setHeaderTitle(courseDetailBean.getCourse_name());
@@ -244,7 +244,7 @@ public class VideoMainPage extends BaseFrameAct {
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
                 videoMask.setVisibility(View.VISIBLE);
-                if (courseDetailBean.getIs_buy().equals("1"))
+                if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode()))
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
                         100, 100, new VideoThumbnailLoader.ThumbnailListener() {
                             @Override

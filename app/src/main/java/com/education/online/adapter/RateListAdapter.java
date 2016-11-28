@@ -84,8 +84,6 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
             commentDate = (TextView) v.findViewById(R.id.commentDate);
             commentTime = (TextView) v.findViewById(R.id.commentTime);
             replyTxt = (TextView) v.findViewById(R.id.replyTxt);
-            if(pos%2==0)
-                replyTxt.setVisibility(View.VISIBLE);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
