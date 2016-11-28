@@ -334,4 +334,15 @@ public class ActUtil {
             }
         });
     }
+
+    public static String getTimeFormat(long totaltime) {
+        int hour = (int) (totaltime / 3600);
+        int leftH = (int) (totaltime % 3600);
+        int min = leftH / 60;
+        int sec = leftH % 60;
+        String hourTxt=hour>9?String.valueOf(hour):("0"+hour);
+        String minTxt=hour>9?String.valueOf(min):("0"+min);
+        String secTxt=hour>9?String.valueOf(sec):("0"+sec);
+        return hourTxt + ":" +minTxt + ":" +  secTxt;
+    }
 }

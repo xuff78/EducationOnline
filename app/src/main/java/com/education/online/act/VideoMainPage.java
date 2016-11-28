@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -35,8 +37,10 @@ import com.education.online.fragment.VideoPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.OpenfileUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -50,6 +54,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
@@ -57,7 +63,7 @@ public class VideoMainPage extends BaseFrameAct {
 
     int currentPos = 0;
     private LinearLayout addfavorite_layout, share_layout, download_layout;
-    private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
+    private TextView textaddfavorite, textshare, textdownload, textaddorbuy, currentTime;
     private ImageView addfavorite, share, download, background;
     private View lastSelectedView = null;
     private LinearLayoutManager layoutManager;
@@ -81,6 +87,7 @@ public class VideoMainPage extends BaseFrameAct {
     private String pageSize = "20";
     private boolean onloading = false;
     private ImageLoader imageLoader;
+    private long totaltime=0;
 
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
@@ -227,14 +234,17 @@ public class VideoMainPage extends BaseFrameAct {
             if (type == "image") {
                 if (upVideoView.isPlaying()) {
                     upVideoView.pause();
+                    upVideoView.release(true);
                 }
                 video_play.setVisibility(View.INVISIBLE);
                 upVideoView.setVisibility(View.INVISIBLE);
                 background.setVisibility(View.VISIBLE);
-                imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
+                if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode()))
+                    imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
                 videorelated.setVisibility(View.INVISIBLE);
                 videoMask.setVisibility(View.GONE);
             } else if (type == "video") {
+                videorelated.setVisibility(View.VISIBLE);
                 video_play.setClickable(true);
                 video_play.setVisibility(View.VISIBLE);
                 payBtn.setClickable(true);
@@ -243,6 +253,21 @@ public class VideoMainPage extends BaseFrameAct {
                 //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
+                upVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(IMediaPlayer mp) {
+                        totaltime=mp.getDuration();
+                        totalTime.setText(ActUtil.getTimeFormat(totaltime/1000));
+                    }
+                });
+                upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(IMediaPlayer mp) {
+                        video_play.setVisibility(View.VISIBLE);
+                        video_play.setClickable(true);
+                        playBtn.setImageResource(R.mipmap.icon_play);
+                    }
+                });
                 videoMask.setVisibility(View.VISIBLE);
                 if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode()))
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
@@ -292,6 +317,7 @@ public class VideoMainPage extends BaseFrameAct {
         _setLeftBackGone();
         initiHandler();
         initView();
+        timer = new Timer();
         httpHandler.getCourseDetail(course_id);
     }
 
@@ -366,12 +392,19 @@ public class VideoMainPage extends BaseFrameAct {
                             video_play.setVisibility(View.VISIBLE);
 
                         } else {
+                            timer=new Timer();
+                            timer.schedule(new TimerTask() {
+
+                                @Override
+                                public void run() {
+                                    handler.sendEmptyMessage(WHAT);
+                                }
+                            }, 0, 1000);
                             playBtn.setImageResource(R.mipmap.icon_video_stop);
                             //开始播放
                             upVideoView.start();
                             video_play.setVisibility(View.INVISIBLE);
                             videoMask.setVisibility(View.GONE);
-
                         }
                         break;
                     case R.id.expandBtn:
@@ -432,6 +465,7 @@ public class VideoMainPage extends BaseFrameAct {
         textdirectory = (TextView) findViewById(R.id.textdirectory);
         textcomments = (TextView) findViewById(R.id.textcomments);
         totalTime = (TextView) findViewById(R.id.totalTime);
+        currentTime = (TextView) findViewById(R.id.currentTime);
 
         viewdetails = findViewById(R.id.viewdetails);
         viewdirectory = findViewById(R.id.viewdirectory);
@@ -443,6 +477,28 @@ public class VideoMainPage extends BaseFrameAct {
         expandBtn = (ImageView) findViewById(R.id.expandBtn);
 //        expandBtn.setOnClickListener(this);
         seekbar = (SeekBar) findViewById(R.id.seekbar);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            int lastProgress=0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                lastProgress=seekBar.getProgress();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if(upVideoView.isPlaying()){
+                    int progress=seekBar.getProgress();
+                    upVideoView.seekTo((int) (totaltime/100*progress));
+                }else
+                    seekBar.setProgress(lastProgress);
+            }
+        });
 
         videoMask = (ImageView) findViewById(R.id.videoMask);
         upVideoView = (UpVideoView) findViewById(R.id.upVideoView);
@@ -453,14 +509,6 @@ public class VideoMainPage extends BaseFrameAct {
         relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         upVideoView.setLayoutParams(params);
 
-        ///播放完成时动作
-        upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(IMediaPlayer mp) {
-                video_play.setVisibility(View.VISIBLE);
-                video_play.setClickable(true);
-            }
-        });
         video_play = (ImageView) findViewById(R.id.video_play);
         video_play.setOnClickListener(listener);
 
@@ -537,4 +585,36 @@ public class VideoMainPage extends BaseFrameAct {
         }
     };
 
+
+    private Timer timer = null;
+    private final static int WHAT = 0;
+    private Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case WHAT:
+                    int currentPlayer = upVideoView.getCurrentPosition();
+                    if (currentPlayer > 0) {
+                        currentTime.setText(ActUtil.getTimeFormat(currentPlayer/1000));
+
+                        // 让seekBar也跟随改变
+                        int progress = (int) ((currentPlayer / (float) totaltime) * 100);
+
+                        seekbar.setProgress(progress);
+                    } else {
+                        currentTime.setText("00:00:00");
+                        seekbar.setProgress(0);
+                        timer.cancel();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        timer.cancel();
+        super.onDestroy();
+    }
 }

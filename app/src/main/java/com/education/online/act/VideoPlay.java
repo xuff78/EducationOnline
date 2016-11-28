@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 
 import com.education.online.R;
@@ -59,9 +60,12 @@ public class VideoPlay extends Activity {
 
         //设置播放地址
         upVideoView.setVideoPath(path);
+        MediaController controller=new MediaController(this);
+        upVideoView.setMediaController(controller);
 
         //开始播放
         upVideoView.start();
+        controller.show();
     }
 
     public void toggle(View view) {
