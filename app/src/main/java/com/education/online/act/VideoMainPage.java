@@ -266,6 +266,9 @@ public class VideoMainPage extends BaseFrameAct {
                         video_play.setVisibility(View.VISIBLE);
                         video_play.setClickable(true);
                         playBtn.setImageResource(R.mipmap.icon_play);
+                        currentTime.setText("00:00:00");
+                        seekbar.setProgress(0);
+                        timer.cancel();
                     }
                 });
                 videoMask.setVisibility(View.VISIBLE);
@@ -317,7 +320,6 @@ public class VideoMainPage extends BaseFrameAct {
         _setLeftBackGone();
         initiHandler();
         initView();
-        timer = new Timer();
         httpHandler.getCourseDetail(course_id);
     }
 
@@ -390,7 +392,7 @@ public class VideoMainPage extends BaseFrameAct {
                             //暂停播放
                             upVideoView.pause();
                             video_play.setVisibility(View.VISIBLE);
-
+                            timer.cancel();
                         } else {
                             timer=new Timer();
                             timer.schedule(new TimerTask() {
@@ -600,10 +602,6 @@ public class VideoMainPage extends BaseFrameAct {
                         int progress = (int) ((currentPlayer / (float) totaltime) * 100);
 
                         seekbar.setProgress(progress);
-                    } else {
-                        currentTime.setText("00:00:00");
-                        seekbar.setProgress(0);
-                        timer.cancel();
                     }
                     break;
                 default:
@@ -614,7 +612,8 @@ public class VideoMainPage extends BaseFrameAct {
 
     @Override
     protected void onDestroy() {
-        timer.cancel();
+        if(timer!=null)
+            timer.cancel();
         super.onDestroy();
     }
 }

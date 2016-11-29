@@ -174,7 +174,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new TitleHolder(convertView);
-        } else if (pos > 5&& pos< getItemCount()-1) {
+        } else if (pos > 5&& pos< getItemCount()) {
             View convertView = listInflater.inflate(R.layout.course_item_all, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CourseItemHolder(convertView);
