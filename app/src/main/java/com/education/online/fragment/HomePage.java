@@ -21,10 +21,12 @@ import com.education.online.act.SearchAct;
 import com.education.online.adapter.ActivityTopGalleryAdapter;
 import com.education.online.adapter.MainAdapter;
 import com.education.online.bean.CategoryBean;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.HomePageInfo;
 import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
@@ -49,31 +51,44 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private int firstItemHeight;
     private int listScrollY=0;
     private SwipeRefreshLayout mSwipeLayout;
+    private int page=1;
+    private ArrayList<CourseBean> courses=new ArrayList<>();
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                jsonStr=jsonData;
-                info= JSON.parseObject(jsonData, HomePageInfo.class);
-                adapter=new MainAdapter(getActivity(), info);
-                recyclerList.setAdapter(adapter);
-//                mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
-//                mViewPager.startAutoScroll();
-                mSwipeLayout.setRefreshing(false);
+                if (method.equals(Method.getHomePage)) {
+                    jsonStr = jsonData;
+                    info = JSON.parseObject(jsonData, HomePageInfo.class);
+                    adapter = new MainAdapter(getActivity(), info);
+                    recyclerList.setAdapter(adapter);
+                    mSwipeLayout.setRefreshing(false);
+                    handler.getRecommentCourses(page);
+                }else if (method.equals(Method.getRecommentCourses)) {
+
+                }
             }
 
             @Override
             public void onFailure(String method, JsonMessage jsonMessage) {
                 super.onFailure(method, jsonMessage);
-                mSwipeLayout.setRefreshing(false);
+                if (method.equals(Method.getHomePage))
+                    mSwipeLayout.setRefreshing(false);
+                else if (method.equals(Method.getRecommentCourses)) {
+
+                }
             }
 
             @Override
             public void onHTTPException(String method, String jsonMessage) {
                 super.onHTTPException(method, jsonMessage);
-                mSwipeLayout.setRefreshing(false);
+                if (method.equals(Method.getHomePage))
+                    mSwipeLayout.setRefreshing(false);
+                else if (method.equals(Method.getRecommentCourses)) {
+
+                }
             }
         });
     }
@@ -104,11 +119,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_blue_dark,
                 android.R.color.holo_green_light);
-//        TextView toolbarTxtRight= (TextView) v.findViewById(R.id.toolbarTxtRight);
-//        String city=SharedPreferencesUtil.getString(getActivity(), "my_address");
-//        if(!city.equals(SharedPreferencesUtil.FAILURE_STRING)){
-//            toolbarTxtRight.setText(city);
-//        }
+
         v.findViewById(R.id.toolbarIconRight).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,10 +127,6 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-//        mViewPager = (ExtendedViewPager) v.findViewById(R.id.galleryImgs);
-//        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-//        toolbar.setTitle("");
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         recyclerList=(RecyclerView)v.findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -137,15 +144,6 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-//        AppBarLayout appBarLayout= (AppBarLayout) v.findViewById(R.id.appbarLayout);
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-//                float alpha=Math.abs(Float.valueOf(i))/appBarLayout.getTotalScrollRange();
-//                headerLayout.setAlpha(alpha);
-//                LogUtil.i("test", "toolbar alpha: "+alpha);
-//            }
-//        });
     }
 
     @Override

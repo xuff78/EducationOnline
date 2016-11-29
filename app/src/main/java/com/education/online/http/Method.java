@@ -14,7 +14,7 @@ public class Method {
     public static final String getIntegral= "uc/user/integral";
 
 
-
+    public static final String getRecommentCourses = "education/homepage/interest";
     public static final String updateValidate = "education/user/validate";
     public static final String getValidateView = "education/user/validateView";
     public static final String getSubjectList = "education/subject/list";

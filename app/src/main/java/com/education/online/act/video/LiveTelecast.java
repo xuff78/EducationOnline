@@ -45,7 +45,7 @@ public class LiveTelecast extends BaseFrameAct {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                if(method.equals(Method.getCourseList)){
+                if(method.equals(Method.getlistByDate)){
                     ArrayList<CourseBean> items= JSON.parseObject(JsonUtil.getString(jsonData, "course_info"),
                             new TypeReference<ArrayList<CourseBean>>(){});
                     onlineCourse.addCourses(items, siNew);

@@ -24,6 +24,7 @@ import com.education.online.act.SearchResultAct;
 import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.HomePageInfo;
 import com.education.online.bean.LiveCourse;
 import com.education.online.bean.SubjectBean;
@@ -51,7 +52,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int padding10 = 0;
     private boolean animaShown = false;
     private HomePageInfo info;
-    private boolean showFirst = true; //是否显示第一项
+    private ArrayList<CourseBean> courses=new ArrayList<>();
 
     public MainAdapter(Activity act, HomePageInfo info) {
         this.act = act;
@@ -66,7 +67,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         // TODO Auto-generated method stub
-        return showFirst ? 8 : 9;
+        return 6+courses.size()+1;
     }
 
     @Override
@@ -77,8 +78,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int pos) {
-        if (!showFirst)
-            pos++;
         if (pos == 0) {
             PagerHolder ivh = (PagerHolder) vh;
         } else if (pos == 1) {
@@ -156,8 +155,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
-        if (!showFirst)
-            pos++;
         RecyclerView.ViewHolder vh = null;
         if (pos == 0) {
             View convertView = listInflater.inflate(R.layout.viewpager_layout, null);
@@ -177,7 +174,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new TitleHolder(convertView);
-        } else if (pos > 5) {
+        } else if (pos > 5&& pos< getItemCount()-1) {
             View convertView = listInflater.inflate(R.layout.course_item_all, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CourseItemHolder(convertView);
@@ -274,6 +271,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     String id = (String) object;
                     Intent i = new Intent(act, SearchResultAct.class);
                     i.putExtra(Constant.SearchSubject, id);
+                    act.startActivity(i);
+                }else{
+                    Intent i = new Intent(act, SearchResultAct.class);
+                    i.putExtra(Constant.SearchWords, "");
                     act.startActivity(i);
                 }
             }

@@ -324,6 +324,14 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getEvaluate,paraMap,false);
 	}
 
+	public  void getRecommentCourses(int page){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("page_size","20");
+		paraMap.put("page", String.valueOf(page));
+		requestPostEdu(Method.getRecommentCourses,paraMap,false);
+	}
+
 	public  void getEvaluateOthers(int page){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
