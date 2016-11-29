@@ -21,6 +21,7 @@ import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
 import com.education.online.act.Mine.MyInteresting;
+import com.education.online.act.discovery.MessageMain;
 import com.education.online.bean.HomePageInfo;
 import com.education.online.bean.LoginInfo;
 import com.education.online.bean.SubjectBean;
@@ -45,7 +46,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 
     private HttpHandler handler;
     private ImageLoader imageLoader;
-    private ImageView teacherImg;
+    private ImageView teacherImg, messageStatus;
     private TextView nameTxt;
 
     @Override
@@ -72,6 +73,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.settingLayout).setOnClickListener(this);
         v.findViewById(R.id.helpLayout).setOnClickListener(this);
         v.findViewById(R.id.myCommentLayout).setOnClickListener(this);
+        v.findViewById(R.id.messageIcon).setOnClickListener(this);
 
         teacherImg= (ImageView) v.findViewById(R.id.teacherImg);
         nameTxt= (TextView) v.findViewById(R.id.nameTxt);
@@ -128,6 +130,9 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.descTxt:
                 startActivity(new Intent(getActivity(), UserInfoEdit.class));
+                break;
+            case R.id.messageIcon:
+                startActivity(new Intent(getActivity(), MessageMain.class));
                 break;
         }
     }

@@ -6,32 +6,28 @@
               android:layout_height="wrap_content"
               android:background="@drawable/chat_layout_home_bg_bottombar">
         <LinearLayout
+            android:id="@+id/editLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/chat_BottomHeight"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/chatBottomLeftLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+            <Button
+                android:id="@+id/input_bar_btn_keyboard"
+                android:layout_width="@dimen/chat_BottomBtnSize"
+                android:layout_height="@dimen/chat_BottomBtnSize"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:layout_margin="@dimen/chat_BottomBtnMargin"
+                android:background="@drawable/chat_btn_keyboard" />
+            <Button
+                android:id="@+id/input_bar_btn_voice"
+                android:layout_width="@dimen/chat_BottomBtnSize"
+                android:layout_height="@dimen/chat_BottomBtnSize"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/chat_BottomBtnMargin"
+                android:background="@drawable/chat_btn_voice_selector"
+                android:textColor="@color/chat_base_color_text_black"/>
 
-                <Button
-                    android:id="@+id/input_bar_btn_action"
-                    android:layout_width="@dimen/chat_BottomBtnSize"
-                    android:layout_height="@dimen/chat_BottomBtnSize"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/chat_btn_add_selector" />
-
-                <Button
-                    android:id="@+id/input_bar_btn_motion"
-                    android:layout_width="@dimen/chat_BottomBtnSize"
-                    android:layout_height="@dimen/chat_BottomBtnSize"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/chat_btn_emo_selector"
-                    android:gravity="center" />
-
-            </LinearLayout>
 
             <include layout="@layout/chat_bottom_text_layout" />
         </LinearLayout>
