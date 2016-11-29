@@ -119,7 +119,7 @@ public class VideoMainPage extends BaseFrameAct {
                         payBtn.setVisibility(View.VISIBLE);
                         video_play.setVisibility(View.INVISIBLE);
                         video_play.setClickable(false);
-                        videorelated.setVisibility(View.INVISIBLE);
+                        videorelated.setVisibility(View.GONE);
                         roundLeftBack.setVisibility(View.INVISIBLE);
                         textaddorbuy.setOnClickListener(listener);
                         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -241,12 +241,14 @@ public class VideoMainPage extends BaseFrameAct {
                 background.setVisibility(View.VISIBLE);
                 if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode()))
                     imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
-                videorelated.setVisibility(View.INVISIBLE);
+                videorelated.setVisibility(View.GONE);
                 videoMask.setVisibility(View.GONE);
             } else if (type == "video") {
-                videorelated.setVisibility(View.VISIBLE);
+                if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode())) {//没买
+                    videorelated.setVisibility(View.VISIBLE);
+                    video_play.setVisibility(View.VISIBLE);
+                }
                 video_play.setClickable(true);
-                video_play.setVisibility(View.VISIBLE);
                 payBtn.setClickable(true);
                 expandBtn.setClickable(true);
                 roundLeftBack.setClickable(true);
@@ -297,7 +299,7 @@ public class VideoMainPage extends BaseFrameAct {
                 video_play.setVisibility(View.INVISIBLE);
                 background.setVisibility(View.VISIBLE);
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
-                videorelated.setVisibility(View.INVISIBLE);
+                videorelated.setVisibility(View.GONE);
             }
         } else {
             if (upVideoView.isPlaying()) {
@@ -305,7 +307,7 @@ public class VideoMainPage extends BaseFrameAct {
             }
             video_play.setVisibility(View.INVISIBLE);
             upVideoView.setVisibility(View.INVISIBLE);
-            videorelated.setVisibility(View.INVISIBLE);
+            videorelated.setVisibility(View.GONE);
             background.setVisibility(View.VISIBLE);
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
         }

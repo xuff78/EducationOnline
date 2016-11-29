@@ -53,8 +53,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean animaShown = false;
     private HomePageInfo info;
     private ArrayList<CourseBean> courses=new ArrayList<>();
+    private String loadingHint = "";
 
-    public MainAdapter(Activity act, HomePageInfo info) {
+    public void setLoadingHint(String hint) {
+        loadingHint = hint;
+        notifyDataSetChanged();
+    }
+
+    public MainAdapter(Activity act, HomePageInfo info, ArrayList<CourseBean> courses) {
         this.act = act;
         this.info = info;
         imageLoader = ImageLoader.getInstance();
@@ -62,6 +68,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         padding10 = ImageUtil.dip2px(act, 10);
         itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 5; //小图片和文字的形成点击区域的边长
         imgHeight = itemWidth - 2 * padding10; //小图片的边长
+        this.courses=courses;
     }
 
     @Override
@@ -73,12 +80,19 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         // TODO Auto-generated method stub
-        return position;
+        return getItemCount() - 1 > position ? position : -1;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int pos) {
-        if (pos == 0) {
+        if (vh instanceof FooterViewHolder) {
+            FooterViewHolder fvh = (FooterViewHolder) vh;
+            fvh.footerHint.setText(loadingHint);
+            if(courses.size()==0)
+            {
+                fvh.footerHint.setText("");
+            }
+        }else if (pos == 0) {
             PagerHolder ivh = (PagerHolder) vh;
         } else if (pos == 1) {
             SubjectHolder ivh = (SubjectHolder) vh;
@@ -150,6 +164,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ivh.imgMask2.setVisibility(View.GONE);
             } else
                 ivh.item2.setVisibility(View.INVISIBLE);
+        } else if (pos > 5) {
+            CourseItemHolder cvh = (CourseItemHolder) vh;
+            CourseBean courseBean=courses.get(pos-6);
+            ActUtil.getCourseTypeTxt(courseBean.getCourse_type(), cvh.typeTxt);
+            cvh.titleTxt.setText(courseBean.getCourse_name());
+            cvh.statusTxt.setText(courseBean.getFollow()+"人正在学习");
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), cvh.courseImg);
+            cvh.itemView.setTag(courseBean);
+            cvh.itemView.setOnClickListener(listener);
         }
     }
 
@@ -174,10 +197,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new TitleHolder(convertView);
-        } else if (pos > 5&& pos< getItemCount()) {
+        } else if (pos > 5) {
             View convertView = listInflater.inflate(R.layout.course_item_all, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new CourseItemHolder(convertView);
+        }else if (pos == -1) {
+            View view = listInflater.inflate(R.layout.footer_layout, null);
+            view.setLayoutParams(new RecyclerView.LayoutParams(-1, ImageUtil.dip2px(act, 45)));
+            vh = new FooterViewHolder(view);
         }
         return vh;
     }
@@ -280,6 +307,22 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         };
     }
+
+    View.OnClickListener listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            CourseBean course= (CourseBean) view.getTag();
+            Intent intent=new Intent();
+            if(course.getCourse_type().equals("3"))
+                intent.setClass(act, CourseMainPage.class);
+            else
+                intent.setClass(act, VideoMainPage.class);
+            intent.putExtra("course_name", course.getCourse_name());
+            intent.putExtra("course_img", course.getImg());
+            intent.putExtra("course_id", course.getCourse_id());
+            act.startActivity(intent);
+        }
+    };
 
     public class CourseHolder extends RecyclerView.ViewHolder {
         TextView subjectName, titleTxt, timeTxt, priceTxt, statusTxt, titleTxt2, timeTxt2, priceTxt2, statusTxt2;

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.SearchAct;
 import com.education.online.adapter.ActivityTopGalleryAdapter;
@@ -29,6 +30,7 @@ import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.view.ExtendedViewPager;
@@ -36,6 +38,7 @@ import com.education.online.view.ExtendedViewPager;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Administrator on 2016/8/16.
@@ -53,6 +56,8 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private SwipeRefreshLayout mSwipeLayout;
     private int page=1;
     private ArrayList<CourseBean> courses=new ArrayList<>();
+    private boolean onloading=false, complete=false;
+    private LinearLayoutManager layoutManager;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
@@ -62,12 +67,21 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                 if (method.equals(Method.getHomePage)) {
                     jsonStr = jsonData;
                     info = JSON.parseObject(jsonData, HomePageInfo.class);
-                    adapter = new MainAdapter(getActivity(), info);
+                    adapter = new MainAdapter(getActivity(), info, courses);
                     recyclerList.setAdapter(adapter);
                     mSwipeLayout.setRefreshing(false);
+                    page=1;
+                    courses.clear();
                     handler.getRecommentCourses(page);
                 }else if (method.equals(Method.getRecommentCourses)) {
-
+                    int totalpage= JsonUtil.getJsonInt(jsonData, "page_total");
+                    if(totalpage==page){
+                        complete=true;
+                    }else
+                        page++;
+                    courses.addAll(JSON.parseObject(JsonUtil.getString(jsonData, "course_info"), new TypeReference<ArrayList<CourseBean>>(){}));
+                    adapter.notifyDataSetChanged();
+                    onloading=false;
                 }
             }
 
@@ -77,7 +91,8 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                 if (method.equals(Method.getHomePage))
                     mSwipeLayout.setRefreshing(false);
                 else if (method.equals(Method.getRecommentCourses)) {
-
+                    onloading=false;
+                    adapter.setLoadingHint("加载失败");
                 }
             }
 
@@ -87,7 +102,8 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                 if (method.equals(Method.getHomePage))
                     mSwipeLayout.setRefreshing(false);
                 else if (method.equals(Method.getRecommentCourses)) {
-
+                    onloading=false;
+                    adapter.setLoadingHint("加载失败");
                 }
             }
         });
@@ -128,11 +144,14 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
         });
 
         recyclerList=(RecyclerView)v.findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
         final View headerLayout=v.findViewById(R.id.headerLayout);
         recyclerList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            int lastVisibleItem=0;
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -140,7 +159,26 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                 float alpha=Math.abs(Float.valueOf(listScrollY))/firstItemHeight;
                 headerLayout.setAlpha(alpha);
 
+
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 LogUtil.i("test", "listScrollY: "+listScrollY);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    if(!onloading){
+                        if(!complete){
+                            onloading = true;
+                            handler.getRecommentCourses(page);
+                            adapter.setLoadingHint("正在加载");
+                        }else
+                            adapter.setLoadingHint("");
+                    }
+                }
             }
         });
 
