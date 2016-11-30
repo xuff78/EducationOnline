@@ -41,12 +41,16 @@ public class SelectorPage extends BaseFragment {
     private RecyclerView recyclerList;
     private CourseSelector callback;
     private HttpHandler handler;
+    private String lastId="";
+    private boolean showLast=false;
     private SelectorRightAdapter subjectList;
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(callback!=null){
-                callback.onSelected((SubjectBean) view.getTag());
+                SubjectBean subjectBean=(SubjectBean) view.getTag();
+                callback.onSelected(subjectBean);
+                lastId=subjectBean.getSubject_id();
             }
         }
     };
@@ -72,12 +76,12 @@ public class SelectorPage extends BaseFragment {
                                     long arg3) {
                 pressPos=position;
                 menuAdapter.notifyDataSetChanged();
-                subjectList = new SelectorRightAdapter(getActivity(), cates.get(position).getChild_subject(), listener);
+                subjectList = new SelectorRightAdapter(getActivity(), cates.get(position).getChild_subject(), listener, showLast, lastId);
                 recyclerList.setAdapter(subjectList);
             }
         });
         if(cates.size()>0) {
-            subjectList = new SelectorRightAdapter(getActivity(), cates.get(0).getChild_subject(), listener);
+            subjectList = new SelectorRightAdapter(getActivity(), cates.get(0).getChild_subject(), listener, showLast, lastId);
             recyclerList.setAdapter(subjectList);
         }
     }
@@ -100,6 +104,15 @@ public class SelectorPage extends BaseFragment {
 
     public void setData(CourseSelector cb){
         callback=cb;
+    }
+
+    public void setCateInfo(ArrayList<SubjectBean> cates){
+        this.cates=cates;
+    }
+
+    public void setLastSelection(String lastId){
+        this.lastId=lastId;
+        showLast=true;
     }
 
     private void initView(View v) {

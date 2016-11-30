@@ -120,7 +120,6 @@ public class VideoMainPage extends BaseFrameAct {
                         video_play.setVisibility(View.INVISIBLE);
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.GONE);
-                        roundLeftBack.setVisibility(View.INVISIBLE);
                         textaddorbuy.setOnClickListener(listener);
                         payBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -140,13 +139,13 @@ public class VideoMainPage extends BaseFrameAct {
                                 textaddorbuy.setText("已拒绝");
                             }
                             textaddorbuy.setOnClickListener(null);
+                        }else {
+                            textaddorbuy.setText("");
+                            textaddorbuy.setOnClickListener(listener);
                         }
-                        textaddorbuy.setText("");
-                        textaddorbuy.setOnClickListener(listener);
                         video_play.setVisibility(View.VISIBLE);
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.VISIBLE);
-                        roundLeftBack.setVisibility(View.VISIBLE);
                         paytips.setVisibility(View.INVISIBLE);
                         payBtn.setVisibility(View.INVISIBLE);
                         payBtn.setClickable(false);
@@ -251,7 +250,6 @@ public class VideoMainPage extends BaseFrameAct {
                 video_play.setClickable(true);
                 payBtn.setClickable(true);
                 expandBtn.setClickable(true);
-                roundLeftBack.setClickable(true);
                 //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
                 upVideoView.setVideoPath(path);
@@ -426,7 +424,7 @@ public class VideoMainPage extends BaseFrameAct {
                         break;
                     case R.id.roundLeftBack:
 
-                        finish();
+                        onBackPressed();
                         break;
                     case R.id.textholder:
                         int pos = (int) view.getTag();

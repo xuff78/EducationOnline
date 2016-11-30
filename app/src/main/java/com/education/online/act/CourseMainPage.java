@@ -10,6 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
+import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.education.online.R;
 import com.education.online.act.order.SubmitOrder;
 import com.education.online.act.pushlive.LiveCameraPage;
@@ -22,11 +30,15 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CourseMainPage extends BaseFrameAct implements View.OnClickListener{
@@ -47,6 +59,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     private EvaluateListBean evaluateListBean=new EvaluateListBean();
     Intent intent;
     HttpHandler httpHandler;
+    private String ConversationId="583e895ac59e0d006b4ffa78";
 
     private String my_usercode="";
     public void initiHandler(){
@@ -197,11 +210,57 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 break;
             case R.id.addorbuy:
                 if(intent.hasExtra("Edit")){
-                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
-                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
-                    startActivity(i);
-                } else if(courseDetailBean.getIs_buy().equals("1")){
+//                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
+//                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
+//                    startActivity(i);
 
+                    if(ConversationId.length()>0){
+                        Intent intent = new Intent(CourseMainPage.this, CM_MessageChatAct.class);
+                        intent.putExtra("Name", courseDetailBean.getCourse_name());
+                        intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                        startActivity(intent);
+                    }else {
+                        AVIMClient user = AVIMClient.getInstance(ChatManager.getInstance().getSelfId());
+                        user.open(new AVIMClientCallback() {
+
+                            @Override
+                            public void done(AVIMClient client, AVIMException e) {
+                                if (e == null) {
+                                    //登录成功
+                                    client.createConversation(Arrays.asList(AVUser.getCurrentUser().getObjectId()), "测试聊天室", null, true,
+                                            new AVIMConversationCreatedCallback() {
+                                                @Override
+                                                public void done(AVIMConversation conv, AVIMException e) {
+                                                    Intent intent = new Intent(CourseMainPage.this, CM_MessageChatAct.class);
+                                                    intent.putExtra("Name", "测试聊天室");
+                                                    ConversationId = conv.getConversationId();
+                                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                                    LogUtil.i("CONVERSATION_ID", "CONVERSATION_ID:  " + ConversationId);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                }
+                            }
+                        });
+                    }
+                } else if(courseDetailBean.getIs_buy().equals("1")){
+                    if(ConversationId.length()>0){
+                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
+
+                            @Override
+                            public void done(AVIMException e) {
+                                if(e==null) {
+                                    Intent intent = new Intent(CourseMainPage.this, CM_MessageChatAct.class);
+                                    intent.putExtra("Name", courseDetailBean.getCourse_name());
+                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                    startActivity(intent);
+                                }else
+                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                            }
+                        });
+                    }else {
+                        ToastUtils.displayTextShort(CourseMainPage.this, "直播未开始");
+                    }
                 }else {
                     Intent i = new Intent(CourseMainPage.this, SubmitOrder.class);
                     i.putExtra(CourseDetailBean.Name, courseDetailBean);

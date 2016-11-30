@@ -21,15 +21,7 @@
             android:id="@+id/background"/>
 
 
-        <ImageView
-            android:visibility="invisible"
-            android:id="@+id/roundLeftBack"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="15dp"
-            android:src="@mipmap/icon_round_back" />
+
 
         <com.upyun.upplayer.widget.UpVideoView
             android:id="@+id/upVideoView"
@@ -140,6 +132,12 @@
                 android:textSize="12sp" />
 
         </RelativeLayout>
+        <ImageView
+            android:id="@+id/roundLeftBack"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="15dp"
+            android:src="@mipmap/icon_round_back" />
     </RelativeLayout>
 
     <LinearLayout

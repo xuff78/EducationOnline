@@ -1,6 +1,8 @@
 package com.avoscloud.leanchatlib.controller;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
@@ -13,6 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
@@ -274,6 +277,12 @@ public class ChatManager extends AVIMClientEventHandler {
   //ChatUser
   public List<Room> findRecentRooms() {
     return ChatManager.getInstance().getRoomsTable().selectRooms();
+  }
+
+  public void joinCoversation(String conversationId, AVIMConversationCallback cb) {
+    AVIMConversation conversation=getConversation(conversationId);
+    String usercode=AVUser.getCurrentUser().getObjectId();
+    conversation.addMembers(Arrays.asList(usercode), cb);
   }
 
   public interface ConnectionListener {

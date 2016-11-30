@@ -29,9 +29,13 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
 	private ImageLoader imageLoader;
 	private int itemWidth=0, itemHeight=0;
 	private View.OnClickListener listener;
+	private boolean showLast=false;
+	private String lastId;
 	
-	public SelectorRightAdapter(Activity act, ArrayList<SubjectBean> arrayList, View.OnClickListener listener)
+	public SelectorRightAdapter(Activity act, ArrayList<SubjectBean> arrayList, View.OnClickListener listener,
+								boolean showLast, String lastId)
     {
+		this.lastId=lastId;
         this.act=act;
         this.dataList=arrayList;
 		this.listener=listener;
@@ -39,6 +43,7 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
         listInflater= LayoutInflater.from(act);
 		itemWidth= (ScreenUtil.getWidth(act)-ImageUtil.dip2px(act, 80+40+20))/3;
 		itemHeight=ImageUtil.dip2px(act, 30);
+		this.showLast=showLast;
     }
 
 	@Override
@@ -90,7 +95,10 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
 				txt.setTextSize(13);
 				txt.setGravity(Gravity.CENTER);
 				txt.setBackgroundResource(R.drawable.shape_corner_blackline);
-				txt.setTextColor(Color.GRAY);
+				if(showLast&&lastId.equals(subjectBean.getSubject_id()))
+					txt.setTextColor(act.getResources().getColor(R.color.normal_red));
+				else
+					txt.setTextColor(Color.GRAY);
 				txt.setText(subjectBean.getSubject_name());
 				linelayout.addView(txt, llp);
 				if(i%3==2||i==beans.size()-1){

@@ -84,6 +84,11 @@ public class Studentintroduction extends BaseFrameAct implements View.OnClickLis
 
     private void initView() {
         starIcon= (ImageView) findViewById(R.id.starIcon);
+        if(teacherInfo.getIs_attention().equals("0")) {
+            starIcon.setImageResource(R.mipmap.icon_star);
+        }else if(teacherInfo.getIs_attention().equals("1")) {
+            starIcon.setImageResource(R.mipmap.icon_star_red);
+        }
         if(myUsercode.equals(teacherInfo.getUsercode()))
             findViewById(R.id.bottomLayout).setVisibility(View.GONE);
         findViewById(R.id.myQrcode).setOnClickListener(this);
@@ -92,6 +97,7 @@ public class Studentintroduction extends BaseFrameAct implements View.OnClickLis
         ImageView teacherImg= (ImageView) findViewById(R.id.teacherImg);
         imageLoader.displayImage(ImageUtil.getImageUrl(teacherInfo.getAvatar()), teacherImg);
         TextView nameTxt= (TextView) findViewById(R.id.nameTxt);
+        findViewById(R.id.roundLeftBack).setOnClickListener(this);
         nameTxt.setText(teacherInfo.getName());
         TextView sexTxt= (TextView) findViewById(R.id.sexTxt);
         if(teacherInfo.getGender().equals("1")){
@@ -143,6 +149,10 @@ public class Studentintroduction extends BaseFrameAct implements View.OnClickLis
                 new QrcodeDialog(Studentintroduction.this, teacherInfo.getUsercode()).show();
                 break;
             case R.id.payattentionBtn:
+                mHandler.addAttention(teacherInfo.getUsercode());
+                break;
+            case R.id.roundLeftBack:
+                onBackPressed();
                 break;
         }
     }

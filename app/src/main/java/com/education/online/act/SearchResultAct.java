@@ -92,6 +92,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                         teacherList.addTeacherCourses(teacheritems, true);
                     }
                     page++;
+
+                    String catesInfo=JsonUtil.getString(jsonData, "subject_info");
+                    ArrayList<SubjectBean> cates= JSON.parseObject(catesInfo, new TypeReference<ArrayList<SubjectBean>>(){});
+                    ((SelectorPage)selectorPage).setCateInfo(cates);
                     courseFilter.setPage(String.valueOf(page));
                 }else if(method.equals(Method.updateSortList)){
                 }else if(method.equals(Method.updateSortList)){
@@ -114,7 +118,15 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         initView();
         type = getIntent().getIntExtra("Type", 0);
         initFilter();
-        if(getIntent().hasExtra(Constant.SearchWords)) {
+        if(getIntent().hasExtra(Constant.SearchSubject)){
+            addCourseListFragment(onlinecoursePage);
+            String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
+            courseFilter.setSubject_id(subject_id);
+            String searchwords = getIntent().getStringExtra(Constant.SearchWords);
+            ((SelectorPage)selectorPage).setLastSelection(subject_id);
+            searchEdt.setText(searchwords);
+            courseFilter.setKey_word(searchwords);
+        }else if(getIntent().hasExtra(Constant.SearchWords)) {
             String searchwords = getIntent().getStringExtra(Constant.SearchWords);
             searchEdt.setText(searchwords);
             searchEdt.setSelection(searchwords.length());
@@ -125,10 +137,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }else {
                 addCourseListFragment(onlinecoursePage);
             }
-        }else if(getIntent().hasExtra(Constant.SearchSubject)){
-            addCourseListFragment(onlinecoursePage);
-            String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
-            courseFilter.setSubject_id(subject_id);
         }
         handler.getCourseList(courseFilter);
     }

@@ -97,7 +97,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                 @Override
                 public void onSelected(SubjectBean subject) {
                     Intent i = new Intent(MainPage.this, SearchResultAct.class);
-//                i.putExtra(Constant.SearchWords, subject.getSubject_name());
+                    i.putExtra(Constant.SearchWords, subject.getSubject_name());
                     i.putExtra(Constant.SearchSubject, subject.getSubject_id());
                     startActivity(i);
                 }

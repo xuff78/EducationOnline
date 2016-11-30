@@ -147,6 +147,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (liveCourses.size() > 0) {
                 WareCourse live = liveCourses.get(0);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                if(live.getCourse_img().length()==0)
+                    ivh.courseImg1.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 ivh.titleTxt.setText(live.getCourse_name());
                 ivh.priceTxt.setText("¥" + live.getPrice());
                 ivh.timeTxt.setVisibility(View.GONE);
@@ -157,6 +159,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (liveCourses.size() > 1) {
                 WareCourse live = liveCourses.get(1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
+                if(live.getCourse_img().length()==0)
+                    ivh.courseImg2.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 ivh.titleTxt2.setText(live.getCourse_name());
                 ivh.priceTxt2.setText("¥" + live.getPrice());
                 ivh.timeTxt2.setVisibility(View.GONE);
@@ -277,7 +281,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             txt.setGravity(Gravity.CENTER_HORIZONTAL);
             layout.addView(txt);
             if (subject != null)
-                layout.setTag(subject.getSubject_id());
+                layout.setTag(subject);
             if (subject != null) {
                 txt.setText(subject.getSubject_name());
                 imageLoader.displayImage(ImageUtil.getImageUrl(subject.getSubject_img()), img);
@@ -295,9 +299,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View view) {
                 Object object = view.getTag();
                 if (object != null) {
-                    String id = (String) object;
+                    SubjectBean subject = (SubjectBean) object;
                     Intent i = new Intent(act, SearchResultAct.class);
-                    i.putExtra(Constant.SearchSubject, id);
+                    i.putExtra(Constant.SearchSubject, subject.getSubject_id());
+                    i.putExtra(Constant.SearchWords, subject.getSubject_name());
                     act.startActivity(i);
                 }else{
                     Intent i = new Intent(act, SearchResultAct.class);
