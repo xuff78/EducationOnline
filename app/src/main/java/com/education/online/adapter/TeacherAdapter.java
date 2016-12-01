@@ -70,7 +70,7 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
     public class TeacherItemHolder extends RecyclerView.ViewHolder
     {
         ImageView teacherImage;
-        TextView teacherName, teacherDesc, evaluation, NumApplicant;
+        TextView teacherName, teacherDesc, evaluation, NumApplicant, courseNum;
         LinearLayout courseLayout, moreLayout;
         View arrowIcon;
         boolean isExpand=false;
@@ -78,8 +78,9 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
         public TeacherItemHolder(View v, final int position)
         {
             super(v);
-            TeacherWithCourse teacher=teachers.get(position);
+            final TeacherWithCourse teacher=teachers.get(position);
             arrowIcon = v.findViewById(R.id.arrowIcon);
+            courseNum = (TextView) v.findViewById(R.id.courseNum);
             teacherImage = (ImageView) v.findViewById(R.id.teacherImage);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             teacherDesc = (TextView) v.findViewById(R.id.teacherDesc);
@@ -96,7 +97,8 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             for (int i=0;i<teacher.getCourse_detail().size();i++){
                 courseLayout.addView(getCourseLayout(teacher.getCourse_detail().get(i)), llpTeacher);
             }
-            if(position>2) {
+            courseNum.setText("共"+teacher.getCourse_detail().size()+"节课");
+            if(teacher.getCourse_detail().size()>2) {
                 LinearLayout.LayoutParams llpCourse=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*2);
                 courseLayout.setLayoutParams(llpCourse);
                 moreLayout.setVisibility(View.VISIBLE);
@@ -110,7 +112,7 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
                             isExpand=false;
                         }else{
                             arrowIcon.setBackgroundResource(R.mipmap.arrow_down_gray);
-                            LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*position);
+                            LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*teacher.getCourse_detail().size());
                             courseLayout.setLayoutParams(llp);
                             isExpand=true;
                         }

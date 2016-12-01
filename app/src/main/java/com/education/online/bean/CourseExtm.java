@@ -13,6 +13,15 @@ public class CourseExtm implements Serializable{
     private String url = "";
     private String state = "";
     private String name ="";
+    private String group_number="";
+
+    public String getGroup_number() {
+        return group_number;
+    }
+
+    public void setGroup_number(String group_number) {
+        this.group_number = group_number;
+    }
 
     public String getName() {
         return name;

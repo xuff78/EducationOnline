@@ -281,8 +281,20 @@ public class ChatManager extends AVIMClientEventHandler {
 
   public void joinCoversation(String conversationId, AVIMConversationCallback cb) {
     AVIMConversation conversation=getConversation(conversationId);
-    String usercode=AVUser.getCurrentUser().getObjectId();
-    conversation.addMembers(Arrays.asList(usercode), cb);
+    conversation.addMembers(Arrays.asList(getSelfId()), cb);
+  }
+
+  public void createCoversation(final String title, final AVIMConversationCreatedCallback cb) {
+    imClient.open(new AVIMClientCallback() {
+
+      @Override
+      public void done(AVIMClient client, AVIMException e) {
+        if (e == null) {
+          //登录成功
+          client.createConversation(Arrays.asList(getSelfId()), title, null, true, cb);
+        }
+      }
+    });
   }
 
   public interface ConnectionListener {

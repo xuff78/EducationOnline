@@ -74,7 +74,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private List<CourseBean> items=new ArrayList<>();
     private List<TeacherWithCourse> teacheritems=new ArrayList<>();
     private CourseUpdate currentCourseFrg;
-    private String[] names=new String[]{"智能排序","人气最高","评价最高","价格最低"};
 //    private String query_type=Constant.TypeCourse;
 
     private void initHandler() {
@@ -121,7 +120,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         if(getIntent().hasExtra(Constant.SearchSubject)){
             addCourseListFragment(onlinecoursePage);
             String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
-            courseFilter.setSubject_id(subject_id);
+            courseFilter.setSubject_ids(subject_id);
             String searchwords = getIntent().getStringExtra(Constant.SearchWords);
             ((SelectorPage)selectorPage).setLastSelection(subject_id);
             searchEdt.setText(searchwords);
@@ -146,10 +145,12 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         FilterAll filter=new FilterAll();
         ArrayList<FilterInfo> list=new ArrayList<>();
         courseFilter=new CourseFilter();
+        String[] names=null;
         if (type == 0) {
             courseTypeLayout.setVisibility(View.VISIBLE);
             addCourseListFragment(onlinecoursePage);
             setFirstFilter(list);
+            names=new String[]{"智能排序","人气最高","评价最高","价格最低"};
         } else {
             courseTypeLayout.setVisibility(View.GONE);
             addCourseListFragment(teacherList);
@@ -170,6 +171,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             String[] typenames3=new String[]{"男","女"};
             info3.setItemInfo(typenames3);
             list.add(info3);
+            names=new String[]{"智能排序","人气最高","评价最高",""};
         }
         filter.setList(list);
         Bundle b=new Bundle();
@@ -180,9 +182,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         ((SelectorPage)selectorPage).setData(SearchResultAct.this);
         selectorByOrder=new SelectorOrder();
         Bundle b2=new Bundle();
-        b2.putInt("type", type);
         b2.putStringArray("Names", names);
         selectorByOrder.setArguments(b2);
+
+        handler.getCourseList(courseFilter);
     }
 
     private void addCourseListFragment(CourseUpdate page) {
@@ -202,7 +205,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     type=i;
                     initFilter();
                     popup.dismiss();
-                }
+                }else
+                    popup.dismiss();
 
             }
         });
@@ -368,7 +372,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     @Override
     public void onSelected(SubjectBean subject) {
         closeDialog();
-        courseFilter.setSubject_id(subject.getSubject_id());
+        courseFilter.setSubject_ids(subject.getSubject_id());
         page=1;
         courseFilter.setPage(String.valueOf(page));
         handler.getCourseList(courseFilter);

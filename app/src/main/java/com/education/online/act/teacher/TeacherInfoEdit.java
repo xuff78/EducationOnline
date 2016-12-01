@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.SearchResultAct;
 import com.education.online.act.login.SubjectSelector;
 import com.education.online.adapter.MainAdapter;
 import com.education.online.bean.SubjectBean;
@@ -45,6 +46,8 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getUserInfo)){
                     teacher= JSON.parseObject(jsonData, TeacherBean.class);
+                    subject.setSubject_name(teacher.getSubject());
+                    subject.setSubject_id(teacher.getSubject_id());
                     setFormData();
                 }else if(method.equals(Method.updateTeacher)){
                     SharedPreferencesUtil.setString(TeacherInfoEdit.this, Constant.SubjectName, teachSubjectTxt.getText().toString());
@@ -114,7 +117,10 @@ public class TeacherInfoEdit extends BaseFrameAct implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.subjectLayout:
-                startActivityForResult(new Intent(TeacherInfoEdit.this, SubjectSelector.class), 0x10);
+                Intent i = new Intent(TeacherInfoEdit.this, SubjectSelector.class);
+                i.putExtra(Constant.SearchSubject, subject.getSubject_id());
+                i.putExtra(Constant.SearchWords, subject.getSubject_name());
+                startActivityForResult(i, 0x10);
                 break;
             case R.id.educationLayout:
                 DialogUtil.showSelectDialog(TeacherInfoEdit.this, "学历", degree, new Dialog.OnClickListener(){

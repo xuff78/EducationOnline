@@ -24,8 +24,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/icon_user_defalut" />
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
 

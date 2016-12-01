@@ -41,6 +41,7 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
     private AllTypeCourseAdapter adapter;
     private RecyclerView recyclerList;
     private HttpHandler handler;
+    private CourseFilter filter;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -68,16 +69,16 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
 
         initHandler();
 
+        filter=new CourseFilter();
+        filter.setCourse_type(null);
+        filter.setUsercode(SharedPreferencesUtil.getUsercode(this));
+        filter.setSort("sort_order");
+        filter.setCourse_validate_status(null);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        CourseFilter filter=new CourseFilter();
-        filter.setCourse_type(null);
-        filter.setUsercode(SharedPreferencesUtil.getUsercode(this));
-        filter.setSort("sort_order");
-        filter.setCourse_validate_status(null);
         handler.getCourseList(filter);
     }
 
@@ -105,10 +106,14 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
             case R.id.currentCourse:
                 currentCourse.setTextColor(getResources().getColor(R.color.dark_orange));
                 lastCourse.setTextColor(getResources().getColor(R.color.normal_gray));
+                filter.setStatus("underway");
+                handler.getCourseList(filter);
                 break;
             case R.id.lastCourse:
+                filter.setStatus("over");
                 lastCourse.setTextColor(getResources().getColor(R.color.dark_orange));
                 currentCourse.setTextColor(getResources().getColor(R.color.normal_gray));
+                handler.getCourseList(filter);
                 break;
         }
     }

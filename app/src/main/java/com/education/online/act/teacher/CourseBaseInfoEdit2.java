@@ -8,14 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
+import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.CM_MessageChatAct;
 import com.education.online.bean.AddClassBean;
 import com.education.online.bean.ArraryCourseTimeBean;
 import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.util.DialogUtil;
+import com.education.online.util.LogUtil;
 
 import org.json.JSONException;
 
@@ -125,7 +131,13 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
             case R.id.submitCourseBtn:
                 if(type==2&&addClassBean.getCourseware_time().length()!=0)//直播课且有时间
                 {
-                    httpHandler.addClass(addClassBean);
+                    ChatManager.getInstance().createCoversation(addClassBean.getName(), new AVIMConversationCreatedCallback() {
+                        @Override
+                        public void done(AVIMConversation conv, AVIMException e) {
+                            addClassBean.setGroup_number(conv.getConversationId());
+                            httpHandler.addClass(addClassBean);
+                        }
+                    });
                 }else
                 {
                     Toast.makeText(CourseBaseInfoEdit2.this,"请填写完整信息",Toast.LENGTH_SHORT).show();

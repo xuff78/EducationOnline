@@ -403,6 +403,9 @@ public class HttpHandler extends Handle {
 		paraMap.put("courseware_time",addClassBean.getCourseware_time());
 		if(addClassBean.getTime_len().length()>0)
 		paraMap.put("time_len",addClassBean.getTime_len());
+		if(addClassBean.getGroup_number().length()>0)
+			paraMap.put("group_number",addClassBean.getGroup_number());
+
 		requestPostEdu(Method.addClass,paraMap,true);
 
 	}

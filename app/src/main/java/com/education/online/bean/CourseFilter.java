@@ -7,7 +7,7 @@ public class CourseFilter {
 
     private String status="underway"; // 否 课程状态 （over-已完结 underway-未完结）  无
     private String course_type="live"; // 否 课程类型（courseware-课件 video-视频 live-直播）  无
-    private String subject_id=null; // 否 科目ID  无
+    private String subject_ids=null; // 否 科目ID  无
     private String key_word=null; // 否 搜索关键字  无
     private String is_free=null; // 否 是否免费 yes-是 no-不是  无
     private String usercode=null; // 否 教师用户代码，教师查看自己的课程可以看到所有状态的课程，查看其他人只能看到审核通过的  无
@@ -23,6 +23,14 @@ public class CourseFilter {
     private String page_size="20"; // 否 页容量  10
     private String page="1"; // 否 页码
 
+    public String getSubject_ids() {
+        return subject_ids;
+    }
+
+    public void setSubject_ids(String subject_ids) {
+        this.subject_ids = subject_ids;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -37,14 +45,6 @@ public class CourseFilter {
 
     public void setCourse_type(String course_type) {
         this.course_type = course_type;
-    }
-
-    public String getSubject_id() {
-        return subject_id;
-    }
-
-    public void setSubject_id(String subject_id) {
-        this.subject_id = subject_id;
     }
 
     public String getKey_word() {

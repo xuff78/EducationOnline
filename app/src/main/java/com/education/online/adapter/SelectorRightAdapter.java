@@ -95,9 +95,10 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
 				txt.setTextSize(13);
 				txt.setGravity(Gravity.CENTER);
 				txt.setBackgroundResource(R.drawable.shape_corner_blackline);
-				if(showLast&&lastId.equals(subjectBean.getSubject_id()))
+				if(showLast&&lastId.equals(subjectBean.getSubject_id())) {
 					txt.setTextColor(act.getResources().getColor(R.color.normal_red));
-				else
+					txt.setBackgroundResource(R.drawable.shape_corner_with_redline);
+				}else
 					txt.setTextColor(Color.GRAY);
 				txt.setText(subjectBean.getSubject_name());
 				linelayout.addView(txt, llp);

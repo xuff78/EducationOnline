@@ -66,6 +66,18 @@ public class SelectorPage extends BaseFragment {
     }
 
     private void setListData() {
+        pressPos=0;
+        for(int i=0;i<cates.size();i++){
+            SubjectBean cate=cates.get(i);
+            for(int j=0;j<cate.getChild_subject().size();j++){
+                SubjectBean subcate=cate.getChild_subject().get(j);
+                for(int k=0;k<subcate.getChild_subject_details().size();k++){
+                    SubjectBean subject=subcate.getChild_subject_details().get(k);
+                    if(subject.getSubject_id().equals(lastId))
+                        pressPos=i;
+                }
+            }
+        }
         menuAdapter=new MenuLeftAdapter();
         menuLeft.setAdapter(menuAdapter);
         menuLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,10 +92,8 @@ public class SelectorPage extends BaseFragment {
                 recyclerList.setAdapter(subjectList);
             }
         });
-        if(cates.size()>0) {
-            subjectList = new SelectorRightAdapter(getActivity(), cates.get(0).getChild_subject(), listener, showLast, lastId);
-            recyclerList.setAdapter(subjectList);
-        }
+        subjectList = new SelectorRightAdapter(getActivity(), cates.get(pressPos).getChild_subject(), listener, showLast, lastId);
+        recyclerList.setAdapter(subjectList);
     }
 
 
@@ -107,7 +117,24 @@ public class SelectorPage extends BaseFragment {
     }
 
     public void setCateInfo(ArrayList<SubjectBean> cates){
-        this.cates=cates;
+        showLast=true;
+        ArrayList<SubjectBean> beans=new ArrayList<>();
+        SubjectBean subject=new SubjectBean();
+        subject.setSubject_name("全部");
+        beans.add(subject);
+
+        ArrayList<SubjectBean> cateSub=new ArrayList<>();
+        SubjectBean item=new SubjectBean();
+        item.setSubject_name("");
+        item.setChild_subject_details(beans);
+        cateSub.add(item);
+
+        SubjectBean firstItemAll=new SubjectBean();
+        firstItemAll.setSubject_name("全部");
+        firstItemAll.setChild_subject(cateSub);
+        this.cates.clear();
+        this.cates.add(firstItemAll);
+        this.cates.addAll(cates);
     }
 
     public void setLastSelection(String lastId){
@@ -167,7 +194,7 @@ public class SelectorPage extends BaseFragment {
                 holder.title.setTextColor(getResources().getColor(R.color.normal_gray));
                 convertView.setBackgroundResource(R.color.whitesmoke);
             }
-            if(position==0){
+            if(position==0&&!showLast){
                 holder.title.setTextColor(Color.RED);
             }
             holder.title.setText(cates.get(position).getSubject_name());

@@ -180,6 +180,8 @@ public class JsonUtil {
                 if(!item.isNull("name"))
                     courseExtm.setName(item.getString("name"));
                 courseExtms.add(courseExtm);
+                if(!item.isNull("group_number"))
+                    courseExtm.setGroup_number(item.getString("group_number"));
 
             }
             courseDetailBean.setCourse_extm(courseExtms);

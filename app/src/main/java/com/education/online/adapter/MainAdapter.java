@@ -301,11 +301,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (object != null) {
                     SubjectBean subject = (SubjectBean) object;
                     Intent i = new Intent(act, SearchResultAct.class);
-                    i.putExtra(Constant.SearchSubject, subject.getSubject_id());
+                    i.putExtra(Constant.SearchSubject, subject.getChild_subject_ids());
                     i.putExtra(Constant.SearchWords, subject.getSubject_name());
                     act.startActivity(i);
                 }else{
                     Intent i = new Intent(act, SearchResultAct.class);
+                    i.putExtra(Constant.SearchSubject, "");
                     i.putExtra(Constant.SearchWords, "");
                     act.startActivity(i);
                 }

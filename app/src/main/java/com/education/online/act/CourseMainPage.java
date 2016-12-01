@@ -23,6 +23,7 @@ import com.education.online.act.order.SubmitOrder;
 import com.education.online.act.pushlive.LiveCameraPage;
 import com.education.online.adapter.CourseAdapter;
 import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.CourseExtm;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
@@ -59,7 +60,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     private EvaluateListBean evaluateListBean=new EvaluateListBean();
     Intent intent;
     HttpHandler httpHandler;
-    private String ConversationId="583e895ac59e0d006b4ffa78";
+    private String ConversationId="";
 
     private String my_usercode="";
     public void initiHandler(){
@@ -70,6 +71,10 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getCourseDtail)) {
                     JsonUtil.getCourseDetail(jsonData, courseDetailBean);
+                    List<CourseExtm> course_extm=courseDetailBean.getCourse_extm();
+                    if(course_extm.size()>0) {
+                        ConversationId = course_extm.get(0).getGroup_number();
+                    }
                     if(intent.hasExtra("Edit")) {
                         if(intent.getStringExtra("status").equals("1")) {
                             textaddorbuy.setText("开始直播");
@@ -220,28 +225,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                         intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
                         startActivity(intent);
                     }else {
-                        AVIMClient user = AVIMClient.getInstance(ChatManager.getInstance().getSelfId());
-                        user.open(new AVIMClientCallback() {
-
-                            @Override
-                            public void done(AVIMClient client, AVIMException e) {
-                                if (e == null) {
-                                    //登录成功
-                                    client.createConversation(Arrays.asList(AVUser.getCurrentUser().getObjectId()), "测试聊天室", null, true,
-                                            new AVIMConversationCreatedCallback() {
-                                                @Override
-                                                public void done(AVIMConversation conv, AVIMException e) {
-                                                    Intent intent = new Intent(CourseMainPage.this, CM_MessageChatAct.class);
-                                                    intent.putExtra("Name", "测试聊天室");
-                                                    ConversationId = conv.getConversationId();
-                                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
-                                                    LogUtil.i("CONVERSATION_ID", "CONVERSATION_ID:  " + ConversationId);
-                                                    startActivity(intent);
-                                                }
-                                            });
-                                }
-                            }
-                        });
+                        ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
                     }
                 } else if(courseDetailBean.getIs_buy().equals("1")){
                     if(ConversationId.length()>0){
@@ -259,7 +243,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                             }
                         });
                     }else {
-                        ToastUtils.displayTextShort(CourseMainPage.this, "直播未开始");
+                        ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
                     }
                 }else {
                     Intent i = new Intent(CourseMainPage.this, SubmitOrder.class);

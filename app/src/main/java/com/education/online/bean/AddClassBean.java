@@ -23,6 +23,15 @@ public class AddClassBean implements Serializable{
     private String plan = ""; // 教学计划  无
     private String  courseware_time = ""; // 具体上课时间，多个时间用逗号','隔开  无
     private String  time_len ="";//
+    private String group_number="";
+
+    public String getGroup_number() {
+        return group_number;
+    }
+
+    public void setGroup_number(String group_number) {
+        this.group_number = group_number;
+    }
 
     public String getName() {
         return name;

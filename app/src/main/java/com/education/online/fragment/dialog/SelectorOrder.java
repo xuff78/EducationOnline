@@ -41,32 +41,30 @@ public class SelectorOrder extends BaseFragment {
         LayoutInflater inflater=LayoutInflater.from(getActivity());
         LinearLayout layout= (LinearLayout) v;
         LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(getActivity(), 50));
-        int type=getArguments().getInt("type",0);
-        int size=4;
-        if(type==1){
-            size=3;
-        }
-        for(int i=0;i<size;i++){
+        for(int i=0;i<names.length;i++){
             final int j=i;
             View item=inflater.inflate(R.layout.selector_by_order_item, null);
             TextView nameTxt= (TextView) item.findViewById(R.id.nameTxt);
-            nameTxt.setText(names[i]);
-            final ImageView img= (ImageView) item.findViewById(R.id.checkIcon);
-            if(i==pressPos) {
-                pressView = img;
-                img.setImageResource(R.mipmap.icon_round_right);
-            }
-            item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    pressPos=j;
-                    pressView.setImageResource(R.mipmap.icon_round);
+            if(names[i].length()>0) {
+                nameTxt.setText(names[i]);
+                final ImageView img = (ImageView) item.findViewById(R.id.checkIcon);
+                if (i == pressPos) {
+                    pressView = img;
                     img.setImageResource(R.mipmap.icon_round_right);
-                    pressView=img;
-                    ((DialogCallback)getActivity()).closeDialog();
-                    ((DialogCallback)getActivity()).onSelected(pressPos);
                 }
-            });
+                item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pressPos = j;
+                        pressView.setImageResource(R.mipmap.icon_round);
+                        img.setImageResource(R.mipmap.icon_round_right);
+                        pressView = img;
+                        ((DialogCallback) getActivity()).closeDialog();
+                        ((DialogCallback) getActivity()).onSelected(pressPos);
+                    }
+                });
+            }else
+                item.setVisibility(View.INVISIBLE);
             layout.addView(item, llp);
         }
     }
