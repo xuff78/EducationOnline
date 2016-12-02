@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMConversation;
@@ -20,10 +24,19 @@ import com.avoscloud.leanchatlib.utils.Constants;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.CM_MessageChatAct;
+import com.education.online.act.SearchAct;
 import com.education.online.act.chat.ConversationItemClickEvent;
 import com.education.online.act.chat.ConversationListAdapter;
 import com.education.online.act.chat.ConversationManager;
 import com.education.online.adapter.VideoMainAdapter;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.Constant;
+import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.ToastUtils;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,12 +53,29 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     private RecyclerView recyclerList;
     protected ConversationListAdapter<Room> itemAdapter;
     private ConversationManager conversationManager;
+    private EditText usercodeEdt;
+    private HttpHandler httpHandler;
+
+    public void initiHandler() {
+        httpHandler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getUserInfo)){
+                    Intent intent=new Intent(MessageMain.this, Studentintroduction.class);
+                    intent.putExtra("jsonData", jsonData);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_top_menu);
 
+        initiHandler();
         _setHeaderTitle("消息");
         initView();
     }
@@ -62,6 +92,21 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
         EventBus.getDefault().register(this);
         findViewById(R.id.systemMessageLayout).setOnClickListener(this);
         findViewById(R.id.myFavorite).setOnClickListener(this);
+        usercodeEdt= (EditText) findViewById(R.id.usercodeEdt);
+        usercodeEdt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId== EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
+                    String word=usercodeEdt.getText().toString().trim();
+                    if(word.length()>0){
+                        httpHandler.getUserInfo(word);
+                    }else{
+                        ToastUtils.displayTextShort(MessageMain.this, "请输入AskID");
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override

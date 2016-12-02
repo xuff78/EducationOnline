@@ -75,8 +75,8 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     if(course_extm.size()>0) {
                         ConversationId = course_extm.get(0).getGroup_number();
                     }
-                    if(intent.hasExtra("Edit")) {
-                        if(intent.getStringExtra("status").equals("1")) {
+                    if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())) {
+                        if(!intent.hasExtra("status")||intent.getStringExtra("status").equals("1")) {
                             textaddorbuy.setText("开始直播");
                             textaddorbuy.setOnClickListener(CourseMainPage.this);
                         }else if(intent.getStringExtra("status").equals("0")) {
@@ -214,16 +214,25 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 //do sth;
                 break;
             case R.id.addorbuy:
-                if(intent.hasExtra("Edit")){
+                if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())){
 //                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
 //                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
 //                    startActivity(i);
 
                     if(ConversationId.length()>0){
-                        Intent intent = new Intent(CourseMainPage.this, CM_MessageChatAct.class);
-                        intent.putExtra("Name", courseDetailBean.getCourse_name());
-                        intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
-                        startActivity(intent);
+                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
+
+                            @Override
+                            public void done(AVIMException e) {
+                                if(e==null) {
+                                    Intent intent = new Intent(CourseMainPage.this, LiveCourseStart.class);
+                                    intent.putExtra("Name", courseDetailBean.getCourse_name());
+                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                    startActivity(intent);
+                                }else
+                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                            }
+                        });
                     }else {
                         ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
                     }
@@ -234,7 +243,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                             @Override
                             public void done(AVIMException e) {
                                 if(e==null) {
-                                    Intent intent = new Intent(CourseMainPage.this, CM_MessageChatAct.class);
+                                    Intent intent = new Intent(CourseMainPage.this, LiveCourseDetail.class);
                                     intent.putExtra("Name", courseDetailBean.getCourse_name());
                                     intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
                                     startActivity(intent);

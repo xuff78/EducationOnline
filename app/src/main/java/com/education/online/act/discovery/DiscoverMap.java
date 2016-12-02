@@ -40,6 +40,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -76,7 +77,7 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                         if(!myUsercode.equals(user.getUsercode())) {
                             final View v = inflater.inflate(R.layout.people_marker_view, null);
                             final ImageView headIcon = (ImageView) v.findViewById(R.id.headIcon);
-                            imageLoader.loadImage(ImageUtil.getImageUrl(user.getAvatar()), new SimpleImageLoadingListener(){
+                            imageLoader.loadImage(ImageUtil.getImageUrl(user.getAvatar()),new SimpleImageLoadingListener(){
                                 @Override
                                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                     headIcon.setImageBitmap(loadedImage);
@@ -221,7 +222,8 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                     baiduMap.animateMapStatus(u);
                 }
 
-                imageLoader.loadImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(DiscoverMap.this, Constant.Avatar)), new SimpleImageLoadingListener(){
+                imageLoader.loadImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(DiscoverMap.this, Constant.Avatar)),
+                        new SimpleImageLoadingListener(){
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         headIcon.setImageBitmap(loadedImage);
@@ -261,7 +263,11 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
 
     @Override
     protected void onDestroy() {
-        mMapView.onDestroy();
+        try {
+            mMapView.onDestroy();
+        }catch (Exception e){
+
+        }
         super.onDestroy();
         // activity 销毁时同时销毁地图控件
     }

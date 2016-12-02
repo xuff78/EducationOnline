@@ -138,11 +138,10 @@ public class VideoMainPage extends BaseFrameAct {
                             } else if (intent.getStringExtra("status").equals("2")) {
                                 textaddorbuy.setText("已拒绝");
                             }
-                            textaddorbuy.setOnClickListener(null);
                         }else {
                             textaddorbuy.setText("");
-                            textaddorbuy.setOnClickListener(listener);
                         }
+                        textaddorbuy.setOnClickListener(null);
                         video_play.setVisibility(View.VISIBLE);
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.VISIBLE);
