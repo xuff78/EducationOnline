@@ -29,6 +29,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_centerVertical="true"
                 android:id="@+id/teacherImg"
+                android:transitionName="headIcon"
                 android:layout_width="65dp"
                 android:layout_height="65dp" />
             <LinearLayout

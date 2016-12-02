@@ -36,15 +36,6 @@ public class CM_MessageChatAct extends ChatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
-        findViewById(R.id.back_imagebtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
         findViewById(R.id.back_home_imagebtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,21 +43,6 @@ public class CM_MessageChatAct extends ChatActivity {
                 startActivity(intent);
             }
         });
-
-        String titleTxt=getIntent().getStringExtra("Name");
-        TextView title= (TextView) findViewById(R.id.header_title_tv);
-        if(titleTxt!=null&&titleTxt.length()>0)
-            title.setText(titleTxt);
-        else
-            title.setText("聊天");
-
-        LeanchatUser user = (LeanchatUser) AVUser.getCurrentUser();
-        String avatar= (String) user.get("avatar");
-        if(avatar==null)
-            avatar="";
-        String username= (String) user.get("username");
-        setNameAndAvatar(username,avatar);
-
     }
 
     String titleName="";

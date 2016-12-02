@@ -455,6 +455,15 @@ public class HttpHandler extends Handle {
 		paraMap.put("usercode",user_code);
 		requestPostEdu(Method.addAttention,paraMap,true);
 	}
+
+	public void getAttentionList(int page){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("page_size","20");
+		paraMap.put("usercode",String.valueOf(page));
+		requestPostEdu(Method.attentionList,paraMap,false);
+	}
+
 	public void evaluate(String course_id,String star,String evaluate_info,String is_secret ){
 		HashMap<String, String > paraMap =new HashMap<>();
 

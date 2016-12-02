@@ -20,6 +20,15 @@ public class UserInfo implements Serializable{
     private Double latitude=0d;
     private String user_identity="";
     private String usercode="";
+    private Boolean selected=true;
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
 
     public String getUsercode() {
         return usercode;

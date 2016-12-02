@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.bean.UserInfo;
+import com.education.online.inter.AdapterCallback;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -25,14 +28,18 @@ public class MyFavorityAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
     private LayoutInflater inflater;
     private int imgLength=0;
     private LinearLayout.LayoutParams llp;
-    private ArrayList<Boolean> addlist=new ArrayList<>();
+    private ArrayList<UserInfo> users=new ArrayList<>();
+    private AdapterCallback listener;
+    private ImageLoader imageLoader=ImageLoader.getInstance();
 
-    public MyFavorityAdapter(Activity activity){
+    public MyFavorityAdapter(Activity activity, ArrayList<UserInfo> users, AdapterCallback onClickListener){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         imgLength= (ScreenUtil.getWidth(activity)- ImageUtil.dip2px(activity, 70))/4; //左右边距40， 中间3*10
         llp=new LinearLayout.LayoutParams(imgLength, imgLength);
         llp.rightMargin=ImageUtil.dip2px(activity, 10);
+        this.users=users;
+        listener=onClickListener;
     }
 
     @Override
@@ -51,22 +58,29 @@ public class MyFavorityAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
     }
 
     @Override
+    public int getItemCount() {
+        return users.size();
+    }
+
+    @Override
     //绑定数据源
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         FavoritItem favor = (FavoritItem) holder;
-        if(addlist.get(position)){
+        UserInfo user=users.get(position);
+        if(user.getSelected()){
             favor.checkBox.setImageResource(R.mipmap.icon_faver_selected);
         }else{
             favor.checkBox.setImageResource(R.mipmap.icon_faver_add);
         }
-
+        imageLoader.displayImage(ImageUtil.getImageUrl(user.getAvatar()), favor.userIcon);
+        favor.nameTxt.setText(user.getNickname());
+        if(user.getUser_identity().equals("1"))
+            favor.typeTxt.setText("学生");
+        else if(user.getUser_identity().equals("2"))
+            favor.typeTxt.setText("老师");
     }
 
-    @Override
-    public int getItemCount() {
-        return 6;
-    }
 
     public class FavoritItem extends RecyclerView.ViewHolder
     {
@@ -79,12 +93,16 @@ public class MyFavorityAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
             checkBox = (ImageView) v.findViewById(R.id.checkBox);
             nameTxt = (TextView) v.findViewById(R.id.nameTxt);
             typeTxt = (TextView) v.findViewById(R.id.typeTxt);
-            addlist.add(true);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.delitem(userIcon, position);
+                }
+            });
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addlist.set(position, !addlist.get(position));
-                    notifyDataSetChanged();
+                    listener.onClick(userIcon, position);
                 }
             });
         }

@@ -10,8 +10,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
@@ -35,6 +38,7 @@ import com.avoscloud.leanchatlib.event.InputBottomBarEvent;
 import com.avoscloud.leanchatlib.event.InputBottomBarRecordEvent;
 import com.avoscloud.leanchatlib.event.InputBottomBarTextEvent;
 import com.avoscloud.leanchatlib.model.ConversationType;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.Constants;
 import com.avoscloud.leanchatlib.utils.LogUtils;
 import com.avoscloud.leanchatlib.utils.NotificationUtils;
@@ -100,6 +104,26 @@ public class ChatActivity  extends AVBaseActivity implements InputBottomBar.Edit
 //        pulltorefresh.setCacheColorHint(Color.TRANSPARENT);
 //        pulltorefresh.setDividerHeight(0);
 //        pulltorefresh.setDivider(new ColorDrawable(Color.TRANSPARENT));
+
+        String titleTxt=getIntent().getStringExtra("Name");
+        TextView title= (TextView) findViewById(R.id.header_title_tv);
+        if(titleTxt!=null&&titleTxt.length()>0)
+            title.setText(titleTxt);
+        else
+            title.setText("聊天");
+
+        LeanchatUser user = (LeanchatUser) AVUser.getCurrentUser();
+        String avatar= (String) user.get("avatar");
+        if(avatar==null)
+            avatar="";
+        String username= (String) user.get("username");
+        setNameAndAvatar(username,avatar);
+        findViewById(R.id.back_imagebtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
