@@ -21,6 +21,7 @@ public class LiveCourseStart extends ChatActivity {
 
     private void initTitle() {
         findViewById(R.id.back_home_imagebtn).setVisibility(View.GONE);
+
     }
 
     @Override

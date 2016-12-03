@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.education.online.R;
+import com.education.online.bean.CourseDetailBean;
 import com.education.online.util.SharedPreferencesUtil;
 import com.upyun.hardware.Config;
 import com.upyun.hardware.PushClient;
@@ -35,7 +36,6 @@ public class LiveCameraPage extends Activity implements View.OnClickListener {
     private ImageView mImgFlash;
     private Config config;
     private String mNotifyMsg;
-    private String usercode="";
     private static final int REQUEST_CODE_PERMISSION_CAMERA = 100;
     private static final int REQUEST_CODE_PERMISSION_RECORD_AUDIO = 101;
 
@@ -45,7 +45,7 @@ public class LiveCameraPage extends Activity implements View.OnClickListener {
         setContentView(R.layout.live_camera);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        usercode= SharedPreferencesUtil.getUsercode(this);
+        CourseDetailBean courseBean= (CourseDetailBean) getIntent().getSerializableExtra(CourseDetailBean.Name);
         surface = (SurfaceRenderView) findViewById(R.id.sv_camera);
         mBtToggle = (ImageView) findViewById(R.id.bt_toggle);
         mBtSetting = (ImageView) findViewById(R.id.bt_setting);
@@ -94,7 +94,7 @@ public class LiveCameraPage extends Activity implements View.OnClickListener {
 
 
         config = new Config.Builder().build();
-        config.url=config.url+usercode;
+        config.url=config.url+courseBean.getCourse_id();
     }
 
     @Override

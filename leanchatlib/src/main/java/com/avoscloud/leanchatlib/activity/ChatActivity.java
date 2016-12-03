@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +79,7 @@ public class ChatActivity  extends AVBaseActivity implements InputBottomBar.Edit
 
     protected String localCameraPath = PathUtils.getPicturePathByCurrentTime();
     private XListView pulltorefresh;
+    protected RelativeLayout videoLayout;
     private Map<String, Object> attr=new HashMap<>();
 
     @Override
@@ -94,6 +96,7 @@ public class ChatActivity  extends AVBaseActivity implements InputBottomBar.Edit
     }
 
     public void initView() {
+        videoLayout = (RelativeLayout) findViewById(R.id.videoLayout);
         pulltorefresh = (XListView) findViewById(R.id.refreshListView);
         pulltorefresh.setPullRefreshEnable(true);
         pulltorefresh.setPullLoadEnable(false);
@@ -208,7 +211,7 @@ public class ChatActivity  extends AVBaseActivity implements InputBottomBar.Edit
         }
     }
 
-    public void setHeaderTitle(String name){};
+    public void  setHeaderTitle(String name){};
 
     /**
      * 获取 conversation，为了避免重复的创建，此处先 query 是否已经存在只包含该 member 的 conversation
