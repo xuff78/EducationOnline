@@ -38,17 +38,25 @@
             android:textSize="13sp" />
 
         <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/CourseTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="8月7日~8月8日 14:00开课"
+        android:textColor="@color/light_gray"
+        android:textSize="13sp" />
+        <TextView
             android:layout_marginTop="5dp"
-            android:id="@+id/CourseTime"
+            android:id="@+id/courseNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="8月7日~8月8日 14:00开课"
             android:textColor="@color/light_gray"
             android:textSize="13sp" />
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
+
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal">

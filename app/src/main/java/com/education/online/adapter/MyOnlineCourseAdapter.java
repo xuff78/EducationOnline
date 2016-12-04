@@ -72,14 +72,16 @@ public class MyOnlineCourseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         CourseItemHolder courseItemHolder = (CourseItemHolder) holder;
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()), courseItemHolder.courseImage);
         courseItemHolder.courseName.setText(course.getCourse_name());
-        courseItemHolder.CourseTime.setText("");
+        courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开始");
         courseItemHolder.enterCourse.setTag(position);
+        if(course.getCount().length()>0)
+        courseItemHolder.courseNum.setText("共"+course.getCount()+"节课");
         SimpleDateFormat dateData=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       long current_time= System.currentTimeMillis();
         String date_time = course.getCourseware_date();
         Date time = null;
         try {
-            time= (Date) dateData.parseObject(date_time);
+            time=  dateData.parse(date_time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -97,9 +99,8 @@ public class MyOnlineCourseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ImageView courseImage;
         TextView courseName;
         TextView CourseTime;
-        TextView courseReview;
         TextView enterCourse;
-        TextView courseComment;
+        TextView courseNum;
         RelativeLayout total_layout;
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -141,6 +142,7 @@ public class MyOnlineCourseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public CourseItemHolder(View v, final int position) {
             super(v);
+            courseNum =  (TextView) v.findViewById(R.id.courseNum);
             courseImage = (ImageView) v.findViewById(R.id.CourseImage);
             courseName = (TextView) v.findViewById(R.id.CourseName);
             CourseTime = (TextView) v.findViewById(R.id.CourseTime);
