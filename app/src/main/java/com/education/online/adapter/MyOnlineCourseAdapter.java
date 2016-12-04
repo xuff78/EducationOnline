@@ -74,8 +74,8 @@ public class MyOnlineCourseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         courseItemHolder.courseName.setText(course.getCourse_name());
         courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开始");
         courseItemHolder.enterCourse.setTag(position);
-        if(course.getCount().length()>0)
-        courseItemHolder.courseNum.setText("共"+course.getCount()+"节课");
+        if(course.getCourse_count().length()>0)
+        courseItemHolder.courseNum.setText("共"+course.getCourse_count()+"节课");
         SimpleDateFormat dateData=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       long current_time= System.currentTimeMillis();
         String date_time = course.getCourseware_date();
