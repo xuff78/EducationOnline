@@ -34,7 +34,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 
-
+//SETTAG
 /**
  * 网络连接管理类：判断网络状态、管理网络连接、发起GET和POST请求。
  * 

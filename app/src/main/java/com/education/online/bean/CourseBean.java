@@ -24,6 +24,35 @@ public class CourseBean implements Serializable{
     private String status="";
     private String course_count="";
     private String courseware_date="";
+    private String state ="";
+
+    public String getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(String conversationId) {
+        conversationId = conversationId;
+    }
+
+    private String conversationId="";
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    private String introduction ="";
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getCourseware_date() {
         return courseware_date;

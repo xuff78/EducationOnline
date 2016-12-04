@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.adapter.MainAdapter;
+import com.education.online.adapter.MyOnlineCourseAdapter;
 import com.education.online.adapter.OnlineCourseAdapter;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
@@ -27,6 +28,14 @@ public class OnlineCoursePage extends CourseUpdate{
 
     private RecyclerView OnlineCoursePageRecycleList;
     private OnlineCourseAdapter adapter;
+    private MyOnlineCourseAdapter myOnlineCourseAdapter;
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    private int type =0;
+
     ArrayList<CourseBean> onlineCourseBeanArrayList = new ArrayList<>();
 
     @Override
@@ -42,7 +51,11 @@ public class OnlineCoursePage extends CourseUpdate{
         if(isNew)
             onlineCourseBeanArrayList.clear();
         onlineCourseBeanArrayList.addAll(courses);
-        adapter.notifyDataSetChanged();
+        if(type==0){
+            myOnlineCourseAdapter.notifyDataSetChanged();
+        }else if (type==1){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void initView(View v) {
@@ -51,8 +64,14 @@ public class OnlineCoursePage extends CourseUpdate{
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         OnlineCoursePageRecycleList.setLayoutManager(layoutManager);
-        adapter=new OnlineCourseAdapter(getActivity(), onlineCourseBeanArrayList);
-        OnlineCoursePageRecycleList.setAdapter(adapter);
+        if(type==0){
+myOnlineCourseAdapter = new MyOnlineCourseAdapter(getActivity(),onlineCourseBeanArrayList);
+            OnlineCoursePageRecycleList.setAdapter(myOnlineCourseAdapter);
+        }
+        else if(type==1) {
+            adapter = new OnlineCourseAdapter(getActivity(), onlineCourseBeanArrayList);
+            OnlineCoursePageRecycleList.setAdapter(adapter);
+        }
 
         OnlineCoursePageRecycleList.addOnScrollListener(new LoadMoreScrollerListener(layoutManager) {
             @Override

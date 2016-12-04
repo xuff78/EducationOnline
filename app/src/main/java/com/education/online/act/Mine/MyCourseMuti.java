@@ -43,6 +43,7 @@ public class MyCourseMuti extends BaseFrameAct {
     private CourseVideoList courseVideoList = new CourseVideoList();
     private CourseVideoList coursewareList = new CourseVideoList();
     private int page=1;
+    private String page_size="10";
     private CourseUpdate currentCourseFrg;
     private HttpHandler handler;
     private List<CourseBean> items=new ArrayList<>();
@@ -53,12 +54,14 @@ public class MyCourseMuti extends BaseFrameAct {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
+                String courseInfo = "";
                 if(method.equals(Method.getCourseCollections)){
-                    String courseInfo= JsonUtil.getString(jsonData, "collection_info");
+                    courseInfo= JsonUtil.getString(jsonData, "collection_info");}
+                else if (method.equals(Method.getMyCourse)){
+                     courseInfo= JsonUtil.getString(jsonData, "course_info");}
                     items = JSON.parseObject(courseInfo, new TypeReference<List<CourseBean>>() {});
                     currentCourseFrg.addCourses(items, page==1?true:false);
                     page++;
-                }
             }
         });
     }
@@ -72,19 +75,36 @@ public class MyCourseMuti extends BaseFrameAct {
         switch (type) {
             case 0:
                 _setHeaderTitle("我的课程");
+                onlinecoursePage.setType(0);
+                courseVideoList.setType(0);
+                coursewareList.setType(0);
                 break;
             case 1:
                 _setHeaderTitle("我的收藏");
+                onlinecoursePage.setType(1);
+                courseVideoList.setType(1);
+                coursewareList.setType(1);
                 break;
             case 2:
                 _setHeaderTitle("我的下载");
+                onlinecoursePage.setType(2);
+                courseVideoList.setType(2);
+                coursewareList.setType(2);
                 break;
         }
         initHandler();
         initView();
         initFrgment();
         addListFragment(onlinecoursePage);
-        handler.getCourseCollections(courseType, page);
+        if(type ==0)
+        {
+            handler.getMyCourse(courseType,page_size,String.valueOf(page));
+        }else if (type ==1) {
+            handler.getCourseCollections(courseType, page);
+        }
+        else if (type ==2){
+          //  handler.
+        }
     }
 
     private void initFrgment() {
@@ -137,7 +157,15 @@ public class MyCourseMuti extends BaseFrameAct {
                         break;
                 }
                 page=1;
-                handler.getCourseCollections(courseType, page);
+                if(type ==0)
+                {
+                    handler.getMyCourse(courseType,page_size,String.valueOf(page));
+                }else if (type ==1) {
+                    handler.getCourseCollections(courseType, page);
+                }
+                else if (type ==2){
+                    //  handler.
+                }
             }
         }
     };

@@ -557,6 +557,26 @@ public void complain(String user_name,String courses_name,String reason,String i
 	requestPostEdu(Method.complain,paraMap,true);
 }
 
+	public void getMyCourse(String course_type,String page_size,String page){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(course_type.length()>0)
+			paraMap.put("course_type",course_type);
+		if(page_size.length()>0)
+			paraMap.put("page_size",page_size);
+		if(page.length()>0)
+			paraMap.put("page",page);
+		requestPostEdu(Method.getMyCourse,paraMap,true);
+	}
+	public void getAdvert(String advert_id){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		if(advert_id.length()>0)
+			paraMap.put("advert_id",advert_id);
+		requestPostEdu(Method.getAdvert,paraMap,true);
+	}
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);

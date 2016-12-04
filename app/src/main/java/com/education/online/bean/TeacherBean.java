@@ -43,6 +43,26 @@ public class TeacherBean implements Serializable{
     private String is_unit_validate=""; // 是否单位验证0-待审核,1-通过,2-拒绝,3-未提交
     private String to_attention_count="";
     private String interest_info="";
+    private String average="";
+
+    public String getEvaluate_count() {
+        return evaluate_count;
+    }
+
+    public void setEvaluate_count(String evaluate_count) {
+        this.evaluate_count = evaluate_count;
+    }
+
+    private String evaluate_count="";
+
+    public String getAverage() {
+        return average;
+    }
+
+    public void setAverage(String average) {
+        this.average = average;
+    }
+
     private List<String> photo_album=new ArrayList<>();
     private List<String> video=new ArrayList<>();
 

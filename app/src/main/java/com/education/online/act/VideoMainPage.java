@@ -121,6 +121,7 @@ public class VideoMainPage extends BaseFrameAct {
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.GONE);
                         textaddorbuy.setOnClickListener(listener);
+                        download_layout.setVisibility(View.GONE);
                         payBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

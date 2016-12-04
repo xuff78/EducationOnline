@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
+import com.education.online.adapter.MyVideoListAdapter;
 import com.education.online.adapter.TeacherAdapter;
 import com.education.online.adapter.VideoListAdapter;
 import com.education.online.bean.CourseBean;
@@ -25,7 +26,11 @@ public class CourseVideoList extends CourseUpdate {
     private RecyclerView teacherList;
     ArrayList<CourseBean> onlineCourseBeanArrayList = new ArrayList<>();
     VideoListAdapter adapter;
-
+    MyVideoListAdapter myVideoListAdapteradapter;
+    private int type =0;
+    public void setType(int type) {
+        this.type = type;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +44,11 @@ public class CourseVideoList extends CourseUpdate {
         if(isNew)
             onlineCourseBeanArrayList.clear();
         onlineCourseBeanArrayList.addAll(courses);
-        adapter.notifyDataSetChanged();
+        if(type == 0){
+            myVideoListAdapteradapter.notifyDataSetChanged();
+        }else if (type==1) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
 
@@ -48,7 +57,11 @@ public class CourseVideoList extends CourseUpdate {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         teacherList.setLayoutManager(layoutManager);
+        if(type ==1){
         adapter=new VideoListAdapter(getActivity(), onlineCourseBeanArrayList);
-        teacherList.setAdapter(adapter);
+        teacherList.setAdapter(adapter);}
+    else if (type ==0){
+        myVideoListAdapteradapter=new MyVideoListAdapter(getActivity(), onlineCourseBeanArrayList);
+        teacherList.setAdapter(myVideoListAdapteradapter);}
     }
 }

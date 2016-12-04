@@ -2,8 +2,10 @@ package com.education.online.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.education.online.bean.AdvertsBean;
 import com.education.online.bean.AnswerInfoBean;
 import com.education.online.bean.AnswerListHolder;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CourseEvaluate;
 import com.education.online.bean.CourseExtm;
@@ -14,6 +16,7 @@ import com.education.online.bean.IntegralInfo;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.QuestionInfoBean;
 import com.education.online.bean.QuestionListHolder;
+import com.education.online.bean.TeacherBean;
 import com.education.online.bean.integralDetail;
 
 import org.json.JSONArray;
@@ -31,13 +34,13 @@ import java.util.Map;
  */
 public class JsonUtil {
 
-    public static JsonMessage getJsonMessage(String jsonStr){
-        JsonMessage jsonMsg=new JsonMessage();
+    public static JsonMessage getJsonMessage(String jsonStr) {
+        JsonMessage jsonMsg = new JsonMessage();
         try {
-            JSONObject json=new JSONObject(jsonStr);
-            if(!json.isNull("return_code"))
+            JSONObject json = new JSONObject(jsonStr);
+            if (!json.isNull("return_code"))
                 jsonMsg.setCode(json.getString("return_code"));
-            if(!json.isNull("return_message"))
+            if (!json.isNull("return_message"))
                 jsonMsg.setMsg(json.getString("return_message"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -46,11 +49,11 @@ public class JsonUtil {
     }
 
     public static String getJsonData(String jsonStr) {
-        String data="";
+        String data = "";
         try {
-            JSONObject json=new JSONObject(jsonStr);
-            if(!json.isNull("data"))
-                data=json.getString("data");
+            JSONObject json = new JSONObject(jsonStr);
+            if (!json.isNull("data"))
+                data = json.getString("data");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -58,16 +61,17 @@ public class JsonUtil {
     }
 
     public static String getString(String jsonStr, String key) {
-        String data="";
+        String data = "";
         try {
-            JSONObject json=new JSONObject(jsonStr);
-            if(!json.isNull(key))
-                data=json.getString(key);
+            JSONObject json = new JSONObject(jsonStr);
+            if (!json.isNull(key))
+                data = json.getString(key);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return data;
     }
+
     public static void addJsonData(JSONObject jsonStr, String key, Object value) {
 
         try {
@@ -81,11 +85,11 @@ public class JsonUtil {
 
 
     public static int getJsonInt(String jsonStr, String key) {
-        int data=0;
+        int data = 0;
         try {
-            JSONObject json=new JSONObject(jsonStr);
-            if(!json.isNull(key))
-                data=json.getInt(key);
+            JSONObject json = new JSONObject(jsonStr);
+            if (!json.isNull(key))
+                data = json.getInt(key);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -93,62 +97,62 @@ public class JsonUtil {
     }
 
     public static boolean getJsonBoolean(String jsonStr, String key) {
-        boolean data=false;
+        boolean data = false;
         try {
-            JSONObject json=new JSONObject(jsonStr);
-            if(!json.isNull(key))
-                data=json.getBoolean(key);
+            JSONObject json = new JSONObject(jsonStr);
+            if (!json.isNull(key))
+                data = json.getBoolean(key);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return data;
     }
 
-    public static CourseDetailBean getCourseDetail (String jsonStr, CourseDetailBean courseDetailBean) throws JSONException {
+    public static CourseDetailBean getCourseDetail(String jsonStr, CourseDetailBean courseDetailBean) throws JSONException {
         List<CourseExtm> courseExtms = new ArrayList<>();
         CourseEvaluate courseEvaluate = new CourseEvaluate();
         CreatUserInfo creatUserInfo = new CreatUserInfo();
         List<EvaluateBean> evaluateBeans = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr);
         if (!jsonObject.isNull("course_id"))
-        courseDetailBean.setCourse_id(jsonObject.getString("course_id"));
-        if(!jsonObject.isNull("course_name"))
+            courseDetailBean.setCourse_id(jsonObject.getString("course_id"));
+        if (!jsonObject.isNull("course_name"))
             courseDetailBean.setCourse_name(jsonObject.getString("course_name"));
-        if(!jsonObject.isNull("subject_name"))
+        if (!jsonObject.isNull("subject_name"))
             courseDetailBean.setSubject_name(jsonObject.getString("subject_name"));
-        if(!jsonObject.isNull("img"))
+        if (!jsonObject.isNull("img"))
             courseDetailBean.setImg(jsonObject.getString("img"));
-        if(!jsonObject.isNull("original_price"))
+        if (!jsonObject.isNull("original_price"))
             courseDetailBean.setOriginal_price(jsonObject.getString("original_price"));
-        if(!jsonObject.isNull("price"))
+        if (!jsonObject.isNull("price"))
             courseDetailBean.setPrice(jsonObject.getString("price"));
-        if(!jsonObject.isNull("follow"))
+        if (!jsonObject.isNull("follow"))
             courseDetailBean.setFollow(jsonObject.getString("follow"));
-        if(!jsonObject.isNull("min_follow"))
+        if (!jsonObject.isNull("min_follow"))
             courseDetailBean.setMin_follow(jsonObject.getString("min_follow"));
-        if(!jsonObject.isNull("max_follow"))
+        if (!jsonObject.isNull("max_follow"))
             courseDetailBean.setMax_follow(jsonObject.getString("max_follow"));
-        if(!jsonObject.isNull("plan"))
+        if (!jsonObject.isNull("plan"))
             courseDetailBean.setPlan(jsonObject.getString("plan"));
-        if(!jsonObject.isNull("refund"))
+        if (!jsonObject.isNull("refund"))
             courseDetailBean.setRefund(jsonObject.getString("refund"));
-        if(!jsonObject.isNull("transfer"))
+        if (!jsonObject.isNull("transfer"))
             courseDetailBean.setTransfer(jsonObject.getString("transfer"));
-        if(!jsonObject.isNull("introduction"))
+        if (!jsonObject.isNull("introduction"))
             courseDetailBean.setIntroduction(jsonObject.getString("introduction"));
-        if(!jsonObject.isNull("hot"))
+        if (!jsonObject.isNull("hot"))
             courseDetailBean.setHot(jsonObject.getString("hot"));
-        if(!jsonObject.isNull("course_type"))
+        if (!jsonObject.isNull("course_type"))
             courseDetailBean.setCourse_type(jsonObject.getString("course_type"));
-        if(!jsonObject.isNull("usercode"))
+        if (!jsonObject.isNull("usercode"))
             courseDetailBean.setUsercode(jsonObject.getString("usercode"));
-        if(!jsonObject.isNull("average"))
+        if (!jsonObject.isNull("average"))
             courseDetailBean.setAverage(jsonObject.getString("average"));
-        if(!jsonObject.isNull("is_collection"))
+        if (!jsonObject.isNull("is_collection"))
             courseDetailBean.setIs_collection(jsonObject.getString("is_collection"));
         if (!jsonObject.isNull("is_buy"))
             courseDetailBean.setIs_buy(jsonObject.getString("is_buy"));
-        if(!jsonObject.isNull("user_info")) {
+        if (!jsonObject.isNull("user_info")) {
             JSONObject jsonObject1 = jsonObject.getJSONObject("user_info");
             if (!jsonObject1.isNull("user_name"))
                 creatUserInfo.setUser_name(jsonObject1.getString("user_name"));
@@ -162,25 +166,23 @@ public class JsonUtil {
                 creatUserInfo.setAverage(jsonObject1.getString("average"));
             courseDetailBean.setUser_info(creatUserInfo);
         }
-        if (!jsonObject.isNull("course_extm"))
-        {
+        if (!jsonObject.isNull("course_extm")) {
             JSONArray jsonArray = jsonObject.getJSONArray("course_extm");
-            for (int i = 0; i < jsonArray.length(); i++)
-            {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject item = jsonArray.getJSONObject(i);
                 CourseExtm courseExtm = new CourseExtm();
-                if(!item.isNull("courseware_date"))
-                courseExtm.setCourseware_date(item.getString("courseware_date"));
-                if(!item.isNull("url"))
+                if (!item.isNull("courseware_date"))
+                    courseExtm.setCourseware_date(item.getString("courseware_date"));
+                if (!item.isNull("url"))
                     courseExtm.setUrl(item.getString("url"));
-                if(!item.isNull("time_len"))
+                if (!item.isNull("time_len"))
                     courseExtm.setTime_len(item.getString("time_len"));
-                if(!item.isNull("state"))
+                if (!item.isNull("state"))
                     courseExtm.setState(item.getString("state"));
-                if(!item.isNull("name"))
+                if (!item.isNull("name"))
                     courseExtm.setName(item.getString("name"));
                 courseExtms.add(courseExtm);
-                if(!item.isNull("group_number"))
+                if (!item.isNull("group_number"))
                     courseExtm.setGroup_number(item.getString("group_number"));
 
             }
@@ -224,24 +226,22 @@ public class JsonUtil {
     }
 
     public static EvaluateListBean getEvaluateList(String jsonStr) throws JSONException {
-        EvaluateListBean  evaluateListBean = new EvaluateListBean();
+        EvaluateListBean evaluateListBean = new EvaluateListBean();
         List<EvaluateBean> evaluateBeanList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr);
-        if(!jsonObject.isNull("average"));
+        if (!jsonObject.isNull("average")) ;
         evaluateListBean.setAverage(jsonObject.getString("average"));
-        if(!jsonObject.isNull("evaluate_details")) {
+        if (!jsonObject.isNull("evaluate_details")) {
             JSONObject jsonObject1 = jsonObject.getJSONObject("evaluate_details");
-            if(!jsonObject1.isNull("page_total"))
+            if (!jsonObject1.isNull("page_total"))
                 evaluateListBean.setPagetotal(jsonObject1.getInt("page_total"));
             if (!jsonObject1.isNull("total"))
                 evaluateListBean.setTotal(jsonObject1.getString("total"));
-            if(!jsonObject1.isNull("current_page"))
+            if (!jsonObject1.isNull("current_page"))
                 evaluateListBean.setCurrent_page(jsonObject1.getInt("current_page"));
-            if (!jsonObject1.isNull("evaluate"))
-            {
+            if (!jsonObject1.isNull("evaluate")) {
                 JSONArray jsonArray = jsonObject1.getJSONArray("evaluate");
-                for (int i=0;i<jsonArray.length();i++)
-                {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject item = jsonArray.getJSONObject(i);
                     EvaluateBean evaluateBean = new EvaluateBean();
                     if (!item.isNull("info"))
@@ -263,19 +263,20 @@ public class JsonUtil {
         return evaluateListBean;
 
     }
+
     public static QuestionListHolder getQuestionListHolder(String jsonStr) throws JSONException {
         QuestionListHolder questionListHolder = new QuestionListHolder();
         List<QuestionInfoBean> questionInfoBeans = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr);
-        if(!jsonObject.isNull("total"))
+        if (!jsonObject.isNull("total"))
             questionListHolder.setTotal(jsonObject.getString("total"));
-        if(!jsonObject.isNull("page_total"))
+        if (!jsonObject.isNull("page_total"))
             questionListHolder.setPage_total(jsonObject.getString("page_total"));
-        if(!jsonObject.isNull("current_page"))
+        if (!jsonObject.isNull("current_page"))
             questionListHolder.setCurrent_page(jsonObject.getString("current_page"));
-        if(!jsonObject.isNull("question_info")){
+        if (!jsonObject.isNull("question_info")) {
             JSONArray jsonArray = jsonObject.getJSONArray("question_info");
-            for (int i=0;i<jsonArray.length();i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject item = jsonArray.getJSONObject(i);
                 QuestionInfoBean questionInfoBean = new QuestionInfoBean();
                 if (!item.isNull("question_id"))
@@ -320,15 +321,15 @@ public class JsonUtil {
         AnswerListHolder answerListHolder = new AnswerListHolder();
         List<AnswerInfoBean> answerInfoBeans = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr);
-        if(!jsonObject.isNull("total"))
+        if (!jsonObject.isNull("total"))
             answerListHolder.setTotal(jsonObject.getString("total"));
-        if(!jsonObject.isNull("page_total"))
+        if (!jsonObject.isNull("page_total"))
             answerListHolder.setPage_total(jsonObject.getString("page_total"));
-        if(!jsonObject.isNull("current_page"))
+        if (!jsonObject.isNull("current_page"))
             answerListHolder.setCurrent_page(jsonObject.getString("current_page"));
-        if(!jsonObject.isNull("answer_info")){
+        if (!jsonObject.isNull("answer_info")) {
             JSONArray jsonArray = jsonObject.getJSONArray("answer_info");
-            for (int i=0;i<jsonArray.length();i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject item = jsonArray.getJSONObject(i);
                 AnswerInfoBean answerInfoBean = new AnswerInfoBean();
                 if (!item.isNull("answer_id"))
@@ -360,15 +361,86 @@ public class JsonUtil {
 
     }
 
+
+    public static AdvertsBean getAdvert(String jsonStr) throws JSONException {
+        AdvertsBean advertsBean = new AdvertsBean();
+        List<CourseBean> courseBeen = new ArrayList<>();
+        List<TeacherBean> teacherBeen = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if (!jsonObject.isNull("advert_id"))
+            advertsBean.setAdvert_id(jsonObject.getString("advert_id"));
+        if (!jsonObject.isNull("title"))
+            advertsBean.setTitle(jsonObject.getString("title"));
+        if (!jsonObject.isNull("img"))
+            advertsBean.setImg(jsonObject.getString("img"));
+        if (!jsonObject.isNull("advert_type"))
+            advertsBean.setAdvert_type(jsonObject.getString("advert_type"));
+        if (!jsonObject.isNull("introduction"))
+            advertsBean.setIntroduction(jsonObject.getString("introduction"));
+
+
+        if (!jsonObject.isNull("course_info")) {
+            JSONArray jsonArray = jsonObject.getJSONArray("course_info");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                CourseBean courseBean = new CourseBean();
+                if (!item.isNull("course_id"))
+                    courseBean.setCourse_id(item.getString("course_id"));
+                if (!item.isNull("course_name"))
+                    courseBean.setCourse_name(item.getString("course_name"));
+                if (!item.isNull("img"))
+                    courseBean.setImg(item.getString("img"));
+                if (!item.isNull("course_type"))
+                    courseBean.setCourse_type(item.getString("course_type"));
+                if (!item.isNull("price"))
+                    courseBean.setPrice(item.getString("price"));
+                if (!item.isNull("follow"))
+                    courseBean.setFollow(item.getString("follow"));
+                if (!item.isNull("courseware_date"))
+                    courseBean.setCourseware_date(item.getString("courseware_date"));
+                if (!item.isNull("conversationId"))
+                    courseBean.setConversationId(item.getString("conversationId"));
+                courseBeen.add(courseBean);
+            }
+        }
+        if (!jsonObject.isNull("teacher_info")) {
+            JSONArray jsonArray = jsonObject.getJSONArray("teacher_info");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                TeacherBean teacherBean = new TeacherBean();
+                if (!item.isNull("avatar"))
+                    teacherBean.setAvatar(item.getString("avatar"));
+                if (!item.isNull("nickname"))
+                    teacherBean.setName(item.getString("nickname"));
+                if (!item.isNull("usercode"))
+                    teacherBean.setUsercode(item.getString("usercode"));
+                if (!item.isNull("average"))
+                    teacherBean.setAverage(item.getString("average"));
+                if (!item.isNull("evaluate_count"))
+                    teacherBean.setEvaluate_count(item.getString("evaluate_count"));
+                if (!item.isNull("about_teacher"))
+                    teacherBean.setIntroduction(item.getString("about_teacher"));
+                if (!item.isNull("tag"))
+                    teacherBean.setTags(item.getString("tag"));
+                teacherBeen.add(teacherBean);
+            }
+        }
+        advertsBean.setCourseInfos(courseBeen);
+        advertsBean.setTeachetInfos(teacherBeen);
+            return advertsBean;
+
+
+        }
+
     public static IntegralInfo getIntegral(String jsonStr) throws JSONException {
-      IntegralInfo integralInfo = new IntegralInfo();
+        IntegralInfo integralInfo = new IntegralInfo();
         List<integralDetail> integralDetails = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr);
-        if(!jsonObject.isNull("integral"))
+        if (!jsonObject.isNull("integral"))
             integralInfo.setIntegral(jsonObject.getString("integral"));
-        if(!jsonObject.isNull("details")){
+        if (!jsonObject.isNull("details")) {
             JSONArray jsonArray = jsonObject.getJSONArray("details");
-            for (int i=0;i<jsonArray.length();i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject item = jsonArray.getJSONObject(i);
                 integralDetail integralDetail = new integralDetail();
                 if (!item.isNull("content"))

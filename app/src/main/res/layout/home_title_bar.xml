@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px" />
     <View
+        android:id="@+id/hintview"
         android:background="@color/whitesmoke"
         android:layout_width="match_parent"
         android:layout_height="10dp" />

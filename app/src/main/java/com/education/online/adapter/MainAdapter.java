@@ -24,6 +24,7 @@ import com.education.online.act.SearchResultAct;
 import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
 import com.education.online.act.video.VideoMain;
+import com.education.online.bean.AdvertsBean;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.HomePageInfo;
 import com.education.online.bean.LiveCourse;
