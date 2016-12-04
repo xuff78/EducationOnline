@@ -75,7 +75,15 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                     if(course_extm.size()>0) {
                         ConversationId = course_extm.get(0).getGroup_number();
                     }
-                    if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())) {
+                    boolean isValid=false;
+                    for(CourseExtm courseExtm:courseDetailBean.getCourse_extm()){
+                        if(!courseExtm.getState().equals("3")){
+                            isValid=true;
+                        }
+                    }
+                    if(!isValid){
+                        textaddorbuy.setText("已结束");
+                    }else if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())) {
                         if(!intent.hasExtra("status")||intent.getStringExtra("status").equals("1")) {
                             textaddorbuy.setText("开始直播");
                             textaddorbuy.setOnClickListener(CourseMainPage.this);

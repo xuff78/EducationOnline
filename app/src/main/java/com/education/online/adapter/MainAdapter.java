@@ -264,6 +264,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
                 lac.setDelay(0.4f);//注意这个地方是以秒为单位，是浮点型数据，所以要加f
                 ll.setLayoutAnimation(lac);
+                ll.startLayoutAnimation();
             }
         }
 
