@@ -106,18 +106,18 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             imageLoader.displayImage(ImageUtil.getImageUrl(info.getImg()), ((PagerHolder) vh).imageView);
         } else if (pos == 1) {
             TitleHolder titleHolder = (TitleHolder) vh;
-        } else if (pos > 2 && pos < (3 + num1)) {
+        } else if (pos > 1&& pos < (3 + num1)) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.item2.setTag(pos);
             ivh.item1.setTag(pos);
-            if (currentpos < num1) {
+            if (currentpos < courseBeen.size()) {
                 CourseBean courseBean = courseBeen.get(currentpos);
-                if (courseBean.getCourse_type().equals("live")) {
+                if (courseBean.getCourse_type().equals("3")) {
                     ivh.courseType1.setText("直播课");
-                } else if (courseBean.getCourse_type().equals("video")) {
+                } else if (courseBean.getCourse_type().equals("2")) {
                     ivh.courseType1.setText("视频课");
                     ivh.imgMask1.setVisibility(View.VISIBLE);
-                } else if (courseBean.getCourse_type().equals("course_ware")) {
+                } else if (courseBean.getCourse_type().equals("1")) {
                     ivh.courseType1.setText("课件课");
                 }
                 if (courseBean.getImg().length() > 0)
@@ -127,18 +127,21 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ivh.priceTxt1.setText("免费");
                 else ivh.priceTxt1.setText("￥" + courseBean.getPrice());
                 ivh.timeTxt1.setText(courseBean.getPlan());
+                ivh.titleTxt1.setText(courseBean.getCourse_name());
+                ivh.timeTxt1.setText(courseBean.getCourseware_date());
+                ivh.item1.setTag(currentpos);
                 currentpos++;
 
             }
 
-            if (currentpos < num1) {
+            if (currentpos < courseBeen.size()) {
                 CourseBean courseBean = courseBeen.get(currentpos);
-                if (courseBean.getCourse_type().equals("live")) {
+                if (courseBean.getCourse_type().equals("3")) {
                     ivh.courseType2.setText("直播课");
-                } else if (courseBean.getCourse_type().equals("video")) {
+                } else if (courseBean.getCourse_type().equals("2")) {
                     ivh.courseType2.setText("视频课");
                     ivh.imgMask2.setVisibility(View.VISIBLE);
-                } else if (courseBean.getCourse_type().equals("course_ware")) {
+                } else if (courseBean.getCourse_type().equals("1")) {
                     ivh.courseType2.setText("课件课");
                 }
                 if (courseBean.getImg().length() > 0)
@@ -148,8 +151,10 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ivh.priceTxt2.setText("免费");
                 else ivh.priceTxt2.setText("￥" + courseBean.getPrice());
                 ivh.timeTxt2.setText(courseBean.getPlan());
-
-
+                ivh.titleTxt2.setText(courseBean.getCourse_name());
+                ivh.timeTxt2.setText(courseBean.getCourseware_date());
+                ivh.item2.setTag(currentpos);
+                currentpos++;
             } else {
                 ivh.item2.setVisibility(View.INVISIBLE);
             }
@@ -241,15 +246,12 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             public void onClick(View view) {
                 int i = (int) view.getTag();
                 Intent intent= new Intent();
-                int currentpos;
                 switch (view.getId()) {
                     case R.id.item1:
-                        currentpos = i*2;
                     case R.id.item2:
-                        currentpos = i*2+1;
-                        CourseBean courseBean = courseBeen.get(currentpos);
+                        CourseBean courseBean = courseBeen.get(i);
                         intent.putExtra("course_id",courseBean.getCourse_id());
-                        if(courseBean.getCourse_type().equals("live"))
+                        if(courseBean.getCourse_type().equals("3"))
                             intent.setClass(act,CourseMainPage.class);
                         else intent.setClass(act,VideoMainPage.class);
                         act.startActivity(intent);
@@ -272,6 +274,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             forYouTitle = (TextView) convertView.findViewById(R.id.forYouTitle);
             forYouTitle.setText("你要的好课，都在这里");
             forYouTitle.setTextSize(14);
+           // forYouTitle.setPadding(0,10,0,10);
             forYouTitle.setTextColor(act.getResources().getColor(R.color.hard_gray));
         }
     }

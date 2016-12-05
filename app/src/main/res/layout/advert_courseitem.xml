@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:layout_marginTop="10dp">
+    android:paddingTop="25dp">
     <LinearLayout
         android:id="@+id/item1"
         android:layout_marginRight="10dp"
@@ -31,25 +31,27 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
             <TextView
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/white"
                 android:id="@+id/courseType1"
                 android:layout_marginTop="50dp"
                 android:background="@color/half_visibily"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="视频课"
+
 
                 />
         </RelativeLayout>
         <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/titleTxt1"
-            android:text="名师讲课"
             style="@style/txt_black_14" />
         <TextView
             android:layout_marginTop="3dp"
             android:id="@+id/timeTxt1"
-            android:text="12:00"
+
             style="@style/txt_gray_12" />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -58,13 +60,11 @@
             <TextView
                 android:layout_marginTop="3dp"
                 android:id="@+id/NumTxt1"
-                android:text="100人在学习"
                 style="@style/txt_gray_12" />
             <TextView
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="3dp"
                 android:id="@+id/priceTxt1"
-                android:text="免费"
                 android:textColor="@color/hard_gray"
                 style="@style/txt_gray_14" />
         </RelativeLayout>
@@ -96,25 +96,27 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
             <TextView
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/white"
                 android:id="@+id/courseType2"
                 android:layout_marginTop="50dp"
                 android:background="@color/half_visibily"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="视频课"
+
 
                 />
         </RelativeLayout>
         <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/titleTxt2"
-            android:text="名师讲课"
             style="@style/txt_black_14" />
         <TextView
             android:layout_marginTop="3dp"
             android:id="@+id/timeTxt2"
-            android:text="12:00"
+
             style="@style/txt_gray_12" />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -123,13 +125,11 @@
             <TextView
                 android:layout_marginTop="3dp"
                 android:id="@+id/NumTxt2"
-                android:text="100人在学习"
                 style="@style/txt_gray_12" />
             <TextView
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="3dp"
                 android:id="@+id/priceTxt2"
-                android:text="免费"
                 android:textColor="@color/hard_gray"
                 style="@style/txt_gray_14" />
         </RelativeLayout>
