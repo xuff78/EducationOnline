@@ -1,5 +1,6 @@
 package com.education.online.act.Mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,7 +36,8 @@ import java.util.List;
  */
 public class MyCourseMuti extends BaseFrameAct {
 
-    private TextView typeTxt, selectTypeView;
+    private TextView hintTxtComment, selectTypeView;
+    private View hintLayout;
     private FrameLayout filterDetailLayout;
     private MenuPopup popup;
     private int type=0; //0:课程  1:收藏  2:下载
@@ -59,9 +61,14 @@ public class MyCourseMuti extends BaseFrameAct {
                     courseInfo= JsonUtil.getString(jsonData, "collection_info");}
                 else if (method.equals(Method.getMyCourse)){
                      courseInfo= JsonUtil.getString(jsonData, "course_info");}
-                    items = JSON.parseObject(courseInfo, new TypeReference<List<CourseBean>>() {});
-                    currentCourseFrg.addCourses(items, page==1?true:false);
-                    page++;
+                String count=JsonUtil.getString(jsonData, "no_evaluate_count");
+                if(!count.equals("0")){
+                    hintTxtComment.setText("您有"+count+"个待评价课程，快去给老师评价吧");
+                    findViewById(R.id.hintLayout).setVisibility(View.VISIBLE);
+                }
+                items = JSON.parseObject(courseInfo, new TypeReference<List<CourseBean>>() {});
+                currentCourseFrg.addCourses(items, page==1?true:false);
+                page++;
             }
         });
     }
@@ -125,6 +132,15 @@ public class MyCourseMuti extends BaseFrameAct {
     }
 
     private void initView() {
+        hintLayout=findViewById(R.id.hintLayout);
+        hintLayout.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MyCourseMuti.this, MyOrderUser.class));
+            }
+        });
+        hintTxtComment= (TextView) findViewById(R.id.hintTxtComment);
         filterDetailLayout= (FrameLayout) findViewById(R.id.fragment_frame);
         TextView courseTypeTxt1= (TextView) findViewById(R.id.courseTypeTxt1);
         courseTypeTxt1.setOnClickListener(typeListener);

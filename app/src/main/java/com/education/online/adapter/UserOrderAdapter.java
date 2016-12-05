@@ -71,7 +71,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         courseHolder.typeName.setText(bean.getSubject_name());
         ActUtil.getCourseTypeTxt(bean.getCourse_type(), courseHolder.CoursePrice);
         courseHolder.CoursePrice.setText(courseHolder.CoursePrice.getText().toString()+"   "+bean.getPrice());
-        courseHolder.statusImg.setImageResource(ActUtil.getOrderStatsImgRes(bean.getState()));
+//        courseHolder.statusImg.setImageResource(ActUtil.getOrderStatsImgRes(bean.getState()));
     }
 
     @Override
@@ -81,18 +81,19 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
     public class CourseItemHolder extends RecyclerView.ViewHolder
     {
-        ImageView CourseImage, statusImg;
-        TextView teacherName, typeName, CoursePrice, CourseName;
+        ImageView CourseImage;
+        TextView teacherName, typeName, CoursePrice, CourseName, addEvaluate, statusTxt;
         LinearLayout imgsLayout;
         public CourseItemHolder(final View v, final int position)
         {
             super(v);
             CourseImage = (ImageView) v.findViewById(R.id.CourseImage);
-            statusImg = (ImageView) v.findViewById(R.id.statusImg);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             typeName = (TextView) v.findViewById(R.id.typeName);
             CoursePrice = (TextView) v.findViewById(R.id.CoursePrice);
             CourseName = (TextView) v.findViewById(R.id.CourseName);
+            addEvaluate = (TextView) v.findViewById(R.id.addEvaluate);
+            statusTxt = (TextView) v.findViewById(R.id.statusTxt);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

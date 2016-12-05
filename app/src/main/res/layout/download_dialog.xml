@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:background="@color/whitesmoke"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/teacher_home_edit"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="下载列表"
+                android:layout_marginLeft="50dp"
+                style="@style/txt_gray_14" />
+            <ImageView
+                android:padding="12dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/icon_cancel"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <View
+                android:layout_alignParentBottom="true"
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/courseRecycleView"
+            android:layout_marginBottom="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/selectAllIcon"
+                android:src="@mipmap/icon_round_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="全选"
+                style="@style/txt_gray_14" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/hintDownload"
+            android:layout_toLeftOf="@+id/btnDownload"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            style="@style/txt_gray_14"
+            android:text="已选0个"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/btnDownload"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@color/light_gray"
+            style="@style/txt_white_14"
+            android:gravity="center"
+            android:text="确认下载"
+            android:layout_width="100dp"
+            android:layout_height="35dp" />
+    </RelativeLayout>
+</RelativeLayout>

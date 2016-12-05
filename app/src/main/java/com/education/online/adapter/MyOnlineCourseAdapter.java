@@ -72,20 +72,12 @@ public class MyOnlineCourseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         CourseItemHolder courseItemHolder = (CourseItemHolder) holder;
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()), courseItemHolder.courseImage);
         courseItemHolder.courseName.setText(course.getCourse_name());
-        courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开始");
+        courseItemHolder.CourseTime.setText(course.getCourseware_date()+" - "+course.getCourseware_end_date().split(" ")[1]);
         courseItemHolder.enterCourse.setTag(position);
         if(course.getCourse_count().length()>0)
-        courseItemHolder.courseNum.setText("共"+course.getCourse_count()+"节课");
-        SimpleDateFormat dateData=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-      long current_time= System.currentTimeMillis();
-        String date_time = course.getCourseware_date();
-        Date time = null;
-        try {
-            time=  dateData.parse(date_time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if(time.getTime()-current_time>15*60*1000)
+            courseItemHolder.courseNum.setText(
+                    "已学"+(Integer.valueOf(course.getCourse_count())-course.getSort_order())+"节·共"+course.getCourse_count()+"节");
+        if(course.getHas_course_during_halfhour().equals("0"))
             courseItemHolder.enterCourse.setVisibility(View.GONE);
 
     }

@@ -27,7 +27,7 @@ public class CourseVideoList extends CourseUpdate {
     ArrayList<CourseBean> onlineCourseBeanArrayList = new ArrayList<>();
     VideoListAdapter adapter;
     MyVideoListAdapter myVideoListAdapteradapter;
-    private int type =0;
+    private int type =1;
     public void setType(int type) {
         this.type = type;
     }

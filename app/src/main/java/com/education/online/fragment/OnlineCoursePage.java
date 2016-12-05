@@ -34,7 +34,7 @@ public class OnlineCoursePage extends CourseUpdate{
         this.type = type;
     }
 
-    private int type =0;
+    private int type =1;
 
     ArrayList<CourseBean> onlineCourseBeanArrayList = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class OnlineCoursePage extends CourseUpdate{
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         OnlineCoursePageRecycleList.setLayoutManager(layoutManager);
         if(type==0){
-myOnlineCourseAdapter = new MyOnlineCourseAdapter(getActivity(),onlineCourseBeanArrayList);
+            myOnlineCourseAdapter = new MyOnlineCourseAdapter(getActivity(),onlineCourseBeanArrayList);
             OnlineCoursePageRecycleList.setAdapter(myOnlineCourseAdapter);
         }
         else if(type==1) {

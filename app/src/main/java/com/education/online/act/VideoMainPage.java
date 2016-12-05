@@ -30,9 +30,11 @@ import com.education.online.adapter.CommentsAdapter;
 import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
 import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.CourseExtm;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
+import com.education.online.download.FileInfo;
 import com.education.online.fragment.VideoPage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -46,6 +48,7 @@ import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.util.VideoUtil;
+import com.education.online.view.DownLoadDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.upyun.upplayer.widget.UpVideoView;
@@ -102,6 +105,7 @@ public class VideoMainPage extends BaseFrameAct {
     private DetailsAdapter detailsAdapter;
     private View.OnClickListener listener;
     private String my_usercode = "";
+    private DownLoadDialog downLoadDialog;
 
     public void initiHandler() {
         httpHandler = new HttpHandler(this, new CallBack(this) {
@@ -348,8 +352,16 @@ public class VideoMainPage extends BaseFrameAct {
 
                         break;
                     case R.id.downloadlayout:
-                        //do sth;
-
+                        ArrayList<FileInfo> files=new ArrayList<>();
+                        for (CourseExtm extm:courseDetailBean.getCourse_extm()){
+                            FileInfo fileInfo=new FileInfo();
+                            fileInfo.setName(extm.getName());
+                            fileInfo.setUrl(ImageUtil.getImageUrl(extm.getUrl()));
+                            files.add(fileInfo);
+                        }
+                        downLoadDialog=new DownLoadDialog(VideoMainPage.this, downloadListener, files,
+                                ImageUtil.dip2px(VideoMainPage.this, 90)+recyclerList.getHeight());
+                        downLoadDialog.show();
                         break;
                     case R.id.addorbuy:
                         //do sth;
@@ -429,6 +441,7 @@ public class VideoMainPage extends BaseFrameAct {
                     case R.id.textholder:
                         int pos = (int) view.getTag();
                         SetplayerOrImageState(pos);
+                        break;
                 }
 
             }
@@ -528,6 +541,12 @@ public class VideoMainPage extends BaseFrameAct {
 
     }
 
+    View.OnClickListener downloadListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
     public void setStatusFalse(int pos) {
         switch (pos) {

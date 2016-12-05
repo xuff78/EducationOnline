@@ -23,8 +23,35 @@ public class CourseBean implements Serializable{
     private String course_type="";
     private String status="";
     private String course_count="";
-    private String courseware_date="";
     private String state ="";
+    private int sort_order=0;
+    private String courseware_date="";
+    private String courseware_end_date="";
+    private String has_course_during_halfhour="";
+
+    public int getSort_order() {
+        return sort_order;
+    }
+
+    public void setSort_order(int sort_order) {
+        this.sort_order = sort_order;
+    }
+
+    public String getCourseware_end_date() {
+        return courseware_end_date;
+    }
+
+    public void setCourseware_end_date(String courseware_end_date) {
+        this.courseware_end_date = courseware_end_date;
+    }
+
+    public String getHas_course_during_halfhour() {
+        return has_course_during_halfhour;
+    }
+
+    public void setHas_course_during_halfhour(String has_course_during_halfhour) {
+        this.has_course_during_halfhour = has_course_during_halfhour;
+    }
 
     public String getConversationId() {
         return conversationId;
