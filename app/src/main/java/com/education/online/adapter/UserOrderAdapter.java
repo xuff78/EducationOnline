@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.act.video.Comment;
 import com.education.online.bean.OrderDetailBean;
 import com.education.online.inter.SimpleAdapterCallback;
 import com.education.online.util.ActUtil;
@@ -71,7 +72,10 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         courseHolder.typeName.setText(bean.getSubject_name());
         ActUtil.getCourseTypeTxt(bean.getCourse_type(), courseHolder.CoursePrice);
         courseHolder.CoursePrice.setText(courseHolder.CoursePrice.getText().toString()+"   "+bean.getPrice());
-//        courseHolder.statusImg.setImageResource(ActUtil.getOrderStatsImgRes(bean.getState()));
+        courseHolder.statusTxt.setText(ActUtil.getOrderStatsTxts(bean.getState()));
+        if(bean.getState().equals("5")){
+            courseHolder.addEvaluate.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -87,6 +91,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         public CourseItemHolder(final View v, final int position)
         {
             super(v);
+            final OrderDetailBean bean=orders.get(position);
             CourseImage = (ImageView) v.findViewById(R.id.CourseImage);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
             typeName = (TextView) v.findViewById(R.id.typeName);
@@ -94,6 +99,17 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
             CourseName = (TextView) v.findViewById(R.id.CourseName);
             addEvaluate = (TextView) v.findViewById(R.id.addEvaluate);
             statusTxt = (TextView) v.findViewById(R.id.statusTxt);
+            addEvaluate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(activity, Comment.class);
+                    intent.putExtra("courseImg", bean.getImg());
+                    intent.putExtra("courseName", bean.getCourse_name());
+                    intent.putExtra("courseIntroduction", bean.getIntroduction());
+                    intent.putExtra("course_id", bean.getCourse_id());
+                    activity.startActivity(intent);
+                }
+            });
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

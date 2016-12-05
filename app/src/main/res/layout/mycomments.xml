@@ -142,8 +142,9 @@
  <ImageView
      android:background="@drawable/shape_nocorner_lightgray"
      android:id="@+id/imageview1"
-     android:layout_width="40dp"
-     android:layout_height="40dp"
+     android:layout_width="60dp"
+     android:layout_height="60dp"
+     android:padding="12dp"
      android:src="@mipmap/icon_redcross1"
      />
     <ImageView
