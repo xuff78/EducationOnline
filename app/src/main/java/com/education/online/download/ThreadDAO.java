@@ -19,7 +19,7 @@ public interface ThreadDAO {
      * @param url
      * @param threadId
      */
-    public void deleteThread(String url, int threadId);
+    public void deleteThread(String url);
 
     /**
      * 更新线程
@@ -27,7 +27,7 @@ public interface ThreadDAO {
      * @param url
      * @param threadId
      */
-    public void updateThread(String url, int threadId,int finished);
+    public void updateThread(String url,int finished);
 
     /**
      * 查找线程
@@ -35,12 +35,12 @@ public interface ThreadDAO {
      * @param url
      * @return
      */
-    public List<ThreadInfo> getThreads(String url);
+    public List<ThreadInfo> getThreads(String url, int complete);
     /**
      * 线程消息是否存在
      * @param url
      * @param threadId
      * @return
      */
-    public boolean isExtists(String url,int threadId);
+    public boolean isExtists(String url);
 }

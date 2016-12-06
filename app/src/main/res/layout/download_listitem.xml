@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/selectedIcon"
+        android:src="@mipmap/icon_round"
         android:layout_width="20dp"
         android:layout_height="20dp" />
     <TextView

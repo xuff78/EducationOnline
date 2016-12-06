@@ -43,7 +43,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         listInflater = LayoutInflater.from(act);
         this.courseDetailBean = courseDetailBean;
         this.evaluateList = evaluatelList;
-
+        imageLoader=imageLoader.getInstance();
     }
 
     public void setLoadingHint(String hint) {

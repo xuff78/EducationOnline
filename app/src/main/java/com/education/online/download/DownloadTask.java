@@ -18,7 +18,7 @@ import java.util.List;
 public class DownloadTask {
     private Context mContext = null;
     private FileInfo mFileInfo = null;
-    private ThreadDAO mDao = null;
+    private ThreadDAOImpl mDao = null;
     private int mFinished = 0;
     private boolean isPause = false;
     public DownloadTask(Context mContext, FileInfo mFileInfo) {
@@ -34,11 +34,12 @@ public class DownloadTask {
 
     public void download(){
         //读取数据库线程信息
-        List<ThreadInfo> threadInfos = mDao.getThreads(mFileInfo.getUrl());
+        List<ThreadInfo> threadInfos = mDao.getThreads(mFileInfo.getUrl(), 0);
         ThreadInfo threadInfo = null;
         if(threadInfos.size()==0){
             //初始化线程信息对象
-            threadInfo = new ThreadInfo(0,mFileInfo.getUrl(),0,mFileInfo.getLength(),0);
+            threadInfo = new ThreadInfo(0,mFileInfo.getUrl(),0,mFileInfo.getLength(),0,
+                    mFileInfo.getCourseid(), mFileInfo.getCourseimg());
         }else{
             threadInfo = threadInfos.get(0);
         }
@@ -54,7 +55,7 @@ public class DownloadTask {
         }
         public void run(){
             //数据库插入线程信息
-            if(!mDao.isExtists(mThreadInfo.getUrl(),mThreadInfo.getId())){
+            if(!mDao.isExtists(mThreadInfo.getUrl())){
                 mDao.insertThread(mThreadInfo);
             }
 
@@ -94,12 +95,12 @@ public class DownloadTask {
                         }
                         //下载暂停时，保存下载进度
                         if(isPause){
-                            mDao.updateThread(mThreadInfo.getUrl(), mThreadInfo.getId(), mFinished);
+                            mDao.updateThread(mThreadInfo.getUrl(), mFinished);
                             return;
                         }
                     }
                     //删除数据库中的线程信息
-                    mDao.deleteThread(mThreadInfo.getUrl(), mThreadInfo.getId());
+                    mDao.updateThreadComplete(mThreadInfo.getUrl(), 1);
                 }
 
             } catch (Exception e) {

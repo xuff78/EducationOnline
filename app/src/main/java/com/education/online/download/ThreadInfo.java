@@ -6,31 +6,50 @@ import java.io.Serializable;
  * Created by 可爱的蘑菇 on 2016/12/4.
  */
 public class ThreadInfo implements Serializable {
-    private int id;
+    private int complete; //0未完成， 1已完成
     private String url;
     private int start;
     private int end;//文件长度
     private int finished;//任务中断时的进度
+    private String courseid;
+    private String courseimg;
 
     public ThreadInfo() {
         super();
     }
 
-    public ThreadInfo(int id, String url, int start, int end, int finished) {
-        super();
-        this.id = id;
+    public ThreadInfo(int complete, String url, int start, int end, int finished, String courseid, String courseimg) {
+        this.complete = complete;
         this.url = url;
         this.start = start;
         this.end = end;
         this.finished = finished;
+        this.courseid = courseid;
+        this.courseimg = courseimg;
     }
 
-    public int getId() {
-        return id;
+    public String getCourseid() {
+        return courseid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCourseid(String courseid) {
+        this.courseid = courseid;
+    }
+
+    public String getCourseimg() {
+        return courseimg;
+    }
+
+    public void setCourseimg(String courseimg) {
+        this.courseimg = courseimg;
+    }
+
+    public int getComplete() {
+        return complete;
+    }
+
+    public void setComplete(int complete) {
+        this.complete = complete;
     }
 
     public String getUrl() {
@@ -67,7 +86,7 @@ public class ThreadInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ThreadInfo [id=" + id + ", url=" + url + ", start=" + start
+        return "ThreadInfo [complete=" + complete + ", url=" + url + ", start=" + start
                 + ", end=" + end + ", finished=" + finished + "]";
     }
 

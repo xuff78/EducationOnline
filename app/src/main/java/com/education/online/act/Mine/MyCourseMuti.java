@@ -62,7 +62,7 @@ public class MyCourseMuti extends BaseFrameAct {
                 else if (method.equals(Method.getMyCourse)){
                      courseInfo= JsonUtil.getString(jsonData, "course_info");}
                 String count=JsonUtil.getString(jsonData, "no_evaluate_count");
-                if(!count.equals("0")){
+                if(!count.equals("0")&&type==0){
                     hintTxtComment.setText("您有"+count+"个待评价课程，快去给老师评价吧");
                     findViewById(R.id.hintLayout).setVisibility(View.VISIBLE);
                 }

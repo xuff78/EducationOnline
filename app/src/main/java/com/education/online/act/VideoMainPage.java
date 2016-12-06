@@ -34,6 +34,7 @@ import com.education.online.bean.CourseExtm;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
+import com.education.online.download.DownloadService;
 import com.education.online.download.FileInfo;
 import com.education.online.fragment.VideoPage;
 import com.education.online.http.CallBack;
@@ -44,6 +45,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.OpenfileUtil;
+import com.education.online.util.SHA;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.VideoThumbnailLoader;
@@ -62,7 +64,7 @@ import java.util.TimerTask;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoMainPage extends BaseFrameAct {
+public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.DownloadCallback{
 
     int currentPos = 0;
     private LinearLayout addfavorite_layout, share_layout, download_layout;
@@ -95,6 +97,8 @@ public class VideoMainPage extends BaseFrameAct {
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
 
+    private  ArrayList<FileInfo> files=new ArrayList<>();
+
     private String course_id;
     private boolean flag = false;
     Intent intent;
@@ -114,6 +118,7 @@ public class VideoMainPage extends BaseFrameAct {
                 super.doSuccess(method, jsonData);
                 if (method.equals(Method.getCourseDtail)) {
                     JsonUtil.getCourseDetail(jsonData, courseDetailBean);
+                    queryDB();
                     // get layout Manager
                     String ispaid = courseDetailBean.getIs_buy();
                     //set Status
@@ -220,6 +225,22 @@ public class VideoMainPage extends BaseFrameAct {
             }
         });
         //
+    }
+
+    private void queryDB() {
+        for (CourseExtm extm:courseDetailBean.getCourse_extm()){
+            FileInfo fileInfo=new FileInfo();
+            fileInfo.setName(extm.getName());
+            fileInfo.setCourseimg(courseDetailBean.getImg());
+            fileInfo.setCourseid(courseDetailBean.getCourse_id());
+            int pos=extm.getUrl().lastIndexOf("/");
+            if(pos>0)
+                fileInfo.setFileName(extm.getUrl().substring(pos));
+            else
+                fileInfo.setFileName(SHA.getSHA(extm.getUrl()));
+            fileInfo.setUrl(ImageUtil.getImageUrl(extm.getUrl()));
+            files.add(fileInfo);
+        }
     }
 
     private void SetplayerOrImageState(int i) {
@@ -352,14 +373,7 @@ public class VideoMainPage extends BaseFrameAct {
 
                         break;
                     case R.id.downloadlayout:
-                        ArrayList<FileInfo> files=new ArrayList<>();
-                        for (CourseExtm extm:courseDetailBean.getCourse_extm()){
-                            FileInfo fileInfo=new FileInfo();
-                            fileInfo.setName(extm.getName());
-                            fileInfo.setUrl(ImageUtil.getImageUrl(extm.getUrl()));
-                            files.add(fileInfo);
-                        }
-                        downLoadDialog=new DownLoadDialog(VideoMainPage.this, downloadListener, files,
+                        downLoadDialog=new DownLoadDialog(VideoMainPage.this, VideoMainPage.this, files,
                                 ImageUtil.dip2px(VideoMainPage.this, 90)+recyclerList.getHeight());
                         downLoadDialog.show();
                         break;
@@ -541,13 +555,6 @@ public class VideoMainPage extends BaseFrameAct {
 
     }
 
-    View.OnClickListener downloadListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
-    };
-
     public void setStatusFalse(int pos) {
         switch (pos) {
             case 0:
@@ -594,7 +601,7 @@ public class VideoMainPage extends BaseFrameAct {
                         httpHandler.getEvaluateList(course_id, null, pageSize, String.valueOf(page));
                         commentsAdapter.setLoadingHint("正在加载");
                     } else
-                        commentsAdapter.setLoadingHint("加载完成");
+                        commentsAdapter.setLoadingHint("共"+evaluateList.size()+"条评论");
                 }
             }
         }
@@ -634,5 +641,17 @@ public class VideoMainPage extends BaseFrameAct {
         if(timer!=null)
             timer.cancel();
         super.onDestroy();
+    }
+
+    @Override
+    public void startDownload(ArrayList<FileInfo> fileInfos) {
+        this.files=fileInfos;
+        for (FileInfo info : files) {
+            if (info.getStatus() == 1) {
+                Intent startIntent=new Intent(this, DownloadService.class);
+                startIntent.putExtra("fileInfo", info);
+                startService(startIntent);
+            }
+        }
     }
 }

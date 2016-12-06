@@ -43,7 +43,8 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
-        View view=listInflater.inflate(R.layout.directorylayout, null);
+        View view=listInflater.inflate(R.layout.download_listitem, null);
+        view.setLayoutParams(new RecyclerView.LayoutParams(-1,-2));
         vh = new DirectoryHolder(view, pos);
         // view.setTag(pos);
 
@@ -57,6 +58,9 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
         FileInfo fileInfo=files.get(pos);
         vh.directorytext.setText((pos+1)+"."+fileInfo.getName());
         switch (fileInfo.getStatus()){
+            case 0:
+                vh.selectedIcon.setImageResource(R.mipmap.icon_round);
+                break;
             case 1:
                 vh.selectedIcon.setImageResource(R.mipmap.icon_round_right);
                 break;

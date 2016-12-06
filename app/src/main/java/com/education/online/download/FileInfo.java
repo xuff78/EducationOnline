@@ -13,20 +13,28 @@ public class FileInfo implements Serializable {
     private int length;
     private int finished;
     private String name="";
-    private int status=0; //0 没选择， 1已选择， 2已下载或下载中
+    private String courseid="";
+    private String courseimg="";
+    private int status=0; //0 没选择， 1已选择， 2下载中, 3已下载
 
     public FileInfo() {
 
     }
 
-    public FileInfo(int id, String url, String fileName, int length,
-                    int finished) {
-        super();
-        this.id = id;
-        this.url = url;
-        this.fileName = fileName;
-        this.length = length;
-        this.finished = finished;
+    public String getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(String courseid) {
+        this.courseid = courseid;
+    }
+
+    public String getCourseimg() {
+        return courseimg;
+    }
+
+    public void setCourseimg(String courseimg) {
+        this.courseimg = courseimg;
     }
 
     public String getName() {
