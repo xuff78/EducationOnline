@@ -48,11 +48,50 @@ public class ThreadDAOImpl implements ThreadDAO{
         db.close();
     }
 
-    @Override
-    public List<ThreadInfo> getThreads(String url, int complete) {
+    public List<ThreadInfo> getThreads(int complete) {
         List<ThreadInfo> list = new ArrayList<ThreadInfo>();
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from thread_info where url=? and complete=?", new String[]{url, complete+""});
+        Cursor cursor = db.rawQuery("select * from thread_info where complete=?", new String[]{complete+""});
+        while(cursor.moveToNext()){
+            ThreadInfo thread = new ThreadInfo();
+            thread.setComplete(cursor.getInt(cursor.getColumnIndex("complete")));
+            thread.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            thread.setStart(cursor.getInt(cursor.getColumnIndex("start")));
+            thread.setEnd(cursor.getInt(cursor.getColumnIndex("end")));
+            thread.setFinished(cursor.getInt(cursor.getColumnIndex("finished")));
+            thread.setCourseid(cursor.getString(cursor.getColumnIndex("courseid")));
+            thread.setCourseimg(cursor.getString(cursor.getColumnIndex("courseimg")));
+            list.add(thread);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+    public List<ThreadInfo> getThreadsByUrl(String url) {
+        List<ThreadInfo> list = new ArrayList<ThreadInfo>();
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from thread_info where url=?", new String[]{url});
+        while(cursor.moveToNext()){
+            ThreadInfo thread = new ThreadInfo();
+            thread.setComplete(cursor.getInt(cursor.getColumnIndex("complete")));
+            thread.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            thread.setStart(cursor.getInt(cursor.getColumnIndex("start")));
+            thread.setEnd(cursor.getInt(cursor.getColumnIndex("end")));
+            thread.setFinished(cursor.getInt(cursor.getColumnIndex("finished")));
+            thread.setCourseid(cursor.getString(cursor.getColumnIndex("courseid")));
+            thread.setCourseimg(cursor.getString(cursor.getColumnIndex("courseimg")));
+            list.add(thread);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+    public List<ThreadInfo> getThreadsByCourseId(String courseid) {
+        List<ThreadInfo> list = new ArrayList<ThreadInfo>();
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from thread_info where courseid=?", new String[]{courseid});
         while(cursor.moveToNext()){
             ThreadInfo thread = new ThreadInfo();
             thread.setComplete(cursor.getInt(cursor.getColumnIndex("complete")));

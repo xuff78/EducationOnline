@@ -34,28 +34,32 @@ public class DownloadTask {
 
     public void download(){
         //读取数据库线程信息
-        List<ThreadInfo> threadInfos = mDao.getThreads(mFileInfo.getUrl(), 0);
+        List<ThreadInfo> threadInfos = mDao.getThreadsByUrl(mFileInfo.getUrl());
         ThreadInfo threadInfo = null;
+        boolean insert=false;
         if(threadInfos.size()==0){
             //初始化线程信息对象
+            insert=true;
             threadInfo = new ThreadInfo(0,mFileInfo.getUrl(),0,mFileInfo.getLength(),0,
                     mFileInfo.getCourseid(), mFileInfo.getCourseimg());
         }else{
             threadInfo = threadInfos.get(0);
         }
         //创建子线程下载
-        new DownloadThread(threadInfo).start();
+        new DownloadThread(threadInfo, insert).start();
     }
+
     class DownloadThread extends Thread{
         private ThreadInfo mThreadInfo = null;
-
-        public DownloadThread(ThreadInfo mThreadInfo) {
+        boolean insert=false;
+        public DownloadThread(ThreadInfo mThreadInfo, boolean insert) {
             super();
+            this.insert=insert;
             this.mThreadInfo = mThreadInfo;
         }
         public void run(){
             //数据库插入线程信息
-            if(!mDao.isExtists(mThreadInfo.getUrl())){
+            if(insert){
                 mDao.insertThread(mThreadInfo);
             }
 

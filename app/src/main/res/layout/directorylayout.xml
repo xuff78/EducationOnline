@@ -6,14 +6,32 @@
     android:layout_height="match_parent"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
-    <TextView
-        android:id="@+id/textdirectory"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:text="PHOTOSHOP基础工具机+唯美图片合成"
-        android:lineSpacingMultiplier="1.5"
-        android:textSize="15sp"/>
+        android:layout_height="40dp">
+        <TextView
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/statusTxt"
+            android:id="@+id/textdirectory"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="PHOTOSHOP基础工具机+唯美图片合成"
+            android:lineSpacingMultiplier="1.5"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/statusTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/normal_blue"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:lineSpacingMultiplier="1.5"
+            android:textSize="14sp"/>
+    </RelativeLayout>
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"

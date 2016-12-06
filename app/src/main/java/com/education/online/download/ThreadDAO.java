@@ -30,13 +30,6 @@ public interface ThreadDAO {
     public void updateThread(String url,int finished);
 
     /**
-     * 查找线程
-     *
-     * @param url
-     * @return
-     */
-    public List<ThreadInfo> getThreads(String url, int complete);
-    /**
      * 线程消息是否存在
      * @param url
      * @param threadId

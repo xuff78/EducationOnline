@@ -7,7 +7,6 @@ import java.io.Serializable;
  */
 public class FileInfo implements Serializable {
 
-    private int id;
     private String url;
     private String fileName;
     private int length;
@@ -53,14 +52,6 @@ public class FileInfo implements Serializable {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -95,7 +86,7 @@ public class FileInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "FileInfo [id=" + id + ", url=" + url + ", fileName=" + fileName
+        return "FileInfo [" + "url=" + url + ", fileName=" + fileName
                 + ", length=" + length + ", finished=" + finished + "]";
     }
 

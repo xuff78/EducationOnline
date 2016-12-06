@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CourseExtm;
+import com.education.online.download.FileInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,14 +25,14 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
     private Activity act;
     private LayoutInflater listInflater;
-    private CourseDetailBean courseDetailBean;
+    private ArrayList<FileInfo> infos;
     private View.OnClickListener listener;
 
 
-    public DirectoryAdapter(Activity act, CourseDetailBean courseDetailBean, View.OnClickListener listener) {
+    public DirectoryAdapter(Activity act, ArrayList<FileInfo> infos, View.OnClickListener listener) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
-        this.courseDetailBean = courseDetailBean;
+        this.infos = infos;
         this.listener = listener;
     }
 
@@ -54,17 +56,23 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
             DirectoryHolder  vh = ( DirectoryHolder ) holder;
-        List<CourseExtm> list = courseDetailBean.getCourse_extm();
         vh.textholder.setTag(pos);
-        vh.directorytext.setText((pos+1)+"."+list.get(pos).getName());
+        vh.directorytext.setText((pos+1)+"."+infos.get(pos).getName());
+        switch (infos.get(pos).getStatus()){
+            case 2:
+                vh.statusTxt.setTextColor(act.getResources().getColor(R.color.light_gray));
+                vh.statusTxt.setText("正在下载");
+                break;
+            case 3:
+                vh.statusTxt.setText("已下载");
+                break;
+        }
+
     }
 
     @Override
     public int getItemCount() {
-      List<CourseExtm> list = courseDetailBean.getCourse_extm();
-
-
-        return list.size();
+        return infos.size();
     }
 
 
@@ -81,10 +89,11 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
     public class DirectoryHolder extends RecyclerView.ViewHolder{
 
-        TextView directorytext;
+        TextView directorytext, statusTxt;
         LinearLayout textholder;
         public DirectoryHolder(View v, int pos) {
             super(v);
+            statusTxt = (TextView) v.findViewById(R.id.statusTxt);
             directorytext = (TextView) v.findViewById(R.id.textdirectory);
             textholder = (LinearLayout) v.findViewById(R.id.textholder);
             textholder.setOnClickListener(listener);

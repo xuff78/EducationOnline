@@ -80,6 +80,7 @@ public class DownLoadDialog extends Dialog implements View.OnClickListener{
         recyclerList.setAdapter(adapter);
         findViewById(R.id.cancelBtn).setOnClickListener(this);
         btnDownload= (TextView) findViewById(R.id.btnDownload);
+        findViewById(R.id.btnDownload).setOnClickListener(this);
         hintDownload= (TextView) findViewById(R.id.hintDownload);
         selectAllIcon= (ImageView) findViewById(R.id.selectAllIcon);
         findViewById(R.id.selectedAllBtn).setOnClickListener(this);

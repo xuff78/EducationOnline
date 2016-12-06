@@ -1,16 +1,11 @@
 package com.education.online.act;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -18,7 +13,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -36,14 +30,14 @@ import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
 import com.education.online.download.DownloadService;
 import com.education.online.download.FileInfo;
-import com.education.online.fragment.VideoPage;
+import com.education.online.download.ThreadDAOImpl;
+import com.education.online.download.ThreadInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
-import com.education.online.util.LogUtil;
 import com.education.online.util.OpenfileUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.ScreenUtil;
@@ -52,7 +46,6 @@ import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.util.VideoUtil;
 import com.education.online.view.DownLoadDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.upyun.upplayer.widget.UpVideoView;
 
 import org.json.JSONException;
@@ -93,7 +86,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private boolean onloading = false;
     private ImageLoader imageLoader;
     private long totaltime=0;
-
+    private ThreadDAOImpl mDao;
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
 
@@ -105,7 +98,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     HttpHandler httpHandler;
 
     private CommentsAdapter commentsAdapter;
-    private DirectoryAdapter directoryAdapter;
+//    private DirectoryAdapter directoryAdapter;
     private DetailsAdapter detailsAdapter;
     private View.OnClickListener listener;
     private String my_usercode = "";
@@ -173,7 +166,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                     }
 
                     detailsAdapter.notifyDataSetChanged();
-                    directoryAdapter.notifyDataSetChanged();
                     if (courseDetailBean.getCourse_extm().size() > 0) {
                         SetplayerOrImageState(0);//初始化状态
                         //  }
@@ -228,6 +220,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void queryDB() {
+//        List<ThreadInfo> threadInfos=mDao.getThreads(courseDetailBean.getCourse_id());
         for (CourseExtm extm:courseDetailBean.getCourse_extm()){
             FileInfo fileInfo=new FileInfo();
             fileInfo.setName(extm.getName());
@@ -239,13 +232,20 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             else
                 fileInfo.setFileName(SHA.getSHA(extm.getUrl()));
             fileInfo.setUrl(ImageUtil.getImageUrl(extm.getUrl()));
+            List<ThreadInfo> listThread=mDao.getThreadsByUrl(fileInfo.getUrl());
+            if(listThread.size()>0){
+                ThreadInfo threadInfo=listThread.get(0);
+                fileInfo.setStatus(threadInfo.getComplete()+2);
+            }
             files.add(fileInfo);
         }
     }
 
     private void SetplayerOrImageState(int i) {
         String relativepath = courseDetailBean.getCourse_extm().get(i).getUrl();
-        if (relativepath != null)
+        if(files.get(i).getStatus()==3){
+            path = DownloadService.DOWNLOAD_PATH+files.get(i).getFileName();
+        }else if (relativepath != null)
             path = VideoUtil.getVideoUrl(relativepath);
 
         if (relativepath.length() > 0)
@@ -340,9 +340,9 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.videodetail);
-        _setRightHomeGone();
+
         _setHeaderGone();
-        _setLeftBackGone();
+        mDao = new ThreadDAOImpl(this);
         initiHandler();
         initView();
         httpHandler.getCourseDetail(course_id);
@@ -393,7 +393,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         viewdetails.setVisibility(View.VISIBLE);
                         break;
                     case R.id.directory:
-                        recyclerList.setAdapter(directoryAdapter);
+                        recyclerList.setAdapter(new DirectoryAdapter(VideoMainPage.this, files, listener));
                         if (view != lastSelectedView)
                             setStatusFalse(lastSelectedPosition);
                         lastSelectedview = directory;
@@ -550,7 +550,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         lastSelectedPosition = 0;
         commentsAdapter = new CommentsAdapter(this, courseDetailBean, evaluateList);
         detailsAdapter = new DetailsAdapter(this, courseDetailBean);
-        directoryAdapter = new DirectoryAdapter(this, courseDetailBean, listener);
         recyclerList.setAdapter(detailsAdapter);
 
     }
@@ -645,13 +644,15 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
     @Override
     public void startDownload(ArrayList<FileInfo> fileInfos) {
-        this.files=fileInfos;
         for (FileInfo info : files) {
             if (info.getStatus() == 1) {
                 Intent startIntent=new Intent(this, DownloadService.class);
+                startIntent.setAction(DownloadService.ACTION_START);
                 startIntent.putExtra("fileInfo", info);
                 startService(startIntent);
+                info.setStatus(2);
             }
         }
+        this.files=fileInfos;
     }
 }

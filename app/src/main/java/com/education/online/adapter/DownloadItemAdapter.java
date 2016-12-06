@@ -65,6 +65,9 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
                 vh.selectedIcon.setImageResource(R.mipmap.icon_round_right);
                 break;
             case 2:
+                vh.selectedIcon.setImageResource(R.mipmap.icon_download);
+                vh.directorytext.setTextColor(act.getResources().getColor(R.color.light_gray));
+            case 3:
                 vh.selectedIcon.setImageResource(R.mipmap.right_blue);
                 vh.directorytext.setTextColor(act.getResources().getColor(R.color.light_gray));
                 break;
