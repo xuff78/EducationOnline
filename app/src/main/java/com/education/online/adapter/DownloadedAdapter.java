@@ -5,13 +5,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.education.online.R;
-import com.education.online.download.FileInfo;
+import com.education.online.download.DownloadCourseInfo;
+import com.education.online.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/7.
@@ -20,15 +24,17 @@ public class DownloadedAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
 
     private Activity act;
     private LayoutInflater listInflater;
-    private ArrayList<FileInfo> infos;
+    private List<DownloadCourseInfo> infos;
     private View.OnClickListener listener;
+    private ImageLoader imageLoader=ImageLoader.getInstance();
+    private int height=0;
 
-
-    public DownloadedAdapter(Activity act, ArrayList<FileInfo> infos, View.OnClickListener listener) {
+    public DownloadedAdapter(Activity act, List<DownloadCourseInfo> infos, View.OnClickListener listener) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
         this.infos = infos;
         this.listener = listener;
+        height=ImageUtil.dip2px(act, 80);
     }
 
     @Override
@@ -40,7 +46,8 @@ public class DownloadedAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
-        View view=listInflater.inflate(R.layout.directorylayout, null);
+        View view=listInflater.inflate(R.layout.downloaded_item_layout, null);
+        view.setLayoutParams(new RecyclerView.LayoutParams(-1, height));
         vh = new DirectoryHolder(view, pos);
         // view.setTag(pos);
 
@@ -51,18 +58,11 @@ public class DownloadedAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
         DirectoryHolder  vh = ( DirectoryHolder ) holder;
-        vh.textholder.setTag(pos);
-        vh.directorytext.setText((pos+1)+"."+infos.get(pos).getName());
-        switch (infos.get(pos).getStatus()){
-            case 2:
-                vh.statusTxt.setTextColor(act.getResources().getColor(R.color.light_gray));
-                vh.statusTxt.setText("正在下载");
-                break;
-            case 3:
-                vh.statusTxt.setText("已下载");
-                break;
-        }
-
+        DownloadCourseInfo info=infos.get(pos);
+        imageLoader.displayImage(ImageUtil.getImageUrl(info.getCourseImg()), vh.courseImg);
+        vh.courseName.setText(info.getCourseName());
+        vh.courseSubName.setText("");
+        vh.courseInfo.setText("共"+info.getFileCount()+"节，下载了"+info.getCourses().size()+"节");
     }
 
     @Override
@@ -70,29 +70,26 @@ public class DownloadedAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
         return infos.size();
     }
 
-
-    public String [] splitResource(String url){
-        String str[]=url.split(",");
-        String temp1 ="";
-        for(int i=0;i<str.length;i++){
-            String str2[]=str[i].split("_");
-            temp1 = temp1+str2[0]+',';
-
-        }
-        return temp1.split(",");
-    }
-
     public class DirectoryHolder extends RecyclerView.ViewHolder{
 
-        TextView directorytext, statusTxt;
-        LinearLayout textholder;
+        TextView courseName, courseSubName, courseInfo, delBtn;
+        ImageView courseImg;
+        SwipeLayout swipeLayout;
+        LinearLayout itemLayout;
         public DirectoryHolder(View v, int pos) {
             super(v);
-            statusTxt = (TextView) v.findViewById(R.id.statusTxt);
-            directorytext = (TextView) v.findViewById(R.id.textdirectory);
-            textholder = (LinearLayout) v.findViewById(R.id.textholder);
-            textholder.setOnClickListener(listener);
-            String information = directorytext .getText().toString();
+            swipeLayout = (SwipeLayout) v.findViewById(R.id.swipeLayout);
+            swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+            courseName = (TextView) v.findViewById(R.id.courseName);
+            courseSubName = (TextView) v.findViewById(R.id.courseSubName);
+            courseInfo = (TextView) v.findViewById(R.id.courseInfo);
+            delBtn = (TextView) v.findViewById(R.id.delBtn);
+            delBtn.setTag(pos);
+            courseImg = (ImageView) v.findViewById(R.id.courseImg);
+            delBtn.setOnClickListener(listener);
+            itemLayout=(LinearLayout) v.findViewById(R.id.itemLayout);
+            itemLayout.setTag(pos);
+            itemLayout.setOnClickListener(listener);
         }
     }
 }

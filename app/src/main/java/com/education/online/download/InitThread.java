@@ -17,10 +17,10 @@ import java.net.URL;
  * 初始化子线程
  */
 class InitThread extends Thread{
-    private FileInfo fileInfo;
+    private ThreadInfo fileInfo;
     private Handler mHandler;
 
-    public InitThread(FileInfo fileInfo, Handler mHandler ) {
+    public InitThread(ThreadInfo fileInfo, Handler mHandler ) {
         super();
         this.fileInfo = fileInfo;
         this.mHandler=mHandler;
@@ -53,7 +53,7 @@ class InitThread extends Thread{
             raf = new  RandomAccessFile(file,"rwd");
             //设置文件长度
             raf.setLength(length);
-            fileInfo.setLength(length);
+            fileInfo.setEnd(length);
             //利用handler将信息从线程中回传给service
             mHandler.obtainMessage(DownloadService.MSG_INIT,fileInfo).sendToTarget();
         }catch(Exception e){

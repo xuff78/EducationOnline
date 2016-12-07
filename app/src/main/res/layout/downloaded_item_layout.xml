@@ -1,0 +1,69 @@
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeLayout"
+    android:layout_width="match_parent" android:layout_height="80dp">
+    <!-- Bottom View Start-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#66ddff00"
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="80dp"
+        android:weightSum="1"
+        android:layout_height="match_parent">
+        <!--What you want to show-->
+        <TextView
+            android:id="@+id/delBtn"
+            android:background="@color/normal_red"
+            android:gravity="center"
+            style="@style/txt_white_14"
+            android:text="删除"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!-- Bottom View End-->
+
+    <!-- Surface View Start -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/itemLayout"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/courseImg"
+            android:layout_width="100dp"
+            android:layout_height="60dp" />
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="第一节YY"
+                android:id="@+id/courseName"
+                style="@style/txt_black_14" />
+            <TextView
+                android:text="第一节YY"
+                android:layout_marginTop="3dp"
+                android:id="@+id/courseSubName"
+                style="@style/txt_gray_12" />
+            <TextView
+                android:text="第一节YY"
+                android:layout_marginTop="3dp"
+                android:id="@+id/courseInfo"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
+    </LinearLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+    <!-- Surface View End -->
+</com.daimajia.swipe.SwipeLayout>

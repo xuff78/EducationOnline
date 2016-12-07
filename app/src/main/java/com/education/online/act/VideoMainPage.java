@@ -1,6 +1,5 @@
 package com.education.online.act;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -10,9 +9,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -36,7 +32,6 @@ import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluateListBean;
 import com.education.online.bean.JsonMessage;
 import com.education.online.download.DownloadService;
-import com.education.online.download.FileInfo;
 import com.education.online.download.ThreadDAOImpl;
 import com.education.online.download.ThreadInfo;
 import com.education.online.http.CallBack;
@@ -97,7 +92,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
 
-    private  ArrayList<FileInfo> files=new ArrayList<>();
+    private  ArrayList<ThreadInfo> files=new ArrayList<>();
 
     private String course_id;
     private boolean flag = false;
@@ -239,12 +234,13 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void queryDB() {
-//        List<ThreadInfo> threadInfos=mDao.getThreads(courseDetailBean.getCourse_id());
         for (CourseExtm extm:courseDetailBean.getCourse_extm()){
-            FileInfo fileInfo=new FileInfo();
-            fileInfo.setName(extm.getName());
+            ThreadInfo fileInfo=new ThreadInfo();
+            fileInfo.setSubname(extm.getName());
+            fileInfo.setCoursename(courseDetailBean.getCourse_name());
             fileInfo.setCourseimg(courseDetailBean.getImg());
             fileInfo.setCourseid(courseDetailBean.getCourse_id());
+            fileInfo.setTotalfilecount(courseDetailBean.getCourse_extm().size());
             int pos=extm.getUrl().lastIndexOf("/");
             if(pos>0)
                 fileInfo.setFileName(extm.getUrl().substring(pos));
@@ -670,8 +666,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     @Override
-    public void startDownload(ArrayList<FileInfo> fileInfos) {
-        for (FileInfo info : files) {
+    public void startDownload(ArrayList<ThreadInfo> fileInfos) {
+        for (ThreadInfo info : files) {
             if (info.getStatus() == 1) {
                 info.setStatus(2);
                 myBinder.startDownload(info);

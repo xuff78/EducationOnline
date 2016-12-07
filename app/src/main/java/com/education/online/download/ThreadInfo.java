@@ -16,6 +16,25 @@ public class ThreadInfo implements Serializable {
     private String coursename;
     private String subname;
     private String filetype;
+    private int totalfilecount=0;
+    private int status=0; //0 没选择， 1已选择， 2下载中, 3已下载
+    private String fileName;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public ThreadInfo() {
         super();
@@ -29,6 +48,14 @@ public class ThreadInfo implements Serializable {
         this.finished = finished;
         this.courseid = courseid;
         this.courseimg = courseimg;
+    }
+
+    public int getTotalfilecount() {
+        return totalfilecount;
+    }
+
+    public void setTotalfilecount(int totalfilecount) {
+        this.totalfilecount = totalfilecount;
     }
 
     public String getCoursename() {

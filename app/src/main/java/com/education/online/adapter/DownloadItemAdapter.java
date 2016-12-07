@@ -10,12 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.bean.CourseDetailBean;
-import com.education.online.bean.CourseExtm;
-import com.education.online.download.FileInfo;
+import com.education.online.download.ThreadInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/5.
@@ -25,9 +22,9 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
     private Activity act;
     private LayoutInflater listInflater;
     private View.OnClickListener listener;
-    private ArrayList<FileInfo> files;
+    private ArrayList<ThreadInfo> files;
 
-    public DownloadItemAdapter(Activity act, ArrayList<FileInfo> files, View.OnClickListener listener) {
+    public DownloadItemAdapter(Activity act, ArrayList<ThreadInfo> files, View.OnClickListener listener) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
         this.files = files;
@@ -55,8 +52,8 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
         DirectoryHolder  vh = ( DirectoryHolder ) holder;
-        FileInfo fileInfo=files.get(pos);
-        vh.directorytext.setText((pos+1)+"."+fileInfo.getName());
+        ThreadInfo fileInfo=files.get(pos);
+        vh.directorytext.setText((pos+1)+"."+fileInfo.getSubname());
         switch (fileInfo.getStatus()){
             case 0:
                 vh.selectedIcon.setImageResource(R.mipmap.icon_round);

@@ -55,20 +55,20 @@ public class DownloadService extends Service {
 
     public class DownloadBinder extends Binder {
 
-        public void startDownload(FileInfo fileInfo) {
+        public void startDownload(ThreadInfo fileInfo) {
             Log.d("TAG", "startDownload() executed");
             Log.i(tag,"Start+"+fileInfo.toString());
             new InitThread(fileInfo, mHandler).start();
         }
 
-        public void pauseDownload(FileInfo fileInfo){
+        public void pauseDownload(ThreadInfo fileInfo){
             Log.i(tag,"Stop+"+fileInfo.toString());
             if(task!=null){
                 task.setPause(true);
             }
         }
 
-        public boolean isDownLoading(FileInfo fileInfo){
+        public boolean isDownLoading(ThreadInfo fileInfo){
             if(downloadTaskMap.containsKey(fileInfo.getUrl())){
                 return true;
             }else
@@ -80,7 +80,7 @@ public class DownloadService extends Service {
         public void handleMessage(Message msg){
             switch(msg.what){
                 case MSG_INIT:
-                    FileInfo fileInfo = (FileInfo)msg.obj;
+                    ThreadInfo fileInfo = (ThreadInfo)msg.obj;
                     Log.i(tag,"INIT"+fileInfo.toString());
                     //启动下载任务
                     task = new DownloadTask(DownloadService.this,fileInfo);

@@ -5,17 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.bean.CourseDetailBean;
-import com.education.online.bean.CourseExtm;
-import com.education.online.download.FileInfo;
+import com.education.online.download.ThreadInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -25,11 +21,11 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
     private Activity act;
     private LayoutInflater listInflater;
-    private ArrayList<FileInfo> infos;
+    private ArrayList<ThreadInfo> infos;
     private View.OnClickListener listener;
 
 
-    public DirectoryAdapter(Activity act, ArrayList<FileInfo> infos, View.OnClickListener listener) {
+    public DirectoryAdapter(Activity act, ArrayList<ThreadInfo> infos, View.OnClickListener listener) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
         this.infos = infos;
@@ -57,7 +53,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
             DirectoryHolder  vh = ( DirectoryHolder ) holder;
         vh.textholder.setTag(pos);
-        vh.directorytext.setText((pos+1)+"."+infos.get(pos).getName());
+        vh.directorytext.setText((pos+1)+"."+infos.get(pos).getSubname());
         switch (infos.get(pos).getStatus()){
             case 2:
                 vh.statusTxt.setTextColor(act.getResources().getColor(R.color.light_gray));

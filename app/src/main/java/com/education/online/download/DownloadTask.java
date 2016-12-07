@@ -17,11 +17,11 @@ import java.util.List;
  */
 public class DownloadTask {
     private Context mContext = null;
-    private FileInfo mFileInfo = null;
+    private ThreadInfo mFileInfo = null;
     private ThreadDAOImpl mDao = null;
     private int mFinished = 0;
     private boolean isPause = false;
-    public DownloadTask(Context mContext, FileInfo mFileInfo) {
+    public DownloadTask(Context mContext, ThreadInfo mFileInfo) {
         super();
         this.mContext = mContext;
         this.mFileInfo = mFileInfo;
@@ -35,18 +35,15 @@ public class DownloadTask {
     public void download(){
         //读取数据库线程信息
         List<ThreadInfo> threadInfos = mDao.getThreadsByUrl(mFileInfo.getUrl());
-        ThreadInfo threadInfo = null;
         boolean insert=false;
         if(threadInfos.size()==0){
             //初始化线程信息对象
             insert=true;
-            threadInfo = new ThreadInfo(0,mFileInfo.getUrl(),0,mFileInfo.getLength(),0,
-                    mFileInfo.getCourseid(), mFileInfo.getCourseimg());
         }else{
-            threadInfo = threadInfos.get(0);
+            mFileInfo = threadInfos.get(0);
         }
         //创建子线程下载
-        new DownloadThread(threadInfo, insert).start();
+        new DownloadThread(mFileInfo, insert).start();
     }
 
     class DownloadThread extends Thread{
@@ -94,7 +91,7 @@ public class DownloadTask {
                         mFinished += len;
                         if(System.currentTimeMillis()-time>100){
                             time = System.currentTimeMillis();
-                            intent.putExtra("finished", mFinished*100/mFileInfo.getLength());
+                            intent.putExtra("finished", mFinished*100/mFileInfo.getEnd());
                             mContext.sendBroadcast(intent);
                         }
                         //下载暂停时，保存下载进度

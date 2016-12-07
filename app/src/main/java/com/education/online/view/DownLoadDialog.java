@@ -2,7 +2,6 @@ package com.education.online.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,14 +9,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.adapter.DownloadItemAdapter;
-import com.education.online.download.DownloadService;
-import com.education.online.download.FileInfo;
-import com.education.online.inter.weekdayDialogCallback;
+import com.education.online.download.ThreadInfo;
 import com.education.online.util.ScreenUtil;
 
 import java.util.ArrayList;
@@ -26,7 +22,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/12/5.
  */
 public class DownLoadDialog extends Dialog implements View.OnClickListener{
-    private ArrayList<FileInfo> files = new ArrayList<>();
+    private ArrayList<ThreadInfo> files = new ArrayList<>();
     private boolean flag =false;
     private Activity act;
     private int height=0;
@@ -37,7 +33,7 @@ public class DownLoadDialog extends Dialog implements View.OnClickListener{
     private ImageView selectAllIcon;
     private boolean selectAll=false;
 
-    public DownLoadDialog(Activity act, DownloadCallback callback, ArrayList<FileInfo> files, int height) {
+    public DownLoadDialog(Activity act, DownloadCallback callback, ArrayList<ThreadInfo> files, int height) {
         super(act, R.style.view_dialog);
         this.act = act;
         this.callback=callback;
@@ -68,7 +64,7 @@ public class DownLoadDialog extends Dialog implements View.OnClickListener{
             @Override
             public void onClick(View view) {
                 int pos= (int) view.getTag();
-                FileInfo file=files.get(pos);
+                ThreadInfo file=files.get(pos);
                 if(file.getStatus()==0)
                     file.setStatus(1);
                 else if(files.get(pos).getStatus()==1)
@@ -95,13 +91,13 @@ public class DownLoadDialog extends Dialog implements View.OnClickListener{
             case R.id.selectedAllBtn:
                 if(selectAll) {
                     selectAllIcon.setImageResource(R.mipmap.icon_round);
-                    for (FileInfo info : files) {
+                    for (ThreadInfo info : files) {
                         if (info.getStatus() == 1)
                             info.setStatus(0);
                     }
                 }else{
                     selectAllIcon.setImageResource(R.mipmap.icon_round_right);
-                    for (FileInfo info : files) {
+                    for (ThreadInfo info : files) {
                         if (info.getStatus() == 0)
                             info.setStatus(1);
                     }
@@ -122,7 +118,7 @@ public class DownLoadDialog extends Dialog implements View.OnClickListener{
 
     private void refreshCountNum(){
         countNum=0;
-        for(FileInfo info:files){
+        for(ThreadInfo info:files){
             if(info.getStatus()==1)
                 countNum++;
         }
@@ -136,6 +132,6 @@ public class DownLoadDialog extends Dialog implements View.OnClickListener{
 
     DownloadCallback callback;
     public interface DownloadCallback{
-        void startDownload(ArrayList<FileInfo> fileInfos);
+        void startDownload(ArrayList<ThreadInfo> fileInfos);
     }
 }
