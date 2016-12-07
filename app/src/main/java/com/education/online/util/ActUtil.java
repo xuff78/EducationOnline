@@ -193,6 +193,24 @@ public class ActUtil {
         return courseStatusTxt;
     }
 
+    public static String getCourseStateTxt(String state) {
+        String txt="";
+        if(state!=null&&state.length()>0) {
+            switch (Integer.valueOf(state)) {
+                case 1:
+                    txt = "未开始";
+                    break;
+                case 2:
+                    txt = "直播中";
+                    break;
+                case 3:
+                    txt = "已完成";
+                    break;
+            }
+        }
+        return txt;
+    }
+
     public static String getCourseTypeTxt(String course_type, TextView courseType) {
         String txt="";
         if(course_type!=null&&course_type.length()>0){

@@ -90,7 +90,7 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             moreLayout = (LinearLayout) v.findViewById(R.id.moreLayout);
             loader.displayImage(ImageUtil.getImageUrl(teacher.getAvatar()), teacherImage);
             teacherName.setText(teacher.getUser_name());
-            teacherDesc.setText(teacher.getAbout_teacher());
+            teacherDesc.setText(teacher.getIntroduction());
             evaluation.setText(teacher.getAverage()+"分");
             NumApplicant.setText("评价: "+teacher.getEvaluate_count());
             LinearLayout.LayoutParams llpTeacher=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60));

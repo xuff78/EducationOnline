@@ -82,6 +82,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                     String word=searchEdt.getText().toString().trim();
                         //记录搜索词
                         String wordsStr=SharedPreferencesUtil.getString(SearchAct.this, Constant.SearchWords);
+                        if(word.length()>0)
                         if(wordsStr.equals(SharedPreferencesUtil.FAILURE_STRING)){
                             wordsStr=word;
                             SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);

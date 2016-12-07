@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <RelativeLayout
+            android:id="@+id/menuLayout1"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/menuTxt1"
+                android:text="我的下载"
+                android:layout_centerInParent="true"
+                style="@style/txt_black_14" />
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/menuLine1"
+                android:background="@color/normal_red"
+                android:layout_width="70dp"
+                android:layout_height="3dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/menuLayout2"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/menuTxt2"
+                android:text="正在下载"
+                android:layout_centerInParent="true"
+                style="@style/txt_gray_14" />
+            <View
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/menuLine2"
+                android:background="@color/normal_red"
+                android:layout_width="70dp"
+                android:layout_height="3dp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <FrameLayout
+        android:id="@+id/fragment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

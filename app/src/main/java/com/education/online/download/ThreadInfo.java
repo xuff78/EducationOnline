@@ -13,6 +13,9 @@ public class ThreadInfo implements Serializable {
     private int finished;//任务中断时的进度
     private String courseid;
     private String courseimg;
+    private String coursename;
+    private String subname;
+    private String filetype;
 
     public ThreadInfo() {
         super();
@@ -26,6 +29,30 @@ public class ThreadInfo implements Serializable {
         this.finished = finished;
         this.courseid = courseid;
         this.courseimg = courseimg;
+    }
+
+    public String getCoursename() {
+        return coursename;
+    }
+
+    public void setCoursename(String coursename) {
+        this.coursename = coursename;
+    }
+
+    public String getSubname() {
+        return subname;
+    }
+
+    public void setSubname(String subname) {
+        this.subname = subname;
+    }
+
+    public String getFiletype() {
+        return filetype;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
     }
 
     public String getCourseid() {

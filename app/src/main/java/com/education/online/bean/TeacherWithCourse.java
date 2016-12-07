@@ -15,7 +15,16 @@ public class TeacherWithCourse {
     private String evaluate_count=""; // 评价总人数
     private String about_teacher=""; // 教师介绍
     private String tags=""; // 标签
+    private String introduction="";
     private List<CourseBean> course_detail=new ArrayList<>();
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 
     public String getAvatar() {
         return avatar;

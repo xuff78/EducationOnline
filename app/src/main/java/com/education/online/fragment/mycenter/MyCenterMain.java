@@ -13,6 +13,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.Mine.HelpandFeedback;
 import com.education.online.act.Mine.MyCourseMuti;
+import com.education.online.act.Mine.MyDownload;
 import com.education.online.act.Mine.MyEvaluation;
 import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.act.Mine.MyQuestion;
@@ -96,8 +97,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                 startActivity(i);
                 break;
             case R.id.myDownloadLayout:
-                i.setClass(getActivity(), MyCourseMuti.class);
-                i.putExtra("Type", 2);
+                i.setClass(getActivity(), MyDownload.class);
                 startActivity(i);
                 break;
             case R.id.myOrderLayout:

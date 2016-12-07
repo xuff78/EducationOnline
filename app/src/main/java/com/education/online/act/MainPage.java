@@ -125,6 +125,10 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         menuBtn1.setSelected(true);
     }
 
+    public void toSubjectList() {
+        menuBtn2.callOnClick();
+    }
+
     private void changePage(Fragment frg){
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();

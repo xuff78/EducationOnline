@@ -74,6 +74,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private List<CourseBean> items=new ArrayList<>();
     private List<TeacherWithCourse> teacheritems=new ArrayList<>();
     private CourseUpdate currentCourseFrg;
+    private String searchWord="";
 //    private String query_type=Constant.TypeCourse;
 
     private void initHandler() {
@@ -121,10 +122,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             addCourseListFragment(onlinecoursePage);
             String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
             courseFilter.setSubject_ids(subject_id);
-            String searchwords = getIntent().getStringExtra(Constant.SearchWords);
             ((SelectorPage)selectorPage).setLastSelection(subject_id);
-            searchEdt.setText(searchwords);
-            courseFilter.setKey_word(searchwords);
         }else if(getIntent().hasExtra(Constant.SearchWords)) {
             String searchwords = getIntent().getStringExtra(Constant.SearchWords);
             searchEdt.setText(searchwords);
@@ -226,6 +224,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     courseFilter.setPage(String.valueOf(page));
                     String searchwords=searchEdt.getText().toString();
                     courseFilter.setKey_word(searchwords);
+                    if(!searchWord.equals(searchwords))
+                        courseFilter.setSubject_ids(null);
+                    searchWord=searchwords;
                     handler.getCourseList(courseFilter);
                 }
                 return false;

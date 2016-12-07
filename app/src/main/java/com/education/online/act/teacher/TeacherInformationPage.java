@@ -134,7 +134,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         teacherTitles.setText(teacher.getSpecialty());
         teachingExperience.setText(teacher.getWork_time()+"年教龄");
 
-        if(teacher.getIs_validate().equals("1"))
+        if(teacher.getIs_ext_validate().equals("1")&&teacher.getIs_id_validate().equals("1"))
             identityConfirmed.setText("已认证");
         else
             identityConfirmed.setText("未认证");

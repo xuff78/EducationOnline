@@ -59,9 +59,9 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
         CourseItemHolder courseItemHolder= (CourseItemHolder) holder;
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),courseItemHolder.courseImage);
         courseItemHolder.courseName.setText(course.getCourse_name());
-        courseItemHolder.CourseTime.setText("");
-        courseItemHolder.CoursePrice.setText(course.getPrice());
-        courseItemHolder.NumApplicant.setText(course.getFollow());
+        courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开课");
+        courseItemHolder.CoursePrice.setText("￥"+course.getPrice());
+        courseItemHolder.NumApplicant.setText(course.getFollow()+"已报名");
     }
 
     @Override

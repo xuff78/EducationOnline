@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.CourseMainPage;
+import com.education.online.act.MainPage;
 import com.education.online.act.SearchResultAct;
 import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.LiveTelecast;
@@ -307,10 +308,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     i.putExtra(Constant.SearchWords, subject.getSubject_name());
                     act.startActivity(i);
                 }else{
-                    Intent i = new Intent(act, SearchResultAct.class);
-                    i.putExtra(Constant.SearchSubject, "");
-                    i.putExtra(Constant.SearchWords, "");
-                    act.startActivity(i);
+                    ((MainPage)act).toSubjectList();
                 }
             }
         };

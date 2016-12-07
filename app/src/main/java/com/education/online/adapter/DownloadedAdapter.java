@@ -5,32 +5,29 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.bean.CourseDetailBean;
-import com.education.online.bean.CourseExtm;
 import com.education.online.download.FileInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/5.
+ * Created by Administrator on 2016/12/7.
  */
-public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
+public class DownloadedAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
 
     private Activity act;
     private LayoutInflater listInflater;
+    private ArrayList<FileInfo> infos;
     private View.OnClickListener listener;
-    private ArrayList<FileInfo> files;
 
-    public DownloadItemAdapter(Activity act, ArrayList<FileInfo> files, View.OnClickListener listener) {
+
+    public DownloadedAdapter(Activity act, ArrayList<FileInfo> infos, View.OnClickListener listener) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
-        this.files = files;
+        this.infos = infos;
         this.listener = listener;
     }
 
@@ -43,8 +40,7 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh=null;
-        View view=listInflater.inflate(R.layout.download_listitem, null);
-        view.setLayoutParams(new RecyclerView.LayoutParams(-1,-2));
+        View view=listInflater.inflate(R.layout.directorylayout, null);
         vh = new DirectoryHolder(view, pos);
         // view.setTag(pos);
 
@@ -55,43 +51,48 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
     //视图与数据的绑定，留待以后实现
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int pos) {
         DirectoryHolder  vh = ( DirectoryHolder ) holder;
-        FileInfo fileInfo=files.get(pos);
-        vh.directorytext.setText((pos+1)+"."+fileInfo.getName());
-        switch (fileInfo.getStatus()){
-            case 0:
-                vh.selectedIcon.setImageResource(R.mipmap.icon_round);
-                break;
-            case 1:
-                vh.selectedIcon.setImageResource(R.mipmap.icon_round_right);
-                break;
+        vh.textholder.setTag(pos);
+        vh.directorytext.setText((pos+1)+"."+infos.get(pos).getName());
+        switch (infos.get(pos).getStatus()){
             case 2:
-                vh.selectedIcon.setImageResource(R.mipmap.icon_download);
-                vh.directorytext.setTextColor(act.getResources().getColor(R.color.light_gray));
+                vh.statusTxt.setTextColor(act.getResources().getColor(R.color.light_gray));
+                vh.statusTxt.setText("正在下载");
                 break;
             case 3:
-                vh.selectedIcon.setImageResource(R.mipmap.right_blue);
-                vh.directorytext.setTextColor(act.getResources().getColor(R.color.light_gray));
+                vh.statusTxt.setText("已下载");
                 break;
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return files.size();
+        return infos.size();
+    }
+
+
+    public String [] splitResource(String url){
+        String str[]=url.split(",");
+        String temp1 ="";
+        for(int i=0;i<str.length;i++){
+            String str2[]=str[i].split("_");
+            temp1 = temp1+str2[0]+',';
+
+        }
+        return temp1.split(",");
     }
 
     public class DirectoryHolder extends RecyclerView.ViewHolder{
 
-        TextView directorytext;
-        ImageView selectedIcon;
+        TextView directorytext, statusTxt;
         LinearLayout textholder;
         public DirectoryHolder(View v, int pos) {
             super(v);
-            selectedIcon = (ImageView) v.findViewById(R.id.selectedIcon);
+            statusTxt = (TextView) v.findViewById(R.id.statusTxt);
             directorytext = (TextView) v.findViewById(R.id.textdirectory);
             textholder = (LinearLayout) v.findViewById(R.id.textholder);
-            v.setTag(pos);
-            v.setOnClickListener(listener);
+            textholder.setOnClickListener(listener);
+            String information = directorytext .getText().toString();
         }
     }
 }

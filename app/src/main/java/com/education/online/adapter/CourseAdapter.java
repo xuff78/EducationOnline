@@ -136,9 +136,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             CourseDetailsHolder vh = (CourseDetailsHolder) holder;
             vh.courseDetail.setText(courseDetailBean.getIntroduction());
             if(courseDetailBean.getPlan().length()>0)
-            vh.coursedate.setText(courseDetailBean.getPlan());
-            else
-            vh.courseDetail.setText("暂无详细安排");
+                vh.coursedate.setText(courseDetailBean.getPlan()+"\n\n");
 
             String temp = "";
             String begindate = "";
@@ -148,7 +146,6 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             SimpleDateFormat timeData = new SimpleDateFormat("HH:mm");
             SimpleDateFormat dayDate = new SimpleDateFormat("yyyy年MM月dd日");
             Calendar cal = Calendar.getInstance();
-            Date currenttime = new Date(System.currentTimeMillis());
 
             try {
                 for (int i = 0; i < courseDetailBean.getCourse_extm().size(); i++) {
@@ -170,13 +167,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         cal.add(Calendar.MINUTE, Integer.parseInt(courseExtm.getTime_len()));
                         endtime = timeData.format(cal.getTime());
                     }
-                    if (date1.before(currenttime)) {//直播已结束
-                        temp = temp + startdate + starttime + "~" + endtime + " 已结束" + tail;
-
-                    } else {
-                        temp = temp + startdate + starttime + "~" + endtime + tail;
-                    }
-
+                    temp = temp + startdate + starttime + "~" + endtime + ActUtil.getCourseStateTxt(courseExtm.getState()) + tail;
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

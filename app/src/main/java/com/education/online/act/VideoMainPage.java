@@ -1,11 +1,18 @@
 package com.education.online.act;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -103,6 +110,18 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private View.OnClickListener listener;
     private String my_usercode = "";
     private DownLoadDialog downLoadDialog;
+    private DownloadService.DownloadBinder myBinder;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            myBinder = (DownloadService.DownloadBinder) service;
+        }
+    };
 
     public void initiHandler() {
         httpHandler = new HttpHandler(this, new CallBack(this) {
@@ -345,6 +364,13 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         mDao = new ThreadDAOImpl(this);
         initiHandler();
         initView();
+
+
+        Intent startIntent=new Intent(this, DownloadService.class);
+        startService(startIntent);
+
+        Intent bindIntent = new Intent(this, DownloadService.class);
+        bindService(bindIntent, connection, BIND_AUTO_CREATE);
         httpHandler.getCourseDetail(course_id);
     }
 
@@ -637,6 +663,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
     @Override
     protected void onDestroy() {
+        unbindService(connection);
         if(timer!=null)
             timer.cancel();
         super.onDestroy();
@@ -646,11 +673,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     public void startDownload(ArrayList<FileInfo> fileInfos) {
         for (FileInfo info : files) {
             if (info.getStatus() == 1) {
-                Intent startIntent=new Intent(this, DownloadService.class);
-                startIntent.setAction(DownloadService.ACTION_START);
-                startIntent.putExtra("fileInfo", info);
-                startService(startIntent);
                 info.setStatus(2);
+                myBinder.startDownload(info);
             }
         }
         this.files=fileInfos;

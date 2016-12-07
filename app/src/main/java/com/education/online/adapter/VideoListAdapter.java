@@ -58,7 +58,7 @@ public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),itemHolder.imageView);
         itemHolder.courseName.setText(course.getCourse_name());
         itemHolder.CourseTime.setText(course.getSubject_name());
-        itemHolder.CoursePrice.setText(course.getPrice());
+        itemHolder.CoursePrice.setText("￥"+course.getPrice());
     }
 
     @Override
