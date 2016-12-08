@@ -1,12 +1,12 @@
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeLayout"
-    android:layout_width="match_parent" android:layout_height="80dp">
+    android:layout_width="match_parent" android:layout_height="90dp">
     <!-- Bottom View Start-->
     <LinearLayout
         android:orientation="horizontal"
         android:background="#66ddff00"
         android:id="@+id/bottom_wrapper"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:weightSum="1"
         android:layout_height="match_parent">
         <!--What you want to show-->
@@ -35,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/courseImg"
             android:layout_width="100dp"
             android:layout_height="60dp" />

@@ -92,7 +92,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
 
-    private  ArrayList<ThreadInfo> files=new ArrayList<>();
+    public  ArrayList<ThreadInfo> files=new ArrayList<>();
 
     private String course_id;
     private boolean flag = false;
@@ -100,7 +100,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     HttpHandler httpHandler;
 
     private CommentsAdapter commentsAdapter;
-//    private DirectoryAdapter directoryAdapter;
+    private DirectoryAdapter directoryAdapter;
     private DetailsAdapter detailsAdapter;
     private View.OnClickListener listener;
     private String my_usercode = "";
@@ -240,6 +240,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             fileInfo.setCoursename(courseDetailBean.getCourse_name());
             fileInfo.setCourseimg(courseDetailBean.getImg());
             fileInfo.setCourseid(courseDetailBean.getCourse_id());
+            fileInfo.setEnd(1); //防止除0
             fileInfo.setTotalfilecount(courseDetailBean.getCourse_extm().size());
             int pos=extm.getUrl().lastIndexOf("/");
             if(pos>0)
@@ -415,7 +416,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         viewdetails.setVisibility(View.VISIBLE);
                         break;
                     case R.id.directory:
-                        recyclerList.setAdapter(new DirectoryAdapter(VideoMainPage.this, files, listener));
+                        directoryAdapter=new DirectoryAdapter(VideoMainPage.this, files, listener, myBinder);
+                        recyclerList.setAdapter(directoryAdapter);
                         if (view != lastSelectedView)
                             setStatusFalse(lastSelectedPosition);
                         lastSelectedview = directory;
@@ -670,9 +672,18 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         for (ThreadInfo info : files) {
             if (info.getStatus() == 1) {
                 info.setStatus(2);
-                myBinder.startDownload(info);
+                myBinder.startDownload(info, null);
             }
         }
         this.files=fileInfos;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(lastSelectedPosition==1){
+                    listener.onClick(directory);
+                }
+            }
+        },1000);
+
     }
 }

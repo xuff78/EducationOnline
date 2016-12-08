@@ -34,7 +34,7 @@ public class DownloadedAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
         listInflater= LayoutInflater.from(act);
         this.infos = infos;
         this.listener = listener;
-        height=ImageUtil.dip2px(act, 80);
+        height=ImageUtil.dip2px(act, 90);
     }
 
     @Override

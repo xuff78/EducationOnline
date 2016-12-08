@@ -1,6 +1,8 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.VideoMainPage;
+import com.education.online.download.DownloadService;
 import com.education.online.download.ThreadInfo;
+import com.education.online.util.Constant;
 
 import java.util.ArrayList;
 
@@ -23,13 +28,15 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
     private LayoutInflater listInflater;
     private ArrayList<ThreadInfo> infos;
     private View.OnClickListener listener;
+    private DownloadService.DownloadBinder myBinder;
 
-
-    public DirectoryAdapter(Activity act, ArrayList<ThreadInfo> infos, View.OnClickListener listener) {
+    public DirectoryAdapter(Activity act, ArrayList<ThreadInfo> infos, View.OnClickListener listener,
+                            DownloadService.DownloadBinder myBinder) {
         this.act=act;
         listInflater= LayoutInflater.from(act);
         this.infos = infos;
         this.listener = listener;
+        this.myBinder=myBinder;
     }
 
     @Override
@@ -54,15 +61,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
             DirectoryHolder  vh = ( DirectoryHolder ) holder;
         vh.textholder.setTag(pos);
         vh.directorytext.setText((pos+1)+"."+infos.get(pos).getSubname());
-        switch (infos.get(pos).getStatus()){
-            case 2:
-                vh.statusTxt.setTextColor(act.getResources().getColor(R.color.light_gray));
-                vh.statusTxt.setText("正在下载");
-                break;
-            case 3:
-                vh.statusTxt.setText("已下载");
-                break;
-        }
+
 
     }
 
@@ -87,14 +86,44 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
         TextView directorytext, statusTxt;
         LinearLayout textholder;
+        ThreadInfo info;
+        int pos=0;
+
         public DirectoryHolder(View v, int pos) {
             super(v);
+            this.pos=pos;
+            info=infos.get(pos);
             statusTxt = (TextView) v.findViewById(R.id.statusTxt);
             directorytext = (TextView) v.findViewById(R.id.textdirectory);
             textholder = (LinearLayout) v.findViewById(R.id.textholder);
             textholder.setOnClickListener(listener);
-            String information = directorytext .getText().toString();
+            boolean isDownloading=myBinder.setCallbackHandker(info.getUrl(), handler);
+            switch (info.getStatus()){
+                case 2:
+                    statusTxt.setText(info.getFinished()*100/info.getEnd()+"%");
+                    break;
+                case 3:
+                    statusTxt.setText("已下载");
+                    break;
+            }
         }
+
+        Handler handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case Constant.updateDownload:
+                        long finished=msg.getData().getLong("finished");
+                        statusTxt.setText(finished*100/info.getEnd()+"%");
+                        break;
+                    case Constant.finishDownload:
+                        statusTxt.setText("已下载");
+                        ((VideoMainPage)act).files.get(pos).setStatus(3);
+                        break;
+                }
+            }
+        };
     }
 }
 

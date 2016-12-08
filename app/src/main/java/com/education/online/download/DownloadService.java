@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * Created by 可爱的蘑菇 on 2016/12/4.
  */
-public class DownloadService extends Service {
+public class DownloadService extends Service implements DownloadTask.FinishCallback{
     private final String tag = getClass().getName();
     public static final String ACTION_START = "ACTION_START";
     public static final String ACTION_STOP = "ACTION_STOP";
@@ -34,8 +34,8 @@ public class DownloadService extends Service {
     public static final int MSG_INIT = 0;
     private DownloadBinder mBinder = new DownloadBinder();
 
-    private DownloadTask task = null;
     private Map<String, DownloadTask> downloadTaskMap=new HashMap<>();
+    private Map<String, Handler> handlerMap=new HashMap<>();
 
     @Override
     public void onCreate() {
@@ -53,26 +53,46 @@ public class DownloadService extends Service {
         return mBinder;
     }
 
+    @Override
+    public void onfinsh(ThreadInfo info) {
+        downloadTaskMap.remove(info.getUrl());
+    }
+
+
     public class DownloadBinder extends Binder {
 
-        public void startDownload(ThreadInfo fileInfo) {
+        public void startDownload(ThreadInfo fileInfo, Handler handler) {
             Log.d("TAG", "startDownload() executed");
             Log.i(tag,"Start+"+fileInfo.toString());
+            handlerMap.put(fileInfo.getUrl(), handler);
             new InitThread(fileInfo, mHandler).start();
         }
 
         public void pauseDownload(ThreadInfo fileInfo){
             Log.i(tag,"Stop+"+fileInfo.toString());
+            DownloadTask task=downloadTaskMap.get(fileInfo.getUrl());
             if(task!=null){
                 task.setPause(true);
             }
+            downloadTaskMap.remove(fileInfo.getUrl());
         }
 
-        public boolean isDownLoading(ThreadInfo fileInfo){
-            if(downloadTaskMap.containsKey(fileInfo.getUrl())){
+        public boolean setCallbackHandker(String url, Handler handler) {
+            if(downloadTaskMap.containsKey(url)){
+                DownloadTask task=downloadTaskMap.get(url);
+                task.setHandler(handler);
                 return true;
             }else
                 return false;
+        }
+
+        public void removeDownload(ThreadInfo fileInfo) {
+            Log.i(tag,"Remove+"+fileInfo.toString());
+            DownloadTask task=downloadTaskMap.get(fileInfo.getUrl());
+            if(task!=null){
+                task.setPause(true);
+            }
+            downloadTaskMap.remove(fileInfo.getUrl());
         }
     }
 
@@ -83,9 +103,11 @@ public class DownloadService extends Service {
                     ThreadInfo fileInfo = (ThreadInfo)msg.obj;
                     Log.i(tag,"INIT"+fileInfo.toString());
                     //启动下载任务
-                    task = new DownloadTask(DownloadService.this,fileInfo);
-                    task.download();
+                    DownloadTask task = new DownloadTask(DownloadService.this,fileInfo, DownloadService.this);
                     downloadTaskMap.put(fileInfo.getUrl(), task);
+                    task.setHandler(handlerMap.get(fileInfo.getUrl()));
+                    handlerMap.remove(fileInfo.getUrl());
+                    task.download();
                     break;
             }
         }

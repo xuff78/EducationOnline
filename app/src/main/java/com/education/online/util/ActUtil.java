@@ -29,7 +29,9 @@ import com.education.online.act.SearchAct;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -174,6 +176,30 @@ public class ActUtil {
     public static String getPrice(String price) {
         return "￥"+price;
     }
+
+    public static String getCashs(String money) {
+        Double cashInt = (Double.parseDouble(money) * 100);
+        BigDecimal original = new BigDecimal(cashInt);
+        BigDecimal result = original.setScale(2, BigDecimal.ROUND_HALF_DOWN);
+        return result.toBigInteger().toString();
+    }
+
+    /** 保留两位小数点 */
+    public static String twoDecimal(String money) {
+        if (money != null && money.length() > 0) {
+            Double decimal = Double.valueOf(money);
+            DecimalFormat fnum = new DecimalFormat("##0.00");
+            String twoDecimal = fnum.format(decimal);
+            return twoDecimal;
+        } else
+            return "暂未获取";
+    }
+    public static String twoDecimal(Double money) {
+        DecimalFormat fnum = new DecimalFormat("##0.00");
+        String twoDecimal = fnum.format(money);
+        return twoDecimal;
+    }
+
 
     public static String getCourseStatusTxt(String status) {
         String courseStatusTxt="";

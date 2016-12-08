@@ -1,7 +1,10 @@
 package com.education.online.act.Mine;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -15,6 +18,7 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
+import com.education.online.download.DownloadService;
 import com.education.online.fragment.CourseVideoList;
 import com.education.online.fragment.OnlineCoursePage;
 import com.education.online.fragment.mycenter.DownloadedListPage;
@@ -42,25 +46,40 @@ public class MyDownload extends BaseFrameAct {
     private MenuPopup popup;
     private int type=0; //0:课程  1:收藏  2:下载
     private DownloadedListPage downloadedListPage = new DownloadedListPage();
-    private DownloadingListPage downloadingListPage = new DownloadingListPage();
-    private int page=1;
-    private String page_size="10";
-    private CourseUpdate currentCourseFrg;
-    private HttpHandler handler;
-    private List<CourseBean> items=new ArrayList<>();
-    private String courseType="live";
     private TextView menuTxt1, menuTxt2;
     private View menuLine1, menuLine2;
+
+    private DownloadService.DownloadBinder myBinder;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            myBinder = (DownloadService.DownloadBinder) service;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download_layout);
 
+        connectService();
         _setHeaderTitle("我的下载");
         initView();
         openFragment(R.id.fragment_layout, downloadedListPage);
 
+    }
+
+    private void connectService() {
+        Intent startIntent=new Intent(this, DownloadService.class);
+        startService(startIntent);
+
+        Intent bindIntent = new Intent(this, DownloadService.class);
+        bindService(bindIntent, connection, BIND_AUTO_CREATE);
     }
 
     private void initView() {
@@ -91,10 +110,18 @@ public class MyDownload extends BaseFrameAct {
                         menuLine2.setVisibility(View.VISIBLE);
                         menuTxt1.setTextColor(getResources().getColor(R.color.normal_gray));
                         menuLine1.setVisibility(View.GONE);
+                        DownloadingListPage downloadingListPage = new DownloadingListPage();
+                        downloadingListPage.setBinder(myBinder);
                         openFragment(R.id.fragment_layout, downloadingListPage);
                         break;
                 }
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        unbindService(connection);
+        super.onDestroy();
+    }
 }

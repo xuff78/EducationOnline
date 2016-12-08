@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by 可爱的蘑菇 on 2016/12/4.
  */
 public class ThreadInfo implements Serializable {
-    private int complete; //0未完成， 1已完成
+    private int complete=0; //0未完成， 1已完成
     private String url;
     private int start;
     private int end;//文件长度

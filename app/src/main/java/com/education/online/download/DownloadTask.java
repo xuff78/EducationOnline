@@ -2,6 +2,11 @@ package com.education.online.download;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
+import com.education.online.util.Constant;
 
 import org.apache.http.HttpStatus;
 
@@ -21,11 +26,14 @@ public class DownloadTask {
     private ThreadDAOImpl mDao = null;
     private int mFinished = 0;
     private boolean isPause = false;
-    public DownloadTask(Context mContext, ThreadInfo mFileInfo) {
+    private Handler handler;
+
+    public DownloadTask(Context mContext, ThreadInfo mFileInfo, FinishCallback fcb) {
         super();
         this.mContext = mContext;
         this.mFileInfo = mFileInfo;
         mDao = new ThreadDAOImpl(mContext);
+        this.fcb=fcb;
     }
 
     public void setPause(boolean isPause) {
@@ -46,6 +54,10 @@ public class DownloadTask {
         new DownloadThread(mFileInfo, insert).start();
     }
 
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
     class DownloadThread extends Thread{
         private ThreadInfo mThreadInfo = null;
         boolean insert=false;
@@ -58,6 +70,8 @@ public class DownloadTask {
             //数据库插入线程信息
             if(insert){
                 mDao.insertThread(mThreadInfo);
+            }else if(handler!=null){
+                handler.sendEmptyMessage(Constant.resumeDownload);
             }
 
             HttpURLConnection conn = null;
@@ -75,7 +89,6 @@ public class DownloadTask {
                 File file = new File(DownloadService.DOWNLOAD_PATH,mFileInfo.getFileName());
                 raf = new RandomAccessFile(file,"rwd");
                 raf.seek(start);
-                Intent intent = new Intent(DownloadService.ACTION_UPDATE);
                 mFinished+=mThreadInfo.getFinished();
                 //开始下载,返回值206
                 if(conn.getResponseCode()== HttpStatus.SC_PARTIAL_CONTENT){
@@ -89,26 +102,37 @@ public class DownloadTask {
                         raf.write(bytes,0,len);
                         //把下载进度发送广播给Activity
                         mFinished += len;
-                        if(System.currentTimeMillis()-time>100){
+                        if(System.currentTimeMillis()-time>200){
                             time = System.currentTimeMillis();
-                            intent.putExtra("finished", mFinished*100/mFileInfo.getEnd());
-                            mContext.sendBroadcast(intent);
+                            Message msg=new Message();
+                            Bundle bundle=new Bundle();
+                            bundle.putLong("finished",mFinished);
+                            msg.setData(bundle);
+                            msg.what=Constant.updateDownload;
+                            if(handler!=null)
+                                handler.sendMessage(msg);
                         }
                         //下载暂停时，保存下载进度
                         if(isPause){
                             mDao.updateThread(mThreadInfo.getUrl(), mFinished);
+                            if(handler!=null)
+                                handler.sendEmptyMessage(Constant.pouseDownload);
                             return;
                         }
                     }
                     //删除数据库中的线程信息
                     mDao.updateThreadComplete(mThreadInfo.getUrl(), 1);
+                    if(handler!=null)
+                        handler.sendEmptyMessage(Constant.finishDownload);
                 }
 
             } catch (Exception e) {
+                if(handler!=null)
+                    handler.sendEmptyMessage(Constant.errorDownload);
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }finally{
-
+                fcb.onfinsh(mThreadInfo);
                 try {conn.disconnect();
                     input.close();
                     raf.close();
@@ -120,5 +144,11 @@ public class DownloadTask {
 
 
         }
+    }
+
+    FinishCallback fcb;
+
+    public interface FinishCallback{
+        void onfinsh(ThreadInfo info);
     }
 }

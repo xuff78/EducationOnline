@@ -43,6 +43,12 @@ public class Constant {
     public static final String API_BASE = "ih.base.";
     public static final String Addr = "Addr";
 
+    public static final int pouseDownload = 1;
+    public static final int resumeDownload = 2;
+    public static final int finishDownload = 3;
+    public static final int errorDownload = 4;
+    public static final int updateDownload = 5;
+
     public class Method{
         public static final String init=API_BASE + "sys.init";
     }
