@@ -252,6 +252,9 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             if(listThread.size()>0){
                 ThreadInfo threadInfo=listThread.get(0);
                 fileInfo.setStatus(threadInfo.getComplete()+2);
+                fileInfo.setStart(threadInfo.getStart());
+                fileInfo.setFinished(threadInfo.getFinished());
+                fileInfo.setEnd(threadInfo.getEnd());
             }
             files.add(fileInfo);
         }

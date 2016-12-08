@@ -10,12 +10,13 @@ import java.util.List;
 /**
  * Created by 可爱的蘑菇 on 2016/12/4.
  */
-public class ThreadDAOImpl implements ThreadDAO{
+public class ThreadDAOImpl{
+
     private DBHelper mHelper = null;
     public ThreadDAOImpl(Context context){
         mHelper = new DBHelper(context);
     }
-    @Override
+
     public void insertThread(ThreadInfo threadInfo) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.execSQL("insert into thread_info(complete,url,start,end,finished,courseid,courseimg, coursename,subname,filetype,totalfilecount,fileName)" +
@@ -26,7 +27,6 @@ public class ThreadDAOImpl implements ThreadDAO{
         db.close();
     }
 
-    @Override
     public void deleteThread(String url) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.execSQL("delete from thread_info where url=?",
@@ -35,7 +35,6 @@ public class ThreadDAOImpl implements ThreadDAO{
 
     }
 
-    @Override
     public void updateThread(String url,int finished) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.execSQL("update thread_info set finished=? where url=?",
@@ -97,7 +96,6 @@ public class ThreadDAOImpl implements ThreadDAO{
         return list;
     }
 
-    @Override
     public boolean isExtists(String url) {
 
         SQLiteDatabase db = mHelper.getWritableDatabase();

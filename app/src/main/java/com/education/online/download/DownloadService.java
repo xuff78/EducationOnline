@@ -35,7 +35,7 @@ public class DownloadService extends Service implements DownloadTask.FinishCallb
     private DownloadBinder mBinder = new DownloadBinder();
 
     private Map<String, DownloadTask> downloadTaskMap=new HashMap<>();
-    private Map<String, Handler> handlerMap=new HashMap<>();
+//    private Map<String, Handler> handlerMap=new HashMap<>();
 
     @Override
     public void onCreate() {
@@ -64,8 +64,13 @@ public class DownloadService extends Service implements DownloadTask.FinishCallb
         public void startDownload(ThreadInfo fileInfo, Handler handler) {
             Log.d("TAG", "startDownload() executed");
             Log.i(tag,"Start+"+fileInfo.toString());
-            handlerMap.put(fileInfo.getUrl(), handler);
-            new InitThread(fileInfo, mHandler).start();
+
+            DownloadTask task = new DownloadTask(DownloadService.this,fileInfo, DownloadService.this);
+            downloadTaskMap.put(fileInfo.getUrl(), task);
+            task.setHandler(handler);
+            task.download();
+//            handlerMap.put(fileInfo.getUrl(), handler);
+//            new InitThread(fileInfo, mHandler).start();
         }
 
         public void pauseDownload(ThreadInfo fileInfo){
@@ -96,20 +101,20 @@ public class DownloadService extends Service implements DownloadTask.FinishCallb
         }
     }
 
-    Handler mHandler = new Handler(){
-        public void handleMessage(Message msg){
-            switch(msg.what){
-                case MSG_INIT:
-                    ThreadInfo fileInfo = (ThreadInfo)msg.obj;
-                    Log.i(tag,"INIT"+fileInfo.toString());
-                    //启动下载任务
-                    DownloadTask task = new DownloadTask(DownloadService.this,fileInfo, DownloadService.this);
-                    downloadTaskMap.put(fileInfo.getUrl(), task);
-                    task.setHandler(handlerMap.get(fileInfo.getUrl()));
-                    handlerMap.remove(fileInfo.getUrl());
-                    task.download();
-                    break;
-            }
-        }
-    };
+//    Handler mHandler = new Handler(){
+//        public void handleMessage(Message msg){
+//            switch(msg.what){
+//                case MSG_INIT:
+//                    ThreadInfo fileInfo = (ThreadInfo)msg.obj;
+//                    Log.i(tag,"INIT"+fileInfo.toString());
+//                    //启动下载任务
+//                    DownloadTask task = new DownloadTask(DownloadService.this,fileInfo, DownloadService.this);
+//                    downloadTaskMap.put(fileInfo.getUrl(), task);
+//                    task.setHandler(handlerMap.get(fileInfo.getUrl()));
+//                    handlerMap.remove(fileInfo.getUrl());
+//                    task.download();
+//                    break;
+//            }
+//        }
+//    };
 }

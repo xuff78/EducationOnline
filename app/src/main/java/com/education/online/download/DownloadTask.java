@@ -67,12 +67,7 @@ public class DownloadTask {
             this.mThreadInfo = mThreadInfo;
         }
         public void run(){
-            //数据库插入线程信息
-            if(insert){
-                mDao.insertThread(mThreadInfo);
-            }else if(handler!=null){
-                handler.sendEmptyMessage(Constant.resumeDownload);
-            }
+
 
             HttpURLConnection conn = null;
             RandomAccessFile raf = null;
@@ -82,16 +77,34 @@ public class DownloadTask {
                 conn = (HttpURLConnection)url.openConnection();
                 conn.setConnectTimeout(3000);
                 conn.setRequestMethod("GET");
-                //设置下载位置
-                int start = mThreadInfo.getStart()+mThreadInfo.getFinished();
-                conn.setRequestProperty("Range", "bytes="+start+"-"+mThreadInfo.getEnd());
+
+                int start = 0;
+                if(insert){
+                    int  length = conn.getContentLength();
+                    if (length<0){
+                        return;
+                    }
+                    mThreadInfo.setStart(0);
+                    mThreadInfo.setEnd(length);
+                    mDao.insertThread(mThreadInfo);
+                    File dir = new File(DownloadService.DOWNLOAD_PATH);
+                    if(!dir.exists()){
+                        dir.mkdir();
+                    }
+                }else if(handler!=null){
+                    handler.sendEmptyMessage(Constant.resumeDownload);
+                    //设置下载位置
+                    start = mThreadInfo.getStart()+mThreadInfo.getFinished();
+                    conn.setRequestProperty("Range", "bytes="+start+"-"+mThreadInfo.getEnd());
+                }
+
                 //写入位置
                 File file = new File(DownloadService.DOWNLOAD_PATH,mFileInfo.getFileName());
                 raf = new RandomAccessFile(file,"rwd");
                 raf.seek(start);
                 mFinished+=mThreadInfo.getFinished();
                 //开始下载,返回值206
-                if(conn.getResponseCode()== HttpStatus.SC_PARTIAL_CONTENT){
+                if(conn.getResponseCode()== HttpStatus.SC_PARTIAL_CONTENT||conn.getResponseCode()== HttpStatus.SC_OK){
                     //读取数据
                     input = conn.getInputStream();
                     byte[] bytes = new byte[1024];

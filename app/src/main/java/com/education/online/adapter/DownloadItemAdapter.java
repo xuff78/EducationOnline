@@ -89,6 +89,9 @@ public class DownloadItemAdapter  extends RecyclerView.Adapter <RecyclerView.Vie
             textholder = (LinearLayout) v.findViewById(R.id.textholder);
             v.setTag(pos);
             v.setOnClickListener(listener);
+            ThreadInfo fileInfo=files.get(pos);
+            if(fileInfo.getStatus()==1)
+                fileInfo.setStatus(0);
         }
     }
 }
