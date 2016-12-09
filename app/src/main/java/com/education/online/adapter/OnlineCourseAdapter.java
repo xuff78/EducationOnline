@@ -13,6 +13,7 @@ import com.education.online.R;
 import com.education.online.act.CourseMainPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -60,8 +61,11 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),courseItemHolder.courseImage);
         courseItemHolder.courseName.setText(course.getCourse_name());
         courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开课");
-        courseItemHolder.CoursePrice.setText("￥"+course.getPrice());
+        courseItemHolder.CoursePrice.setText(ActUtil.getPrice(course.getPrice()));
         courseItemHolder.NumApplicant.setText(course.getFollow()+"已报名");
+        if(course.getIs_buy().equals("1"))
+            courseItemHolder.ApplicantCourse.setVisibility(View.GONE);
+
     }
 
     @Override

@@ -80,7 +80,7 @@ public class SubmitOrder extends BaseFrameAct implements View.OnClickListener {
         TextView courseType= (TextView) findViewById(R.id.courseType);
         ActUtil.getCourseTypeTxt(bean.getCourse_type(), courseType);
         TextView coursePrice= (TextView) findViewById(R.id.coursePrice);
-        coursePrice.setText("￥"+bean.getPrice());
+        coursePrice.setText(ActUtil.getPrice(bean.getPrice()));
         TextView teacherName= (TextView) findViewById(R.id.teacherName);
         teacherName.setText(bean.getSubject_name()+"  "+bean.getUser_info().getUser_name());
         TextView courseName= (TextView) findViewById(R.id.courseName);
@@ -88,7 +88,7 @@ public class SubmitOrder extends BaseFrameAct implements View.OnClickListener {
         TextView courseTotalPrice= (TextView) findViewById(R.id.courseTotalPrice);
         courseTotalPrice.setText("￥"+bean.getPrice());
         TextView orderPrice= (TextView) findViewById(R.id.orderPrice);
-        orderPrice.setText("￥"+bean.getPrice());
+        orderPrice.setText("总价： ￥"+bean.getPrice());
         findViewById(R.id.submitBtn).setOnClickListener(this);
     }
 

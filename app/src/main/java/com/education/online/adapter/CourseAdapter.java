@@ -116,7 +116,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
             vh.courseoldprice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
-            vh.coursePrice.setText( courseDetailBean.getPrice());
+            vh.coursePrice.setText(ActUtil.getPrice(courseDetailBean.getPrice()));
             vh.studentNum.setText("班级人数" + courseDetailBean.getMax_follow() + "人，已报名" + courseDetailBean.getFollow() + "人");
             vh.praisePercent.setText((int) (Float.valueOf(courseDetailBean.getUser_info().getAverage()) / 5 * 100) + "%好评");
             vh.totalSerial.setText("共" + courseDetailBean.getCourse_extm().size() + "次课");

@@ -223,7 +223,7 @@ public class HomepageCourse extends BaseFragment {
             TextView CourseTime = (TextView) v.findViewById(R.id.CourseTime);
             CourseTime.setText(course.getUser_name());
             TextView CoursePrice = (TextView) v.findViewById(R.id.CoursePrice);
-            CoursePrice.setText("￥"+course.getPrice());
+            CoursePrice.setText(ActUtil.getPrice(course.getPrice()));
             TextView NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
             NumApplicant.setText(course.getFollow()+"人已报名");
             CourseName.setText(CourseName.getText().toString()+course.getSubject_name());

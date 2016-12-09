@@ -174,7 +174,14 @@ public class ActUtil {
     }
 
     public static String getPrice(String price) {
-        return "￥"+price;
+        if(price.length()>0) {
+            if (Double.valueOf(price) == 0)
+                return "免费";
+            else
+                return "￥" + price;
+        }else{
+            return "未知";
+        }
     }
 
     public static String getCashs(String money) {

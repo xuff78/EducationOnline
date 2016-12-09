@@ -67,8 +67,8 @@ public class DetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             CourseInfoHolder vh = (CourseInfoHolder) holder;
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.courseBrief.setText(courseDetailBean.getIntroduction());
-            vh.coursePrice.setText(courseDetailBean.getPrice());
-          vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
+            vh.coursePrice.setText(ActUtil.getPrice(courseDetailBean.getPrice()));
+          vh.courseoldprice.setText(ActUtil.getPrice(courseDetailBean.getOriginal_price()));
         }   else if (pos == 1) {
           TeacherInfoHolder vh = (TeacherInfoHolder) holder;
           vh.teacherName.setText(courseDetailBean.getUser_info().getUser_name());

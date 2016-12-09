@@ -1,5 +1,6 @@
 package com.education.online.act.Mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
         contactus  = (RelativeLayout) findViewById(R.id.contactus);
         servicephone= (TextView) findViewById(R.id.servicephone);
         exitlogin= (TextView) findViewById(R.id.exitlogin);
+        findViewById(R.id.aboutLayout).setOnClickListener(this);
     }
 
     @Override
@@ -49,6 +51,9 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
             break;
             case R.id.exitlogin:
             break;
+            case R.id.aboutLayout:
+                startActivity(new Intent(this, About.class));
+                break;
         }
     }
 }

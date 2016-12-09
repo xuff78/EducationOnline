@@ -106,7 +106,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 LiveCourse live = liveCourses.get(0);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                 ivh.titleTxt.setText(live.getCourse_name());
-                ivh.priceTxt.setText("¥" + live.getPrice());
+                ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
                 ivh.timeTxt.setText(live.getCourseware_date());
                 ivh.statusTxt.setText(live.getFollow() + "人在学习");
             } else
@@ -115,7 +115,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 LiveCourse live = liveCourses.get(1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
                 ivh.titleTxt2.setText(live.getCourse_name());
-                ivh.priceTxt2.setText("¥" + live.getPrice());
+                ivh.priceTxt2.setText(ActUtil.getPrice(live.getPrice()));
                 ivh.timeTxt2.setText(live.getCourseware_date());
                 ivh.statusTxt2.setText(live.getFollow() + "人在学习");
             } else
@@ -128,7 +128,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 VideoCourse live = liveCourses.get(0);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                 ivh.titleTxt.setText(live.getCourse_name());
-                ivh.priceTxt.setText("¥" + live.getPrice());
+                ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
                 ivh.timeTxt.setVisibility(View.GONE);
                 ivh.statusTxt.setText(live.getFollow() + "人在学习");
             } else
@@ -137,7 +137,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 VideoCourse live = liveCourses.get(1);
                 imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg2);
                 ivh.titleTxt2.setText(live.getCourse_name());
-                ivh.priceTxt2.setText("¥" + live.getPrice());
+                ivh.priceTxt2.setText(ActUtil.getPrice(live.getPrice()));
                 ivh.timeTxt2.setVisibility(View.GONE);
                 ivh.statusTxt2.setText(live.getFollow() + "人在学习");
             } else
@@ -152,7 +152,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if(live.getCourse_img().length()==0)
                     ivh.courseImg1.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 ivh.titleTxt.setText(live.getCourse_name());
-                ivh.priceTxt.setText("¥" + live.getPrice());
+                ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
                 ivh.timeTxt.setVisibility(View.GONE);
                 ivh.statusTxt.setText(live.getFollow() + "人在学习");
                 ivh.imgMask1.setVisibility(View.GONE);
@@ -164,7 +164,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if(live.getCourse_img().length()==0)
                     ivh.courseImg2.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 ivh.titleTxt2.setText(live.getCourse_name());
-                ivh.priceTxt2.setText("¥" + live.getPrice());
+                ivh.priceTxt2.setText(ActUtil.getPrice(live.getPrice()));
                 ivh.timeTxt2.setVisibility(View.GONE);
                 ivh.statusTxt2.setText(live.getFollow() + "人在学习");
                 ivh.imgMask2.setVisibility(View.GONE);

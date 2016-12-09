@@ -125,7 +125,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ivh.NumTxt1.setText(courseBean.getFollow() + "人报名");
                 if (courseBean.getPrice().equals("0.00"))
                     ivh.priceTxt1.setText("免费");
-                else ivh.priceTxt1.setText("￥" + courseBean.getPrice());
+                else ivh.priceTxt1.setText(ActUtil.getPrice(courseBean.getPrice()));
                 ivh.timeTxt1.setText(courseBean.getPlan());
                 ivh.titleTxt1.setText(courseBean.getCourse_name());
                 ivh.timeTxt1.setText(courseBean.getCourseware_date());
@@ -149,7 +149,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ivh.NumTxt2.setText(courseBean.getFollow() + "人报名");
                 if (courseBean.getPrice().equals("0.00"))
                     ivh.priceTxt2.setText("免费");
-                else ivh.priceTxt2.setText("￥" + courseBean.getPrice());
+                else ivh.priceTxt2.setText(ActUtil.getPrice( courseBean.getPrice()));
                 ivh.timeTxt2.setText(courseBean.getPlan());
                 ivh.titleTxt2.setText(courseBean.getCourse_name());
                 ivh.timeTxt2.setText(courseBean.getCourseware_date());

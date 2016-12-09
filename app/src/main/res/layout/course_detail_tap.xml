@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:gravity="center_vertical|right"
-            android:text="现价：￥"
+            android:text="现价："
             android:textColor="@color/dark_orange"
             android:textSize="13sp" />
 
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|right"
-                android:text="原价：￥"
+                android:text="原价："
                 android:textColor="@color/normal_gray"
                 android:textSize="11sp" />
 

@@ -91,7 +91,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private ThreadDAOImpl mDao;
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
-
+    private int openFilePos=0;
     public  ArrayList<ThreadInfo> files=new ArrayList<>();
 
     private String course_id;
@@ -261,17 +261,11 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void SetplayerOrImageState(int i) {
+        openFilePos=i;
         String relativepath = courseDetailBean.getCourse_extm().get(i).getUrl();
-        if(files.get(i).getStatus()==3){
-            path = DownloadService.DOWNLOAD_PATH+files.get(i).getFileName();
-        }else if (relativepath != null)
-            path = VideoUtil.getVideoUrl(relativepath);
+        path = VideoUtil.getVideoUrl(relativepath);
 
-        if (relativepath.length() > 0)
-        //设置背景图片
-//        upVideoView.setImage(R.drawable.dog);
-        //设置播放地址
-        {
+        if (relativepath.length() > 0){
             String type = "";
             type = OpenfileUtil.getFiletype(relativepath);
             if (type == "image") {
@@ -447,6 +441,17 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             video_play.setVisibility(View.VISIBLE);
                             timer.cancel();
                         } else {
+                            if(files.get(openFilePos).getStatus()==3){
+                                path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
+                                upVideoView.setVideoPath(path);
+                                upVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+                                    @Override
+                                    public void onPrepared(IMediaPlayer mp) {
+                                        totaltime=mp.getDuration();
+                                        totalTime.setText(ActUtil.getTimeFormat(totaltime/1000));
+                                    }
+                                });
+                            }
                             timer=new Timer();
                             timer.schedule(new TimerTask() {
 

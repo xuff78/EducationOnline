@@ -14,6 +14,7 @@ import com.education.online.act.VideoMainPage;
 import com.education.online.act.video.VideoMain;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -58,7 +59,7 @@ public class VideoListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),itemHolder.imageView);
         itemHolder.courseName.setText(course.getCourse_name());
         itemHolder.CourseTime.setText(course.getSubject_name());
-        itemHolder.CoursePrice.setText("￥"+course.getPrice());
+        itemHolder.CoursePrice.setText(ActUtil.getPrice(course.getPrice()));
     }
 
     @Override

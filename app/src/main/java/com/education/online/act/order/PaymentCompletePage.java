@@ -17,6 +17,7 @@ import com.education.online.bean.OrderDetailBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
 import com.education.online.util.JsonUtil;
 
 import java.util.List;
@@ -68,7 +69,7 @@ public class PaymentCompletePage extends BaseFrameAct implements View.OnClickLis
         TextView orderId= (TextView) findViewById(R.id.orderId);
         orderId.setText("订单号： "+orderDetailBean.getOrder_number());
         TextView orderAmount= (TextView) findViewById(R.id.orderAmount);
-        orderAmount.setText("课程名： "+orderDetailBean.getCourse_name()+"   ¥"+orderDetailBean.getPrice());
+        orderAmount.setText("课程名： "+orderDetailBean.getCourse_name()+"   "+ ActUtil.getPrice(orderDetailBean.getPrice()));
         findViewById(R.id.toOrder).setOnClickListener(this);
         findViewById(R.id.toHome).setOnClickListener(this);
     }

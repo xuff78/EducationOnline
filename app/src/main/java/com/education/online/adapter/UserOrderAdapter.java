@@ -71,7 +71,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         courseHolder.teacherName.setText(bean.getUser_name());
         courseHolder.typeName.setText(bean.getSubject_name());
         ActUtil.getCourseTypeTxt(bean.getCourse_type(), courseHolder.CoursePrice);
-        courseHolder.CoursePrice.setText(courseHolder.CoursePrice.getText().toString()+"   "+bean.getPrice());
+        courseHolder.CoursePrice.setText(courseHolder.CoursePrice.getText().toString()+"   "+ActUtil.getPrice(bean.getPrice()));
         courseHolder.statusTxt.setText(ActUtil.getOrderStatsTxts(bean.getState()));
         if(bean.getState().equals("5")){
             courseHolder.addEvaluate.setVisibility(View.VISIBLE);

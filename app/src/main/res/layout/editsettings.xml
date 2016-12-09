@@ -189,9 +189,40 @@
         android:background="@color/light_gray" />
 
     <RelativeLayout
+        android:id="@+id/aboutLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
->
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/what_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:text="关于"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/icon_black_arrow_right" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <TextView
             android:id="@+id/exitlogin"
             android:padding="5dp"

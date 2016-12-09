@@ -81,7 +81,7 @@ public class AllTypeCourseAdapter extends RecyclerView.Adapter <RecyclerView.Vie
                 CourseTime.setText("共"+ course.getCourse_count()+"节课");
 
             TextView CoursePrice = (TextView) v.findViewById(R.id.CoursePrice);
-            CoursePrice.setText("￥"+course.getPrice());
+            CoursePrice.setText(ActUtil.getPrice(course.getPrice()));
             TextView NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
             NumApplicant.setText(course.getFollow()+"人已报名");
             CourseName.setText(CourseName.getText().toString()+course.getCourse_name());

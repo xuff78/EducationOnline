@@ -36,10 +36,10 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
         TextView courseName= (TextView) findViewById(R.id.courseName);
         courseName.setText(orderDetailBean.getCourse_name());
         TextView coursePrice= (TextView) findViewById(R.id.coursePrice);
-        coursePrice.setText(orderDetailBean.getPrice());
+        coursePrice.setText("￥"+orderDetailBean.getPrice());
         walletAmount= (TextView) findViewById(R.id.walletAmount);
         TextView orderPrice= (TextView) findViewById(R.id.orderPrice);
-        orderPrice.setText(orderDetailBean.getOrder_price());
+        orderPrice.setText("总价： ￥"+orderDetailBean.getOrder_price());
         findViewById(R.id.rechargeBtn).setOnClickListener(this);
         findViewById(R.id.payBtn).setOnClickListener(this);
     }

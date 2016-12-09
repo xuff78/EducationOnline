@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/whitesmoke"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="30dp"
+                android:src="@mipmap/icon_xiangxue"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="向学客户端"
+                android:textSize="18sp"
+                style="@style/txt_black_14" />
+            <TextView
+                android:id="@+id/versionTxt"
+                android:layout_marginTop="5dp"
+                android:text="版本： 1.0.0"
+                style="@style/txt_gray_14" />
+            <View
+                android:layout_marginTop="20dp"
+                android:background="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:lineSpacingExtra="6dp"
+            android:padding="20dp"
+            android:text="        广州互问信息技术有限公司创立于2016年，是一家专注于教育改革创新，教育资源均衡共享的科技创新型企业。
+        公司由来自知名科技企业专家、教育专家等顶尖人才组建，专注于智慧教育在线服务、实训建设服务以及虚拟仿真大数据服务三大领域的开发，以推动、促进教育“知行合一”的本质为宗旨，致力于为高等教育、职业教育、基础教育等各大教育领域提供集智慧教育顶层设计、信息化、教学实训仿真模拟、现代教育装备、教学资源、创新增值服务于一体的综合解决方案，以及通过高效、智能、精准的师生资源匹配向社会大众提供以职业技能培训为核心的O2O互联网教育服务。"
+            style="@style/txt_black_14" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="Copyright © 2016 向学所有"
+            style="@style/txt_gray_14" />
+        <TextView
+            android:layout_marginTop="6dp"
+            android:text="广州互问信息技术有限公司"
+            style="@style/txt_gray_14" />
+
+    </LinearLayout>
+</ScrollView>

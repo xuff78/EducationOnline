@@ -28,6 +28,15 @@ public class CourseBean implements Serializable{
     private String courseware_date="";
     private String courseware_end_date="";
     private String has_course_during_halfhour="";
+    private String is_buy="";
+
+    public String getIs_buy() {
+        return is_buy;
+    }
+
+    public void setIs_buy(String is_buy) {
+        this.is_buy = is_buy;
+    }
 
     public int getSort_order() {
         return sort_order;
