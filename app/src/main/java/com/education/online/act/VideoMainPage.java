@@ -316,16 +316,18 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                     }
                 });
                 videoMask.setVisibility(View.VISIBLE);
-                if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode()))
+                if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode())) {
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
                         100, 100, new VideoThumbnailLoader.ThumbnailListener() {
                             @Override
-                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
+                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap, float rotate) {
                                 if (bitmap != null)
                                     iv.setImageBitmap(bitmap);
+//                                upVideoView.setRotation(rotate);
                             }
                         });
-                else {
+
+                }else {
                     videoMask.setVisibility(View.GONE);
                     video_play.setVisibility(View.INVISIBLE);
                 }
