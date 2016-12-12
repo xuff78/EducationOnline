@@ -82,7 +82,7 @@ public class TeacherImgAdapter extends RecyclerView.Adapter <RecyclerView.ViewHo
                 VideoThumbnailLoader.getIns().display(activity, ImageUtil.getImageUrl(items.get(position).getVideoUrl()),vh.teacherImg,
                         100, 100, new VideoThumbnailLoader.ThumbnailListener(){
                             @Override
-                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
+                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap, float rotate) {
                                 if(bitmap!=null)
                                     iv.setImageBitmap(bitmap);
                             }
