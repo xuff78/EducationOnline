@@ -1,15 +1,11 @@
 package com.education.online.act.login;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,10 +14,14 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.act.order.GetVeriCode;
+import com.education.online.act.FirstPage;
+import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.Constant;
+import com.education.online.util.SHA;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
@@ -33,69 +33,71 @@ import static com.mob.tools.utils.R.getStringRes;
 /**
  * Created by 可爱的蘑菇 on 2016/8/11.
  */
-public class RegisterPage1 extends BaseFrameAct {
+public class ModifyPassword extends BaseFrameAct {
 
-    private Button NextStep;
-    private TextView GetVertiCode;
-    private EditText UserMobile;
+    private Button Complete;
+    private TextView GetVertiCode, bindPhoneNum;
+    private EditText Newpassword;
     private EditText ValidVertiCode;
     private Timecounter timecounter;
     private Intent intent;
     private String phoneNum;
+    private String password;
     private String veriCode;
     private boolean getvericode = false;
     private HttpHandler httpHandler;
 
-    private String country = "";
-    private boolean ready;
-    private static String sms_type = "reg";
+
+    private static String sms_type = "others";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_page1);
+        setContentView(R.layout.modifypassword);
 
-         _setHeaderTitle("注 册");
+        _setHeaderTitle("修改密码");
         initView();
         initHandler();
     }
 
     private void initView() {
-
+        intent = getIntent();
         GetVertiCode = (TextView) findViewById(R.id.GetVertiCode);
         //GetVertiCode.setBackgroundColor(Color.parseColor("#FF6600"));
-        NextStep = (Button) findViewById(R.id.NextStep);
-        final EditText UserMobile = (EditText) findViewById(R.id.UserMobile);
+        Complete = (Button) findViewById(R.id.Complete);
+        final EditText Newpassword = (EditText) findViewById(R.id.Newpassword);
         final EditText ValidVeriCode = (EditText) findViewById(R.id.ValidVertiCode);
         timecounter = new Timecounter(60000, 1000);
-        NextStep.setOnClickListener(new View.OnClickListener() {
+        bindPhoneNum = (TextView) findViewById(R.id.bindPhoneNum);
+        phoneNum = SharedPreferencesUtil.getString(this, Constant.UserName);//保存用户名在本地
+        bindPhoneNum.setText(phoneNum);
+
+        Complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserMobile.setError(null);
+                Newpassword.setError(null);
                 ValidVeriCode.setError(null);
-                String Num = UserMobile.getText().toString().trim().replaceAll("\\s*", "");
+                String Num = Newpassword.getText().toString().trim();
                 String vericode = ValidVeriCode.getText().toString().trim();
-                if (TextUtils.isEmpty(vericode) && TextUtils.isEmpty(Num)) {
-                    ValidVeriCode.setError(getString(R.string.enter_valid_vericode));
-                    UserMobile.setError(getString(R.string.enter_valid_phone));
-                    UserMobile.requestFocus();
-                } else if (TextUtils.isEmpty(vericode)) {
-                    ValidVeriCode.setError(getString(R.string.enter_valid_vericode));
-                    ValidVeriCode.requestFocus();
-                } else if (!getvericode) {
+                if (!getvericode) {
                     ValidVeriCode.setError("请获取验证码");
                     ValidVeriCode.requestFocus();
-                } else if (getvericode && phoneNum.equals(Num)) {//此处验证验证码是否正确
-                    //  timecounter.onFinish();
-                    UserMobile.setError(null);
-                    ValidVeriCode.setError(null);
-                    //phoneNum =  UserMobile.getText().toString().trim().replaceAll("\\s*", "");
-                    veriCode = ValidVeriCode.getText().toString().trim();
-                    httpHandler.Verify(phoneNum,veriCode);
-
-                    // }
-                } else {
-                    Toast.makeText(RegisterPage1.this, R.string.faliure_wrong_vericode, Toast.LENGTH_SHORT).show();
+                }else {
+                    if (TextUtils.isEmpty(vericode)) {
+                        ValidVeriCode.setError(getString(R.string.enter_valid_vericode));
+                        ValidVeriCode.requestFocus();
+                    } else if (TextUtils.isEmpty(Num)) {
+                        ValidVeriCode.setError("请输入有效密码");
+                        ValidVeriCode.requestFocus();
+                    } else {
+                        Newpassword.setError(null);
+                        ValidVeriCode.setError(null);
+                        veriCode = ValidVeriCode.getText().toString().trim();
+                        password = Newpassword.getText().toString().trim();
+                        String SHApassword = SHA.getSHA(password);
+                        httpHandler.ModifyPassword(SHApassword, veriCode);// }
+                    }
                 }
                 //startActivity(new Intent(RegisterPage1.this, TeacherPage.class));
 
@@ -104,40 +106,44 @@ public class RegisterPage1 extends BaseFrameAct {
         GetVertiCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserMobile.setError(null);
+                Newpassword.setError(null);
                 ValidVeriCode.setError(null);
-                String Num = UserMobile.getText().toString();
-                if (TextUtils.isEmpty(Num) || !isPhoneNumValid(Num)) {
-                    UserMobile.setError(getString(R.string.enter_valid_phone));
-                    UserMobile.requestFocus();
-                } else {
-                    getvericode = true;
-                    phoneNum = UserMobile.getText().toString().trim();
-               httpHandler.getSms(phoneNum,sms_type);
-                    timecounter.start();
-
-                }
+                String Num = Newpassword.getText().toString();
+                getvericode = true;
+                httpHandler.getSms(phoneNum, sms_type);
+                timecounter.start();
             }
         });
-
     }
 
-    private void initHandler(){
-        httpHandler = new HttpHandler(RegisterPage1.this,new CallBack(RegisterPage1.this){
+    ;
+
+    private void initHandler() {
+        httpHandler = new HttpHandler(ModifyPassword.this, new CallBack(ModifyPassword.this) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                if(method.equals(Method.verify)){ intent = new Intent();
-                    intent.putExtra("phone",phoneNum);
-                    intent.setClass(RegisterPage1.this,RegisterPage2.class);
-                    startActivity(intent);}
-                if(method.equals(Method.getSms)){
-                    ToastUtils.displayTextShort(RegisterPage1.this,"获取短信验证码成功！");
+                if (method.equals(Method.modifypassword)) {
+                    ToastUtils.displayTextShort(ModifyPassword.this, "密码修改成功！");
+                    intent.setClass(ModifyPassword.this, FirstPage.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                 }
+                if (method.equals(Method.getSms)) {
+                    ToastUtils.displayTextShort(ModifyPassword.this, "获取短信验证码成功！");
+                }
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+                super.onFailure(method, jsonMessage);
+
 
             }
         });
     }
+
 
     private boolean isPhoneNumValid(String num) {
         return (num.length() == 11);
@@ -168,6 +174,4 @@ public class RegisterPage1 extends BaseFrameAct {
 
         }
     }
-
-
 }

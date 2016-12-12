@@ -46,6 +46,27 @@ public class HttpHandler extends Handle {
 		requestPostUser(Method.Login, paramMap, true);
 	}
 
+	public void getSms(String phone, String sms_type) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("phone", phone);
+		paramMap.put("sms_type", sms_type);
+		requestPostEdu(Method.getSms, paramMap, true);
+	}
+
+	public void Verify(String phone, String verify_code) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("phone", phone);
+		paramMap.put("verify_code", verify_code);
+		requestPostEdu(Method.verify, paramMap, true);
+	}
+	public void ModifyPassword(String password, String verify_code) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("password", password);
+		paramMap.put("verify_code", verify_code);
+		requestPostUser(Method.modifypassword, paramMap, true);
+	}
+
 	public void getSubjectList() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		requestPostEdu(Method.getSubjectList, paramMap, true);

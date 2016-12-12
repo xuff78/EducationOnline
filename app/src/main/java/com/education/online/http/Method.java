@@ -52,5 +52,8 @@ public class Method {
     public static final String complain= "education/user/expose";
     public static final String getMyCourse= "education/course/self";
     public static final String getAdvert= "education/homepage/advert";
+    public static final String getSms="education/common/sendSms";
+    public static final String verify="education/common/verify";
+    public static final String modifypassword="uc/user/modifyPassword";
 
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.login.ModifyPassword;
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -27,6 +28,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
     }
     public void init(){
         modifypwd = (RelativeLayout) findViewById(R.id.modifypwd);
+        modifypwd.setOnClickListener(this);
         privacy= (RelativeLayout) findViewById(R.id.privacy);
         downloadsetting = (RelativeLayout) findViewById(R.id.downloadsetting);
         servicenum = (RelativeLayout) findViewById(R.id.servicenum);
@@ -40,6 +42,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.modifypwd:
+                startActivity(new Intent(this, ModifyPassword.class));
             break;
             case R.id.privacy:
             break;
