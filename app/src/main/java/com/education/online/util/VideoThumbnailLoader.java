@@ -3,10 +3,8 @@ package com.education.online.util;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -15,7 +13,6 @@ import com.nostra13.universalimageloader.cache.memory.MemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * Created by Administrator on 2016/11/8.
@@ -52,7 +49,6 @@ public class VideoThumbnailLoader {
         private int width;
         private int height;
         private Activity act;
-        private float rotate=0;
         public ThumbnailLoadTask(Activity act, String url, ImageView iv, int width, int height,
                                  ThumbnailListener thumbnailListener){
             this.url = url;
@@ -80,33 +76,7 @@ public class VideoThumbnailLoader {
                     if (null != file && file.exists()) {//去磁盘缓存取
                         bitmap = BitmapFactory.decodeFile(file.getPath());
                         if (null==bitmap) {
-//                            bitmap = ImageUtil.createVideoThumbnail(url, width, height);
-                            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                            try {
-                                if (Build.VERSION.SDK_INT >= 14) {
-                                    retriever.setDataSource(url, new HashMap<String, String>());
-                                } else {
-                                    retriever.setDataSource(url);
-                                }
-//                                String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT); // 视频高度
-//                                String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH); // 视频宽度
-                                rotate = Float.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION));
-                                bitmap = retriever.getFrameAtTime();
-                            } catch (IllegalArgumentException ex) {
-                                // Assume this is a corrupt video file
-                            } catch (RuntimeException ex) {
-                                // Assume this is a corrupt video file.
-                            } finally {
-                                try {
-                                    retriever.release();
-                                } catch (RuntimeException ex) {
-                                    // Ignore failures while cleaning up.
-                                }
-                            }
-                            if (bitmap != null) {
-                                bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
-                                        ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-                            }
+                            bitmap = ImageUtil.createVideoThumbnail(url, width, height);
                             FileUtil.saveBitmap(bitmap, filename, act);
                         }
                     } else {
@@ -128,7 +98,7 @@ public class VideoThumbnailLoader {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            thumbnailListener.onThumbnailLoadCompleted(url, iv, bitmap, rotate);//回调
+            thumbnailListener.onThumbnailLoadCompleted(url, iv, bitmap);//回调
         }
     }
 
@@ -162,6 +132,6 @@ public class VideoThumbnailLoader {
 
     //自己定义一个回调,通知外部图片加载完毕
     public interface ThumbnailListener{
-        void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap, float roatate);
+        void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap);
     }
 }

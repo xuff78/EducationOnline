@@ -153,6 +153,7 @@
         <activity
             android:name=".act.VideoMainPage"
             android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
         <activity
             android:name=".act.teacher.TeacherInfoEdit"

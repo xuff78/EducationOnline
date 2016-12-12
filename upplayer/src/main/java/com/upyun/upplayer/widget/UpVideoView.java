@@ -995,7 +995,7 @@ public class UpVideoView extends FrameLayout implements MediaController.MediaPla
             }
             activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            DisplayMetrics metrics = new DisplayMetrics();
+            /*DisplayMetrics metrics = new DisplayMetrics();
             activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
             mRawParams = getLayoutParams();
             ViewGroup.LayoutParams fullParams;
@@ -1017,7 +1017,7 @@ public class UpVideoView extends FrameLayout implements MediaController.MediaPla
                         .show();
                 return;
             }
-            setLayoutParams(fullParams);
+            setLayoutParams(fullParams);*/
             isFullState = true;
         }
     }
@@ -1027,10 +1027,10 @@ public class UpVideoView extends FrameLayout implements MediaController.MediaPla
         if (isFullState) {
             if (activity.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+//                        WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             }
-            setLayoutParams(mRawParams);
+//            setLayoutParams(mRawParams);
             isFullState = false;
         }
     }

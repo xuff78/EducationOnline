@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.OpenfileUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.ScreenUtil;
@@ -48,6 +50,7 @@ import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.util.VideoUtil;
 import com.education.online.view.DownLoadDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.upyun.upplayer.widget.IRenderView;
 import com.upyun.upplayer.widget.UpVideoView;
 
 import org.json.JSONException;
@@ -70,7 +73,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private TextView paytips, payBtn;
     private LinearLayout details, directory, comments;
     private TextView textdetails, textdirectory, textcomments, totalTime;
-    private View viewdetails, viewdirectory, viewcomments;
+    private View viewdetails, viewdirectory, viewcomments, bottomLayout;
     private ImageView roundLeftBack;
     private RecyclerView recyclerList;
     private View lastSelectedview;
@@ -314,10 +317,9 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
                         100, 100, new VideoThumbnailLoader.ThumbnailListener() {
                             @Override
-                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap, float rotate) {
+                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
                                 if (bitmap != null)
                                     iv.setImageBitmap(bitmap);
-//                                upVideoView.setRotation(rotate);
                             }
                         });
 
@@ -354,6 +356,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.videodetail);
 
         _setHeaderGone();
@@ -371,6 +375,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void initView() {
+        bottomLayout=findViewById(R.id.bottomLayout);
         my_usercode = SharedPreferencesUtil.getUsercode(this);
         listener = new View.OnClickListener() {
 
@@ -437,11 +442,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                     case R.id.video_play:
                     case R.id.playBtn:
                         if (upVideoView.isPlaying()) {
-                            playBtn.setImageResource(R.mipmap.icon_play);
-                            //暂停播放
-                            upVideoView.pause();
-                            video_play.setVisibility(View.VISIBLE);
-                            timer.cancel();
+                            stopPlay();
                         } else {
                             if(files.get(openFilePos).getStatus()==3){
                                 path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
@@ -455,13 +456,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                                 });
                             }
                             timer=new Timer();
-                            timer.schedule(new TimerTask() {
-
-                                @Override
-                                public void run() {
-                                    handler.sendEmptyMessage(WHAT);
-                                }
-                            }, 0, 1000);
+                            timer.schedule(task, 1000, 1000);
                             playBtn.setImageResource(R.mipmap.icon_video_stop);
                             //开始播放
                             upVideoView.start();
@@ -470,17 +465,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         }
                         break;
                     case R.id.expandBtn:
-                        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                        }
-                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                        DisplayMetrics metrics = new DisplayMetrics();
-                        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
-                        mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
-                        upVideoView.setLayoutParams(params);
-                        upVideoView.getTrackInfo();
+                        upVideoView.fullScreen(VideoMainPage.this);
                         break;
                     case R.id.roundLeftBack:
 
@@ -538,7 +523,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         playBtn = (ImageView) findViewById(R.id.playBtn);
         playBtn.setOnClickListener(listener);
         expandBtn = (ImageView) findViewById(R.id.expandBtn);
-//        expandBtn.setOnClickListener(this);
+        expandBtn.setOnClickListener(listener);
         seekbar = (SeekBar) findViewById(R.id.seekbar);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -565,12 +550,14 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
         videoMask = (ImageView) findViewById(R.id.videoMask);
         upVideoView = (UpVideoView) findViewById(R.id.upVideoView);
+        upVideoView.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
+        upVideoView.setBufferSize(1024*1024*5);
         int width = ScreenUtil.getWidth(this);
         int height = (int) (((float) width) * 9 / 16);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
         //  relativelayout1.setLayoutParams(params);
         relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
-        upVideoView.setLayoutParams(params);
+//        upVideoView.setLayoutParams(params);
 
         video_play = (ImageView) findViewById(R.id.video_play);
         video_play.setOnClickListener(listener);
@@ -586,6 +573,14 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         detailsAdapter = new DetailsAdapter(this, courseDetailBean);
         recyclerList.setAdapter(detailsAdapter);
 
+    }
+
+    private void stopPlay() {
+        playBtn.setImageResource(R.mipmap.icon_play);
+        //暂停播放
+        upVideoView.pause();
+        video_play.setVisibility(View.VISIBLE);
+        timer.cancel();
     }
 
     public void setStatusFalse(int pos) {
@@ -608,10 +603,33 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+            bottomLayout.setVisibility(View.GONE);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            int width = ScreenUtil.getWidth(this);
+            int height = (int) (((float) width) * 9 / 16);
+            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            bottomLayout.setVisibility(View.VISIBLE);
         }
         super.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (upVideoView.isFullState()) {
+            //退出全屏
+            upVideoView.exitFullScreen(this);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(upVideoView.isPlaying())
+            stopPlay();
+    }
 
     @Override
     public void onStop() {
@@ -647,13 +665,21 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     };
 
 
-    private Timer timer = null;
+    private Timer timer=null;
+    private TimerTask task = new TimerTask() {
+
+        @Override
+        public void run() {
+            handler.sendEmptyMessage(WHAT);
+        }
+    };
     private final static int WHAT = 0;
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case WHAT:
                     int currentPlayer = upVideoView.getCurrentPosition();
+                    LogUtil.i("Time", "show time: "+System.currentTimeMillis());
                     if (currentPlayer > 0) {
                         currentTime.setText(ActUtil.getTimeFormat(currentPlayer/1000));
 
@@ -672,8 +698,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     @Override
     protected void onDestroy() {
         unbindService(connection);
-        if(timer!=null)
-            timer.cancel();
         super.onDestroy();
     }
 

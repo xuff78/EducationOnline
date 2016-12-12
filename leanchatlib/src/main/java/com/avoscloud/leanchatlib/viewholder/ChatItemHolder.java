@@ -70,11 +70,12 @@ public class ChatItemHolder extends CommonViewHolder {
   @Override
   public void bindData(Object o) {
     message = (AVIMMessage)o;
+    long gap = System.currentTimeMillis() - message.getTimestamp();
     timeView.setText(Utils.millisecsToDateString(message.getTimestamp()));
 
     LeanchatUser user = AVUserCacheUtils.getCachedUser(message.getFrom());
     if (null != user) {
-      nameView.setText(user.getUsername());
+      nameView.setText((String)user.get("username"));
       ImageLoader.getInstance().displayImage(user.getAvatarUrl(), avatarView, PhotoUtils.avatarImageOptions);
     } else {
       try {

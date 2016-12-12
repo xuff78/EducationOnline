@@ -104,7 +104,7 @@ public class ChatAdapter extends BaseAdapter{
         }
         ((CommonViewHolder) holder).bindData(messageList.get(position));
         if (holder instanceof ChatItemHolder) {
-            ((ChatItemHolder)holder).showTimeView(shouldShowTime(position));
+            ((ChatItemHolder)holder).showTimeView(false);//shouldShowTime(position));
             ((ChatItemHolder)holder).showUserName(isShowUserName);
         }
         return holder.itemView;

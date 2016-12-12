@@ -113,6 +113,9 @@ public class VideoPlay extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // do something
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // do something
         }
         super.onConfigurationChanged(newConfig);
     }
