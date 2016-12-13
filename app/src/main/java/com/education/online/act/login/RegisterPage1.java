@@ -48,14 +48,13 @@ public class RegisterPage1 extends BaseFrameAct {
 
     private String country = "";
     private boolean ready;
-    private static String sms_type = "reg";
+    private String sms_type = "reg";
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page1);
-
-         _setHeaderTitle("注 册");
         initView();
         initHandler();
     }
@@ -67,6 +66,14 @@ public class RegisterPage1 extends BaseFrameAct {
         NextStep = (Button) findViewById(R.id.NextStep);
         final EditText UserMobile = (EditText) findViewById(R.id.UserMobile);
         final EditText ValidVeriCode = (EditText) findViewById(R.id.ValidVertiCode);
+        intent = getIntent();
+        type = intent.getStringExtra("type");
+        if (type.equals("regist")) {
+            _setHeaderTitle("注册");
+        } else if (type.equals("retrievepassword")) {
+            sms_type = "others";
+            _setHeaderTitle("找回密码");
+        }
         timecounter = new Timecounter(60000, 1000);
         NextStep.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +94,19 @@ public class RegisterPage1 extends BaseFrameAct {
                     ValidVeriCode.requestFocus();
                 } else if (getvericode && phoneNum.equals(Num)) {//此处验证验证码是否正确
                     //  timecounter.onFinish();
+
                     UserMobile.setError(null);
                     ValidVeriCode.setError(null);
                     //phoneNum =  UserMobile.getText().toString().trim().replaceAll("\\s*", "");
                     veriCode = ValidVeriCode.getText().toString().trim();
-                    httpHandler.Verify(phoneNum,veriCode);
+                    if (type.equals("regist")) {
+                        httpHandler.Verify(phoneNum, veriCode);
+                    } else if (type.equals("retrievepassword")) {
+                        intent.putExtra("phone", phoneNum);
+                        intent.putExtra("verify_code", veriCode);
+                        intent.setClass(RegisterPage1.this, RegisterPage2.class);
+                        startActivity(intent);
+                    }
 
                     // }
                 } else {
@@ -113,7 +128,7 @@ public class RegisterPage1 extends BaseFrameAct {
                 } else {
                     getvericode = true;
                     phoneNum = UserMobile.getText().toString().trim();
-               httpHandler.getSms(phoneNum,sms_type);
+                    httpHandler.getSms(phoneNum, sms_type);
                     timecounter.start();
 
                 }
@@ -122,17 +137,19 @@ public class RegisterPage1 extends BaseFrameAct {
 
     }
 
-    private void initHandler(){
-        httpHandler = new HttpHandler(RegisterPage1.this,new CallBack(RegisterPage1.this){
+    private void initHandler() {
+        httpHandler = new HttpHandler(RegisterPage1.this, new CallBack(RegisterPage1.this) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                if(method.equals(Method.verify)){ intent = new Intent();
-                    intent.putExtra("phone",phoneNum);
-                    intent.setClass(RegisterPage1.this,RegisterPage2.class);
-                    startActivity(intent);}
-                if(method.equals(Method.getSms)){
-                    ToastUtils.displayTextShort(RegisterPage1.this,"获取短信验证码成功！");
+                if (method.equals(Method.verify)) {
+                    intent.putExtra("phone", phoneNum);
+                    intent.putExtra("verify_code", veriCode);
+                    intent.setClass(RegisterPage1.this, RegisterPage2.class);
+                    startActivity(intent);
+                }
+                if (method.equals(Method.getSms)) {
+                    ToastUtils.displayTextShort(RegisterPage1.this, "获取短信验证码成功！");
                 }
 
             }

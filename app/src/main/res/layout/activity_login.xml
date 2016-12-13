@@ -92,6 +92,15 @@
                 android:text="登  录"
                 android:textStyle="bold" />
 
+            <TextView
+                android:textSize="13sp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/retrievepassword"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:textColor="@color/white"
+                android:text="忘记密码？"/>
+
         </LinearLayout>
     <TextView
         android:layout_alignParentBottom="true"

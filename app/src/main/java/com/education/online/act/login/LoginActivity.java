@@ -36,6 +36,7 @@ public class LoginActivity extends BaseFrameAct {
 
     private EditText userName;
     private EditText userPsd;
+    private TextView retrievepassword;
     HttpHandler handler;
 
     @Override
@@ -53,6 +54,7 @@ public class LoginActivity extends BaseFrameAct {
     private void initView() {
         userName = (EditText) findViewById(R.id.userName);
         userPsd = (EditText) findViewById(R.id.userPsd);
+        retrievepassword = (TextView) findViewById(R.id.retrievepassword);
         String loginName=SharedPreferencesUtil.getString(this, Constant.UserName);//保存用户名在本地
         String psw=SharedPreferencesUtil.getString(this, Constant.UserPSW);//保存用户名在本地
         if(!loginName.equals(SharedPreferencesUtil.FAILURE_STRING)){//有数据时自动填写
@@ -82,7 +84,19 @@ public class LoginActivity extends BaseFrameAct {
         findViewById(R.id.registerBtn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterPage1.class));
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, RegisterPage1.class);
+                intent.putExtra("type","regist");
+                startActivity(intent);
+            }
+        });
+        retrievepassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, RegisterPage1.class);
+                intent.putExtra("type","retrievepassword");
+                startActivity(intent);
             }
         });
     }

@@ -55,5 +55,6 @@ public class Method {
     public static final String getSms="education/common/sendSms";
     public static final String verify="education/common/verify";
     public static final String modifypassword="uc/user/modifyPassword";
+    public static final String retrievePassword="uc/user/retrievePassword";
 
 }
