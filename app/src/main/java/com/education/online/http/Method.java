@@ -57,4 +57,7 @@ public class Method {
     public static final String modifypassword="uc/user/modifyPassword";
     public static final String retrievePassword="uc/user/retrievePassword";
 
+
+    public static final String getPayment= "payment/payment/info";
+
 }

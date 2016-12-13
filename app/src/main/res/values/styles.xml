@@ -8,6 +8,16 @@
         <item name="colorAccent">@color/normal_red</item>
     </style>
 
+    <style name="SwipeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/hard_gray</item>
+        <item name="colorAccent">@color/normal_red</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="txt_black_14">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

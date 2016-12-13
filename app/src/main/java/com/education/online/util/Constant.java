@@ -9,6 +9,9 @@ public class Constant {
 
     public static final String API_Url_User="http://106.75.5.58:43320/";
     public static final String API_Url_Service="http://106.75.5.58:43330/";
+    public static final String API_Url_Payment="http://106.75.5.58:44330/";
+
+
     public static final String Url_API="url_api";
     public static final String Product_code="Product_code";
     public static final String App_Channel="app_channel";
@@ -48,6 +51,15 @@ public class Constant {
     public static final int finishDownload = 3;
     public static final int errorDownload = 4;
     public static final int updateDownload = 5;
+
+    /** 支付宝支付业务：入参app_id */
+    public static final String APPID = "";
+    /** 支付宝账户登录授权业务：入参pid值 */
+    public static final String PID = "";
+    /** 支付宝账户登录授权业务：入参target_id值 */
+    public static final String TARGET_ID = "";
+    /** 商户私钥，pkcs8格式 */
+    public static final String RSA_PRIVATE = "";
 
     public class Method{
         public static final String init=API_BASE + "sys.init";

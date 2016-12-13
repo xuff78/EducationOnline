@@ -560,6 +560,15 @@ public class HttpHandler extends Handle {
 		requestPostUser(Method.getIntegral,paraMap,true);
 
 	}
+
+	public  void getPayment(String order_number, String pay_channel){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("order_number",order_number);
+		paraMap.put("pay_channel",pay_channel);
+		requestPostPayment(Method.getPayment,paraMap,true);
+	}
+
 	public  void submitFeedback(String introduction){
 		HashMap<String, String > paraMap =new HashMap<>();
 
@@ -615,6 +624,11 @@ public void complain(String user_name,String courses_name,String reason,String i
 	protected void requestPostEdu(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_Service+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_Service+method, method, body, 1);
+	}
+
+	protected void requestPostPayment(String method, HashMap paramMap, boolean showDialog) {
+		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_Service+method, paramMap); //这个是加密过程，可以不看
+		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_Payment+method, method, body, 1);
 	}
 
 //	protected void requestPost(String method, HashMap paramMap, boolean showDialog) {
