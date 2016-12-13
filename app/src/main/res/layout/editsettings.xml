@@ -8,8 +8,7 @@
     <RelativeLayout
         android:id="@+id/modifypwd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
@@ -26,6 +25,7 @@
 
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/right1"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -38,15 +38,13 @@
         android:layout_marginLeft="18dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
         android:background="@color/light_gray" />
 
 
     <RelativeLayout
         android:id="@+id/privacy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
@@ -62,6 +60,7 @@
 
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/right2"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -70,8 +69,6 @@
             android:src="@mipmap/icon_black_arrow_right" />
     </RelativeLayout>
     <View
-
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/light_gray" />
@@ -90,8 +87,7 @@
     <RelativeLayout
         android:id="@+id/downloadsetting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
@@ -106,6 +102,7 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/right3"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -118,13 +115,12 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="10dp"
+
         android:background="@color/light_gray" />
     <RelativeLayout
         android:id="@+id/servicenum"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
@@ -139,6 +135,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:layout_centerVertical="true"
             android:text="18732317261"
             android:id="@+id/servicephone"
             android:layout_width="wrap_content"
@@ -152,13 +149,11 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="15dp"
         android:background="@color/light_gray" />
     <RelativeLayout
         android:id="@+id/contactus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
@@ -173,6 +168,7 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/right5"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -185,7 +181,6 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="10dp"
         android:background="@color/light_gray" />
 
     <RelativeLayout
