@@ -26,6 +26,7 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
     public static final int UnionPay=3;
     private View checkedIcon=null;
     private View checkIcon, checkIcon2, checkIcon3, checkIcon4;
+    private int choice=-1;
 
     public PayTypeDialog(Context context, boolean showWallet, PayDialogCallBack cb) {
         super(context, R.style.view_dialog);
@@ -68,13 +69,16 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
         findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismiss();
+                if(choice!=-1) {
+                    dismiss();
+                }
             }
         });
         findViewById(R.id.payBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
+                cb.onSelected(choice);
             }
         });
         if(!showWallet)
@@ -88,19 +92,19 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
         switch (view.getId()){
             case R.id.walletPayLayout:
                 checkedIcon=checkIcon;
-                cb.onSelected(0);
+                choice=0;
                 break;
             case R.id.alipayPayLayout:
                 checkedIcon=checkIcon2;
-                cb.onSelected(1);
+                choice=1;
                 break;
             case R.id.wechatPayLayout:
                 checkedIcon=checkIcon3;
-                cb.onSelected(2);
+                choice=2;
                 break;
             case R.id.unionPayLayout:
                 checkedIcon=checkIcon4;
-                cb.onSelected(3);
+                choice=3;
                 break;
         }
         checkedIcon.setVisibility(View.VISIBLE);

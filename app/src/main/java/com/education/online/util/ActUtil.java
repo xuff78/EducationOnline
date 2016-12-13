@@ -318,6 +318,9 @@ public class ActUtil {
         String res="";
         if(state!=null&&state.length()>0){
             switch (Integer.valueOf(state)){
+                case 0:
+                    res= "已取消";
+                    break;
                 case 1:
                     res= "待支付";
                     break;

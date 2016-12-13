@@ -53,4 +53,7 @@ public class Method {
     public static final String getMyCourse= "education/course/self";
     public static final String getAdvert= "education/homepage/advert";
 
+
+    public static final String getPayment= "payment/payment/info";
+
 }

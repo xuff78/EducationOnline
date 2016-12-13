@@ -1,9 +1,11 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/11/11.
  */
-public class OrderDetailBean {
+public class OrderDetailBean implements Serializable{
 
     private String order_number=""; // 订单号
     private String order_price=""; // 实付金额

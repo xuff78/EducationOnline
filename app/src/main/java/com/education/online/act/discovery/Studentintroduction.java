@@ -26,6 +26,8 @@ import com.education.online.util.JsonUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.QrcodeDialog;
+import com.education.online.view.SwipeBackActivity;
+import com.education.online.view.SwipeBackLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 /**
  * Created by 可爱的蘑菇 on 2016/9/27.
  */
-public class Studentintroduction extends BaseFrameAct implements View.OnClickListener{
+public class Studentintroduction extends SwipeBackActivity implements View.OnClickListener{
 
     private HttpHandler mHandler;
     private TeacherBean teacherInfo;
@@ -72,12 +74,12 @@ public class Studentintroduction extends BaseFrameAct implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_introduction);
+        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
 
         myUsercode= SharedPreferencesUtil.getUsercode(this);
         imageLoader=ImageLoader.getInstance();
         teacherInfo= JSON.parseObject(getIntent().getStringExtra("jsonData"), TeacherBean.class);
         initHandler();
-        _setHeaderGone();
 
         initView();
     }

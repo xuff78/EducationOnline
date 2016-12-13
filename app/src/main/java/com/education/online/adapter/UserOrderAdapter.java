@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.act.order.OrderPay;
 import com.education.online.act.video.Comment;
 import com.education.online.bean.OrderDetailBean;
 import com.education.online.inter.SimpleAdapterCallback;
@@ -75,6 +76,9 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         courseHolder.statusTxt.setText(ActUtil.getOrderStatsTxts(bean.getState()));
         if(bean.getState().equals("5")){
             courseHolder.addEvaluate.setVisibility(View.VISIBLE);
+        }else if(bean.getState().equals("1")){
+            courseHolder.addEvaluate.setVisibility(View.VISIBLE);
+            courseHolder.addEvaluate.setText("去支付");
         }
     }
 
@@ -102,12 +106,18 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
             addEvaluate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(activity, Comment.class);
-                    intent.putExtra("courseImg", bean.getImg());
-                    intent.putExtra("courseName", bean.getCourse_name());
-                    intent.putExtra("courseIntroduction", bean.getIntroduction());
-                    intent.putExtra("course_id", bean.getCourse_id());
-                    activity.startActivity(intent);
+                    if(bean.getState().equals("5")) {
+                        Intent intent=new Intent(activity, Comment.class);
+                        intent.putExtra("courseImg", bean.getImg());
+                        intent.putExtra("courseName", bean.getCourse_name());
+                        intent.putExtra("courseIntroduction", bean.getIntroduction());
+                        intent.putExtra("course_id", bean.getCourse_id());
+                        activity.startActivity(intent);
+                    }else if(bean.getState().equals("1")){
+                        Intent intent = new Intent(activity, OrderPay.class);
+                        intent.putExtra("Order", bean);
+                        activity.startActivity(intent);
+                    }
                 }
             });
             v.setOnClickListener(new View.OnClickListener() {
