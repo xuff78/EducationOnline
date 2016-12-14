@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
@@ -23,6 +24,8 @@ import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
 import com.education.online.view.PayTypeDialog;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -88,9 +91,10 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
-            public void doSuccess(String method, String jsonData){
+            public void doSuccess(String method, final String jsonData){
                 if(method.equals(Method.getPayment)){
                     final String sign_str= JsonUtil.getString(jsonData, "sign_str");
+                    EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
 //                    Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID);
 //                    String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
 //                    String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE);
@@ -100,13 +104,19 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                         @Override
                         public void run() {
                             PayTask alipay = new PayTask(OrderPay.this);
-                            Map<String, String> result = alipay.payV2(sign_str, true);
-                            Log.i("msp", result.toString());
+                            try {
+                                String str=jsonData; //URLEncoder.encode(sign_str, "UTF-8");
+                                Map<String, String> result = alipay.payV2(str, true);
+                                Log.i("msp", "sign_str encode: "+str);
+                                Log.i("msp", result.toString());
 
-                            Message msg = new Message();
-                            msg.what = SDK_PAY_FLAG;
-                            msg.obj = result;
-                            mHandler.sendMessage(msg);
+                                Message msg = new Message();
+                                msg.what = SDK_PAY_FLAG;
+                                msg.obj = result;
+                                mHandler.sendMessage(msg);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     };
 
