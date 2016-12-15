@@ -22,6 +22,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.OrderInfoUtil2_0;
 import com.education.online.view.PayTypeDialog;
 
 import java.io.UnsupportedEncodingException;
@@ -72,7 +73,7 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                         // 获取alipay_open_id，调支付时作为参数extern_token 的value
                         // 传入，则支付账户为该授权账户
                         Toast.makeText(OrderPay.this,
-                                "授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT)
+                                "授权成功" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT)
                                 .show();
                     } else {
                         // 其他状态值则为授权失败
@@ -87,13 +88,30 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
             }
         }
     };
+    private String APPID="2016072800112933";
+    private String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAN+t4ANqVWdu0JI2" +
+            "053gil1MSk3Grj+r957HSepLtyK2jObpJsDm5L7XKB4I4KcVYWA+13K4fTJVi84D" +
+            "v549xF8QIav1Wvh0hTxKWVdwxSqMZbTKzZP2xjxKL5SgXKroe2amaDv3wpRRppUB" +
+            "1pDXSizzGRwnDXN9B3S9xitdBuQ7AgMBAAECgYEA202/p7mWmH2mkuScYFspbcYB" +
+            "x/W3HAhAFHWyO7wWhztSNId9jn4S4iVTWPc9Q7QLr/CNDhZh8Xq8QrWcJsrKftCz" +
+            "ulvNh9vT/eddsMR7l4jQ8wsaMQz8Fx39OcnlGhO+jkJXJ2Q5/p1/Ip3rQO9yQuzi" +
+            "0qnYV+00Au70tiGUJNECQQDxG2tUFbj83PBFEH8ogmgbr+h4s2vIPZQpex10Cm08" +
+            "kB6kgPBs8kwdoAJEzVHC7CenysaIpwVOmKuRO9j5c3NZAkEA7X7fIuP3ArtcsFUo" +
+            "xNXB/QqEYxn8Kx5tdxVaNUMW4fomZ94ZzYrMrWxIkt5fsd71HCy+/wf0qtdgZkqo" +
+            "vWCFswJACl4FdW4hsC3H3xBgh1tkIpyjwFzmq4uKTWZP0+eG3u3Lg4NP0z9v6m4w" +
+            "6shxVZJV+i8L7mBQKBsEdZA/OiqusQJALYMFobsL5/MdxRDcujO4dBRi4Fbncx/m" +
+            "nE50NgbASNfWKktuqGvz4zwAAF0q+3wdfqO4ikjtAxw49gFSqs/nbwJBAOpQVyNS" +
+            "V3JQaecdSFX6EfScdX8zYnwt0lCjTXYToo+T+GnZD5go62yd6TBZQFIy4ZrfMCYk" +
+            "6IJjFe7vH9fOqxE=";
+    private String PID="";
+    private Object TARGET_ID="";
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, final String jsonData){
                 if(method.equals(Method.getPayment)){
-                    final String sign_str= JsonUtil.getString(jsonData, "sign_str");
+//                    final String sign_str= JsonUtil.getString(jsonData, "sign_str");
                     EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
 //                    Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID);
 //                    String orderParam = OrderInfoUtil2_0.buildOrderParam(params);

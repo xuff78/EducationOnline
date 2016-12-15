@@ -1019,7 +1019,8 @@ public class UpVideoView extends FrameLayout implements MediaController.MediaPla
             }
             setLayoutParams(fullParams);*/
             isFullState = true;
-        }
+        }else
+            exitFullScreen(activity);
     }
 
     public void exitFullScreen(Activity activity) {
