@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +20,8 @@ import com.education.online.bean.PayResult;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
-import com.education.online.util.JsonUtil;
-import com.education.online.util.OrderInfoUtil2_0;
 import com.education.online.view.PayTypeDialog;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -56,6 +51,9 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(OrderPay.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(OrderPay.this, PaymentCompletePage.class);
+                        i.putExtra("Order", orderDetailBean);
+                        startActivity(i);
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(OrderPay.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -125,8 +123,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                             try {
                                 String str=jsonData; //URLEncoder.encode(sign_str, "UTF-8");
                                 Map<String, String> result = alipay.payV2(str, true);
-                                Log.i("msp", "sign_str encode: "+str);
-                                Log.i("msp", result.toString());
+//                                Log.i("msp", "sign_str encode: "+str);
+//                                Log.i("msp", result.toString());
 
                                 Message msg = new Message();
                                 msg.what = SDK_PAY_FLAG;
@@ -137,7 +135,6 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                             }
                         }
                     };
-
                     Thread payThread = new Thread(payRunnable);
                     payThread.start();
                 }

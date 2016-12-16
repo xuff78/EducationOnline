@@ -65,7 +65,10 @@ public class PaymentCompletePage extends BaseFrameAct implements View.OnClickLis
     }
 
     public void init() {
-        orderDetailBean= JSON.parseObject(getIntent().getStringExtra("jsonData"), OrderDetailBean.class);
+        if(getIntent().hasExtra("jsonData"))
+            orderDetailBean= JSON.parseObject(getIntent().getStringExtra("jsonData"), OrderDetailBean.class);
+        else if(getIntent().hasExtra("Order"))
+            orderDetailBean= (OrderDetailBean) getIntent().getSerializableExtra("Order");
         TextView orderId= (TextView) findViewById(R.id.orderId);
         orderId.setText("订单号： "+orderDetailBean.getOrder_number());
         TextView orderAmount= (TextView) findViewById(R.id.orderAmount);
