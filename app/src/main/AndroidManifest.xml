@@ -85,7 +85,7 @@
         <activity
             android:name=".act.LiveCourseDetail"
             android:configChanges="orientation|keyboard|screenSize"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".act.LiveCourseStart"
             android:configChanges="orientation|keyboard|screenSize"

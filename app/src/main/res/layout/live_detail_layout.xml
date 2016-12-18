@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/videoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.upyun.upplayer.widget.UpVideoView
+        android:id="@+id/upVideoView"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="220dp"
+        />
+    <RelativeLayout
+        android:background="@color/light_trans_black"
+        android:id="@+id/app_header_layout_value"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip" >
+        <ImageView
+            android:id="@+id/back_imagebtn"
+            android:layout_width="40dip"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_round_back" />
+
+        <TextView
+            android:id="@+id/header_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/back_home_imagebtn"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_expand_screen"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dip" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_alignBottom="@+id/upVideoView"
+        android:background="@color/light_trans_black"
+        android:id="@+id/videoBottomLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip" >
+
+        <ImageView
+            android:layout_toLeftOf="@+id/softPanBtn"
+            android:layout_marginRight="10dp"
+            android:id="@+id/chatLayoutController"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_expand_screen"/>
+
+        <ImageView
+            android:id="@+id/softPanBtn"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_expand_screen"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dip" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/chatListLayout"
+        android:layout_below="@+id/upVideoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.avoscloud.leanchatlib.xlist.XListView
+            android:id="@+id/refreshListView"
+            android:layout_above="@+id/fragment_chat_inputbottombar"
+            android:cacheColorHint="#0000"
+            android:divider="@null"
+            android:dividerHeight="5dp"
+            android:scrollbarStyle="outsideOverlay"
+            android:stackFromBottom="false"
+            android:transcriptMode="normal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <com.avoscloud.leanchatlib.activity.InputBottomBar
+            android:id="@+id/fragment_chat_inputbottombar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</RelativeLayout>
