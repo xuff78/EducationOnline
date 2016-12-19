@@ -45,53 +45,91 @@
             android:layout_marginRight="3dip" />
     </RelativeLayout>
     <RelativeLayout
-        android:visibility="gone"
-        android:layout_alignBottom="@+id/upVideoView"
-        android:background="@color/light_trans_black"
-        android:id="@+id/videoBottomLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="40dip" >
-
-        <ImageView
-            android:layout_toLeftOf="@+id/softPanBtn"
-            android:layout_marginRight="10dp"
-            android:id="@+id/chatLayoutController"
-            android:layout_width="40dip"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon_expand_screen"/>
-
-        <ImageView
-            android:id="@+id/softPanBtn"
-            android:layout_width="40dip"
-            android:layout_height="match_parent"
-            android:src="@mipmap/icon_expand_screen"
-            android:padding="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="3dip" />
-    </RelativeLayout>
-    <RelativeLayout
         android:id="@+id/chatListLayout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="300dp">
         <com.avoscloud.leanchatlib.xlist.XListView
             android:id="@+id/refreshListView"
-            android:layout_above="@+id/fragment_chat_inputbottombar"
+            android:layout_above="@+id/controlLayout"
             android:cacheColorHint="#0000"
             android:divider="@null"
             android:dividerHeight="1dp"
             android:scrollbarStyle="outsideOverlay"
             android:stackFromBottom="false"
             android:transcriptMode="normal"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="match_parent"/>
-        <com.avoscloud.leanchatlib.activity.InputBottomBar
+        <LinearLayout
+            android:id="@+id/controlLayout"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:id="@+id/videoBottomLayout"
+            android:layout_above="@+id/fragment_chat_inputbottombar"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip" >
+            <ImageView
+                android:id="@+id/chatLayoutController"
+                android:padding="8dp"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:src="@mipmap/icon_comment"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/softPanBtn"
+                android:layout_marginRight="1dip" />
+
+            <ImageView
+                android:id="@+id/softPanBtn"
+                android:padding="5dp"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:src="@drawable/chat_btn_keyboard"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip" />
+        </RelativeLayout>
+        <!--<com.avoscloud.leanchatlib.activity.InputBottomBar
             android:id="@+id/fragment_chat_inputbottombar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+            android:layout_height="wrap_content"/>-->
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/fragment_chat_inputbottombar"
+                android:background="@color/whitesmoke"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <View
+                    android:background="@color/light_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"/>
+                <com.avoscloud.leanchatlib.view.EmotionEditText
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/input_bar_btn_send_text"
+                    android:id="@+id/input_bar_et_emotion"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/chat_login_edit_normal"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+                <Button
+                    android:id="@+id/input_bar_btn_send_text"
+                    android:layout_width="@dimen/chat_BottomBtnSize"
+                    android:layout_height="@dimen/chat_BottomBtnSize"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/chat_btn_send_selector"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#000"/>
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

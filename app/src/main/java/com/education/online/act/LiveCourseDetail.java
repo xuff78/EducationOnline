@@ -86,13 +86,13 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     private View videoBottomLayout;
     String LiveCourseUrl="rtmp://pull.live.iqkui.com/live/";
     protected LiveChatAdapter itemAdapter;
-    protected InputBottomBar inputBottomBar;
+    protected RelativeLayout inputBottomBar;
 
     protected String localCameraPath = PathUtils.getPicturePathByCurrentTime();
     private XListView pulltorefresh;
     private View chatListLayout;
     private Map<String, Object> attr=new HashMap<>();
-    private int chatListFullscreenWidth=0, chatListHeight=0;
+    private int chatListHeight=0;
 //    private int videoHeight=0, videoWidth=0;
 
     @Override
@@ -113,7 +113,6 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
 //        videoWidth = ScreenUtil.getWidth(this);
 //        videoHeight = (int) (((float) videoWidth) * 9 / 16);
-        chatListFullscreenWidth = ImageUtil.dip2px(this, 240);
         chatListHeight = ImageUtil.dip2px(this, 300);
         CourseDetailBean bean= (CourseDetailBean) getIntent().getSerializableExtra(CourseDetailBean.Name);
         videoView= (UpVideoView) findViewById(R.id.upVideoView);
@@ -130,8 +129,8 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
         pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
         pulltorefresh.setPullRefreshEnable(true);
         pulltorefresh.setPullLoadEnable(false);
-        inputBottomBar = (InputBottomBar) findViewById(com.avoscloud.leanchatlib.R.id.fragment_chat_inputbottombar);
-        inputBottomBar.setEditlistener(this);
+        inputBottomBar = (RelativeLayout) findViewById(R.id.fragment_chat_inputbottombar);
+//        inputBottomBar.setEditlistener(this);
         itemAdapter = new LiveChatAdapter(this);
         pulltorefresh.setAdapter(itemAdapter);
 
@@ -166,13 +165,17 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
                     videoView.fullScreen(LiveCourseDetail.this);
                     break;
                 case R.id.softPanBtn:
-
+                    if(inputBottomBar.isShown()){
+                        inputBottomBar.setVisibility(View.GONE);
+                    }else{
+                        inputBottomBar.setVisibility(View.VISIBLE);
+                    }
                     break;
                 case R.id.chatLayoutController:
-                    if(chatListLayout.isShown()){
-                        chatListLayout.setVisibility(View.GONE);
+                    if(pulltorefresh.isShown()){
+                        pulltorefresh.setVisibility(View.GONE);
                     }else{
-                        chatListLayout.setVisibility(View.VISIBLE);
+                        pulltorefresh.setVisibility(View.VISIBLE);
                     }
                     break;
             }
@@ -183,18 +186,15 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 //            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
-            videoBottomLayout.setVisibility(View.VISIBLE);
-            inputBottomBar.setVisibility(View.GONE);
+//            inputBottomBar.setVisibility(View.GONE);
             videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
-            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(chatListFullscreenWidth, -1);
+            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, -1);
 //            rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             rlp.addRule(RelativeLayout.BELOW, R.id.app_header_layout_value);
-            rlp.addRule(RelativeLayout.ABOVE, R.id.videoBottomLayout);
             chatListLayout.setLayoutParams(rlp);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
 //            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, videoHeight));
-            videoBottomLayout.setVisibility(View.GONE);
-            inputBottomBar.setVisibility(View.VISIBLE);
+//            inputBottomBar.setVisibility(View.GONE);
             RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
             rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             chatListLayout.setLayoutParams(rlp);
@@ -493,12 +493,10 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
                         this.getContentResolver().takePersistableUriPermission(uri, takeFlags);
                     }
                     String localSelectPath = ProviderPathUtils.getPath(this, uri);
-                    inputBottomBar.hideMoreLayout();
                     sendImage(localSelectPath);
                     break;
                 case TAKE_CAMERA_REQUEST:
                     try {
-                        inputBottomBar.hideMoreLayout();
                         sendImage(localCameraPath);
                     }catch (Exception e){
                         Toast.makeText(this, "获取图片失败，请检查存储卡", 500).show();
