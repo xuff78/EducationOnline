@@ -54,6 +54,7 @@ import com.avoscloud.leanchatlib.utils.ProviderPathUtils;
 import com.avoscloud.leanchatlib.utils.Utils;
 import com.avoscloud.leanchatlib.xlist.XListView;
 import com.education.online.R;
+import com.education.online.adapter.LiveChatAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
@@ -84,15 +85,15 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     private UpVideoView videoView;
     private View videoBottomLayout;
     String LiveCourseUrl="rtmp://pull.live.iqkui.com/live/";
-    protected ChatAdapter itemAdapter;
+    protected LiveChatAdapter itemAdapter;
     protected InputBottomBar inputBottomBar;
 
     protected String localCameraPath = PathUtils.getPicturePathByCurrentTime();
     private XListView pulltorefresh;
     private View chatListLayout;
     private Map<String, Object> attr=new HashMap<>();
-    private int chatListFullscreenWidth=0;
-    private int videoHeight=0, videoWidth=0;
+    private int chatListFullscreenWidth=0, chatListHeight=0;
+//    private int videoHeight=0, videoWidth=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +111,14 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
     public void initView() {
 
-        videoWidth = ScreenUtil.getWidth(this);
-        videoHeight = (int) (((float) videoWidth) * 9 / 16);
+//        videoWidth = ScreenUtil.getWidth(this);
+//        videoHeight = (int) (((float) videoWidth) * 9 / 16);
         chatListFullscreenWidth = ImageUtil.dip2px(this, 240);
+        chatListHeight = ImageUtil.dip2px(this, 300);
         CourseDetailBean bean= (CourseDetailBean) getIntent().getSerializableExtra(CourseDetailBean.Name);
         videoView= (UpVideoView) findViewById(R.id.upVideoView);
-        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, videoHeight);
-        videoView.setLayoutParams(rlp);
+//        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, videoHeight);
+//        videoView.setLayoutParams(rlp);
         videoView.setVideoPath(LiveCourseUrl+bean.getCourse_id());
         MediaController controller=new MediaController(this);
         videoView.setMediaController(controller);
@@ -130,7 +132,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
         pulltorefresh.setPullLoadEnable(false);
         inputBottomBar = (InputBottomBar) findViewById(com.avoscloud.leanchatlib.R.id.fragment_chat_inputbottombar);
         inputBottomBar.setEditlistener(this);
-        itemAdapter = new ChatAdapter(this);
+        itemAdapter = new LiveChatAdapter(this);
         pulltorefresh.setAdapter(itemAdapter);
 
         String titleTxt=getIntent().getStringExtra("Name");
@@ -180,22 +182,21 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
+//            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
             videoBottomLayout.setVisibility(View.VISIBLE);
             inputBottomBar.setVisibility(View.GONE);
             videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
             RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(chatListFullscreenWidth, -1);
-            rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//            rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             rlp.addRule(RelativeLayout.BELOW, R.id.app_header_layout_value);
             rlp.addRule(RelativeLayout.ABOVE, R.id.videoBottomLayout);
             chatListLayout.setLayoutParams(rlp);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, videoHeight));
+//            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, videoHeight));
             videoBottomLayout.setVisibility(View.GONE);
             inputBottomBar.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, -1);
-            rlp.addRule(RelativeLayout.BELOW, R.id.upVideoView);
-            rlp.addRule(RelativeLayout.ABOVE, R.id.fragment_chat_inputbottombar);
+            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             chatListLayout.setLayoutParams(rlp);
         }
         super.onConfigurationChanged(newConfig);

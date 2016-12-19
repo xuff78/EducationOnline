@@ -6,8 +6,8 @@
     <com.upyun.upplayer.widget.UpVideoView
         android:id="@+id/upVideoView"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="220dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         />
     <RelativeLayout
         android:background="@color/light_trans_black"
@@ -74,15 +74,15 @@
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/chatListLayout"
-        android:layout_below="@+id/upVideoView"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="300dp">
         <com.avoscloud.leanchatlib.xlist.XListView
             android:id="@+id/refreshListView"
             android:layout_above="@+id/fragment_chat_inputbottombar"
             android:cacheColorHint="#0000"
             android:divider="@null"
-            android:dividerHeight="5dp"
+            android:dividerHeight="1dp"
             android:scrollbarStyle="outsideOverlay"
             android:stackFromBottom="false"
             android:transcriptMode="normal"
