@@ -79,7 +79,7 @@ public class LiveChatAdapter extends BaseAdapter {
                 holder = new LiveChatTxtItemHolder(con, null, true);
                 break;
             case ITEM_LEFT_IMAGE:
-                holder = new LiveChatTxtItemHolder(con, null, true);
+                holder = new ChatItemImageHolder(con, null, true);
                 break;
             case ITEM_LEFT_AUDIO:
                 holder = new ChatItemAudioHolder(con, null, true);
@@ -88,7 +88,7 @@ public class LiveChatAdapter extends BaseAdapter {
                 holder = new ChatItemLocationHolder(con, null, true);
                 break;
             case ITEM_RIGHT_TEXT:
-                holder = new ChatItemTextHolder(con, null, false);
+                holder = new LiveChatTxtItemHolder(con, null, false);
                 break;
             case ITEM_RIGHT_IMAGE:
                 holder = new ChatItemImageHolder(con, null, false);

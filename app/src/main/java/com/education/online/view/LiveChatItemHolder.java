@@ -43,7 +43,7 @@ public class LiveChatItemHolder extends CommonViewHolder {
     protected ImageView errorView;
 
     public LiveChatItemHolder(Context context, ViewGroup root, boolean isLeft) {
-        super(context, root, R.layout.chat_item_left_layout);
+        super(context, root, R.layout.chat_item_left);
         this.isLeft = isLeft;
         initView();
     }
