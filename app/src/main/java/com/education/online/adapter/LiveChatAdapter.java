@@ -16,6 +16,7 @@ import com.avoscloud.leanchatlib.viewholder.ChatItemImageHolder;
 import com.avoscloud.leanchatlib.viewholder.ChatItemLocationHolder;
 import com.avoscloud.leanchatlib.viewholder.ChatItemTextHolder;
 import com.avoscloud.leanchatlib.viewholder.CommonViewHolder;
+import com.education.online.view.LiveChatItemHolder;
 import com.education.online.view.LiveChatTxtItemHolder;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class LiveChatAdapter extends BaseAdapter {
         RecyclerView.ViewHolder holder=null;
         switch (getItemViewType(position)) {
             case ITEM_LEFT_TEXT:
-                holder = new LiveChatTxtItemHolder(con, null, true);
+                holder = new LiveChatItemHolder(con, null, true);
                 break;
             case ITEM_LEFT_IMAGE:
                 holder = new ChatItemImageHolder(con, null, true);
@@ -88,7 +89,7 @@ public class LiveChatAdapter extends BaseAdapter {
                 holder = new ChatItemLocationHolder(con, null, true);
                 break;
             case ITEM_RIGHT_TEXT:
-                holder = new LiveChatTxtItemHolder(con, null, false);
+                holder = new LiveChatItemHolder(con, null, false);
                 break;
             case ITEM_RIGHT_IMAGE:
                 holder = new ChatItemImageHolder(con, null, false);

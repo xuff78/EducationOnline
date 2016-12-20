@@ -8,10 +8,13 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -85,12 +88,16 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     private UpVideoView videoView;
     private View videoBottomLayout;
     String LiveCourseUrl="rtmp://pull.live.iqkui.com/live/";
+    String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
     protected LiveChatAdapter itemAdapter;
     protected RelativeLayout inputBottomBar;
 
     protected String localCameraPath = PathUtils.getPicturePathByCurrentTime();
     private XListView pulltorefresh;
     private View chatListLayout;
+    private EditText inputEdt;
+    private Button sendBtn;
+    private TextView liveInfo;
     private Map<String, Object> attr=new HashMap<>();
     private int chatListHeight=0;
 //    private int videoHeight=0, videoWidth=0;
@@ -119,11 +126,13 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 //        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, videoHeight);
 //        videoView.setLayoutParams(rlp);
         videoView.setVideoPath(LiveCourseUrl+bean.getCourse_id());
-        MediaController controller=new MediaController(this);
-        videoView.setMediaController(controller);
+//        MediaController controller=new MediaController(this);
+//        videoView.setMediaController(controller);
         videoView.start();
-        controller.show();
+//        controller.show();
 
+        liveInfo= (TextView) findViewById(R.id.liveInfo);
+        inputEdt= (EditText) findViewById(R.id.input_bar_et_emotion);
         videoBottomLayout=findViewById(R.id.videoBottomLayout);
         chatListLayout=findViewById(R.id.chatListLayout);
         pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
@@ -151,6 +160,8 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
         findViewById(R.id.back_home_imagebtn).setOnClickListener(listener);
         findViewById(R.id.softPanBtn).setOnClickListener(listener);
         findViewById(R.id.chatLayoutController).setOnClickListener(listener);
+        sendBtn= (Button) findViewById(R.id.input_bar_btn_send_text);
+        sendBtn.setOnClickListener(listener);
     }
 
     View.OnClickListener listener=new View.OnClickListener(){
@@ -177,6 +188,24 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
                     }else{
                         pulltorefresh.setVisibility(View.VISIBLE);
                     }
+                    break;
+                case R.id.input_bar_btn_send_text:
+                    String inputTxt=inputEdt.getText().toString().trim();
+                    if (TextUtils.isEmpty(inputTxt)) {
+                        Toast.makeText(LiveCourseDetail.this, com.avoscloud.leanchatlib.R.string.message_is_null, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    inputEdt.setText("");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendBtn.setEnabled(true);
+                        }
+                    }, 1000);
+
+                    EventBus.getDefault().post(
+                            new InputBottomBarTextEvent(InputBottomBarEvent.INPUTBOTTOMBAR_SEND_TEXT_ACTION, inputTxt, inputBottomBar.getTag()));
                     break;
             }
         }
@@ -337,6 +366,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     public void setConversation(AVIMConversation conversation) {
         imConversation = conversation;
         pulltorefresh.setEnabled(true);
+        liveInfo.setText(conversation.getMembers().size()+"人在观看");
         inputBottomBar.setTag(imConversation.getConversationId());
         fetchMessages();
         NotificationUtils.addTag(conversation.getConversationId());

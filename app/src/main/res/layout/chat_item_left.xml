@@ -32,30 +32,38 @@
             android:id="@+id/chat_left_iv_avatar"
             android:layout_above="@+id/chat_left_tv_name"
             style="@style/chat_avatar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
 
-        <TextView
-            android:id="@+id/chat_left_tv_name"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text=""
-            android:textSize="10sp"
-            android:textColor="@color/light_gray"
-            android:layout_marginBottom="3dp"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:gravity="center"/>
         </LinearLayout>
         <LinearLayout
+            android:background="@mipmap/bg_message_rec"
             android:id="@+id/chat_left_layout_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/headerLayout"
-            android:orientation="horizontal"
-            android:paddingRight="40dp"/>
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp">
 
+            <TextView
+                android:id="@+id/chat_left_tv_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text=""
+                android:textSize="11sp"
+                android:textColor="@color/normal_gray"
+                android:singleLine="true"
+                android:ellipsize="end" />
+            <TextView
+                android:id="@+id/chat_left_text_tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
         <FrameLayout
             android:id="@+id/chat_left_layout_status"
             android:layout_width="wrap_content"

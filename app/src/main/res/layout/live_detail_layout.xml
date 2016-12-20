@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/videoLayout"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <com.upyun.upplayer.widget.UpVideoView
@@ -38,8 +39,7 @@
             android:id="@+id/back_home_imagebtn"
             android:layout_width="40dip"
             android:layout_height="match_parent"
-            android:src="@mipmap/icon_expand_screen"
-            android:padding="10dp"
+            android:src="@mipmap/icon_rotato"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="3dip" />
@@ -68,11 +68,16 @@
             android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
+            android:background="#ddffffff"
             android:id="@+id/videoBottomLayout"
             android:layout_above="@+id/fragment_chat_inputbottombar"
             android:layout_width="fill_parent"
             android:layout_height="40dip" >
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/liveInfo"
+                style="@style/txt_gray_14" />
             <ImageView
                 android:id="@+id/chatLayoutController"
                 android:padding="8dp"
