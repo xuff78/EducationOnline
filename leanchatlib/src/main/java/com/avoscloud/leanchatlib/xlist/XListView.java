@@ -9,6 +9,13 @@
 package com.avoscloud.leanchatlib.xlist;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,6 +70,7 @@ public class XListView extends ListView implements OnScrollListener {
 														// load more.
 	private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
 													// feature.
+	private int alphaHeight=120;
 
 	/**
 	 * @param context
@@ -331,6 +339,34 @@ public class XListView extends ListView implements OnScrollListener {
 			invokeOnScrolling();
 		}
 		super.computeScroll();
+	}
+
+	private LinearGradient mLinearGradient;
+	private Matrix mGradientMatrix;
+	private Paint mPaint;
+	private int mViewWidth = 0;
+	private int mTranslate = 0;
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		if (mViewWidth == 0) {
+			mViewWidth = getMeasuredWidth();
+			mPaint = new Paint();
+			LinearGradient shader = new LinearGradient(0, 0, 0, alphaHeight, 0x00ffffff, 0xffffffff, Shader.TileMode.CLAMP);
+			mPaint.setShader(shader);
+			// Set the Transfer mode to be porter duff and destination in
+			mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+		}
+	}
+
+	@Override
+	public void draw(Canvas canvas) {
+		super.draw(canvas);
+		if(mPaint!=null) {
+			canvas.drawRect(0, 0, mViewWidth, alphaHeight, mPaint);
+			invalidate();
+		}
 	}
 
 	@Override
