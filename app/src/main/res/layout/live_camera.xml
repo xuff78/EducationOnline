@@ -22,32 +22,37 @@
             android:layout_gravity="center" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@android:color/transparent"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
+            android:gravity="center_vertical|right"
+            android:background="@color/light_trans_black"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/txt_white_14"
+                android:layout_width="260dp"
+                android:layout_marginLeft="25dp"
+                android:id="@+id/liveInfo" />
             <ImageView
                 android:id="@+id/btn_flashlight_switch"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="3dp"
                 android:src="@drawable/selector_switchflash" />
 
             <ImageView
+                android:padding="3dp"
                 android:id="@+id/btn_camera_switch"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/selector_rewardcamera" />
         </LinearLayout>
     </FrameLayout>
-
     <RelativeLayout
+        android:id="@+id/controlLayout"
         android:background="@color/light_trans_black"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="85dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
@@ -60,14 +65,37 @@
             android:onClick="startPush" />
 
         <ImageView
-            android:visibility="gone"
             android:layout_marginLeft="40dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/bt_toggle"
             android:id="@+id/bt_setting"
-            android:src="@android:mipmap/sym_def_app_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:padding="7dp"
+            android:background="@mipmap/icon_round_white"
+            android:src="@mipmap/icon_teacher_menu_settings"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <ImageView
+            android:id="@+id/chatLayoutController"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:padding="8dp"
+            android:background="@mipmap/icon_round_white"
+            android:src="@mipmap/icon_comment"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/bt_toggle"
+            android:layout_marginRight="40dip" />
 
     </RelativeLayout>
+    <com.avoscloud.leanchatlib.xlist.XListView
+        android:id="@+id/refreshListView"
+        android:layout_above="@+id/controlLayout"
+        android:cacheColorHint="#0000"
+        android:divider="@null"
+        android:dividerHeight="1dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:stackFromBottom="false"
+        android:transcriptMode="normal"
+        android:layout_width="240dp"
+        android:layout_height="300dp"/>
 </RelativeLayout>

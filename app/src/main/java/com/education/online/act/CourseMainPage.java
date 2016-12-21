@@ -223,27 +223,25 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                 break;
             case R.id.addorbuy:
                 if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())){
-                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
-                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
-                    startActivity(i);
 
-//                    if(ConversationId.length()>0){
-//                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
-//
-//                            @Override
-//                            public void done(AVIMException e) {
-//                                if(e==null) {
-//                                    Intent intent = new Intent(CourseMainPage.this, LiveCourseStart.class);
-//                                    intent.putExtra("Name", courseDetailBean.getCourse_name());
-//                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
-//                                    startActivity(intent);
-//                                }else
-//                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
-//                            }
-//                        });
-//                    }else {
-//                        ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
-//                    }
+
+                    if(ConversationId.length()>0){
+                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
+
+                            @Override
+                            public void done(AVIMException e) {
+                                if(e==null) {
+                                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
+                                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                    startActivity(i);
+                                }else
+                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                            }
+                        });
+                    }else {
+                        ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
+                    }
                 } else if(courseDetailBean.getIs_buy().equals("1")){
                     if(ConversationId.length()>0){
                         ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){

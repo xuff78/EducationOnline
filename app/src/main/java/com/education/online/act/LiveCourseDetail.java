@@ -77,7 +77,6 @@ import de.greenrobot.event.EventBus;
 public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.EditorListener{
 
     //  protected ChatFragment chatFragment;
-    protected AVIMConversation conversation;
     private static final int TAKE_CAMERA_REQUEST = 2;
     private static final int GALLERY_REQUEST = 0;
     private static final int GALLERY_KITKAT_REQUEST = 3;
@@ -137,7 +136,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
         chatListLayout=findViewById(R.id.chatListLayout);
         pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
         pulltorefresh.setPullRefreshEnable(true);
-        pulltorefresh.setPullLoadEnable(false);
+        pulltorefresh.setPullLoadEnable(true);
         inputBottomBar = (RelativeLayout) findViewById(R.id.fragment_chat_inputbottombar);
 //        inputBottomBar.setEditlistener(this);
         itemAdapter = new LiveChatAdapter(this);
@@ -323,7 +322,6 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
     protected void updateConversation(AVIMConversation conversation) {
         if (null != conversation) {
-            this.conversation = conversation;
             setConversation(conversation);
             showUserName(ConversationHelper.typeOfConversation(conversation) != ConversationType.Single);
 //      initActionBar(ConversationHelper.titleOfConversation(conversation));
