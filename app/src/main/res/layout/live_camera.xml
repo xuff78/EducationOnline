@@ -21,32 +21,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
-            android:background="@color/light_trans_black"
+            android:gravity="center_vertical"
+            android:background="@color/hard_trans_black"
             android:orientation="horizontal">
             <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
                 style="@style/txt_white_14"
-                android:layout_width="260dp"
-                android:layout_marginLeft="25dp"
                 android:id="@+id/liveInfo" />
             <ImageView
+                android:layout_toLeftOf="@+id/btn_camera_switch"
                 android:id="@+id/btn_flashlight_switch"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="3dp"
+                android:padding="6dp"
                 android:src="@drawable/selector_switchflash" />
 
             <ImageView
-                android:padding="3dp"
+                android:layout_alignParentRight="true"
+                android:padding="5dp"
                 android:id="@+id/btn_camera_switch"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/selector_rewardcamera" />
-        </LinearLayout>
+        </RelativeLayout>
     </FrameLayout>
     <RelativeLayout
         android:id="@+id/controlLayout"
@@ -69,7 +71,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/bt_toggle"
             android:id="@+id/bt_setting"
-            android:padding="7dp"
+            android:padding="9dp"
             android:background="@mipmap/icon_round_white"
             android:src="@mipmap/icon_teacher_menu_settings"
             android:layout_width="40dp"
@@ -79,7 +81,7 @@
             android:id="@+id/chatLayoutController"
             android:layout_width="40dip"
             android:layout_height="40dip"
-            android:padding="8dp"
+            android:padding="10dp"
             android:background="@mipmap/icon_round_white"
             android:src="@mipmap/icon_comment"
             android:layout_centerVertical="true"

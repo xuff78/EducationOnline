@@ -77,30 +77,12 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.live_camera);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setContentView(R.layout.live_camera);
 
+        initView();
         CourseDetailBean courseBean= (CourseDetailBean) getIntent().getSerializableExtra(CourseDetailBean.Name);
-        liveInfo = (TextView) findViewById(R.id.liveInfo);
-        surface = (SurfaceRenderView) findViewById(R.id.sv_camera);
-        mBtToggle = (ImageView) findViewById(R.id.bt_toggle);
-        mBtSetting = (ImageView) findViewById(R.id.bt_setting);
-        mBtconvert = (ImageView) findViewById(R.id.btn_camera_switch);
-        mImgFlash = (ImageView) findViewById(R.id.btn_flashlight_switch);
-        mBtToggle.setOnClickListener(this);
-        mBtSetting.setOnClickListener(this);
-        mBtconvert.setOnClickListener(this);
-        mImgFlash.setOnClickListener(this);
-        mImgFlash.setEnabled(true);
-        pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
-        pulltorefresh.setPullRefreshEnable(true);
-        pulltorefresh.setPullLoadEnable(true);
-        itemAdapter = new LiveChatAdapter(this);
-        pulltorefresh.setAdapter(itemAdapter);
-
         mClient = new PushClient(surface);
-
-
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable ex) {
@@ -115,12 +97,10 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                 });
             }
         });
-
         // check permission for 6.0+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkPermission();
         }
-
         surface.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -133,11 +113,29 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
             }
         });
 
-
         config = new Config.Builder().build();
         config.url=config.url+courseBean.getCourse_id();
 
         initByIntent(getIntent());
+    }
+
+    private void initView() {
+        liveInfo = (TextView) findViewById(R.id.liveInfo);
+        surface = (SurfaceRenderView) findViewById(R.id.sv_camera);
+        mBtToggle = (ImageView) findViewById(R.id.bt_toggle);
+        mBtSetting = (ImageView) findViewById(R.id.bt_setting);
+        mBtconvert = (ImageView) findViewById(R.id.btn_camera_switch);
+        mImgFlash = (ImageView) findViewById(R.id.btn_flashlight_switch);
+        mBtToggle.setOnClickListener(this);
+        mBtSetting.setOnClickListener(this);
+        mBtconvert.setOnClickListener(this);
+        mImgFlash.setOnClickListener(this);
+        mImgFlash.setEnabled(true);
+        pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
+        pulltorefresh.setPullRefreshEnable(true);
+        pulltorefresh.setPullLoadEnable(false);
+        itemAdapter = new LiveChatAdapter(this);
+        pulltorefresh.setAdapter(itemAdapter);
     }
 
     @Override
@@ -297,7 +295,6 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                     });
                 }
             }
-
             @Override
             public void onLoadMore() {
 

@@ -233,7 +233,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                                 if(e==null) {
                                     Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
                                     i.putExtra(CourseDetailBean.Name, courseDetailBean);
-                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                    i.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
                                     startActivity(i);
                                 }else
                                     ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
