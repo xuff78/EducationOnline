@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -85,7 +87,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     protected MessageAgent messageAgent;
 
     private UpVideoView videoView;
-    private View videoBottomLayout;
+//    private View videoBottomLayout;
     String LiveCourseUrl="rtmp://pull.live.iqkui.com/live/";
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
     protected LiveChatAdapter itemAdapter;
@@ -132,11 +134,21 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
         liveInfo= (TextView) findViewById(R.id.liveInfo);
         inputEdt= (EditText) findViewById(R.id.input_bar_et_emotion);
-        videoBottomLayout=findViewById(R.id.videoBottomLayout);
+        inputEdt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId== EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
+                    sendBtn.callOnClick();
+                }
+                return false;
+            }
+        });
+//        videoBottomLayout=findViewById(R.id.videoBottomLayout);
         chatListLayout=findViewById(R.id.chatListLayout);
         pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
         pulltorefresh.setPullRefreshEnable(true);
-        pulltorefresh.setPullLoadEnable(true);
+        pulltorefresh.setPullLoadEnable(false);
+        pulltorefresh.setShowTrans(true);
         inputBottomBar = (RelativeLayout) findViewById(R.id.fragment_chat_inputbottombar);
 //        inputBottomBar.setEditlistener(this);
         itemAdapter = new LiveChatAdapter(this);
@@ -157,7 +169,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
         setNameAndAvatar(username,avatar);
         findViewById(R.id.back_imagebtn).setOnClickListener(listener);
         findViewById(R.id.back_home_imagebtn).setOnClickListener(listener);
-        findViewById(R.id.softPanBtn).setOnClickListener(listener);
+//        findViewById(R.id.softPanBtn).setOnClickListener(listener);
         findViewById(R.id.chatLayoutController).setOnClickListener(listener);
         sendBtn= (Button) findViewById(R.id.input_bar_btn_send_text);
         sendBtn.setOnClickListener(listener);
@@ -174,13 +186,13 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
                 case R.id.back_home_imagebtn:
                     videoView.fullScreen(LiveCourseDetail.this);
                     break;
-                case R.id.softPanBtn:
-                    if(inputBottomBar.isShown()){
-                        inputBottomBar.setVisibility(View.GONE);
-                    }else{
-                        inputBottomBar.setVisibility(View.VISIBLE);
-                    }
-                    break;
+//                case R.id.softPanBtn:
+//                    if(inputBottomBar.isShown()){
+//                        inputBottomBar.setVisibility(View.GONE);
+//                    }else{
+//                        inputBottomBar.setVisibility(View.VISIBLE);
+//                    }
+//                    break;
                 case R.id.chatLayoutController:
                     if(pulltorefresh.isShown()){
                         pulltorefresh.setVisibility(View.GONE);

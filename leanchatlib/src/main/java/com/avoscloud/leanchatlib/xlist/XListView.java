@@ -55,6 +55,12 @@ public class XListView extends ListView implements OnScrollListener {
 	private boolean mEnablePullLoad;
 	private boolean mPullLoading;
 	private boolean mIsFooterReady = false;
+
+	public void setShowTrans(boolean showTrans) {
+		this.showTrans = showTrans;
+	}
+
+	private boolean showTrans=false;
 	
 	// total list items, used to detect is at the bottom of listview.
 	private int mTotalItemCount;
@@ -363,7 +369,7 @@ public class XListView extends ListView implements OnScrollListener {
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		if(mPaint!=null) {
+		if(mPaint!=null&&showTrans) {
 			canvas.drawRect(0, 0, mViewWidth, alphaHeight, mPaint);
 			invalidate();
 		}

@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVUser;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.upyun.UploadTask;
@@ -73,10 +75,13 @@ public class UserInfoEdit extends BaseFrameAct {
                     userinfo= JSON.parseObject(jsonData, UserInfo.class);
                     setFormData();
                 }else if(method.equals(Method.Update)){
-
-                    if(avatar!=null&&avatar.length()>0)
+                    LeanchatUser user= (LeanchatUser) AVUser.getCurrentUser();
+                    if(avatar!=null&&avatar.length()>0) {
                         SharedPreferencesUtil.setString(UserInfoEdit.this, Constant.Avatar, avatar);
+                        user.put("avatar", ImageUtil.getImageUrl(avatar));
+                    }
                     SharedPreferencesUtil.setString(UserInfoEdit.this, Constant.NickName, nickName.getText().toString());
+                    user.put("username", nickName.getText().toString());
                     DialogUtil.showInfoDialog(UserInfoEdit.this, "提示", "修改成功", new DialogInterface.OnClickListener(){
 
                         @Override

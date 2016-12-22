@@ -68,14 +68,13 @@
             android:id="@+id/chat_left_layout_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_alignRight="@+id/chat_left_layout_content">
+            android:layout_toRightOf="@+id/chat_left_layout_content">
 
             <ProgressBar
                 android:id="@+id/chat_left_progressbar"
                 style="@android:style/Widget.ProgressBar.Large"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"/>
 
             <TextView

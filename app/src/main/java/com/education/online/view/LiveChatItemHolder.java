@@ -96,7 +96,7 @@ public class LiveChatItemHolder extends CommonViewHolder {
                             username="";
                         user.put("username", username);
                     }
-                    LogUtil.i("user", "create id: "+message.getFrom()+"  name: "+user.get("username"));
+                    LogUtil.i("user", "create id: "+message.getFrom()+"  name: "+user.get("username")+"  avatar: "+user.get("avatar"));
                     user.setObjectId(message.getFrom());
                     AVUserCacheUtils.cacheUser(message.getFrom(), user);
                 }

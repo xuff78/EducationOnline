@@ -182,8 +182,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         Bundle b2=new Bundle();
         b2.putStringArray("Names", names);
         selectorByOrder.setArguments(b2);
-
-        handler.getCourseList(courseFilter);
     }
 
     private void addCourseListFragment(CourseUpdate page) {
@@ -202,6 +200,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 if(type!=i) {
                     type=i;
                     initFilter();
+                    handler.getCourseList(courseFilter);
                     popup.dismiss();
                 }else
                     popup.dismiss();

@@ -134,8 +134,10 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
         pulltorefresh = (XListView) findViewById(com.avoscloud.leanchatlib.R.id.refreshListView);
         pulltorefresh.setPullRefreshEnable(true);
         pulltorefresh.setPullLoadEnable(false);
+        pulltorefresh.setShowTrans(true);
         itemAdapter = new LiveChatAdapter(this);
         pulltorefresh.setAdapter(itemAdapter);
+        findViewById(R.id.chatLayoutController).setOnClickListener(this);
     }
 
     @Override
@@ -182,6 +184,13 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
 
             case R.id.btn_flashlight_switch:
                 mClient.toggleFlashlight();
+                break;
+            case R.id.chatLayoutController:
+                if(pulltorefresh.isShown()){
+                    pulltorefresh.setVisibility(View.GONE);
+                }else{
+                    pulltorefresh.setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }
