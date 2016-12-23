@@ -137,6 +137,7 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
         pulltorefresh.setShowTrans(true);
         itemAdapter = new LiveChatAdapter(this);
         pulltorefresh.setAdapter(itemAdapter);
+        findViewById(R.id.appBack).setOnClickListener(this);
         findViewById(R.id.chatLayoutController).setOnClickListener(this);
     }
 
@@ -191,6 +192,9 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                 }else{
                     pulltorefresh.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.appBack:
+                onBackPressed();
                 break;
         }
     }

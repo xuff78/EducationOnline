@@ -18,7 +18,7 @@
         android:id="@+id/walletAmount"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="0.00"
+        android:text=""
         style="@style/txt_black_14" />
     <EditText
         android:id="@+id/rechargePrice"

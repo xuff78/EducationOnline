@@ -76,6 +76,21 @@ public class HttpHandler extends Handle {
 		requestPostUser(Method.retrievePassword, paramMap, true);
 	}
 
+	public void rechargeWallet(String amount) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("amount", amount);
+		requestPostEdu(Method.rechargeWallet, paramMap, true);
+	}
+
+	public void payWallet(String order_number,String pay_pwd) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("order_number", order_number);
+		paramMap.put("pay_pwd", pay_pwd);
+		requestPostUser(Method.payWallet, paramMap, true);
+	}
+
 	public void getSubjectList() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		requestPostEdu(Method.getSubjectList, paramMap, true);

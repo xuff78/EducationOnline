@@ -184,6 +184,39 @@ public class ActUtil {
         }
     }
 
+    public static boolean isCash(String moneyStr, Activity con) {
+        String hinttxt=null;
+        if (moneyStr.length() == 0) {
+            hinttxt="请输入金额";
+        } else if (moneyStr.startsWith(".") || moneyStr.endsWith(".") || moneyStr.startsWith("00")) {
+            hinttxt="请输入有效金额";
+        } else if (moneyStr.contains(".")) {
+            String[] str = moneyStr.split("\\.");
+            if (str[0].length() > 9) {
+                hinttxt="你输入金额的整数不能多于9位";
+            } else if (str[1].length() >= 3) {
+                hinttxt="你输入金额的小数不能多于2位";
+            }else{
+                double money = Double.parseDouble(moneyStr);
+                if (money == 0) {
+                    hinttxt="请输入有效金额";
+                }
+            }
+        } else if (moneyStr.length() > 9) {
+            hinttxt="你输入金额的整数不能多于9位";
+        } else if (moneyStr.length() > 0) {
+            double money = Double.parseDouble(moneyStr);
+            if (money == 0) {
+                hinttxt="请输入有效金额";
+            }
+        }
+        if(hinttxt!=null){
+            ToastUtils.displayTextShort(con, hinttxt);
+            return false;
+        }else
+            return true;
+    }
+
     public static String getCashs(String money) {
         Double cashInt = (Double.parseDouble(money) * 100);
         BigDecimal original = new BigDecimal(cashInt);

@@ -198,4 +198,13 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0x11){
+            String psw=data.getStringExtra("psw");
+            handler.payWallet(orderDetailBean.getOrder_number(), psw);
+        }
+    }
 }
