@@ -33,6 +33,7 @@ import java.util.List;
 public class MyQuestion extends BaseFrameAct {
 
     //marker
+    ///maker
     private LinearLayoutManager layoutManager;
     private HttpHandler httpHandler;
     private TextView askbtn;
@@ -73,7 +74,7 @@ public class MyQuestion extends BaseFrameAct {
             }
         });
         recyclerList = (RecyclerView) findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(MyQuestion.this);
+         layoutManager = new LinearLayoutManager(MyQuestion.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
         adapter = new MyquestionAdapter(MyQuestion.this, questionListHolder, questionInfoBeens);
@@ -114,6 +115,7 @@ public class MyQuestion extends BaseFrameAct {
                     questionListHolder = JsonUtil.getQuestionListHolder(jsonData);
                     questionInfoBeens.addAll(questionListHolder.getQuestion_infos());
                     adapter.notifyDataSetChanged();
+                    page++;
                 }
             }
 

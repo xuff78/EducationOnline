@@ -66,6 +66,7 @@ public class MyWalletHistory extends BaseFrameAct {
                     Log.d("getWalletInfo", "获取钱包详情成功");
                     walletLogBeanList.addAll(walletInfoBean.getWallet_log());
                     adapter.notifyDataSetChanged();
+                    page++;
                 }
             }
 
