@@ -631,6 +631,25 @@ public void complain(String user_name,String courses_name,String reason,String i
 			paraMap.put("advert_id",advert_id);
 		requestPostEdu(Method.getAdvert,paraMap,true);
 	}
+
+	public void getWalletInfo(String page_size,String page){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("page_size",page_size);
+		paraMap.put("page",page);
+		requestPostUser(Method.getWalletInfo,paraMap,true);
+	}
+	public void setPayPassword(String password){
+		HashMap<String, String > paraMap =new HashMap<>();
+
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("password",password);
+		requestPostUser(Method.setPayPassword,paraMap,true);
+	}
+
+
+
 	protected void requestPostUser(String method, HashMap paramMap, boolean showDialog) {
 		String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+method, paramMap); //这个是加密过程，可以不看
 		new HttpAsyncTask(mContext, this, showDialog).execute(Constant.API_Url_User+method, method, body, 1);

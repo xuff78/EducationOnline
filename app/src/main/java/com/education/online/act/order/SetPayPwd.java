@@ -1,6 +1,7 @@
 package com.education.online.act.order;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,12 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.SHA;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -31,6 +38,13 @@ public class SetPayPwd extends BaseFrameAct {
     private TextView textView1;
     private LinearLayout passwordlayout;
     private View view1;
+    private final int success=0x10;
+    private HttpHandler httpHandler;
+    private String type;
+    private Intent intent;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +52,15 @@ public class SetPayPwd extends BaseFrameAct {
         setContentView(R.layout.set_pay_password);
         _setHeaderTitle("设置支付密码");
         init();
+        initHandler();
 
 
     }
 
     public void init() {
+        intent = getIntent();
+        if(intent.hasExtra("type"))
+            type = intent.getStringExtra("type");
         textViews[0] = (EditText) findViewById(R.id.pwd1);
         textViews[1] = (EditText) findViewById(R.id.pwd2);
         textViews[2] = (EditText) findViewById(R.id.pwd3);
@@ -116,9 +134,12 @@ public class SetPayPwd extends BaseFrameAct {
                             if (confirmPassword.equals(initPassword)) {//相等关闭键盘
                                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(textViews[5].getWindowToken(), 0);
-                                Toast toast = new Toast(SetPayPwd.this).makeText(SetPayPwd.this, "最终密码是" + initPassword, Toast.LENGTH_SHORT);
-                                toast.show();
-                                finish();
+                               // Toast toast = new Toast(SetPayPwd.this).makeText(SetPayPwd.this, "最终密码是" + initPassword, Toast.LENGTH_SHORT);
+                              //  toast.show();
+                               // finish();
+                                String Codedpassword = SHA.getSHA(initPassword);
+                                httpHandler.setPayPassword(Codedpassword);
+
                             } else {
                                 isConfirmEnter = false;
                                 Toast toast = new Toast(SetPayPwd.this).makeText(SetPayPwd.this, "前后两次密码不一致，请重新输入！", Toast.LENGTH_SHORT);
@@ -127,8 +148,8 @@ public class SetPayPwd extends BaseFrameAct {
                             }
                         } else {
                             initPassword = GetString();
-                            Toast toast = new Toast(SetPayPwd.this).makeText(SetPayPwd.this, "初始密码是" + initPassword, Toast.LENGTH_SHORT);
-                            toast.show();
+                           // Toast toast = new Toast(SetPayPwd.this).makeText(SetPayPwd.this, "初始密码是" + initPassword, Toast.LENGTH_SHORT);
+                           // toast.show();
                             isConfirmEnter = true;
                             initState();
                         }
@@ -214,5 +235,18 @@ public class SetPayPwd extends BaseFrameAct {
             }
         }
         return false;
+    }
+
+    private void initHandler(){
+        httpHandler = new HttpHandler(SetPayPwd.this,new CallBack(SetPayPwd.this){
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                if(method.equals(Method.setPayPassword)){
+                    setResult(success);
+                    finish();
+
+                }
+            }
+        });
     }
 }

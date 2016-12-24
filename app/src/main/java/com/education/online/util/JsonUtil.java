@@ -17,6 +17,8 @@ import com.education.online.bean.JsonMessage;
 import com.education.online.bean.QuestionInfoBean;
 import com.education.online.bean.QuestionListHolder;
 import com.education.online.bean.TeacherBean;
+import com.education.online.bean.WalletInfoBean;
+import com.education.online.bean.WalletLogBean;
 import com.education.online.bean.integralDetail;
 
 import org.json.JSONArray;
@@ -456,6 +458,49 @@ public class JsonUtil {
         return integralInfo;
 
 
+    }
+
+    public static WalletInfoBean getWalletInfo(String jsonStr) throws JSONException {
+        WalletInfoBean walletInfoBean = new WalletInfoBean();
+        List<WalletLogBean> walletLogBeen = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        if (!jsonObject.isNull("balance"))
+            walletInfoBean.setBalance(jsonObject.getString("balance"));
+        if (!jsonObject.isNull("payment_amout"))
+            walletInfoBean.setPayment_amout(jsonObject.getString("payment_amout"));
+        if (!jsonObject.isNull("recharge_amount"))
+            walletInfoBean.setRecharge_amount(jsonObject.getString("recharge_amount"));
+        if (!jsonObject.isNull("withdraw_amount"))
+            walletInfoBean.setWithdraw_amount(jsonObject.getString("withdraw_amount"));
+        if (!jsonObject.isNull("total"))
+            walletInfoBean.setTotal(jsonObject.getString("total"));
+        if (!jsonObject.isNull("current_page"))
+            walletInfoBean.setCurrent_page(jsonObject.getString("current_page"));
+        if (!jsonObject.isNull("page_total"))
+            walletInfoBean.setPage_total(jsonObject.getString("page_total"));
+        if (!jsonObject.isNull("wallet_log"))
+        {
+            JSONArray jsonArray = jsonObject.getJSONArray("wallet_log");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+              WalletLogBean walletLogBean = new WalletLogBean();
+                if (!item.isNull("content"))
+                   walletLogBean.setContent(item.getString("content"));
+                if (!item.isNull("amount"))
+                    walletLogBean.setAmount(item.getString("amount"));
+                if (!item.isNull("balance"))
+                    walletLogBean.setBalance(item.getString("balance"));
+                    if (!item.isNull("created_at"))
+                        walletLogBean.setCreated_at(item.getString("created_at"));
+                walletLogBeen.add(walletLogBean);
+            }
+            walletInfoBean.setWallet_log(walletLogBeen);
+        }
+
+
+
+
+        return walletInfoBean;
     }
 //    public static ArrayList<RainBean> getRainInfo(String jsonStr) {
 //        ArrayList<RainBean> infos=new ArrayList<>();

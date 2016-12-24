@@ -5,10 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.order.GetVeriCode;
 import com.education.online.act.order.SetPayPwd;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.JsonUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -16,6 +24,10 @@ import com.education.online.act.order.SetPayPwd;
 public class MyWallet extends BaseFrameAct implements View.OnClickListener{
 
     private TextView walletBalance, chargeBtn;
+    private HttpHandler httpHandler;
+    private String page_size="10";
+    private int page =1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +36,8 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
         _setHeaderTitle("钱包管理");
         _setRightHomeListener(this);
         initView();
+        initHandler();
+        httpHandler.getWalletInfo(page_size,String.valueOf(page));
     }
 
     private void initView() {
@@ -33,6 +47,7 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
         findViewById(R.id.pswLayout).setOnClickListener(this);
         findViewById(R.id.tixianLayout).setOnClickListener(this);
         findViewById(R.id.historyLayout).setOnClickListener(this);
+
     }
 
     @Override
@@ -52,5 +67,24 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                 startActivity(new Intent(MyWallet.this, MyWalletHistory.class));
                 break;
         }
+    }
+
+    private void initHandler(){
+        httpHandler = new HttpHandler(MyWallet.this, new CallBack(MyWallet.this){
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getWalletInfo)){
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    if (!jsonObject.isNull("balance")){
+                        String balance = jsonObject.getString("balance");
+                        walletBalance.setText(balance);
+                    }
+
+                }
+
+
+            }
+        });
     }
 }

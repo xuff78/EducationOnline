@@ -56,9 +56,11 @@ public class Method {
     public static final String verify="education/common/verify";
     public static final String modifypassword="uc/user/modifyPassword";
     public static final String retrievePassword="uc/user/retrievePassword";
-
+    public static final String getWalletInfo= "uc/user/wallet";
+    public static final String setPayPassword= "uc/user/setPayPassword";
 
     public static final String getPayment= "payment/payment/info";
     public static final String rechargeWallet= "education/user/recharge";
     public static final String payWallet= "payment/payment/wallet";
+
 }
