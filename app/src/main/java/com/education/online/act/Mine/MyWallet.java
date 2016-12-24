@@ -13,6 +13,7 @@ import com.education.online.act.order.SetPayPwd;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
 
 import org.json.JSONException;
@@ -27,7 +28,6 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
     private HttpHandler httpHandler;
     private String page_size="10";
     private int page =1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.chargeBtn:
-                startActivity(new Intent(MyWallet.this, MyWalletCharge.class));
+                startActivityForResult(new Intent(MyWallet.this, MyWalletCharge.class), 0x10);
                 break;
             case R.id.pswLayout:
 //                startActivity(new Intent(getActivity(), MyOrders.class));
@@ -86,5 +86,13 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode== Constant.refreshData){
+            httpHandler.getWalletInfo(page_size,String.valueOf(page));
+        }
     }
 }

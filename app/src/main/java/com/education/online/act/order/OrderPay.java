@@ -50,10 +50,7 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(OrderPay.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(OrderPay.this, PaymentCompletePage.class);
-                        i.putExtra("Order", orderDetailBean);
-                        startActivity(i);
+                        toCompletePage();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(OrderPay.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -137,6 +134,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                     };
                     Thread payThread = new Thread(payRunnable);
                     payThread.start();
+                }else if(method.equals(Method.payWallet)){
+                    toCompletePage();
                 }
             }
         });
@@ -170,6 +169,13 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
         findViewById(R.id.payBtn).setOnClickListener(this);
     }
 
+    private void toCompletePage(){
+        Toast.makeText(OrderPay.this, "支付成功", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(OrderPay.this, PaymentCompletePage.class);
+        i.putExtra("Order", orderDetailBean);
+        startActivity(i);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -188,6 +194,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     public void onSelected(int payType) {
         switch (payType){
             case PayTypeDialog.WalletPay:
+                Intent i=new Intent(OrderPay.this, SetPayPwd.class);
+                startActivity(i);
                 break;
             case PayTypeDialog.AliPay:
                 handler.getPayment(orderDetailBean.getOrder_number(), "alipay");

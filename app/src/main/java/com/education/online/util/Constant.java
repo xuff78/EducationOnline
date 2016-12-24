@@ -61,6 +61,8 @@ public class Constant {
     /** 商户私钥，pkcs8格式 */
     public static final String RSA_PRIVATE = "";
 
+    public static final int refreshData=0x66;
+
     public class Method{
         public static final String init=API_BASE + "sys.init";
     }

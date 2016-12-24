@@ -2,11 +2,13 @@ package com.education.online.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
+import com.education.online.view.ZoomRecyclerView;
 
 import org.json.JSONException;
 
@@ -42,14 +45,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CourseMainPage extends BaseFrameAct implements View.OnClickListener{
+public class CourseMainPage extends AppCompatActivity implements View.OnClickListener{
 
-    private RecyclerView recyclerList;
+    private ZoomRecyclerView recyclerList;
     private LinearLayoutManager layoutManager;
     private CourseAdapter adapter;
     private List<EvaluateBean> evaluateList=new ArrayList<>();
     private LinearLayout addfavorite_layout, share_layout, download_layout;
-    private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
+    private TextView textaddfavorite, textshare, textdownload, textaddorbuy, header_title_tv;
     private ImageView addfavorite, share, download;
     private CourseDetailBean courseDetailBean=new CourseDetailBean();
     private String course_id;
@@ -57,6 +60,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     private String pageSize="20";
     private boolean flag=false;
     private boolean onloading=false;
+    private RelativeLayout header;
     private EvaluateListBean evaluateListBean=new EvaluateListBean();
     Intent intent;
     HttpHandler httpHandler;
@@ -99,7 +103,7 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
                         textaddorbuy.setText("立即报名");
                         textaddorbuy.setOnClickListener(CourseMainPage.this);
                     }
-                    _setHeaderTitle(courseDetailBean.getCourse_name());
+                    header_title_tv.setText(courseDetailBean.getCourse_name());
                     adapter.notifyDataSetChanged();
 
                     if(my_usercode.equals(courseDetailBean.getUsercode())){
@@ -158,14 +162,16 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_course_layout);
 
-        _setRightHomeListener(this);
         initiHandler();
         initView();
         httpHandler.getCourseDetail(course_id);
     }
 
     private void initView() {
-
+        header_title_tv= (TextView) findViewById(R.id.header_title_tv);
+        header= (RelativeLayout) findViewById(R.id.app_header_layout_value);
+        header.setAlpha(0);
+        findViewById(R.id.back_imagebtn).setOnClickListener(this);
         my_usercode = SharedPreferencesUtil.getUsercode(this);
         intent = getIntent();
         course_id = intent.getStringExtra("course_id");
@@ -188,7 +194,8 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
         textdownload.setVisibility(View.INVISIBLE);
         download.setVisibility(View.INVISIBLE);
 
-        recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
+        recyclerList=(ZoomRecyclerView)findViewById(R.id.recyclerList);
+        recyclerList.setHeadView(header);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
@@ -205,6 +212,9 @@ public class CourseMainPage extends BaseFrameAct implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.back_imagebtn:
+                onBackPressed();
+                break;
             case R.id.addfavoritelayout:
                 if (!flag) {
                     addfavorite.setSelected(true);

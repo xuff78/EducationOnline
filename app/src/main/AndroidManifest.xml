@@ -308,7 +308,7 @@
         <activity
             android:name=".act.order.SetPayPwd"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustResize|adjustUnspecified" />
         <activity
             android:name=".act.discovery.discovery.MyAnswers"
             android:screenOrientation="portrait"
