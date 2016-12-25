@@ -188,6 +188,11 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     public void onSelected(int payType) {
         switch (payType){
             case PayTypeDialog.WalletPay:
+                Intent intent = new Intent();
+                intent.setClass(OrderPay.this,WalletPay.class);
+                intent.putExtra("cost",orderDetailBean.getOrder_price());
+                startActivityForResult(intent,0x10);
+
                 break;
             case PayTypeDialog.AliPay:
                 handler.getPayment(orderDetailBean.getOrder_number(), "alipay");
