@@ -11,6 +11,7 @@ import com.education.online.bean.AddClassBean;
 import com.education.online.bean.CourseFilter;
 import com.education.online.util.Constant;
 import com.education.online.util.LeanSignatureUtil;
+import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
 
 import java.lang.reflect.Field;
@@ -87,7 +88,7 @@ public class HttpHandler extends Handle {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("order_number", order_number);
-		paramMap.put("pay_pwd", pay_pwd);
+		paramMap.put("pay_pwd", SHA.getSHA(pay_pwd));
 		requestPostUser(Method.payWallet, paramMap, true);
 	}
 

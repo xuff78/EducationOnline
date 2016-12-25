@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@color/white"
@@ -23,7 +26,9 @@
     <EditText
         android:id="@+id/rechargePrice"
         android:layout_marginTop="10dp"
-        android:text="0.00"
+        android:inputType="numberDecimal"
+        android:text=""
+        android:singleLine="true"
         android:paddingLeft="10dp"
         android:background="@drawable/shape_nocorner_black"
         style="@style/txt_black_14"
@@ -164,3 +169,4 @@
     </LinearLayout>
         </LinearLayout>
 </LinearLayout>
+</ScrollView>

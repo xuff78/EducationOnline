@@ -23,6 +23,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
 import com.education.online.view.PayTypeDialog;
 
@@ -53,7 +54,10 @@ public class MyWalletCharge extends BaseFrameAct implements View.OnClickListener
             public void doSuccess(String method, final String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 if (method.equals(Method.rechargeWallet)) {
-                    if(status==STATUS.AliPay){
+                    if(status==STATUS.AliPay) {
+                        httpHandler.getPayment(JsonUtil.getString(jsonData, "recharge_code"), "alipay");
+                    }
+                }else if(method.equals(Method.getPayment)){
                         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
                         Runnable payRunnable = new Runnable() {
 
@@ -77,7 +81,6 @@ public class MyWalletCharge extends BaseFrameAct implements View.OnClickListener
                         payThread.start();
                     }
                 }
-            }
         });
     }
 
@@ -151,6 +154,7 @@ public class MyWalletCharge extends BaseFrameAct implements View.OnClickListener
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(MyWalletCharge.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        setResult(Constant.refreshData);
                         finish();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

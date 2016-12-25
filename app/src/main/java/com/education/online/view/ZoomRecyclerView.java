@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.education.online.R;
 import com.education.online.util.LogUtil;
@@ -21,6 +22,11 @@ import com.education.online.util.LogUtil;
  */
 public class ZoomRecyclerView extends RecyclerView{
 
+    public void setHeadView(View header) {
+        this.header=header;
+    }
+
+    private View header;
     private enum STATUS {
         DragDown, AnimaBack, Scroll
     }
@@ -105,17 +111,19 @@ public class ZoomRecyclerView extends RecyclerView{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 listScrollY+=dy;
+                float alpha=listScrollY/(float)imghHeight;
+                header.setAlpha(alpha);
             }
         });
+        if(getChildCount()>0) {
+            View childView = getChildAt(0);
+            courseImg = (ImageView) childView.findViewById(R.id.courseImg);
+            imghHeight = courseImg.getHeight();
+        }
     }
 
     private void setChildView(int offsetY){
         if(getChildCount()>0){
-            if(courseImg==null) {
-                View childView=getChildAt(0);
-                courseImg = (ImageView) childView.findViewById(R.id.courseImg);
-                imghHeight=courseImg.getHeight();
-            }
             LinearLayout.LayoutParams rlp = (LinearLayout.LayoutParams) courseImg.getLayoutParams();
             rlp.height=imghHeight-offsetY;
             courseImg.setLayoutParams(rlp);

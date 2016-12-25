@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/courseImg"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="245dp"
         android:scaleType="centerCrop"
         android:transitionName="course_img" />
 

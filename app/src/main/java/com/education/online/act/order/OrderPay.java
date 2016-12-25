@@ -137,6 +137,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                     };
                     Thread payThread = new Thread(payRunnable);
                     payThread.start();
+                }else if(method.equals(Method.payWallet)){
+                    toCompletePage();
                 }
             }
         });
@@ -168,6 +170,13 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
         orderPrice.setText("总价： ￥"+orderDetailBean.getOrder_price());
         findViewById(R.id.rechargeBtn).setOnClickListener(this);
         findViewById(R.id.payBtn).setOnClickListener(this);
+    }
+
+    private void toCompletePage(){
+        Toast.makeText(OrderPay.this, "支付成功", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(OrderPay.this, PaymentCompletePage.class);
+        i.putExtra("Order", orderDetailBean);
+        startActivity(i);
     }
 
     @Override
