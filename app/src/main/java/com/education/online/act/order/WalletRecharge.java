@@ -38,7 +38,7 @@ public class WalletRecharge extends BaseFrameAct implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.payBtn:
-                dialog=new PayTypeDialog(WalletRecharge.this, false, WalletRecharge.this);
+                dialog=new PayTypeDialog(WalletRecharge.this, false, WalletRecharge.this, "0");
                 dialog.show();
                 break;
         }

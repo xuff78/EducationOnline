@@ -19,6 +19,7 @@ import com.education.online.bean.TeacherBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
 import com.education.online.util.SHA;
 
 import org.json.JSONException;
@@ -43,7 +44,7 @@ public class WalletPay extends BaseFrameAct {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enter_pay_password);
-        _setHeaderTitle("设置支付密码");
+        _setHeaderTitle("请输入支付密码");
         init();
     }
 
@@ -60,7 +61,7 @@ public class WalletPay extends BaseFrameAct {
         textView1 = (TextView) findViewById(R.id.textview1);
         costtextview = (TextView) findViewById(R.id.cost);
         if(!cost.isEmpty())
-        costtextview.setText(cost);
+        costtextview.setText("¥"+ActUtil.twoDecimal(cost));
         view1 = findViewById(R.id.view1);
         passwordlayout = (LinearLayout) findViewById(R.id.passwordlayout);
         view1.setOnClickListener(new View.OnClickListener() {

@@ -59,7 +59,7 @@ public class DiscoveryPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), InvitePage.class));
                 break;
             case R.id.testLayout:
-                startActivity(new Intent(getActivity(), MessageMain.class));
+//                startActivity(new Intent(getActivity(), MessageMain.class));
                 break;
         }
     }

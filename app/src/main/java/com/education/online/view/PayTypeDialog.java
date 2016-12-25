@@ -9,8 +9,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ScreenUtil;
 
 /**
@@ -27,11 +29,13 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
     private View checkedIcon=null;
     private View checkIcon, checkIcon2, checkIcon3, checkIcon4;
     private int choice=-1;
+    private String price="";
 
-    public PayTypeDialog(Context context, boolean showWallet, PayDialogCallBack cb) {
+    public PayTypeDialog(Context context, boolean showWallet, PayDialogCallBack cb, String price) {
         super(context, R.style.view_dialog);
         this.showWallet=showWallet;
         this.cb=cb;
+        this.price=price;
     }
 
     @Override
@@ -50,6 +54,8 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
      * 初始化加载View
      */
     private void initView() {
+        TextView priceTxt= (TextView) findViewById(R.id.priceTxt);
+        priceTxt.setText(ActUtil.twoDecimal(price)+"元");
         RelativeLayout walletPayLayout = (RelativeLayout) findViewById(R.id.walletPayLayout);
         walletPayLayout.setOnClickListener(this);
         RelativeLayout alipayPayLayout = (RelativeLayout) findViewById(R.id.alipayPayLayout);

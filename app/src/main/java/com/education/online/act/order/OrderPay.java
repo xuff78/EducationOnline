@@ -14,13 +14,19 @@ import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.Mine.MyWalletCharge;
 import com.education.online.bean.AuthResult;
 import com.education.online.bean.OrderDetailBean;
 import com.education.online.bean.PayResult;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.view.PayTypeDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -107,7 +113,7 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
-            public void doSuccess(String method, final String jsonData){
+            public void doSuccess(String method, final String jsonData) throws JSONException {
                 if(method.equals(Method.getPayment)){
 //                    final String sign_str= JsonUtil.getString(jsonData, "sign_str");
                     EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
@@ -139,6 +145,13 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                     payThread.start();
                 }else if(method.equals(Method.payWallet)){
                     toCompletePage();
+                }else if(method.equals(Method.getWalletInfo)){
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    if (!jsonObject.isNull("balance")){
+                        String balance = jsonObject.getString("balance");
+                        walletAmount.setText("¥"+ ActUtil.twoDecimal(balance));
+                    }
+
                 }
             }
         });
@@ -156,6 +169,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
             orderDetailBean= (OrderDetailBean) getIntent().getSerializableExtra("Order");
         initHandler();
         initView();
+
+        handler.getWalletInfo("10","1");
     }
 
     private void initView() {
@@ -167,7 +182,10 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
         coursePrice.setText("￥"+orderDetailBean.getPrice());
         walletAmount= (TextView) findViewById(R.id.walletAmount);
         TextView orderPrice= (TextView) findViewById(R.id.orderPrice);
-        orderPrice.setText("总价： ￥"+orderDetailBean.getOrder_price());
+        String orderPriceTxt=orderDetailBean.getOrder_price();
+        if(orderPriceTxt.length()==0)
+            orderPriceTxt=orderDetailBean.getPrice();
+        orderPrice.setText("总价： ￥"+orderPriceTxt);
         findViewById(R.id.rechargeBtn).setOnClickListener(this);
         findViewById(R.id.payBtn).setOnClickListener(this);
     }
@@ -183,11 +201,12 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.rechargeBtn:
-                Intent i=new Intent(OrderPay.this, WalletRecharge.class);
-                startActivity(i);
+                startActivityForResult(new Intent(OrderPay.this, MyWalletCharge.class), 0x10);
+//                Intent i=new Intent(OrderPay.this, WalletRecharge.class);
+//                startActivity(i);
                 break;
             case R.id.payBtn:
-                dialog=new PayTypeDialog(OrderPay.this, true, OrderPay.this);
+                dialog=new PayTypeDialog(OrderPay.this, true, OrderPay.this, orderDetailBean.getPrice());
                 dialog.show();
                 break;
         }
@@ -199,9 +218,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
             case PayTypeDialog.WalletPay:
                 Intent intent = new Intent();
                 intent.setClass(OrderPay.this,WalletPay.class);
-                intent.putExtra("cost",orderDetailBean.getOrder_price());
+                intent.putExtra("cost",orderDetailBean.getPrice());
                 startActivityForResult(intent,0x10);
-                toCompletePage();
                 break;
             case PayTypeDialog.AliPay:
                 handler.getPayment(orderDetailBean.getOrder_number(), "alipay");
@@ -219,6 +237,8 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
         if(resultCode==0x11){
             String psw=data.getStringExtra("psw");
             handler.payWallet(orderDetailBean.getOrder_number(), psw);
+        }else if(resultCode== Constant.refreshData){
+            handler.getWalletInfo("10","1");
         }
     }
 }

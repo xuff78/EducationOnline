@@ -89,7 +89,7 @@ public class HttpHandler extends Handle {
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("order_number", order_number);
 		paramMap.put("pay_pwd", SHA.getSHA(pay_pwd));
-		requestPostUser(Method.payWallet, paramMap, true);
+		requestPostPayment(Method.payWallet, paramMap, true);
 	}
 
 	public void getSubjectList() {
