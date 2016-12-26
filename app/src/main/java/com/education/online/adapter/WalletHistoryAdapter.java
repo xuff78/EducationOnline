@@ -68,8 +68,8 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter <RecyclerView.Vie
         } else {
             CourseItemHolder fvh = (CourseItemHolder) holder;
             WalletLogBean walletLogBean = walletLogBeanList.get(position);
-            fvh.balanceTxt.setText(walletLogBean.getBalance());
-            fvh.costTxt.setText(walletLogBean.getAmount());
+            fvh.balanceTxt.setText("￥"+walletLogBean.getBalance());
+            fvh.costTxt.setText("￥"+walletLogBean.getAmount());
             fvh.dateTxt.setText(walletLogBean.getCreated_at());
             fvh.courseName.setText(walletLogBean.getContent());
 
@@ -89,10 +89,10 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter <RecyclerView.Vie
         public CourseItemHolder(View v, int position)
         {
             super(v);
-            courseName = (TextView) v.findViewById(R.id.CourseName);
-            balanceTxt = (TextView) v.findViewById(R.id.courseNumTxt);
-            dateTxt = (TextView) v.findViewById(R.id.CourseTime);
-            costTxt = (TextView) v.findViewById(R.id.CoursePrice);
+            courseName = (TextView) v.findViewById(R.id.courseName);
+            balanceTxt = (TextView) v.findViewById(R.id.balanceTxt);
+            dateTxt = (TextView) v.findViewById(R.id.dateTxt);
+            costTxt = (TextView) v.findViewById(R.id.costTxt);
 
         }
 

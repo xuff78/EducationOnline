@@ -50,7 +50,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity act;
     private LayoutInflater listInflater;
     private ImageLoader imageLoader;
-    private int itemWidth = 0, itemHeight = 0, imgHeight = 0;
+    private int itemWidth = 0, itemHeight = 0, imgHeight = 0, courseWidth=0;
     private int padding10 = 0;
     private boolean animaShown = false;
     private HomePageInfo info;
@@ -70,6 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         padding10 = ImageUtil.dip2px(act, 10);
         itemWidth = (ScreenUtil.getWidth(act) - 2 * padding10) / 5; //小图片和文字的形成点击区域的边长
         imgHeight = itemWidth - 2 * padding10; //小图片的边长
+        courseWidth = (ScreenUtil.getWidth(act) - 5 * padding10) / 2;
         this.courses=courses;
     }
 
@@ -98,7 +99,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             PagerHolder ivh = (PagerHolder) vh;
         } else if (pos == 1) {
             SubjectHolder ivh = (SubjectHolder) vh;
-        } else if (pos == 2) {
+       /* } else if (pos == 2) {
             CourseHolder ivh = (CourseHolder) vh;
             ivh.subjectName.setText("直播");
             List<LiveCourse> liveCourses = info.getLive();
@@ -169,7 +170,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ivh.statusTxt2.setText(live.getFollow() + "人在学习");
                 ivh.imgMask2.setVisibility(View.GONE);
             } else
-                ivh.item2.setVisibility(View.INVISIBLE);
+                ivh.item2.setVisibility(View.INVISIBLE);*/
         } else if (pos > 5) {
             CourseItemHolder cvh = (CourseItemHolder) vh;
             CourseBean courseBean=courses.get(pos-6);
@@ -198,7 +199,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             vh = new SubjectHolder(view, pos);
         } else if (pos == 2 || pos == 3 || pos == 4) {
             View convertView = listInflater.inflate(R.layout.home_course_layout, null);
-            vh = new CourseHolder(convertView, pos);
+            vh = new CourseLayoutHolder(convertView, pos);
         } else if (pos == 5) {
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
@@ -330,7 +331,151 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     };
 
-    public class CourseHolder extends RecyclerView.ViewHolder {
+
+    public class CourseLayoutHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout itemlayout1, itemlayout2;
+        TextView subjectName;
+        int pos = 0;
+
+        public CourseLayoutHolder(View v, int pos) {
+            super(v);
+            this.pos=pos;
+            itemlayout1=(LinearLayout)v.findViewById(R.id.itemlayout1);
+            itemlayout2=(LinearLayout)v.findViewById(R.id.itemlayout2);
+            subjectName= (TextView) v.findViewById(R.id.subjectName);
+            v.findViewById(R.id.mornBtn).setOnClickListener(listener);
+            LinearLayout addLayout=itemlayout1;
+            if (pos == 2) {
+                subjectName.setText("直播");
+                List<LiveCourse> liveCourses = info.getLive();
+                for(int i=0;i<liveCourses.size();i++){
+                    if(i>1)
+                        addLayout=itemlayout2;
+                    CourseViewHolder ivh=getCourseHolder(addLayout);
+                    LiveCourse live = liveCourses.get(i);
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                    ivh.titleTxt.setText(live.getCourse_name());
+                    ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
+                    ivh.timeTxt.setText(live.getCourseware_date());
+                    ivh.statusTxt.setText(live.getFollow() + "人在学习");
+                }
+            } if (pos == 3) {
+                subjectName.setText("视频");
+                List<VideoCourse> liveCourses = info.getVideo();
+                for(int i=0;i<liveCourses.size();i++){
+                    if(i>1)
+                        addLayout=itemlayout2;
+                    CourseViewHolder ivh=getCourseHolder(addLayout);
+                    VideoCourse live = liveCourses.get(i);
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                    ivh.titleTxt.setText(live.getCourse_name());
+                    ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
+                    ivh.timeTxt.setVisibility(View.GONE);
+                    ivh.statusTxt.setText(live.getFollow() + "人在学习");
+                }
+            } if (pos == 4) {
+                subjectName.setText("课件");
+                List<WareCourse> liveCourses = info.getWare();
+                for(int i=0;i<liveCourses.size();i++){
+                    if(i>1)
+                        addLayout=itemlayout2;
+                    CourseViewHolder ivh=getCourseHolder(addLayout);
+                    WareCourse live = liveCourses.get(0);
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                    if(live.getCourse_img().length()==0)
+                        ivh.courseImg1.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    ivh.titleTxt.setText(live.getCourse_name());
+                    ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
+                    ivh.timeTxt.setVisibility(View.GONE);
+                    ivh.statusTxt.setText(live.getFollow() + "人在学习");
+                    ivh.imgMask1.setVisibility(View.GONE);
+                }
+            }
+        }
+
+        public class CourseViewHolder{
+            public TextView titleTxt, timeTxt, priceTxt, statusTxt;
+            public ImageView courseImg1, imgMask1;
+        }
+
+        public CourseViewHolder getCourseHolder(LinearLayout linearLayout){
+            CourseViewHolder holder=new CourseViewHolder();
+            View v=listInflater.inflate(R.layout.home_course_item, null);
+            holder.titleTxt = (TextView) v.findViewById(R.id.titleTxt);
+            holder.timeTxt = (TextView) v.findViewById(R.id.timeTxt);
+            holder.priceTxt = (TextView) v.findViewById(R.id.priceTxt);
+            holder.statusTxt = (TextView) v.findViewById(R.id.statusTxt);
+            holder.courseImg1 = (ImageView) v.findViewById(R.id.courseImg1);
+            holder.imgMask1 = (ImageView) v.findViewById(R.id.imgMask1);
+            v.setOnClickListener(listener);
+            LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(courseWidth, -2);
+            llp.rightMargin=padding10;
+            linearLayout.addView(v, llp);
+            return holder;
+        }
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.mornBtn:
+                        if (pos == 2)
+                            act.startActivity(new Intent(act, LiveTelecast.class));
+                        else if (pos == 3) {
+                            Intent i = new Intent(act, SearchResultAct.class);
+                            i.putExtra(Constant.TypeCourse, "coursevideo");
+                            act.startActivity(i);
+                        }else if (pos == 4){
+                            Intent i = new Intent(act, SearchResultAct.class);
+                            i.putExtra(Constant.TypeCourse, "courseware");
+                            act.startActivity(i);
+                        }
+                        break;
+                    case R.id.item1:
+                    case R.id.item2:
+                        Intent intent = new Intent();
+                        if (pos == 2) {
+                            LiveCourse course=new LiveCourse();
+                            if(view.getId()==R.id.item1)
+                                course=info.getLive().get(0);
+                            else if(view.getId()==R.id.item2)
+                                course=info.getLive().get(1);
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("course_img", course.getCourse_img());
+                            intent.putExtra("course_id", course.getCourse_id());
+                            intent.setClass(act, CourseMainPage.class);
+                            act.startActivity(intent);
+                        } else if (pos == 3) {
+                            VideoCourse course=new VideoCourse();
+                            if(view.getId()==R.id.item1)
+                                course=info.getVideo().get(0);
+                            else if(view.getId()==R.id.item2)
+                                course=info.getVideo().get(1);
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("course_img", course.getCourse_img());
+                            intent.putExtra("course_id", course.getCourse_id());
+                            intent.setClass(act, VideoMainPage.class);
+                            act.startActivity(intent);
+                        } else if (pos == 4) {
+                            WareCourse course=new WareCourse();
+                            if(view.getId()==R.id.item1)
+                                course=info.getWare().get(0);
+                            else if(view.getId()==R.id.item2)
+                                course=info.getWare().get(1);
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("course_img", course.getCourse_img());
+                            intent.putExtra("course_id", course.getCourse_id());
+                            intent.setClass(act, VideoMainPage.class);
+                            act.startActivity(intent);
+                        }
+                        break;
+                }
+            }
+        };
+    }
+
+   /* public class CourseHolder extends RecyclerView.ViewHolder {
         TextView subjectName, titleTxt, timeTxt, priceTxt, statusTxt, titleTxt2, timeTxt2, priceTxt2, statusTxt2;
         ImageView courseImg1, courseImg2, imgMask1, imgMask2;
         View item1, item2;
@@ -417,8 +562,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             }
         };
-    }
-    ;
+    }*/
 
 public class TitleHolder extends RecyclerView.ViewHolder {
     TextView forYouTitle;

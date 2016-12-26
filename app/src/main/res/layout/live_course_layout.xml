@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <com.education.online.view.ZoomRecyclerView
+        android:background="@color/white"
         android:layout_above="@+id/bottomLayout"
         android:id="@+id/recyclerList"
         android:layout_width="match_parent"

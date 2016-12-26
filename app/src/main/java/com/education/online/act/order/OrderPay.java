@@ -41,6 +41,10 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     private HttpHandler handler;
     private final int SDK_PAY_FLAG=1;
     private final int SDK_AUTH_FLAG=2;
+    private enum STATUS {
+        Wallet, AliPay, WeChat, UnionPay
+    }
+    private STATUS status = STATUS.Wallet;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -116,33 +120,36 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
             public void doSuccess(String method, final String jsonData) throws JSONException {
                 if(method.equals(Method.getPayment)){
 //                    final String sign_str= JsonUtil.getString(jsonData, "sign_str");
-                    EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+                    if(status==STATUS.AliPay) {
+                        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
 //                    Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID);
 //                    String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
 //                    String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE);
 //                    final String orderInfo = orderParam + "&" + sign;
-                    Runnable payRunnable = new Runnable() {
+                        Runnable payRunnable = new Runnable() {
 
-                        @Override
-                        public void run() {
-                            PayTask alipay = new PayTask(OrderPay.this);
-                            try {
-                                String str=jsonData; //URLEncoder.encode(sign_str, "UTF-8");
-                                Map<String, String> result = alipay.payV2(str, true);
+                            @Override
+                            public void run() {
+                                PayTask alipay = new PayTask(OrderPay.this);
+                                try {
+                                    String str = jsonData; //URLEncoder.encode(sign_str, "UTF-8");
+                                    Map<String, String> result = alipay.payV2(str, true);
 //                                Log.i("msp", "sign_str encode: "+str);
 //                                Log.i("msp", result.toString());
 
-                                Message msg = new Message();
-                                msg.what = SDK_PAY_FLAG;
-                                msg.obj = result;
-                                mHandler.sendMessage(msg);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                    Message msg = new Message();
+                                    msg.what = SDK_PAY_FLAG;
+                                    msg.obj = result;
+                                    mHandler.sendMessage(msg);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    };
-                    Thread payThread = new Thread(payRunnable);
-                    payThread.start();
+                        };
+                        Thread payThread = new Thread(payRunnable);
+                        payThread.start();
+                    }else if(status==STATUS.AliPay) {
+                    }
                 }else if(method.equals(Method.payWallet)){
                     toCompletePage();
                 }else if(method.equals(Method.getWalletInfo)){
@@ -217,16 +224,19 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
         switch (payType){
             case PayTypeDialog.WalletPay:
                 Intent intent = new Intent();
-                intent.setClass(OrderPay.this,WalletPay.class);
-                intent.putExtra("cost",orderDetailBean.getPrice());
-                startActivityForResult(intent,0x10);
+                intent.setClass(OrderPay.this, WalletPay.class);
+                intent.putExtra("cost", orderDetailBean.getPrice());
+                startActivityForResult(intent, 0x10);
                 break;
             case PayTypeDialog.AliPay:
+                status=STATUS.AliPay;
                 handler.getPayment(orderDetailBean.getOrder_number(), "alipay");
                 break;
             case PayTypeDialog.WechatPay:
+                status=STATUS.WeChat;
                 break;
             case PayTypeDialog.UnionPay:
+                status=STATUS.UnionPay;
                 break;
         }
     }

@@ -581,7 +581,8 @@ public class HttpHandler extends Handle {
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paraMap.put("order_number",order_number);
-		paraMap.put("pay_channel",pay_channel);
+		if(pay_channel!=null&&pay_channel.length()>0)
+			paraMap.put("pay_channel",pay_channel);
 		requestPostPayment(Method.getPayment,paraMap,true);
 	}
 

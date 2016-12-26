@@ -18,7 +18,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingRight="10dp"
         android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -46,10 +46,11 @@
                 style="@style/txt_gray_14" />
         </RelativeLayout>
         <LinearLayout
+            android:id="@+id/itemlayout1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/item1"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
@@ -141,7 +142,13 @@
                     android:id="@+id/statusTxt2"
                     android:text="100人在学习"
                     style="@style/txt_gray_12" />
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemlayout2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         </LinearLayout>
 </LinearLayout>

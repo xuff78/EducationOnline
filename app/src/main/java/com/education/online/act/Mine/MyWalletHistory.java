@@ -32,7 +32,7 @@ public class MyWalletHistory extends BaseFrameAct {
     private WalletInfoBean walletInfoBean;
     private WalletHistoryAdapter adapter;
     private int page = 1;
-    private String pageSize = "10";
+    private String pageSize = "20";
     private List<WalletLogBean> walletLogBeanList = new ArrayList<>();
     private boolean onloading = false;
 

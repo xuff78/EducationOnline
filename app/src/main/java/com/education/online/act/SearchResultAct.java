@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback, SelectorPage.CourseSelector{
 
-    private TextView typeTxt, selectTypeView;
+    private TextView typeTxt, selectTypeView, selectTypeView2, selectTypeView3;
     private EditText searchEdt;
     private View typeLayout, menuBtn1, menuBtn2, menuBtn3, transblackBg, courseTypeLayout;
     private FrameLayout filterDetailLayout;
@@ -134,6 +134,13 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }else {
                 addCourseListFragment(onlinecoursePage);
             }
+        }else if(getIntent().hasExtra(Constant.TypeCourse)){
+            String courseType=getIntent().getStringExtra(Constant.TypeCourse);
+            if(courseType.equals("coursevideo"))
+                selectTypeView2.callOnClick();
+            else if(courseType.equals("courseware"))
+                selectTypeView3.callOnClick();
+            return;
         }
         handler.getCourseList(courseFilter);
     }
@@ -244,8 +251,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         TextView courseTypeTxt1= (TextView) findViewById(R.id.courseTypeTxt1);
         courseTypeTxt1.setOnClickListener(typeListener);
         selectTypeView=courseTypeTxt1;
-        findViewById(R.id.courseTypeTxt2).setOnClickListener(typeListener);
-        findViewById(R.id.courseTypeTxt3).setOnClickListener(typeListener);
+        selectTypeView2= (TextView) findViewById(R.id.courseTypeTxt2);
+        selectTypeView2.setOnClickListener(typeListener);
+        selectTypeView3= (TextView) findViewById(R.id.courseTypeTxt3);
+        selectTypeView3.setOnClickListener(typeListener);
     }
 
     private void setFirstFilter(ArrayList<FilterInfo> list){
