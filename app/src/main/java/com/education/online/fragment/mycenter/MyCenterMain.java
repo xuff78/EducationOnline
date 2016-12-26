@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.avos.avoscloud.AVException;
+import com.avoscloud.leanchatlib.model.Room;
 import com.education.online.R;
 import com.education.online.act.Mine.HelpandFeedback;
 import com.education.online.act.Mine.MyCourseMuti;
@@ -22,6 +24,7 @@ import com.education.online.act.Mine.Settings;
 import com.education.online.act.Mine.UserInfoEdit;
 import com.education.online.act.Mine.AskAndAnswer;
 import com.education.online.act.Mine.MyInteresting;
+import com.education.online.act.chat.ConversationManager;
 import com.education.online.act.discovery.MessageMain;
 import com.education.online.bean.HomePageInfo;
 import com.education.online.bean.LoginInfo;
@@ -39,6 +42,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 可爱的蘑菇 on 2016/9/10.
@@ -47,8 +51,9 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
 
     private HttpHandler handler;
     private ImageLoader imageLoader;
-    private ImageView teacherImg, messageStatus;
-    private TextView nameTxt;
+    private ImageView teacherImg;
+    private TextView nameTxt,messageStatus;
+    private ConversationManager conversationManager = ConversationManager.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +66,7 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
     }
 
     private void initView(View v) {
+        messageStatus= (TextView) v.findViewById(R.id.messageStatus);
         v.findViewById(R.id.myCourseLayout).setOnClickListener(this);
         v.findViewById(R.id.myDownloadLayout).setOnClickListener(this);
         v.findViewById(R.id.myOrderLayout).setOnClickListener(this);
@@ -85,6 +91,27 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
         super.onResume();
         imageLoader.displayImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(getActivity(), Constant.Avatar)), teacherImg);
         nameTxt.setText(SharedPreferencesUtil.getString(getActivity(), Constant.NickName));
+        updateConversationList();
+    }
+
+    private void updateConversationList() {
+        if(conversationManager!=null)
+            conversationManager.findAndCacheRooms(new Room.MultiRoomsCallback() {
+                @Override
+                public void done(List<Room> roomList, AVException exception) {
+                    if (exception==null) {
+                        int news=0;
+                        for(int i=0;i<roomList.size();i++){
+                            Room room=roomList.get(i);
+                            news+=room.getUnreadCount();
+                        }
+                        if(news>0) {
+                            messageStatus.setVisibility(View.VISIBLE);
+                        }else
+                            messageStatus.setVisibility(View.GONE);
+                    }
+                }
+            });
     }
 
     @Override

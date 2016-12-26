@@ -47,6 +47,7 @@
                 android:layout_height="40dp" />
             <TextView
                 android:textColor="@color/normal_red"
+                android:visibility="gone"
                 android:textSize="22sp"
                 android:text="●"
                 android:layout_marginRight="10dp"
