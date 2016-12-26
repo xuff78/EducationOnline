@@ -53,7 +53,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
     private List<EvaluateBean> evaluateList=new ArrayList<>();
     private LinearLayout addfavorite_layout, share_layout, download_layout;
     private TextView textaddfavorite, textshare, textdownload, textaddorbuy, header_title_tv;
-    private ImageView addfavorite, share, download;
+    private ImageView addfavorite, share, download, roundBackBtn;
     private CourseDetailBean courseDetailBean=new CourseDetailBean();
     private String course_id;
     private int page=1;
@@ -177,6 +177,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
         course_id = intent.getStringExtra("course_id");
         addfavorite = (ImageView) findViewById(R.id.addfavorite);
         share = (ImageView) findViewById(R.id.share);
+        roundBackBtn = (ImageView) findViewById(R.id.roundBackBtn);
         download = (ImageView) findViewById(R.id.download);
         textaddfavorite = (TextView) findViewById(R.id.textAddFavorite);
         textshare = (TextView) findViewById(R.id.textShare);
@@ -195,7 +196,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
         download.setVisibility(View.INVISIBLE);
 
         recyclerList=(ZoomRecyclerView)findViewById(R.id.recyclerList);
-        recyclerList.setHeadView(header);
+        recyclerList.setHeadView(header, roundBackBtn);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);

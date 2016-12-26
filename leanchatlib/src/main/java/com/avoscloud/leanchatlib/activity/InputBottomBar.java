@@ -297,7 +297,8 @@ public class InputBottomBar extends LinearLayout {
    */
   private void showTextLayout() {
     contentEditText.setVisibility(View.VISIBLE);
-    recordBtn.setVisibility(contentEditText.getText().length() > 0 ? GONE : VISIBLE);
+    recordBtn.setVisibility(GONE);
+    voiceBtn.setVisibility(contentEditText.getText().length() > 0 ? GONE : VISIBLE);
     actionBtn.setVisibility(contentEditText.getText().length() > 0 ? GONE : VISIBLE);
     sendTextBtn.setVisibility(contentEditText.getText().length() > 0 ? VISIBLE : GONE);
     keyboardBtn.setVisibility(View.GONE);

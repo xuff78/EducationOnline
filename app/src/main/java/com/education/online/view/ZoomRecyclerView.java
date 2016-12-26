@@ -22,11 +22,12 @@ import com.education.online.util.LogUtil;
  */
 public class ZoomRecyclerView extends RecyclerView{
 
-    public void setHeadView(View header) {
+    public void setHeadView(View header, View roundBackBtn) {
         this.header=header;
+        this.roundBackBtn=roundBackBtn;
     }
 
-    private View header;
+    private View header, roundBackBtn;
     private enum STATUS {
         DragDown, AnimaBack, Scroll
     }
@@ -111,8 +112,15 @@ public class ZoomRecyclerView extends RecyclerView{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 listScrollY+=dy;
-                float alpha=listScrollY/(float)imghHeight;
-                header.setAlpha(alpha);
+                int scrollYdis=listScrollY-imghHeight/2;
+                float alpha=scrollYdis/((float)imghHeight/2);
+                if(alpha>=0)
+                    header.setAlpha(alpha);
+                else
+                    header.setAlpha(0);
+                float alpha2=1-listScrollY/((float)imghHeight/2);
+                if(alpha2>=0)
+                    roundBackBtn.setAlpha(alpha2);
             }
         });
         if(getChildCount()>0) {
