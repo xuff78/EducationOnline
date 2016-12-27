@@ -129,9 +129,9 @@ public class WalletPay extends BaseFrameAct {
                         // Toast toast = new Toast(SetPayPwd.this).makeText(SetPayPwd.this, "最终密码是" + initPassword, Toast.LENGTH_SHORT);
                         //  toast.show();
                         // finish();
-                        String Codedpassword = SHA.getSHA(initPassword);
+//                        String Codedpassword = SHA.getSHA(initPassword);
                         Intent data = new Intent();
-                        data.putExtra("psw",Codedpassword);
+                        data.putExtra("psw",initPassword);
                         setResult(0x11,data);
                         finish();
                     }
