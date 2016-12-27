@@ -41,6 +41,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.tungdx.mediapicker.MediaOptions;
+import vn.tungdx.mediapicker.utils.MediaUtils;
+
 /**
  * Created by Administrator on 2016/8/30.
  */
@@ -54,6 +57,7 @@ public class HomepageVideo extends BaseFragment {
     private String imgpath="";
     private int tobeDelPos=-1;
     private String dispose_type="add"; //1添加，0删除
+    private MediaOptions mMediaOptions ;
     private AdapterCallback callback=new AdapterCallback() {
         @Override
         public void onClick(View v, int i) {
@@ -127,6 +131,8 @@ public class HomepageVideo extends BaseFragment {
         teacherList.setLayoutManager(layoutManager);
         adapter=new TeacherImgAdapter(getActivity(), items, true, callback);
         teacherList.setAdapter(adapter);
+        MediaOptions.Builder builder = new MediaOptions.Builder();
+        mMediaOptions = builder.selectVideo().canSelectMultiVideo(false).build();
     }
 
     private Dialog progressDialog;
@@ -138,7 +144,12 @@ public class HomepageVideo extends BaseFragment {
                 requestCode == SelectVideoDialog.SELECT_VIDEO_BY_PICK_PHOTO)) {
 
             progressDialog = ProgressDialog.show(getActivity(), "", "处理中。。");
-            final String picPath = SelectVideoDialog.doPhoto(getActivity(), requestCode, data);
+            final int code = checkValidVideo(data.getData());
+            if(code!=1) {
+                ToastUtils.displayTextShort(getActivity(), "获取视频失败");
+                return;
+            }
+            final String picPath = SelectVideoDialog.getPath(getActivity(), data.getData());//SelectVideoDialog.doPhoto(getActivity(), requestCode, data);
             Log.i("Upload", "最终选择的视频: " + picPath);
             if (picPath == null) {
                 ToastUtils.displayTextShort(getActivity(), "获取视频失败");
@@ -198,6 +209,25 @@ public class HomepageVideo extends BaseFragment {
         }
         if(adapter!=null)
             adapter.notifyDataSetChanged();
+    }
+
+    private int checkValidVideo(Uri videoUri) {
+        if (videoUri == null)
+            return -2;
+        long duration = MediaUtils.getDuration(getActivity(),
+                MediaUtils.getRealVideoPathFromURI(getActivity().getContentResolver(), videoUri));
+        if (duration == 0) {
+            duration = MediaUtils
+                    .getDuration(getActivity(), videoUri);
+        }
+        if (mMediaOptions.getMaxVideoDuration() != Integer.MAX_VALUE
+                && duration >= mMediaOptions.getMaxVideoDuration() + 1000) {
+            return 0;
+        } else if (duration == 0
+                || duration < mMediaOptions.getMinVideoDuration()) {
+            return -1;
+        }
+        return 1;
     }
 
 }
