@@ -323,6 +323,13 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getUserInfo, paramMap, true);
 	}
 
+	public void getUserInfoNoDialog(String usercode) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("usercode",usercode);
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getUserInfo, paramMap, false);
+	}
+
 	public void regist(String phone, String password,String identity,String nickname,String gender,String avatar,String subject_id)
 	{
 		HashMap<String, String> paraMap = new HashMap<>();

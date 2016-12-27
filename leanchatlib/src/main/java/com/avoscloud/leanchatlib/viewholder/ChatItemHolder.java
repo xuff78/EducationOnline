@@ -9,7 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.LogUtil;
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.avoscloud.leanchatlib.R;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.event.ImTypeMessageResendEvent;
@@ -20,6 +23,8 @@ import com.avoscloud.leanchatlib.utils.PhotoUtils;
 import com.avoscloud.leanchatlib.utils.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.Arrays;
+import java.util.Map;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -80,7 +85,26 @@ public class ChatItemHolder extends CommonViewHolder {
     } else {
       try {
         //TODO 加载完应该回调刷新 UI
-        AVUserCacheUtils.cacheUsers(Arrays.asList(message.getFrom()));
+        if(message instanceof AVIMTextMessage) {
+          AVIMTextMessage msg= (AVIMTextMessage) message;
+          Map<String, Object> infos=msg.getAttrs();
+          user = AVUser.newAVUser(LeanchatUser.class, null);
+          if(infos.containsKey("avatar")) {
+            Object avatar=infos.get("avatar");
+            if(avatar==null)
+              avatar="";
+            user.put("avatar", avatar);
+          }
+          if(infos.containsKey("nickname")) {
+            Object username=infos.get("nickname");
+            if(username==null)
+              username="";
+            user.put("username", username);
+          }
+//          LogUtil.i("user", "create id: "+message.getFrom()+"  name: "+user.get("username")+"  avatar: "+user.get("avatar"));
+          user.setObjectId(message.getFrom());
+          AVUserCacheUtils.cacheUser(message.getFrom(), user);
+        }
       } catch (Exception e) {
         e.printStackTrace();
       }

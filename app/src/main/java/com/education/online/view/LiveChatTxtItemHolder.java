@@ -1,5 +1,6 @@
 package com.education.online.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class LiveChatTxtItemHolder extends LiveChatItemHolder {
 
     protected TextView contentView;
 
-    public LiveChatTxtItemHolder(Context context, ViewGroup root, boolean isLeft) {
+    public LiveChatTxtItemHolder(Activity context, ViewGroup root, boolean isLeft) {
         super(context, root, isLeft);
     }
 

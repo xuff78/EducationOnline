@@ -1,5 +1,6 @@
 package com.education.online.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -46,8 +47,8 @@ public class LiveChatAdapter extends BaseAdapter {
     private boolean isShowUserName = true;
 
     private List<AVIMMessage> messageList = new ArrayList<>();
-    private Context con;
-    public LiveChatAdapter(Context con) {this.con=con;}
+    private Activity con;
+    public LiveChatAdapter(Activity con) {this.con=con;}
 
     public void setMessageList(List<AVIMMessage> messages) {
         messageList.clear();

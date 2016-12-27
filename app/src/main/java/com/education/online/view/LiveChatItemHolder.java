@@ -1,6 +1,8 @@
 package com.education.online.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
@@ -22,10 +25,18 @@ import com.avoscloud.leanchatlib.utils.PhotoUtils;
 import com.avoscloud.leanchatlib.utils.Utils;
 import com.avoscloud.leanchatlib.viewholder.CommonViewHolder;
 import com.education.online.R;
+import com.education.online.bean.UserInfo;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.util.Constant;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -48,9 +59,31 @@ public class LiveChatItemHolder extends CommonViewHolder {
     protected ProgressBar progressBar;
     protected TextView statusView, content;
     protected ImageView errorView;
+    private HttpHandler mHandler;
+    private Activity context;
 
-    public LiveChatItemHolder(Context context, ViewGroup root, boolean isLeft) {
+    private void initHandler() {
+        mHandler = new HttpHandler(context, new CallBack(context) {
+            @Override
+            public void doSuccess(String method, String jsonData) throws JSONException {
+                super.doSuccess(method, jsonData);
+                if(method.equals(Method.getUserInfo)){
+                    UserInfo userinfo= JSON.parseObject(jsonData, UserInfo.class);
+
+                    LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+                    user.put("avatar", ImageUtil.getImageUrl(userinfo.getAvatar()));
+                    user.put("username", userinfo.getNickname());
+                    AVUserCacheUtils.cacheUser(message.getFrom(), user);
+                    nameView.setText(userinfo.getNickname());
+                    ImageLoader.getInstance().displayImage(user.getAvatarUrl(), avatarView, PhotoUtils.avatarImageOptions);
+                }
+            }
+        });
+    }
+
+    public LiveChatItemHolder(Activity context, ViewGroup root, boolean isLeft) {
         super(context, root, R.layout.chat_item_left);
+        this.context=context;
         this.isLeft = isLeft;
         initView();
     }
@@ -77,7 +110,7 @@ public class LiveChatItemHolder extends CommonViewHolder {
         LeanchatUser user = AVUserCacheUtils.getCachedUser(message.getFrom());
 
         LogUtil.i("user", "load id: "+message.getFrom());
-        if (null == user) {
+        /*if (null == user) {
             try {
                 //TODO 加载完应该回调刷新 UI
                 if(message instanceof AVIMTextMessage) {
@@ -103,7 +136,7 @@ public class LiveChatItemHolder extends CommonViewHolder {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         if (message instanceof AVIMTextMessage) {
             AVIMTextMessage textMessage = (AVIMTextMessage) message;
             content.setText(EmotionHelper.replace(ChatManager.getContext(), textMessage.getText()));
@@ -111,6 +144,9 @@ public class LiveChatItemHolder extends CommonViewHolder {
         if (null != user) {
             nameView.setText((String)user.get("username"));
             ImageLoader.getInstance().displayImage(user.getAvatarUrl(), avatarView, PhotoUtils.avatarImageOptions);
+        }else{
+            initHandler();
+            mHandler.getUserInfoNoDialog(message.getFrom());
         }
 
         switch (message.getMessageStatus()) {
