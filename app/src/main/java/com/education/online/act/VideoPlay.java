@@ -134,6 +134,6 @@ public class VideoPlay extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        upVideoView.release(true);
+        upVideoView.stopPlayback();
     }
 }

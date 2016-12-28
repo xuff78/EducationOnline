@@ -428,8 +428,8 @@ public class ActUtil {
         int min = leftH / 60;
         int sec = leftH % 60;
         String hourTxt=hour>9?String.valueOf(hour):("0"+hour);
-        String minTxt=hour>9?String.valueOf(min):("0"+min);
-        String secTxt=hour>9?String.valueOf(sec):("0"+sec);
+        String minTxt=min>9?String.valueOf(min):("0"+min);
+        String secTxt=sec>9?String.valueOf(sec):("0"+sec);
         return hourTxt + ":" +minTxt + ":" +  secTxt;
     }
 }

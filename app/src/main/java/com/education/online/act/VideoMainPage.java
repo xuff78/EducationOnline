@@ -51,6 +51,7 @@ import com.education.online.util.VideoUtil;
 import com.education.online.view.DownLoadDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.upyun.upplayer.widget.IRenderView;
+import com.upyun.upplayer.widget.SimpleVideoView;
 import com.upyun.upplayer.widget.UpVideoView;
 
 import org.json.JSONException;
@@ -140,7 +141,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         video_play.setClickable(false);
                         videorelated.setVisibility(View.GONE);
                         textaddorbuy.setOnClickListener(listener);
-                        download_layout.setVisibility(View.GONE);
+                        download_layout.setVisibility(View.INVISIBLE);
                         payBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -293,6 +294,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                 expandBtn.setClickable(true);
                 //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
+                upVideoView.setBufferSize(1024*1024*10);
                 upVideoView.setVideoPath(path);
                 upVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                     @Override
@@ -456,7 +458,15 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                                 });
                             }
                             timer=new Timer();
+                            task=new TimerTask() {
+
+                                @Override
+                                public void run() {
+                                    handler.sendEmptyMessage(WHAT);
+                                }
+                            };
                             timer.schedule(task, 1000, 1000);
+
                             playBtn.setImageResource(R.mipmap.icon_video_stop);
                             //开始播放
                             upVideoView.start();
@@ -550,8 +560,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
         videoMask = (ImageView) findViewById(R.id.videoMask);
         upVideoView = (UpVideoView) findViewById(R.id.upVideoView);
-        upVideoView.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
-        upVideoView.setBufferSize(1024*1024*5);
+//        upVideoView.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
         int width = ScreenUtil.getWidth(this);
         int height = (int) (((float) width) * 9 / 16);
 //        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
@@ -580,7 +589,10 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         //暂停播放
         upVideoView.pause();
         video_play.setVisibility(View.VISIBLE);
-        timer.cancel();
+        if(task!=null);
+            task.cancel();
+        if(timer!=null);
+            timer.cancel();
     }
 
     public void setStatusFalse(int pos) {
@@ -634,7 +646,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     @Override
     public void onStop() {
         super.onStop();
-        upVideoView.release(true);
+        upVideoView.stopPlayback();
     }
 
     RecyclerView.OnScrollListener srcollListener = new RecyclerView.OnScrollListener() {
@@ -666,19 +678,13 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
 
     private Timer timer=null;
-    private TimerTask task = new TimerTask() {
-
-        @Override
-        public void run() {
-            handler.sendEmptyMessage(WHAT);
-        }
-    };
+    private TimerTask task = null;
     private final static int WHAT = 0;
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case WHAT:
-                    int currentPlayer = upVideoView.getCurrentPosition();
+                    /*int currentPlayer = upVideoView.getCurrentPosition();
                     LogUtil.i("Time", "show time: "+System.currentTimeMillis());
                     if (currentPlayer > 0) {
                         currentTime.setText(ActUtil.getTimeFormat(currentPlayer/1000));
@@ -687,13 +693,33 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         int progress = (int) ((currentPlayer / (float) totaltime) * 100);
 
                         seekbar.setProgress(progress);
-                    }
+                    }*/
+                    setProgress();
                     break;
                 default:
                     break;
             }
         }
     };
+
+    private long setProgress() {
+        if (upVideoView == null )
+            return 0;
+
+        long position = upVideoView.getCurrentPosition();
+        long duration = upVideoView.getDuration();
+        if (seekbar != null) {
+            long pos=0;
+            if (duration > 0) {
+                pos = 100L * position / duration;
+                seekbar.setProgress((int) pos);
+            }
+            int percent = upVideoView.getBufferPercentage();
+            seekbar.setSecondaryProgress(percent);
+            LogUtil.i("progress", "pos = "+pos+"  percent = "+percent);
+        }
+        return position;
+    }
 
     @Override
     protected void onDestroy() {
