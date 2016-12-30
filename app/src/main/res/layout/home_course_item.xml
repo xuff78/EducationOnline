@@ -32,6 +32,9 @@
         android:id="@+id/timeTxt"
         android:text="12:00"
         style="@style/txt_gray_12" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:layout_marginTop="3dp"
         android:id="@+id/priceTxt"
@@ -39,9 +42,15 @@
         android:textColor="@color/dark_orange"
         style="@style/txt_gray_14" />
     <TextView
+        android:layout_toRightOf="@+id/priceTxt"
+        android:layout_width="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:layout_alignBottom="@+id/priceTxt"
         android:layout_marginTop="3dp"
         android:id="@+id/statusTxt"
         android:text="100人在学习"
         style="@style/txt_gray_12" />
+    </RelativeLayout>
 </LinearLayout>
 

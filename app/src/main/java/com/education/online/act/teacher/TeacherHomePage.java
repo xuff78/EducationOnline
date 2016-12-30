@@ -38,6 +38,7 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     ImageButton homeBtn;
     private HttpHandler mHandler;
     private TeacherBean teacherBean;
+    private boolean isEdit=false;
 
     private void initHandler() {
         mHandler = new HttpHandler(this, new CallBack(this) {
@@ -62,7 +63,11 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
         _setRightHome(R.mipmap.teacher_home_edit, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                homeBtn.setImageResource(R.mipmap.teacher_home_done);
+                isEdit=!isEdit;
+                if(isEdit)
+                    homeBtn.setImageResource(R.mipmap.icon_teacher_menu_edit);
+                else
+                    homeBtn.setImageResource(R.mipmap.teacher_home_done);
                 switch (lastSelectedPosition){
                     case 0:
                         homepageImg.setEdit();
@@ -118,9 +123,10 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view != lastSelectedview) {
-            professionLayout.setVisibility(View.VISIBLE);
             setStatusFalse(lastSelectedPosition);
             lastSelectedview= view;
+            isEdit=false;
+            homeBtn.setImageResource(R.mipmap.icon_teacher_menu_edit);
             switch (view.getId()) {
                 case R.id.details:
                     lastSelectedPosition=0;
@@ -135,7 +141,6 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                     openFragment(R.id.frgframe, homepageVideo);
                     break;
                 case R.id.comments:
-                    professionLayout.setVisibility(View.GONE);
                     lastSelectedPosition=2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewcomments.setVisibility(View.VISIBLE);

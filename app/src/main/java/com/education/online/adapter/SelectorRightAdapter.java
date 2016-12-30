@@ -68,7 +68,11 @@ public class SelectorRightAdapter extends RecyclerView.Adapter<ViewHolder>{
 	public ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
 		ViewHolder vh=null;
 		View view=listInflater.inflate(R.layout.selector_right_item, null);
-		view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+		SubjectBean cate=dataList.get(pos);
+		if(cate.getChild_subject_details().size()>0)
+			view.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+		else
+			view.setLayoutParams(new RecyclerView.LayoutParams(-1, 0));
 		vh=new ItemViewHolder(view, pos);
 		return vh;
 	}

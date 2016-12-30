@@ -20,6 +20,8 @@ import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avoscloud.leanchatlib.controller.ChatManager;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
+import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.education.online.R;
 import com.education.online.act.order.SubmitOrder;
 import com.education.online.act.pushlive.LiveCameraPage;
@@ -32,6 +34,8 @@ import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
+import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -227,7 +231,15 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                 httpHandler.addCollection(course_id);
                 break;
             case R.id.sharelayout:
-                //do sth;
+                if(courseDetailBean.getUsercode().length()>0) {
+                    LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+                    user.put("avatar", ImageUtil.getImageUrl(courseDetailBean.getUser_info().getAvatar()));
+                    user.put("username", courseDetailBean.getUser_info().getUser_name());
+                    user.put("user_type ", "2");
+                    user.setObjectId(courseDetailBean.getUsercode());
+                    AVUserCacheUtils.cacheUser(user.getObjectId(), user);
+                    ActUtil.goChat(courseDetailBean.getUsercode(), this, courseDetailBean.getUser_info().getUser_name());
+                }
                 break;
             case R.id.downloadlayout:
                 //do sth;

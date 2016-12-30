@@ -2,6 +2,7 @@ package com.education.online.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +64,11 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
         courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开课");
         courseItemHolder.CoursePrice.setText(ActUtil.getPrice(course.getPrice()));
         courseItemHolder.NumApplicant.setText(course.getFollow()+"已报名");
-        if(course.getIs_buy().equals("1"))
-            courseItemHolder.ApplicantCourse.setVisibility(View.GONE);
+        if(course.getIs_buy().equals("1")) {
+            courseItemHolder.ApplicantCourse.setBackgroundResource(R.drawable.shape_grayline_with_corner);
+            courseItemHolder.ApplicantCourse.setText("已报名");
+            courseItemHolder.ApplicantCourse.setTextColor(Color.GRAY);
+        }
 
     }
 

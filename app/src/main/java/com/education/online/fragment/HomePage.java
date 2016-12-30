@@ -71,6 +71,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                     recyclerList.setAdapter(adapter);
                     mSwipeLayout.setRefreshing(false);
                     page=1;
+                    listScrollY=0;
                     courses.clear();
                     handler.getRecommentCourses(page);
                 }else if (method.equals(Method.getRecommentCourses)) {

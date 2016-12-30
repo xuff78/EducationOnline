@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -112,7 +113,8 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         } else if (pos == 0) {
             CourseHolder vh = (CourseHolder) holder;
-            imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg);
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg,
+                    ImageUtil.getImageOption(0));
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
             vh.courseoldprice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);

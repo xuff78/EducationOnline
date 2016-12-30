@@ -260,13 +260,13 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:background="@color/whitesmoke"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/addorbuy"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:background="@color/whitesmoke"
                 android:id="@+id/addfavoritelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -293,6 +293,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:background="@color/whitesmoke"
                 android:id="@+id/sharelayout"
                 android:layout_width="match_parent"

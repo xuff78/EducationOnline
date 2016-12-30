@@ -160,7 +160,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                                 textaddorbuy.setText("已拒绝");
                             }
                         }else {
-                            textaddorbuy.setText("");
+                            textaddorbuy.setText("继续学习");
                         }
                         textaddorbuy.setOnClickListener(null);
                         video_play.setVisibility(View.VISIBLE);

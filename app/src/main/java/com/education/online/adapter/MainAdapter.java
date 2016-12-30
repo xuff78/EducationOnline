@@ -177,6 +177,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ActUtil.getCourseTypeTxt(courseBean.getCourse_type(), cvh.typeTxt);
             cvh.titleTxt.setText(courseBean.getCourse_name());
             cvh.statusTxt.setText(courseBean.getFollow()+"人正在学习");
+            cvh.priceTxt.setText(ActUtil.getPrice(courseBean.getPrice()));
             imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), cvh.courseImg);
             cvh.itemView.setTag(courseBean);
             cvh.itemView.setOnClickListener(listener);
@@ -307,6 +308,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Intent i = new Intent(act, SearchResultAct.class);
                     i.putExtra(Constant.SearchSubject, subject.getChild_subject_ids());
                     i.putExtra(Constant.SearchWords, subject.getSubject_name());
+                    i.putExtra("AllCate", true);
                     act.startActivity(i);
                 }else{
                     ((MainPage)act).toSubjectList();
@@ -352,7 +354,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 for(int i=0;i<liveCourses.size();i++){
                     if(i>1)
                         addLayout=itemlayout2;
-                    CourseViewHolder ivh=getCourseHolder(addLayout);
+                    CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     LiveCourse live = liveCourses.get(i);
                     imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                     ivh.titleTxt.setText(live.getCourse_name());
@@ -366,7 +368,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 for(int i=0;i<liveCourses.size();i++){
                     if(i>1)
                         addLayout=itemlayout2;
-                    CourseViewHolder ivh=getCourseHolder(addLayout);
+                    CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     VideoCourse live = liveCourses.get(i);
                     imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                     ivh.titleTxt.setText(live.getCourse_name());
@@ -380,7 +382,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 for(int i=0;i<liveCourses.size();i++){
                     if(i>1)
                         addLayout=itemlayout2;
-                    CourseViewHolder ivh=getCourseHolder(addLayout);
+                    CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     WareCourse live = liveCourses.get(0);
                     imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
                     if(live.getCourse_img().length()==0)
@@ -399,7 +401,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public ImageView courseImg1, imgMask1;
         }
 
-        public CourseViewHolder getCourseHolder(LinearLayout linearLayout){
+        public CourseViewHolder getCourseHolder(LinearLayout linearLayout, int pos){
             CourseViewHolder holder=new CourseViewHolder();
             View v=listInflater.inflate(R.layout.home_course_item, null);
             holder.titleTxt = (TextView) v.findViewById(R.id.titleTxt);
@@ -409,6 +411,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.courseImg1 = (ImageView) v.findViewById(R.id.courseImg1);
             holder.imgMask1 = (ImageView) v.findViewById(R.id.imgMask1);
             v.setOnClickListener(listener);
+            v.setTag(pos);
             LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(courseWidth, -2);
             llp.rightMargin=padding10;
             linearLayout.addView(v, llp);
@@ -435,34 +438,23 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     case R.id.item1:
                     case R.id.item2:
                         Intent intent = new Intent();
+                        int tag= (int) view.getTag();
                         if (pos == 2) {
-                            LiveCourse course=new LiveCourse();
-                            if(view.getId()==R.id.item1)
-                                course=info.getLive().get(0);
-                            else if(view.getId()==R.id.item2)
-                                course=info.getLive().get(1);
+                            LiveCourse course=info.getLive().get(tag);
                             intent.putExtra("course_name", course.getCourse_name());
                             intent.putExtra("course_img", course.getCourse_img());
                             intent.putExtra("course_id", course.getCourse_id());
                             intent.setClass(act, CourseMainPage.class);
                             act.startActivity(intent);
                         } else if (pos == 3) {
-                            VideoCourse course=new VideoCourse();
-                            if(view.getId()==R.id.item1)
-                                course=info.getVideo().get(0);
-                            else if(view.getId()==R.id.item2)
-                                course=info.getVideo().get(1);
+                            VideoCourse course=info.getVideo().get(tag);
                             intent.putExtra("course_name", course.getCourse_name());
                             intent.putExtra("course_img", course.getCourse_img());
                             intent.putExtra("course_id", course.getCourse_id());
                             intent.setClass(act, VideoMainPage.class);
                             act.startActivity(intent);
                         } else if (pos == 4) {
-                            WareCourse course=new WareCourse();
-                            if(view.getId()==R.id.item1)
-                                course=info.getWare().get(0);
-                            else if(view.getId()==R.id.item2)
-                                course=info.getWare().get(1);
+                            WareCourse course=info.getWare().get(tag);
                             intent.putExtra("course_name", course.getCourse_name());
                             intent.putExtra("course_img", course.getCourse_img());
                             intent.putExtra("course_id", course.getCourse_id());
@@ -574,7 +566,7 @@ public class TitleHolder extends RecyclerView.ViewHolder {
 }
 
 public class CourseItemHolder extends RecyclerView.ViewHolder {
-    TextView titleTxt, statusTxt, typeTxt;
+    TextView titleTxt, statusTxt, typeTxt, priceTxt;
     ImageView courseImg;
 
     public CourseItemHolder(View convertView) {
@@ -583,6 +575,7 @@ public class CourseItemHolder extends RecyclerView.ViewHolder {
         titleTxt = (TextView) convertView.findViewById(R.id.titleTxt);
         statusTxt = (TextView) convertView.findViewById(R.id.statusTxt);
         typeTxt = (TextView) convertView.findViewById(R.id.typeTxt);
+        priceTxt = (TextView) convertView.findViewById(R.id.priceTxt);
     }
 }
 }

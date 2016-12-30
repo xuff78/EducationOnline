@@ -119,8 +119,8 @@ public class HomepageCourse extends BaseFragment {
             }
             if(ids.length()>0)
                 handler.updateSortList(ids.substring(0, ids.length()-1));
-            else
-                handler.updateSortList(ids);
+//            else
+//                handler.updateSortList(ids);
             LogUtil.i("test", "finishEdit!!");
         }else {
             edit=true;

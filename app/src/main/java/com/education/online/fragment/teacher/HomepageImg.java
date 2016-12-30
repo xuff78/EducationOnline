@@ -91,6 +91,7 @@ public class HomepageImg extends BaseFragment {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
+                if(getActivity()!=null)
                 if(method.equals(Method.dispose)){
                     if(dispose_type.equals("add")){
                         VideoImgItem item=new VideoImgItem();

@@ -85,6 +85,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             initHandler();
             _setHeaderGone();
             _setHeaderTitle("首页");
+            _setLeftBackGone();
             _setRightHome(R.mipmap.icon_query, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
