@@ -9,10 +9,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 
 import com.education.online.R;
+import com.upyun.upplayer.widget.MediaController;
 import com.upyun.upplayer.widget.UpVideoView;
 
 public class VideoPlay extends Activity {

@@ -20,6 +20,7 @@ import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 
+import io.vov.vitamio.LibsChecker;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +44,9 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
 
         ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
+
+        if (!LibsChecker.checkVitamioLibs(this))
+            return;
     }
 
     @Override

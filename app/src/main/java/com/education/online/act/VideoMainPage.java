@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -61,29 +62,31 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
+import io.vov.vitamio.LibsChecker;
+import io.vov.vitamio.widget.MediaController;
+import io.vov.vitamio.widget.VideoView;
 
 public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.DownloadCallback{
 
     int currentPos = 0;
     private LinearLayout addfavorite_layout, share_layout, download_layout;
-    private TextView textaddfavorite, textshare, textdownload, textaddorbuy, currentTime;
+    private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
     private ImageView addfavorite, share, download, background;
     private View lastSelectedView = null;
     private LinearLayoutManager layoutManager;
     private TextView paytips, payBtn;
     private LinearLayout details, directory, comments;
-    private TextView textdetails, textdirectory, textcomments, totalTime;
+    private TextView textdetails, textdirectory, textcomments;
     private View viewdetails, viewdirectory, viewcomments, bottomLayout;
     private ImageView roundLeftBack;
     private RecyclerView recyclerList;
     private View lastSelectedview;
     private int lastSelectedPosition;
-    private RelativeLayout videorelated;
+//    private RelativeLayout videorelated;
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks/";
-    private UpVideoView upVideoView;
-    private SeekBar seekbar;
-    private ImageView playBtn, expandBtn, video_play, videoMask;
+    private VideoView upVideoView;
+//    private SeekBar seekbar;
+    private ImageView /*playBtn, expandBtn,*/ video_play, videoMask;
     RelativeLayout.LayoutParams mVideoParams;
     RelativeLayout relativelayout1;
     private List<EvaluateBean> evaluateList = new ArrayList<>();
@@ -91,7 +94,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private String pageSize = "20";
     private boolean onloading = false;
     private ImageLoader imageLoader;
-    private long totaltime=0;
     private ThreadDAOImpl mDao;
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
@@ -137,9 +139,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         //do sth
                         paytips.setVisibility(View.VISIBLE);
                         payBtn.setVisibility(View.VISIBLE);
-                        video_play.setVisibility(View.INVISIBLE);
-                        video_play.setClickable(false);
-                        videorelated.setVisibility(View.GONE);
                         textaddorbuy.setOnClickListener(listener);
                         download_layout.setVisibility(View.INVISIBLE);
                         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -163,13 +162,12 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             textaddorbuy.setText("继续学习");
                         }
                         textaddorbuy.setOnClickListener(null);
-                        video_play.setVisibility(View.VISIBLE);
-                        video_play.setClickable(false);
-                        videorelated.setVisibility(View.VISIBLE);
+//                        video_play.setVisibility(View.VISIBLE);
+//                        video_play.setClickable(false);
                         paytips.setVisibility(View.INVISIBLE);
                         payBtn.setVisibility(View.INVISIBLE);
                         payBtn.setClickable(false);
-                        expandBtn.setClickable(false);
+//                        expandBtn.setClickable(false);
                     }
 
                     _setHeaderTitle(courseDetailBean.getCourse_name());
@@ -275,45 +273,17 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             if (type == "image") {
                 if (upVideoView.isPlaying()) {
                     upVideoView.pause();
-                    upVideoView.release(true);
                 }
-                video_play.setVisibility(View.INVISIBLE);
                 upVideoView.setVisibility(View.INVISIBLE);
                 background.setVisibility(View.VISIBLE);
                 if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode()))
                     imageLoader.displayImage(ImageUtil.getImageUrl(relativepath), background);
-                videorelated.setVisibility(View.GONE);
                 videoMask.setVisibility(View.GONE);
             } else if (type == "video") {
-                if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode())) {//没买
-                    videorelated.setVisibility(View.VISIBLE);
-                    video_play.setVisibility(View.VISIBLE);
-                }
-                video_play.setClickable(true);
                 payBtn.setClickable(true);
-                expandBtn.setClickable(true);
                 //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
-                upVideoView.setBufferSize(1024*1024*10);
-                upVideoView.setVideoPath(path);
-                upVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(IMediaPlayer mp) {
-                        totaltime=mp.getDuration();
-                        totalTime.setText(ActUtil.getTimeFormat(totaltime/1000));
-                    }
-                });
-                upVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(IMediaPlayer mp) {
-                        video_play.setVisibility(View.VISIBLE);
-                        video_play.setClickable(true);
-                        playBtn.setImageResource(R.mipmap.icon_play);
-                        currentTime.setText("00:00:00");
-                        seekbar.setProgress(0);
-                        timer.cancel();
-                    }
-                });
+//                upVideoView.setBufferSize(1024*1024*10);
                 videoMask.setVisibility(View.VISIBLE);
                 if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode())) {
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
@@ -324,10 +294,18 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                                     iv.setImageBitmap(bitmap);
                             }
                         });
-
+                    MediaController mp=new MediaController(VideoMainPage.this);
+//                    mp.setClickIsFullScreenListener(new MediaController.onClickIsFullScreenListener() {
+//                        @Override
+//                        public void setOnClickIsFullScreen() {
+//                            upVideoView.fullScreen(VideoMainPage.this);
+//                        }
+//                    });
+                    upVideoView.setMediaController(mp);
+                    upVideoView.setVideoPath(path);
+                    video_play.setVisibility(View.VISIBLE);
                 }else {
                     videoMask.setVisibility(View.GONE);
-                    video_play.setVisibility(View.INVISIBLE);
                 }
 //                upVideoView.start();
                 //暂停看风景
@@ -338,18 +316,14 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                 }
                 upVideoView.setVisibility(View.INVISIBLE);
                 videoMask.setVisibility(View.GONE);
-                video_play.setVisibility(View.INVISIBLE);
                 background.setVisibility(View.VISIBLE);
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
-                videorelated.setVisibility(View.GONE);
             }
         } else {
             if (upVideoView.isPlaying()) {
                 upVideoView.pause();
             }
-            video_play.setVisibility(View.INVISIBLE);
             upVideoView.setVisibility(View.INVISIBLE);
-            videorelated.setVisibility(View.GONE);
             background.setVisibility(View.VISIBLE);
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
         }
@@ -449,33 +423,16 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             if(files.get(openFilePos).getStatus()==3){
                                 path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
                                 upVideoView.setVideoPath(path);
-                                upVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-                                    @Override
-                                    public void onPrepared(IMediaPlayer mp) {
-                                        totaltime=mp.getDuration();
-                                        totalTime.setText(ActUtil.getTimeFormat(totaltime/1000));
-                                    }
-                                });
                             }
-                            timer=new Timer();
-                            task=new TimerTask() {
 
-                                @Override
-                                public void run() {
-                                    handler.sendEmptyMessage(WHAT);
-                                }
-                            };
-                            timer.schedule(task, 1000, 1000);
-
-                            playBtn.setImageResource(R.mipmap.icon_video_stop);
                             //开始播放
                             upVideoView.start();
-                            video_play.setVisibility(View.INVISIBLE);
                             videoMask.setVisibility(View.GONE);
+                            video_play.setVisibility(View.GONE);
                         }
                         break;
                     case R.id.expandBtn:
-                        upVideoView.fullScreen(VideoMainPage.this);
+//                        upVideoView.fullScreen(VideoMainPage.this);
                         break;
                     case R.id.roundLeftBack:
 
@@ -495,6 +452,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         course_id = intent.getStringExtra("course_id");
         addfavorite = (ImageView) findViewById(R.id.addfavorite);
         share = (ImageView) findViewById(R.id.share);
+        video_play = (ImageView) findViewById(R.id.video_play);
+        video_play.setOnClickListener(listener);
         download = (ImageView) findViewById(R.id.download);
         textaddfavorite = (TextView) findViewById(R.id.textAddFavorite);
         textshare = (TextView) findViewById(R.id.textShare);
@@ -522,44 +481,14 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         textdetails = (TextView) findViewById(R.id.textdetails);
         textdirectory = (TextView) findViewById(R.id.textdirectory);
         textcomments = (TextView) findViewById(R.id.textcomments);
-        totalTime = (TextView) findViewById(R.id.totalTime);
-        currentTime = (TextView) findViewById(R.id.currentTime);
 
         viewdetails = findViewById(R.id.viewdetails);
         viewdirectory = findViewById(R.id.viewdirectory);
         viewcomments = findViewById(R.id.viewcomments);
         relativelayout1 = (RelativeLayout) findViewById(R.id.relativelayout1);
-        videorelated = (RelativeLayout) findViewById(R.id.videorelated);
-        playBtn = (ImageView) findViewById(R.id.playBtn);
-        playBtn.setOnClickListener(listener);
-        expandBtn = (ImageView) findViewById(R.id.expandBtn);
-        expandBtn.setOnClickListener(listener);
-        seekbar = (SeekBar) findViewById(R.id.seekbar);
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            int lastProgress=0;
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                lastProgress=seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                if(upVideoView.isPlaying()){
-                    int progress=seekBar.getProgress();
-                    upVideoView.seekTo((int) (totaltime/100*progress));
-                }else
-                    seekBar.setProgress(lastProgress);
-            }
-        });
 
         videoMask = (ImageView) findViewById(R.id.videoMask);
-        upVideoView = (UpVideoView) findViewById(R.id.upVideoView);
+        upVideoView = (VideoView) findViewById(R.id.upVideoView);
 //        upVideoView.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
         int width = ScreenUtil.getWidth(this);
         int height = (int) (((float) width) * 9 / 16);
@@ -568,8 +497,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 //        upVideoView.setLayoutParams(params);
 
-        video_play = (ImageView) findViewById(R.id.video_play);
-        video_play.setOnClickListener(listener);
 
         //
         layoutManager = new LinearLayoutManager(this);
@@ -585,14 +512,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void stopPlay() {
-        playBtn.setImageResource(R.mipmap.icon_play);
         //暂停播放
         upVideoView.pause();
-        video_play.setVisibility(View.VISIBLE);
-        if(task!=null);
-            task.cancel();
-        if(timer!=null);
-            timer.cancel();
     }
 
     public void setStatusFalse(int pos) {
@@ -628,11 +549,11 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
     @Override
     public void onBackPressed() {
-        if (upVideoView.isFullState()) {
-            //退出全屏
-            upVideoView.exitFullScreen(this);
-            return;
-        }
+//        if (upVideoView.isFullState()) {
+//            //退出全屏
+//            upVideoView.exitFullScreen(this);
+//            return;
+//        }
         super.onBackPressed();
     }
 
@@ -675,51 +596,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             lastVisibleItem = layoutManager.findLastVisibleItemPosition();
         }
     };
-
-
-    private Timer timer=null;
-    private TimerTask task = null;
-    private final static int WHAT = 0;
-    private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-                case WHAT:
-                    /*int currentPlayer = upVideoView.getCurrentPosition();
-                    LogUtil.i("Time", "show time: "+System.currentTimeMillis());
-                    if (currentPlayer > 0) {
-                        currentTime.setText(ActUtil.getTimeFormat(currentPlayer/1000));
-
-                        // 让seekBar也跟随改变
-                        int progress = (int) ((currentPlayer / (float) totaltime) * 100);
-
-                        seekbar.setProgress(progress);
-                    }*/
-                    setProgress();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    private long setProgress() {
-        if (upVideoView == null )
-            return 0;
-
-        long position = upVideoView.getCurrentPosition();
-        long duration = upVideoView.getDuration();
-        if (seekbar != null) {
-            long pos=0;
-            if (duration > 0) {
-                pos = 100L * position / duration;
-                seekbar.setProgress((int) pos);
-            }
-            int percent = upVideoView.getBufferPercentage();
-            seekbar.setSecondaryProgress(percent);
-            LogUtil.i("progress", "pos = "+pos+"  percent = "+percent);
-        }
-        return position;
-    }
 
     @Override
     protected void onDestroy() {

@@ -20,28 +20,25 @@
             android:layout_height="match_parent"
             android:id="@+id/background"/>
 
-
-
-
-        <com.upyun.upplayer.widget.UpVideoView
+        <io.vov.vitamio.widget.VideoView
             android:id="@+id/upVideoView"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
+
         <ImageView
             android:id="@+id/videoMask"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/video_play"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_centerInParent="true"
+            android:visibility="gone"
             android:padding="10dp"
-            android:src="@mipmap/icon_video_play"
-            android:visibility="gone" />
+            android:id="@+id/video_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/icon_video_play" />
 
         <TextView
             android:visibility="invisible"
@@ -67,8 +64,7 @@
             android:text="立即购买"
             android:textColor="@color/dark_orange"
             android:textSize="16sp" />
-
-        <RelativeLayout
+        <!--<RelativeLayout
             android:visibility="gone"
             android:id="@+id/videorelated"
             android:layout_width="match_parent"
@@ -133,7 +129,7 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </RelativeLayout>
+        </RelativeLayout>-->
         <ImageView
             android:id="@+id/roundLeftBack"
             android:layout_width="60dp"

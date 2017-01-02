@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/videorelated"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="#88000000"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/pause"
+            android:padding="5dp"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/icon_play" />
+
+        <SeekBar
+            android:layout_centerVertical="true"
+            android:thumb="@mipmap/icon_oval"
+            android:id="@+id/mediacontroller_progress"
+            android:maxHeight="10dip"
+            android:minHeight="10dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/is_full_screen"
+            android:layout_toRightOf="@+id/pause"
+            android:max="100"
+            android:progress="0" />
+
+        <ImageView
+            android:id="@+id/is_full_screen"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_expand_screen" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/is_full_screen"
+            android:gravity="bottom|right"
+            android:text="00:00"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/time_current"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/pause"
+            android:text="00:00:00"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:visibility="gone" >
+
+        <ImageButton
+            android:id="@+id/prev"
+            style="@style/MediaButtonCompat.Previous" />
+
+        <ImageButton
+            android:id="@+id/rew"
+            style="@style/MediaButtonCompat.Rew" />
+
+        <ImageButton
+            android:id="@+id/ffwd"
+            style="@style/MediaButtonCompat.Ffwd" />
+
+        <ImageButton
+            android:id="@+id/next"
+            style="@style/MediaButtonCompat.Next" />
+    </LinearLayout>-->
+
+</LinearLayout>
