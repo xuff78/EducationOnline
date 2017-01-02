@@ -199,7 +199,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mCurrentState = STATE_PLAYBACK_COMPLETED;
       mTargetState = STATE_PLAYBACK_COMPLETED;
       if (mMediaController != null)
-        mMediaController.hide();
+        mMediaController.show();
       if (mOnCompletionListener != null)
         mOnCompletionListener.onCompletion(mMediaPlayer);
     }

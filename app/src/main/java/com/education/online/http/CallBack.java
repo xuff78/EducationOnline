@@ -37,18 +37,20 @@ public class CallBack {
 	 */
 	public void onSuccess(String method, String jsonMessage) throws JSONException {
 //		LogUtil.e(TAG, "onSuccess:"+jsonMessage);
-		JsonMessage msg= JsonUtil.getJsonMessage(jsonMessage);
-		if(msg.getCode()==null){
-			oServerException(method, jsonMessage);
-		}else if(msg.getCode().equals("0"))
-			doSuccess(method, JsonUtil.getJsonData(jsonMessage));
-		else if(msg.getCode().equals("-232030")) {
-			ToastUtils.displayTextShort(mContext, "会话失效，请重新登录");
-			Intent i=new Intent(mContext, LoginActivity.class);
-			i.putExtra("TimeOut", true);
-			mContext.startActivity(i);
-		}else{
-			onFailure(method, msg);
+		if(mContext!=null&&!mContext.isFinishing()) {
+			JsonMessage msg = JsonUtil.getJsonMessage(jsonMessage);
+			if (msg.getCode() == null) {
+				oServerException(method, jsonMessage);
+			} else if (msg.getCode().equals("0"))
+				doSuccess(method, JsonUtil.getJsonData(jsonMessage));
+			else if (msg.getCode().equals("-232030")) {
+				ToastUtils.displayTextShort(mContext, "会话失效，请重新登录");
+				Intent i = new Intent(mContext, LoginActivity.class);
+				i.putExtra("TimeOut", true);
+				mContext.startActivity(i);
+			} else {
+				onFailure(method, msg);
+			}
 		}
 	}
 
@@ -71,6 +73,7 @@ public class CallBack {
 	 */
 	public void onHTTPException(String method, String jsonMessage){
 //		LogUtil.e(TAG, "onHTTPException:"+jsonMessage);
+		if(mContext!=null&&!mContext.isFinishing())
 		DialogUtil.showInfoDailog(mContext, "提示", GlbsNet.HTTP_ERROR_MESSAGE);
 	}
 
