@@ -26,6 +26,10 @@
             android:layout_height="wrap_content" />
 
 
+        <io.vov.vitamio.widget.MediaController
+            android:id="@+id/mediaController"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/videoMask"
             android:layout_width="match_parent"
@@ -64,6 +68,8 @@
             android:text="立即购买"
             android:textColor="@color/dark_orange"
             android:textSize="16sp" />
+
+
         <!--<RelativeLayout
             android:visibility="gone"
             android:id="@+id/videorelated"

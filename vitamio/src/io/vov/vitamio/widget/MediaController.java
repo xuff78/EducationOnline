@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.LayoutDirection;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -74,7 +75,7 @@ import io.vov.vitamio.utils.StringUtils;
  * created in an xml layout.
  */
 public class MediaController extends FrameLayout {
-  private static final int sDefaultTimeout = 3000;
+  private static final int sDefaultTimeout = 10000;
   private static final int FADE_OUT = 1;
   private static final int SHOW_PROGRESS = 2;
   private MediaPlayerControl mPlayer;
@@ -225,6 +226,11 @@ public class MediaController extends FrameLayout {
       mWindow.setContentView(mRoot);
       mWindow.setWidth(LayoutParams.MATCH_PARENT);
       mWindow.setHeight(LayoutParams.WRAP_CONTENT);
+    }else{
+      removeAllViews();
+      mRoot=((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(getResources().getIdentifier("mediacontroller", "layout", mContext.getPackageName()), null);
+      LayoutParams flp=new LayoutParams(-1,-2);
+      this.addView(mRoot, flp);
     }
     initControllerView(mRoot);
   }

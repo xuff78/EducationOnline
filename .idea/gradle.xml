@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/mediapicker" />
             <option value="$PROJECT_DIR$/upplayer" />
             <option value="$PROJECT_DIR$/uppush" />
+            <option value="$PROJECT_DIR$/vitamio" />
           </set>
         </option>
         <option name="myModules">
@@ -25,6 +26,7 @@
             <option value="$PROJECT_DIR$/mediapicker" />
             <option value="$PROJECT_DIR$/upplayer" />
             <option value="$PROJECT_DIR$/uppush" />
+            <option value="$PROJECT_DIR$/vitamio" />
           </set>
         </option>
       </GradleProjectSettings>

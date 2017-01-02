@@ -112,6 +112,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private String my_usercode = "";
     private DownLoadDialog downLoadDialog;
     private DownloadService.DownloadBinder myBinder;
+    private MediaController mediaController;
     private ServiceConnection connection = new ServiceConnection() {
 
         @Override
@@ -284,26 +285,26 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                 //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
 //                upVideoView.setBufferSize(1024*1024*10);
-                videoMask.setVisibility(View.VISIBLE);
                 if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode())) {
+                    upVideoView.stopPlayback();
+
                     VideoThumbnailLoader.getIns().display(this, path, videoMask,
-                        100, 100, new VideoThumbnailLoader.ThumbnailListener() {
-                            @Override
-                            public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
-                                if (bitmap != null)
-                                    iv.setImageBitmap(bitmap);
-                            }
-                        });
-                    MediaController mp=new MediaController(VideoMainPage.this);
+                            100, 100, new VideoThumbnailLoader.ThumbnailListener() {
+                                @Override
+                                public void onThumbnailLoadCompleted(String url, ImageView iv, Bitmap bitmap) {
+                                    if (bitmap != null)
+                                        iv.setImageBitmap(bitmap);
+                                }
+                            });
+
+                    video_play.setVisibility(View.VISIBLE);
+
 //                    mp.setClickIsFullScreenListener(new MediaController.onClickIsFullScreenListener() {
 //                        @Override
 //                        public void setOnClickIsFullScreen() {
 //                            upVideoView.fullScreen(VideoMainPage.this);
 //                        }
 //                    });
-                    upVideoView.setMediaController(mp);
-                    upVideoView.setVideoPath(path);
-                    video_play.setVisibility(View.VISIBLE);
                 }else {
                     videoMask.setVisibility(View.GONE);
                 }
@@ -351,6 +352,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void initView() {
+        mediaController= (MediaController) findViewById(R.id.mediaController);
         bottomLayout=findViewById(R.id.bottomLayout);
         my_usercode = SharedPreferencesUtil.getUsercode(this);
         listener = new View.OnClickListener() {
@@ -416,15 +418,15 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         viewcomments.setVisibility(View.VISIBLE);
                         break;
                     case R.id.video_play:
-                    case R.id.playBtn:
                         if (upVideoView.isPlaying()) {
                             stopPlay();
                         } else {
+//                            MediaController mediaController=new MediaController(VideoMainPage.this);
+                            upVideoView.setMediaController(mediaController);
                             if(files.get(openFilePos).getStatus()==3){
                                 path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
-                                upVideoView.setVideoPath(path);
                             }
-
+                            upVideoView.setVideoPath(path);
                             //开始播放
                             upVideoView.start();
                             videoMask.setVisibility(View.GONE);
@@ -513,7 +515,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
     private void stopPlay() {
         //暂停播放
-        upVideoView.pause();
+        upVideoView.stopPlayback();
     }
 
     public void setStatusFalse(int pos) {
@@ -561,13 +563,14 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     protected void onPause() {
         super.onPause();
         if(upVideoView.isPlaying())
-            stopPlay();
+            upVideoView.pause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        upVideoView.stopPlayback();
+        if(upVideoView.isPlaying())
+            upVideoView.pause();
     }
 
     RecyclerView.OnScrollListener srcollListener = new RecyclerView.OnScrollListener() {
@@ -599,6 +602,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
     @Override
     protected void onDestroy() {
+        upVideoView.stopPlayback();
         unbindService(connection);
         super.onDestroy();
     }
