@@ -33,6 +33,7 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
     private List<EvaluateBean> evaluations=new ArrayList<>();
     private ImageLoader imageLoader=ImageLoader.getInstance();
     private AdapterCallback cb;
+    private int e1=0,e2=0,e3=0,e4=0,e5=0;
 
     public RateAdapter(Activity activity, List<EvaluateBean> evaluations, AdapterCallback cb){
         this.activity = activity;
@@ -72,6 +73,16 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             vh.rateTxt.setText(average);
             vh.numTxt.setText("共"+total+"人评价");
             vh.ratingBar.setStar(Float.valueOf(average));
+            vh.progress1.setProgress(e1);
+            vh.rate5Txt.setText(e1+"%");
+            vh.progress2.setProgress(e2);
+            vh.rate4Txt.setText(e2+"%");
+            vh.progress3.setProgress(e3);
+            vh.rate3Txt.setText(e3+"%");
+            vh.progress4.setProgress(e4);
+            vh.rate2Txt.setText(e4+"%");
+            vh.progress5.setProgress(e5);
+            vh.rate1Txt.setText(e5+"%");
         }else if(pos==1){
             MenuHolder vh = (MenuHolder) holder;
             for (int i=0;i<vh.txts.size();i++){
@@ -96,9 +107,14 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
         return 2+evaluations.size();
     }
 
-    public void setOtherInfo(String average, int total) {
+    public void setOtherInfo(String average, int total, int e1, int e2, int e3, int e4, int e5) {
         this.average=average;
         this.total=total+"";
+        this.e1=e1;
+        this.e2=e2;
+        this.e3=e3;
+        this.e4=e4;
+        this.e5=e5;
     }
 
     public class TopRateHolder extends RecyclerView.ViewHolder {

@@ -53,8 +53,9 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
                     if(page==1){
                         evaluations.clear();
                         evaluations.addAll(pageEvluate.getEvaluate());
+                        adapter.setOtherInfo(average, pageEvluate.getTotal(),JsonUtil.getJsonInt(jsonData, "one_ratio"), JsonUtil.getJsonInt(jsonData, "two_ratio"),
+                                JsonUtil.getJsonInt(jsonData, "three_ratio"),JsonUtil.getJsonInt(jsonData, "four_ratio"),JsonUtil.getJsonInt(jsonData, "five_ratio"));
                         adapter.notifyDataSetChanged();
-                        adapter.setOtherInfo(average, pageEvluate.getTotal());
                     }else {
                         evaluations.addAll(pageEvluate.getEvaluate());
                         adapter.notifyDataSetChanged();

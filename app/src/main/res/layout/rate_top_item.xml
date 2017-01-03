@@ -78,7 +78,7 @@
                     android:layout_toRightOf="@+id/hint5"
                     android:layout_toLeftOf="@+id/rate5Txt"
                     android:max="100"
-                    android:progress="50"
+                    android:progress="0"
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
                 <TextView
@@ -106,7 +106,7 @@
                     android:layout_toRightOf="@+id/hint4"
                     android:layout_toLeftOf="@+id/rate4Txt"
                     android:max="100"
-                    android:progress="50"
+                    android:progress="0"
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
                 <TextView
@@ -134,7 +134,7 @@
                     android:layout_toRightOf="@+id/hint3"
                     android:layout_toLeftOf="@+id/rate3Txt"
                     android:max="100"
-                    android:progress="50"
+                    android:progress="0"
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
                 <TextView
@@ -162,7 +162,7 @@
                     android:layout_toRightOf="@+id/hint2"
                     android:layout_toLeftOf="@+id/rate2Txt"
                     android:max="100"
-                    android:progress="50"
+                    android:progress="0"
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
                 <TextView
@@ -190,7 +190,7 @@
                     android:layout_toRightOf="@+id/hint1"
                     android:layout_toLeftOf="@+id/rate1Txt"
                     android:max="100"
-                    android:progress="50"
+                    android:progress="0"
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
                 <TextView
