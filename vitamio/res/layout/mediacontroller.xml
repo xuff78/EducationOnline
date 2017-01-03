@@ -5,19 +5,17 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:paddingRight="10dp"
         android:background="#88000000"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:orientation="horizontal" >
 
-        <ImageButton
+        <ImageView
             android:id="@+id/mediacontroller_play_pause"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:background="@drawable/mediacontroller_button"
             android:contentDescription="@string/mediacontroller_play_pause"
             android:src="@drawable/mediacontroller_pause" />
 
@@ -27,30 +25,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/mediacontroller_play_pause" />
 
         <TextView
             android:id="@+id/mediacontroller_time_total"
+            android:layout_toLeftOf="@+id/expendBtn"
             style="@style/MediaController_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp" />
 
         <SeekBar
             android:id="@+id/mediacontroller_seekbar"
             android:thumb="@drawable/icon_oval"
+            android:progressDrawable="@drawable/scrubber_progress_horizontal_holo_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="10dip"
+            android:maxHeight="6dip"
             android:minHeight="10dip"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/mediacontroller_time_total"
             android:layout_toRightOf="@id/mediacontroller_time_current"
             android:focusable="true"
             android:max="1000" />
+        <ImageView
+            android:id="@+id/expendBtn"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_expand_screen" />
     </RelativeLayout>
 
     <TextView

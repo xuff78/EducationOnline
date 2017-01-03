@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -36,6 +37,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 
 import io.vov.vitamio.MediaFormat;
 import io.vov.vitamio.MediaPlayer;
@@ -237,6 +239,12 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
         mOnBufferingUpdateListener.onBufferingUpdate(mp, percent);
     }
   };
+
+  @Override
+  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    super.onSizeChanged(w, h, oldw, oldh);
+  }
+
   private OnInfoListener mInfoListener = new OnInfoListener() {
     @Override
     public boolean onInfo(MediaPlayer mp, int what, int extra) {
@@ -249,7 +257,8 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
           if (mMediaBufferingIndicator != null)
             mMediaBufferingIndicator.setVisibility(View.VISIBLE);
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-          mMediaPlayer.start();
+          if(mCurrentState != STATE_PAUSED)
+              mMediaPlayer.start();
           if (mMediaBufferingIndicator != null)
             mMediaBufferingIndicator.setVisibility(View.GONE);
         }
@@ -752,5 +761,29 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
 
   protected boolean isInPlaybackState() {
     return (mMediaPlayer != null && mCurrentState != STATE_ERROR && mCurrentState != STATE_IDLE && mCurrentState != STATE_PREPARING);
+  }
+
+  public boolean isFullState=false;
+
+  public void fullScreen(Activity activity) {
+    if (!isFullState) {
+      if (activity.getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+      }
+      activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+              WindowManager.LayoutParams.FLAG_FULLSCREEN);
+      isFullState = true;
+    }else
+      exitFullScreen(activity);
+  }
+
+  public void exitFullScreen(Activity activity) {
+
+    if (isFullState) {
+      if (activity.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        isFullState = false;
+      }
+    }
   }
 }

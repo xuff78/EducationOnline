@@ -63,6 +63,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.vov.vitamio.LibsChecker;
+import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
@@ -352,7 +353,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void initView() {
-        mediaController= (MediaController) findViewById(R.id.mediaController);
         bottomLayout=findViewById(R.id.bottomLayout);
         my_usercode = SharedPreferencesUtil.getUsercode(this);
         listener = new View.OnClickListener() {
@@ -426,6 +426,13 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             if(files.get(openFilePos).getStatus()==3){
                                 path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
                             }
+                            upVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mp) {
+                                    upVideoView.seekTo(0);
+                                    upVideoView.pause();
+                                }
+                            });
                             upVideoView.setVideoPath(path);
                             //开始播放
                             upVideoView.start();
@@ -433,8 +440,17 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             video_play.setVisibility(View.GONE);
                         }
                         break;
-                    case R.id.expandBtn:
-//                        upVideoView.fullScreen(VideoMainPage.this);
+                    case R.id.expendBtn:
+                        if(!upVideoView.isFullState) {
+                            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+                            upVideoView.fullScreen(VideoMainPage.this);
+                            upVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
+                        }else{
+                            int width = ScreenUtil.getWidth(VideoMainPage.this);
+                            int height = (int) (((float) width) * 9 / 16);
+                            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+                            upVideoView.fullScreen(VideoMainPage.this);
+                        }
                         break;
                     case R.id.roundLeftBack:
 
@@ -449,6 +465,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             }
         };
 
+        mediaController= (MediaController) findViewById(R.id.mediaController);
+        mediaController.setExpendListener(listener);
         imageLoader = ImageLoader.getInstance();
         intent = getIntent();
         course_id = intent.getStringExtra("course_id");
@@ -538,12 +556,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             bottomLayout.setVisibility(View.GONE);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            int width = ScreenUtil.getWidth(this);
-            int height = (int) (((float) width) * 9 / 16);
-            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
             bottomLayout.setVisibility(View.VISIBLE);
         }
         super.onConfigurationChanged(newConfig);
@@ -551,11 +565,14 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
     @Override
     public void onBackPressed() {
-//        if (upVideoView.isFullState()) {
-//            //退出全屏
-//            upVideoView.exitFullScreen(this);
-//            return;
-//        }
+        if (upVideoView.isFullState) {
+            //退出全屏
+            int width = ScreenUtil.getWidth(VideoMainPage.this);
+            int height = (int) (((float) width) * 9 / 16);
+            relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            upVideoView.exitFullScreen(this);
+            return;
+        }
         super.onBackPressed();
     }
 

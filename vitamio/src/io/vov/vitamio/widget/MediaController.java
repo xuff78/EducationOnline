@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -42,6 +43,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
+import io.vov.vitamio.R;
 import io.vov.vitamio.utils.Log;
 import io.vov.vitamio.utils.StringUtils;
 
@@ -94,10 +96,12 @@ public class MediaController extends FrameLayout {
   private boolean mDragging;
   private boolean mInstantSeeking = false;
   private boolean mFromXml = false;
-  private ImageButton mPauseButton;
+  private ImageView mPauseButton, expendBtn;
   private AudioManager mAM;
   private OnShownListener mShownListener;
   private OnHiddenListener mHiddenListener;
+  private View.OnClickListener listener;
+
   @SuppressLint("HandlerLeak")
   private Handler mHandler = new Handler() {
     @Override
@@ -198,7 +202,7 @@ public class MediaController extends FrameLayout {
     mWindow.setOutsideTouchable(true);
     mAnimStyle = android.R.style.Animation;
   }
-  
+
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public void setWindowLayoutType() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -246,7 +250,10 @@ public class MediaController extends FrameLayout {
   }
 
   private void initControllerView(View v) {
-    mPauseButton = (ImageButton) v.findViewById(getResources().getIdentifier("mediacontroller_play_pause", "id", mContext.getPackageName()));
+    expendBtn= (ImageView) v.findViewById(R.id.expendBtn);
+    if(listener!=null)
+      expendBtn.setOnClickListener(listener);
+    mPauseButton = (ImageView) v.findViewById(getResources().getIdentifier("mediacontroller_play_pause", "id", mContext.getPackageName()));
     if (mPauseButton != null) {
       mPauseButton.requestFocus();
       mPauseButton.setOnClickListener(mPauseListener);
@@ -480,6 +487,10 @@ public class MediaController extends FrameLayout {
     if (mProgress != null)
       mProgress.setEnabled(enabled);
     super.setEnabled(enabled);
+  }
+
+  public void setExpendListener(OnClickListener expendListener) {
+    listener=expendListener;
   }
 
   public interface OnShownListener {
