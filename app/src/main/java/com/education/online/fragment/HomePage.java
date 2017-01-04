@@ -2,6 +2,7 @@ package com.education.online.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -73,7 +74,12 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                     page=1;
                     listScrollY=0;
                     courses.clear();
-                    handler.getRecommentCourses(page);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            handler.getRecommentCourses(page);
+                        }
+                    },2000);
                 }else if (method.equals(Method.getRecommentCourses)) {
                     int totalpage= JsonUtil.getJsonInt(jsonData, "page_total");
                     if(totalpage==page){

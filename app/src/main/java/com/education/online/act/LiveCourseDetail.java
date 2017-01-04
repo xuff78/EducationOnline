@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,8 +16,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,9 +33,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.avoscloud.leanchatlib.activity.AVBaseActivity;
-import com.avoscloud.leanchatlib.activity.ChatActivity;
 import com.avoscloud.leanchatlib.activity.InputBottomBar;
-import com.avoscloud.leanchatlib.adapter.ChatAdapter;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.controller.ConversationHelper;
 import com.avoscloud.leanchatlib.controller.MessageAgent;
@@ -62,8 +57,6 @@ import com.education.online.R;
 import com.education.online.adapter.LiveChatAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.util.ImageUtil;
-import com.education.online.util.ScreenUtil;
-import com.upyun.upplayer.widget.UpVideoView;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +65,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import io.vov.vitamio.widget.VideoView;
 
 /**
  * Created by Administrator on 2016/12/2.
@@ -86,7 +80,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     protected AVIMConversation imConversation;
     protected MessageAgent messageAgent;
 
-    private UpVideoView videoView;
+    private VideoView videoView;
 //    private View videoBottomLayout;
     String LiveCourseUrl="rtmp://pull.live.iqkui.com/live/";
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
@@ -123,10 +117,10 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 //        videoHeight = (int) (((float) videoWidth) * 9 / 16);
         chatListHeight = ImageUtil.dip2px(this, 300);
         CourseDetailBean bean= (CourseDetailBean) getIntent().getSerializableExtra(CourseDetailBean.Name);
-        videoView= (UpVideoView) findViewById(R.id.upVideoView);
+        videoView= (VideoView) findViewById(R.id.upVideoView);
 //        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, videoHeight);
 //        videoView.setLayoutParams(rlp);
-        videoView.setVideoPath(LiveCourseUrl+bean.getCourse_id());
+        videoView.setVideoPath(path); //LiveCourseUrl+bean.getCourse_id());
 //        MediaController controller=new MediaController(this);
 //        videoView.setMediaController(controller);
         videoView.start();
@@ -184,7 +178,20 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
                     onBackPressed();
                     break;
                 case R.id.back_home_imagebtn:
-                    videoView.fullScreen(LiveCourseDetail.this);
+                    if(!videoView.isFullState) {
+//                        videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
+                        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, -1);
+                        rlp.addRule(RelativeLayout.BELOW, R.id.app_header_layout_value);
+                        chatListLayout.setLayoutParams(rlp);
+                        videoView.fullScreen(LiveCourseDetail.this);
+                        videoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
+                    }else{
+                        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
+                        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        chatListLayout.setLayoutParams(rlp);
+                        videoView.fullScreen(LiveCourseDetail.this);
+                        videoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
+                    }
                     break;
 //                case R.id.softPanBtn:
 //                    if(inputBottomBar.isShown()){
@@ -226,18 +233,13 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 //            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
-//            inputBottomBar.setVisibility(View.GONE);
-            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
-            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, -1);
-//            rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            rlp.addRule(RelativeLayout.BELOW, R.id.app_header_layout_value);
-            chatListLayout.setLayoutParams(rlp);
+//            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, -1);
+//            rlp.addRule(RelativeLayout.BELOW, R.id.app_header_layout_value);
+//            chatListLayout.setLayoutParams(rlp);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            videoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, videoHeight));
-//            inputBottomBar.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
-            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            chatListLayout.setLayoutParams(rlp);
+//            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
+//            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//            chatListLayout.setLayoutParams(rlp);
         }
         super.onConfigurationChanged(newConfig);
     }
@@ -245,9 +247,13 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     @Override
     public void onBackPressed() {
 
-        if (videoView.isFullState()) {
+        if (videoView.isFullState) {
             //退出全屏
-            videoView.exitFullScreen(this);
+            RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            chatListLayout.setLayoutParams(rlp);
+            videoView.fullScreen(LiveCourseDetail.this);
+            videoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
             return;
         }
         super.onBackPressed();
@@ -256,7 +262,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     @Override
     protected void onStop() {
         super.onStop();
-        videoView.release(true);
+        videoView.pause();
     }
 
     @Override
@@ -370,6 +376,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
+        videoView.stopPlayback();
         super.onDestroy();
     }
 

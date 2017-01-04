@@ -92,6 +92,13 @@ public class HttpHandler extends Handle {
 		requestPostPayment(Method.payWallet, paramMap, true);
 	}
 
+	public void startCourse(String course_id) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("course_id", course_id);
+		requestPostPayment(Method.startCourse, paramMap, true);
+	}
+
 	public void getSubjectList() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		requestPostEdu(Method.getSubjectList, paramMap, true);

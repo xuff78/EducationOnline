@@ -84,17 +84,24 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                         ConversationId = course_extm.get(0).getGroup_number();
                     }
                     boolean isValid=false;
+                    String startDateTime="";
                     for(CourseExtm courseExtm:courseDetailBean.getCourse_extm()){
                         if(!courseExtm.getState().equals("3")){
                             isValid=true;
+                            startDateTime=courseExtm.getCourseware_date();
+                            break;
                         }
                     }
                     if(!isValid){
                         textaddorbuy.setText("已结束");
                     }else if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())) {
                         if(!intent.hasExtra("status")||intent.getStringExtra("status").equals("1")) {
-                            textaddorbuy.setText("开始直播");
-                            textaddorbuy.setOnClickListener(CourseMainPage.this);
+                            if(ActUtil.canStartLive(startDateTime)) {
+                                textaddorbuy.setText("开始直播");
+                                textaddorbuy.setOnClickListener(CourseMainPage.this);
+                            }else{
+                                textaddorbuy.setText("尚未开始");
+                            }
                         }else if(intent.getStringExtra("status").equals("0")) {
                             textaddorbuy.setText("待审核");
                         }else if(intent.getStringExtra("status").equals("2")) {
@@ -138,6 +145,20 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(CourseMainPage.this,"收藏成功！",Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(CourseMainPage.this,"取消收藏成功！",Toast.LENGTH_SHORT).show();
+                }else if(method.equals(Method.startCourse)){
+                    ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
+
+                        @Override
+                        public void done(AVIMException e) {
+                            if(e==null) {
+                                Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
+                                i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                                i.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                startActivity(i);
+                            }else
+                                ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                        }
+                    });
                 }
             }
 
@@ -246,22 +267,8 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.addorbuy:
                 if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())){
-
-
                     if(ConversationId.length()>0){
-                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
-
-                            @Override
-                            public void done(AVIMException e) {
-                                if(e==null) {
-                                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
-                                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
-                                    i.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
-                                    startActivity(i);
-                                }else
-                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
-                            }
-                        });
+                        httpHandler.startCourse(courseDetailBean.getCourse_id());
                     }else {
                         ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
                     }

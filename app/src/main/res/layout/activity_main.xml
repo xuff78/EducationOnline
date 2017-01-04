@@ -7,6 +7,7 @@
 
 
     <ImageView
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:id="@+id/bt_full"
         android:layout_width="wrap_content"
@@ -16,10 +17,11 @@
         android:src="@mipmap/icon_expand_screen"
         android:onClick="fullScreen" />
 
-    <com.upyun.upplayer.widget.UpVideoView
+    <io.vov.vitamio.widget.VideoView
         android:id="@+id/uvv_vido"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 
     <EditText

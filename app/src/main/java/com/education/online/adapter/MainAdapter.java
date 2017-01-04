@@ -250,32 +250,28 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 if (i % 5 == 4 || i == itemsize) {
                     itemsLayout.addView(linelayout);
-                    setAnima(linelayout);
+                    setAnima(linelayout, i);
                     linelayout = new LinearLayout(act);
                 }
             }
             animaShown = true;
         }
 
-        private void setAnima(LinearLayout ll) {
+        private void setAnima(LinearLayout ll, int i) {
             if (!animaShown) {
                 AnimationSet animation = new AnimationSet(false);
                 animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.fade_in));
-                ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1f, 1.5f, 1f, 0.5f, 0.5f);
-                scaleAnimation.setDuration(500);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1f, 0.0f, 1f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                scaleAnimation.setDuration(400);
                 animation.addAnimation(scaleAnimation);
-                animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.slide_in_left));
-                MenuAnimationController lac = new MenuAnimationController(animation);
-                lac.setOnIndexListener(new MenuAnimationController.Callback(){
-
-                    @Override
-                    public int onIndex(MenuAnimationController controller, int count, int index) {
-                        LogUtil.i("Anima", "count: "+count+"  index: "+index);
-                        return 0;
-                    }
-                });
-                lac.setOrder(3);//LayoutAnimationController.ORDER_RANDOM);
-                lac.setDelay(0.4f);//注意这个地方是以秒为单位，是浮点型数据，所以要加f
+                animation.setInterpolator(act, android.R.anim.decelerate_interpolator);
+//                animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.slide_in_left));
+                int offset=((i+1)/5-1)*200;
+                animation.setStartOffset(offset);
+                LayoutAnimationController lac = new LayoutAnimationController(animation);
+                lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
+                lac.setDelay(0.2f);//注意这个地方是以秒为单位，是浮点型数据，所以要加f
                 ll.setLayoutAnimation(lac);
                 ll.startLayoutAnimation();
             }

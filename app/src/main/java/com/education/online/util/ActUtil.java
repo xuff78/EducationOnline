@@ -99,6 +99,21 @@ public class ActUtil {
         }
     }
 
+    public static boolean canStartLive(String datestring) {
+        try {
+            Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
+            long nowTime=mCalendar.getTimeInMillis();
+            SimpleDateFormat dateData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateStart = dateData.parse(datestring);
+            long startTime=dateStart.getTime();
+            if(nowTime-startTime<3600)
+                return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static String getDate() {
         Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
         long todayL=mCalendar.getTimeInMillis();

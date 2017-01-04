@@ -2,18 +2,16 @@ package com.education.online.act;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.education.online.R;
-import com.upyun.upplayer.widget.MediaController;
-import com.upyun.upplayer.widget.UpVideoView;
+
+import io.vov.vitamio.widget.VideoView;
 
 public class VideoPlay extends Activity {
     ////////////I am a marker
@@ -34,7 +32,7 @@ public class VideoPlay extends Activity {
     private static final String TAG = VideoPlay.class.getSimpleName();
     RelativeLayout.LayoutParams mVideoParams;
 
-    UpVideoView upVideoView;
+    VideoView upVideoView;
     private EditText mPathEt;
 
     @Override
@@ -52,20 +50,14 @@ public class VideoPlay extends Activity {
             path = intent.getStringExtra("Uri");
         }
 
-        upVideoView = (UpVideoView) findViewById(R.id.uvv_vido);
-
-        upVideoView.setBufferSize(10 * 1024 * 1024);
+        upVideoView = (VideoView) findViewById(R.id.uvv_vido);
         //设置背景图片
 //        upVideoView.setImage(R.drawable.dog);
+        upVideoView.setMediaController(new io.vov.vitamio.widget.MediaController(VideoPlay.this));
 
         //设置播放地址
         upVideoView.setVideoPath(path);
-        MediaController controller=new MediaController(this);
-        upVideoView.setMediaController(controller);
 
-        //开始播放
-        upVideoView.start();
-        controller.show();
     }
 
     public void toggle(View view) {
@@ -95,20 +87,20 @@ public class VideoPlay extends Activity {
     public void fullScreen(View view) {
         upVideoView.fullScreen(this);
     }
-
-    private void fullScreen() {
-        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
-        mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
-        upVideoView.setLayoutParams(params);
-        upVideoView.getTrackInfo();
-    }
+//
+//    private void fullScreen() {
+//        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels);
+//        mVideoParams = (RelativeLayout.LayoutParams) upVideoView.getLayoutParams();
+//        upVideoView.setLayoutParams(params);
+//        upVideoView.getTrackInfo();
+//    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -123,7 +115,7 @@ public class VideoPlay extends Activity {
     @Override
     public void onBackPressed() {
 
-        if (upVideoView.isFullState()) {
+        if (upVideoView.isFullState) {
             //退出全屏
             upVideoView.exitFullScreen(this);
             return;

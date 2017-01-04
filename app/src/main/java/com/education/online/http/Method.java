@@ -39,6 +39,7 @@ public class Method {
     public static final String getOrderDetail = "education/order/view";
     public static final String getOrderList = "education/order/list";
 
+    public static final String startCourse="education/course/start";
     public static final String addClass="education/course/add";
     public static final String addCollection ="education/course/collection" ;
     public static final String addAttention ="education/user/attention";
