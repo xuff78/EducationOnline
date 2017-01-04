@@ -46,15 +46,17 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <TextView
-                android:textColor="@color/normal_red"
-                android:visibility="gone"
-                android:textSize="22sp"
-                android:text="●"
+                android:textSize="8sp"
+                android:layout_marginTop="5dp"
+                android:text="0"
+                style="@style/txt_white_12"
+                android:gravity="center"
+                android:background="@mipmap/common_msg_tips"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
                 android:id="@+id/messageStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
         </RelativeLayout>
         <LinearLayout
             android:orientation="horizontal"

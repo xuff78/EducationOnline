@@ -308,7 +308,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Intent i = new Intent(act, SearchResultAct.class);
                     i.putExtra(Constant.SearchSubject, subject.getChild_subject_ids());
                     i.putExtra(Constant.SearchWords, subject.getSubject_name());
-                    i.putExtra("AllCate", true);
                     act.startActivity(i);
                 }else{
                     ((MainPage)act).toSubjectList();

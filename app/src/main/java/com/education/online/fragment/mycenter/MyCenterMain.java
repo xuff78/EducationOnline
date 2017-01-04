@@ -107,6 +107,10 @@ public class MyCenterMain extends BaseFragment implements View.OnClickListener{
                         }
                         if(news>0) {
                             messageStatus.setVisibility(View.VISIBLE);
+                            if(news>99)
+                                messageStatus.setText("99");
+                            else
+                                messageStatus.setText(news+"");
                         }else
                             messageStatus.setVisibility(View.GONE);
                     }

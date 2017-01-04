@@ -1,5 +1,6 @@
 package com.education.online.act.chat;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -12,9 +13,14 @@ import java.util.List;
 public class ConversationListAdapter<T> extends RecyclerView.Adapter<ConversationItemHolder> {
 
   private List<T> dataList = new ArrayList<T>();
+  private Activity act;
 
   public List<T> getDataList() {
     return dataList;
+  }
+
+  public ConversationListAdapter(Activity con){
+    act=con;
   }
 
   public void setDataList(List<T> datas) {
@@ -30,7 +36,7 @@ public class ConversationListAdapter<T> extends RecyclerView.Adapter<Conversatio
 
   @Override
   public ConversationItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ConversationItemHolder(parent);
+    return new ConversationItemHolder(parent, act);
   }
 
   @Override

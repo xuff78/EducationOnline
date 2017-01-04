@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,6 +20,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMSingleMessageQueryCallback;
 import com.avoscloud.leanchatlib.controller.ConversationHelper;
 import com.avoscloud.leanchatlib.event.ImTypeMessageEvent;
 import com.avoscloud.leanchatlib.model.ConversationType;
+import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.model.Room;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.avoscloud.leanchatlib.utils.Constants;
@@ -50,8 +53,8 @@ import de.greenrobot.event.EventBus;
  */
 public class MessageMain extends BaseFrameAct implements View.OnClickListener{
 
-    private RecyclerView recyclerList;
-    protected ConversationListAdapter<Room> itemAdapter;
+    private RecyclerView recyclerList, searchResultList;
+    protected ConversationListAdapter<Room> itemAdapter, itemAdapter2;
     private ConversationManager conversationManager;
     private EditText usercodeEdt;
     private HttpHandler httpHandler;
@@ -82,13 +85,19 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
 
     private void initView() {
         recyclerList=(RecyclerView)findViewById(R.id.fragment_conversation_srl_view);
+        searchResultList=(RecyclerView)findViewById(R.id.searchResultList);
         conversationManager = ConversationManager.getInstance();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
+        LinearLayoutManager searchListLLM = new LinearLayoutManager(this);
+        searchListLLM.setOrientation(LinearLayoutManager.VERTICAL);
+        searchResultList.setLayoutManager(searchListLLM);
 
-        itemAdapter = new ConversationListAdapter<Room>();
+        itemAdapter = new ConversationListAdapter<Room>(this);
         recyclerList.setAdapter(itemAdapter);
+        itemAdapter2 = new ConversationListAdapter<Room>(this);
+        searchResultList.setAdapter(itemAdapter2);
         EventBus.getDefault().register(this);
         findViewById(R.id.systemMessageLayout).setOnClickListener(this);
         findViewById(R.id.myFavorite).setOnClickListener(this);
@@ -105,6 +114,46 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
                     }
                 }
                 return false;
+            }
+        });
+        usercodeEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editable.length()>0){
+                    String  word=editable.toString().trim().toLowerCase();
+                    List<Room> findRooms=new ArrayList<Room>();
+                    List<Room> sortedRooms = itemAdapter.getDataList();
+                    for (Room room:sortedRooms){
+                        AVIMConversation conversation = room.getConversation();
+                        if (null != conversation) {
+                            if (ConversationHelper.typeOfConversation(conversation) == ConversationType.Single) {
+                                LeanchatUser user = AVUserCacheUtils.getCachedUser(ConversationHelper.otherIdOfConversation(conversation));
+                                if (null != user) {
+                                    if(((String)user.get("username")).toLowerCase().contains(word))
+                                        findRooms.add(room);
+                                }
+                            }
+                        }else{
+                            String name=ConversationHelper.nameOfConversation(conversation);
+                            if(name.toLowerCase().contains(word))
+                                findRooms.add(room);
+                        }
+                    }
+                    itemAdapter2.setDataList(findRooms);
+                    itemAdapter2.notifyDataSetChanged();
+                    searchResultList.setVisibility(View.VISIBLE);
+                }else
+                    searchResultList.setVisibility(View.GONE);
             }
         });
     }
@@ -150,7 +199,7 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
                 if (filterException(exception)) {
 
                     updateLastMessage(roomList);
-                    cacheRelatedUsers(roomList);
+//                    cacheRelatedUsers(roomList);
 
                     List<Room> sortedRooms = sortRooms(roomList);
                     itemAdapter.setDataList(sortedRooms);
@@ -178,7 +227,7 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
         }
     }
 
-    private void cacheRelatedUsers(List<Room> rooms) {
+    /*private void cacheRelatedUsers(List<Room> rooms) {
         List<String> needCacheUsers = new ArrayList<String>();
         for(Room room : rooms) {
             AVIMConversation conversation = room.getConversation();
@@ -192,7 +241,7 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
                 itemAdapter.notifyDataSetChanged();
             }
         });
-    }
+    }*/
 
     private List<Room> sortRooms(final List<Room> roomList) {
         List<Room> sortedList = new ArrayList<Room>();

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.FirstPage;
+import com.education.online.act.MainPage;
 import com.education.online.act.login.ModifyPassword;
 
 /**
@@ -35,6 +37,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
         contactus  = (RelativeLayout) findViewById(R.id.contactus);
         servicephone= (TextView) findViewById(R.id.servicephone);
         exitlogin= (TextView) findViewById(R.id.exitlogin);
+        exitlogin.setOnClickListener(this);
         findViewById(R.id.aboutLayout).setOnClickListener(this);
     }
 
@@ -53,6 +56,9 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
             case R.id.contactus:
             break;
             case R.id.exitlogin:
+                Intent intent = new Intent(Settings.this, MainPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             break;
             case R.id.aboutLayout:
                 startActivity(new Intent(this, About.class));

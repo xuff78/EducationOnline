@@ -77,7 +77,11 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         super.onCreate(savedInstanceState);
 
 //        StatusBarCompat.fitPage(this);
-        if(getIntent().hasExtra("Exit"))
+
+        if(getIntent().hasExtra("Login")) {
+            startActivity(new Intent(MainPage.this, FirstPage.class));
+            finish();
+        }else if(getIntent().hasExtra("Exit"))
             finish();
         else {
             setContentView(R.layout.main_page);

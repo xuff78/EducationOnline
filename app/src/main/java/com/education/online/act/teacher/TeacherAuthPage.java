@@ -50,21 +50,26 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
         mHandler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
-                Intent intent=new Intent();
-                intent.putExtra("ResId", clickViewId);
-                intent.putExtra("jsonData", jsonData);
-                switch (clickViewId){
-                    case R.id.idStatus:
-                        intent.setClass(TeacherAuthPage.this, TeacherAuthIdentity.class);
-                        break;
-                    case R.id.teacherStatus:
-                    case R.id.eduStatus:
-                    case R.id.zyzzStatus:
-                    case R.id.gzdwStatus:
-                        intent.setClass(TeacherAuthPage.this, TeacherAuthOthers.class);
-                        break;
+                if(method.equals(Method.getValidateDetails)) {
+                    Intent intent = new Intent();
+                    intent.putExtra("ResId", clickViewId);
+                    intent.putExtra("jsonData", jsonData);
+                    switch (clickViewId) {
+                        case R.id.idStatus:
+                            intent.setClass(TeacherAuthPage.this, TeacherAuthIdentity.class);
+                            break;
+                        case R.id.teacherStatus:
+                        case R.id.eduStatus:
+                        case R.id.zyzzStatus:
+                        case R.id.gzdwStatus:
+                            intent.setClass(TeacherAuthPage.this, TeacherAuthOthers.class);
+                            break;
+                    }
+                    startActivity(intent);
+                }else if(method.equals(Method.getValidateView)){
+                    status= JSON.parseObject(jsonData, TeacherAuth.class);
+                    setData();
                 }
-                startActivity(intent);
             }
         });
     }
@@ -78,6 +83,7 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
         status= JSON.parseObject(getIntent().getStringExtra("jsonData"), TeacherAuth.class);
         initHandler();
         initView();
+        setData();
     }
 
     private void initView() {
@@ -86,11 +92,20 @@ public class TeacherAuthPage extends BaseFrameAct implements View.OnClickListene
         eduStatus=(TextView)findViewById(R.id.eduStatus);
         zyzzStatus=(TextView)findViewById(R.id.zyzzStatus);
         gzdwStatus=(TextView)findViewById(R.id.gzdwStatus);
+    }
+
+    private void setData() {
         setInfo(idStatus, status.getIs_id_validate());
         setInfo(teacherStatus, status.getIs_tc_validate());
         setInfo(eduStatus, status.getIs_edu_bg_validate());
         setInfo(zyzzStatus, status.getIs_specialty_validate());
         setInfo(gzdwStatus, status.getIs_unit_validate());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHandler.getValidateViewNoDialog();
     }
 
     private void setInfo(TextView txt, String status) {

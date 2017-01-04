@@ -74,7 +74,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private List<CourseBean> items=new ArrayList<>();
     private List<TeacherWithCourse> teacheritems=new ArrayList<>();
     private CourseUpdate currentCourseFrg;
-    private boolean AllCate=false;
+    private boolean AllCate=true;
     private String searchWord="";
 //    private String query_type=Constant.TypeCourse;
 
@@ -97,6 +97,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                         String catesInfo = JsonUtil.getString(jsonData, "subject_info");
                         ArrayList<SubjectBean> cates = JSON.parseObject(catesInfo, new TypeReference<ArrayList<SubjectBean>>(){});
                         ((SelectorPage) selectorPage).setCateInfo(cates);
+                    }else{
+                        ((SelectorPage) selectorPage).clearCate();
                     }
                     courseFilter.setPage(String.valueOf(page));
                 }else if(method.equals(Method.updateSortList)){
@@ -120,13 +122,14 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         initView();
         type = getIntent().getIntExtra("Type", 0);
         initFilter();
-        AllCate=getIntent().getBooleanExtra("AllCate", false);
+//        AllCate=getIntent().getBooleanExtra("AllCate", false);
         if(getIntent().hasExtra(Constant.SearchSubject)){
             addCourseListFragment(onlinecoursePage);
             String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
             courseFilter.setSubject_ids(subject_id);
             ((SelectorPage)selectorPage).setLastSelection(subject_id);
         }else if(getIntent().hasExtra(Constant.SearchWords)) {
+            AllCate=false;
             String searchwords = getIntent().getStringExtra(Constant.SearchWords);
             searchEdt.setText(searchwords);
             searchEdt.setSelection(searchwords.length());
@@ -208,10 +211,9 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 typeTxt.setText(typeStrs[i]);
                 if(type!=i) {
-                    if(AllCate)
-                        AllCate=false;
                     type=i;
                     initFilter();
+                    AllCate=true;
                     handler.getCourseList(courseFilter);
                     popup.dismiss();
                 }else
@@ -238,8 +240,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     if(!searchWord.equals(searchwords))
                         courseFilter.setSubject_ids(null);
                     searchWord=searchwords;
-                    if(AllCate)
-                        AllCate=false;
+                    AllCate=false;
                     handler.getCourseList(courseFilter);
                 }
                 return false;
@@ -391,8 +392,6 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         courseFilter.setSubject_ids(subject.getSubject_id());
         page=1;
         courseFilter.setPage(String.valueOf(page));
-        if(AllCate)
-            AllCate=false;
         handler.getCourseList(courseFilter);
     }
 

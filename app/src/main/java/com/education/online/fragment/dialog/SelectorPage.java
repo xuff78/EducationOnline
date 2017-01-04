@@ -43,6 +43,7 @@ public class SelectorPage extends BaseFragment {
     private HttpHandler handler;
     private String lastId="";
     private boolean showLast=false;
+    private boolean allCate=true;
     private SelectorRightAdapter subjectList;
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
@@ -59,6 +60,7 @@ public class SelectorPage extends BaseFragment {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
+                allCate=true;
                 cates= JSON.parseObject(jsonData, new TypeReference<ArrayList<SubjectBean>>(){});
                 setListData();
             }
@@ -117,6 +119,7 @@ public class SelectorPage extends BaseFragment {
     }
 
     public void setCateInfo(ArrayList<SubjectBean> cates){
+        allCate=false;
         showLast=true;
         ArrayList<SubjectBean> beans=new ArrayList<>();
         SubjectBean subject=new SubjectBean();
@@ -140,6 +143,12 @@ public class SelectorPage extends BaseFragment {
     public void setLastSelection(String lastId){
         this.lastId=lastId;
         showLast=true;
+    }
+
+    //用于回复到所有科目，如果已经是，就不清除了
+    public void clearCate(){
+        if(!allCate)
+            cates.clear();
     }
 
     private void initView(View v) {

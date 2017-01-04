@@ -279,6 +279,12 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getValidateView, paramMap, true);
 	}
 
+	public void getValidateViewNoDialog() {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getValidateView, paramMap, false);
+	}
+
 	public void updateLocation(String latitude, String longitude) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));

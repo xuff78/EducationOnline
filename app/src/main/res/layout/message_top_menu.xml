@@ -20,15 +20,21 @@
             android:imeOptions="actionSearch"
             android:id="@+id/usercodeEdt"
             android:singleLine="true"
-            android:inputType="numberSigned"
             android:layout_marginLeft="60dp"
             android:background="@null"
             android:layout_marginRight="@dimen/padding_left"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </RelativeLayout>
-    <RelativeLayout
+    <FrameLayout
         android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
         android:id="@+id/systemMessageLayout"
         android:layout_width="fill_parent"
         android:layout_height="55dip"
@@ -96,4 +102,13 @@
         android:id="@+id/fragment_conversation_srl_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/searchResultList"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 </LinearLayout>

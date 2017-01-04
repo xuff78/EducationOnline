@@ -50,7 +50,6 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getValidateView)){
-
                     Intent i=new Intent(getActivity(), AuthMenu.class);
                     i.putExtra("jsonData", jsonData);
                     startActivity(i);

@@ -1,10 +1,13 @@
 package com.education.online.act.chat;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avoscloud.leanchatlib.controller.ConversationHelper;
@@ -16,8 +19,15 @@ import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.avoscloud.leanchatlib.utils.PhotoUtils;
 import com.avoscloud.leanchatlib.viewholder.CommonViewHolder;
 import com.education.online.R;
+import com.education.online.bean.UserInfo;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
+import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,9 +43,13 @@ public class ConversationItemHolder extends CommonViewHolder {
   TextView recentMsgView;
   TextView recentTimeView;
   TextView recentUnreadView;
+  private HttpHandler mHandler;
+  private Activity act;
+  private String usercode;
 
-  public ConversationItemHolder(ViewGroup root) {
+  public ConversationItemHolder(ViewGroup root, Activity act) {
     super(root.getContext(), root, R.layout.conversation_item);
+    this.act=act;
     initView();
   }
 
@@ -54,17 +68,19 @@ public class ConversationItemHolder extends CommonViewHolder {
     AVIMConversation conversation = room.getConversation();
     if (null != conversation) {
       if (ConversationHelper.typeOfConversation(conversation) == ConversationType.Single) {
-        String orderid= ConversationHelper.otherIdOfConversation(conversation);
-        LeanchatUser user = AVUserCacheUtils.getCachedUser(orderid);
+        usercode= ConversationHelper.otherIdOfConversation(conversation);
+        LeanchatUser user = AVUserCacheUtils.getCachedUser(usercode);
         if (null != user) {
           ImageLoader.getInstance().displayImage(user.getAvatarUrl(), recentAvatarView, PhotoUtils.avatarImageOptions);
+          recentNameView.setText((String) user.get("username"));
         }else{
-//          ActUtil.saveUsercode(orderid, getContext());
+          initHandler();
+          mHandler.getUserInfoNoDialog(usercode);
         }
       } else {
         recentAvatarView.setImageBitmap(ConversationManager.getConversationIcon(conversation));
+        recentNameView.setText(ConversationHelper.nameOfConversation(conversation));
       }
-      recentNameView.setText(ConversationHelper.nameOfConversation(conversation));
 
       int num = room.getUnreadCount();
       if (num > 0) {
@@ -91,5 +107,25 @@ public class ConversationItemHolder extends CommonViewHolder {
         }
       });
     }
+  }
+
+
+  private void initHandler() {
+    mHandler = new HttpHandler(act, new CallBack(act) {
+      @Override
+      public void doSuccess(String method, String jsonData) throws JSONException {
+        super.doSuccess(method, jsonData);
+        if(method.equals(Method.getUserInfo)){
+          UserInfo userinfo= JSON.parseObject(jsonData, UserInfo.class);
+
+          LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+          user.put("avatar", ImageUtil.getImageUrl(userinfo.getAvatar()));
+          user.put("username", userinfo.getNickname());
+          AVUserCacheUtils.cacheUser(usercode, user);
+          recentNameView.setText(userinfo.getNickname());
+          ImageLoader.getInstance().displayImage(user.getAvatarUrl(), recentAvatarView, PhotoUtils.avatarImageOptions);
+        }
+      }
+    });
   }
 }
