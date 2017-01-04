@@ -35,8 +35,10 @@ import com.education.online.bean.WareCourse;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
+import com.education.online.view.MenuAnimationController;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -263,8 +265,16 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 scaleAnimation.setDuration(500);
                 animation.addAnimation(scaleAnimation);
                 animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.slide_in_left));
-                LayoutAnimationController lac = new LayoutAnimationController(animation);
-                lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
+                MenuAnimationController lac = new MenuAnimationController(animation);
+                lac.setOnIndexListener(new MenuAnimationController.Callback(){
+
+                    @Override
+                    public int onIndex(MenuAnimationController controller, int count, int index) {
+                        LogUtil.i("Anima", "count: "+count+"  index: "+index);
+                        return 0;
+                    }
+                });
+                lac.setOrder(3);//LayoutAnimationController.ORDER_RANDOM);
                 lac.setDelay(0.4f);//注意这个地方是以秒为单位，是浮点型数据，所以要加f
                 ll.setLayoutAnimation(lac);
                 ll.startLayoutAnimation();

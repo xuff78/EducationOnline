@@ -6,12 +6,12 @@ import android.view.animation.Animation;
 import android.view.animation.LayoutAnimationController;
 
 /**
- * Created by 可爱的蘑菇 on 2016/12/5.
+ * Created by Administrator on 2017/1/4.
  */
-public class CustomLayoutAnimationController extends LayoutAnimationController {
+public class MenuAnimationController extends LayoutAnimationController {
 
     // 7 just lucky number
-    public static final int ORDER_CUSTOM  = 7;
+    public static final int ORDER_CUSTOM  = 3;
 
     private Callback onIndexListener;
 
@@ -19,15 +19,15 @@ public class CustomLayoutAnimationController extends LayoutAnimationController {
         this.onIndexListener = onIndexListener;
     }
 
-    public CustomLayoutAnimationController(Animation anim) {
+    public MenuAnimationController(Animation anim) {
         super(anim);
     }
 
-    public CustomLayoutAnimationController(Animation anim, float delay) {
+    public MenuAnimationController(Animation anim, float delay) {
         super(anim, delay);
     }
 
-    public CustomLayoutAnimationController(Context context, AttributeSet attrs) {
+    public MenuAnimationController(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -48,6 +48,6 @@ public class CustomLayoutAnimationController extends LayoutAnimationController {
      */
     public static interface Callback{
 
-        public int onIndex(CustomLayoutAnimationController controller, int count, int index);
+        public int onIndex(MenuAnimationController controller, int count, int index);
     }
 }
