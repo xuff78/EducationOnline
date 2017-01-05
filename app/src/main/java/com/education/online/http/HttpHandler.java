@@ -68,6 +68,14 @@ public class HttpHandler extends Handle {
 		requestPostUser(Method.modifypassword, paramMap, true);
 	}
 
+	public void submitEvaluateReply(String evaluate_id, String message) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("evaluate_id", evaluate_id);
+		paramMap.put("message", message);
+		requestPostUser(Method.submitEvaluateReply, paramMap, true);
+	}
+
 	public void RetrievePassword(String phone,String password, String verify_code) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));

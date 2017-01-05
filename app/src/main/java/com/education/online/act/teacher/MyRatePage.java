@@ -22,6 +22,7 @@ import com.education.online.http.Method;
 import com.education.online.inter.AdapterCallback;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
 
@@ -68,6 +69,9 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
                         adapter.notifyDataSetChanged();
                     }
                     page++;
+                }else if(method.equals(Method.submitEvaluateReply)){
+                    bottomLayout.setVisibility(View.GONE);
+                    ToastUtils.displayTextShort(MyRatePage.this, "回复已提交");
                 }
             }
         });
@@ -88,6 +92,15 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
 
     private void initView() {
         feedbackSubmit=(Button)findViewById(R.id.feedbackSubmit);
+        feedbackSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String words=feedbackEdt.getText().toString().trim();
+                if(words.length()>0){
+                    handler.submitEvaluateReply(feebackEvaluate.getEvaluate_id(), words);
+                }
+            }
+        });
         feedbackEdt=(EditText)findViewById(R.id.feedbackEdt);
         bottomLayout=findViewById(R.id.bottomLayout);
         recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
@@ -116,7 +129,7 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
     @Override
     public void delitem(View v, int i) {
         int pressPos=i-2;
-        feedbackSubmit.setVisibility(View.VISIBLE);
+        bottomLayout.setVisibility(View.VISIBLE);
         feebackEvaluate=evaluations.get(pressPos);
     }
 }

@@ -100,6 +100,25 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                                 textaddorbuy.setText("开始直播");
                                 textaddorbuy.setOnClickListener(CourseMainPage.this);
                             }else{
+                                textaddorbuy.setOnLongClickListener(new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View view) {
+                                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
+
+                                            @Override
+                                            public void done(AVIMException e) {
+                                                if(e==null) {
+                                                    Intent i = new Intent(CourseMainPage.this, LiveCameraPage.class);
+                                                    i.putExtra(CourseDetailBean.Name, courseDetailBean);
+                                                    i.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                                                    startActivity(i);
+                                                }else
+                                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                                            }
+                                        });
+                                        return true;
+                                    }
+                                });
                                 textaddorbuy.setText("尚未开始");
                             }
                         }else if(intent.getStringExtra("status").equals("0")) {

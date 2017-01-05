@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
+        android:layout_above="@+id/bottomLayout"
         android:id="@+id/recyclerList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -21,8 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
         <EditText
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:id="@+id/feedbackEdt"
             android:layout_marginRight="5dp"
+            style="@style/txt_gray_14"
             android:layout_toLeftOf="@+id/feedbackSubmit"
             android:layout_centerVertical="true"
             android:background="@drawable/shape_nocorner_lightgray"

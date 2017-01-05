@@ -34,6 +34,7 @@ public class Method {
     public static final String getlistByDate = "education/course/listByDate";
     public static final String dispose = "education/user/dispose";
     public static final String getCourseCollections = "education/user/collections";
+    public static final String submitEvaluateReply = "education/course/evaluateReply";
 
     public static final String submitOrder = "education/order/save";
     public static final String getOrderDetail = "education/order/view";

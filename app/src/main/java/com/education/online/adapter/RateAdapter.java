@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,6 +98,15 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
             vh.userName.setText(evaluateBean.getUser_name());
             vh.userComments.setText(evaluateBean.getInfo());
+            if(evaluateBean.getReply_info().length()>0){
+                vh.replyTxt.setText("老师回复： "+evaluateBean.getReply_info());
+                vh.replyTxt.setVisibility(View.VISIBLE);
+                vh.startfeedBack.setBackgroundResource(R.drawable.shape_grayline_with_corner);
+                vh.startfeedBack.setText("已回复");
+                vh.startfeedBack.setTextColor(Color.GRAY);
+            }else{
+
+            }
         }
     }
 
@@ -188,12 +198,19 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             startfeedBack = (TextView) v.findViewById(R.id.startfeedBack);
             replyTxt = (TextView) v.findViewById(R.id.replyTxt);
             startfeedBack.setVisibility(View.VISIBLE);
-            startfeedBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cb.delitem(view, pos);
-                }
-            });
+            startfeedBack.setTag(pos);
+            startfeedBack.setOnClickListener(replyListener);
         }
     }
+
+    View.OnClickListener replyListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int pos= (int) view.getTag();
+            EvaluateBean evaluateBean = evaluations.get(pos-2);
+            if(evaluateBean.getReply_info().length()==0) {
+                cb.delitem(view, pos);
+            }
+        }
+    };
 }
