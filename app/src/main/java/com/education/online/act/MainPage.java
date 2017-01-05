@@ -79,6 +79,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
 //        StatusBarCompat.fitPage(this);
 
         if(getIntent().hasExtra("Login")) {
+            SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
             startActivity(new Intent(MainPage.this, FirstPage.class));
             finish();
         }else if(getIntent().hasExtra("Exit"))

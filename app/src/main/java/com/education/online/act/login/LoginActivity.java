@@ -1,8 +1,12 @@
 package com.education.online.act.login;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +53,11 @@ public class LoginActivity extends BaseFrameAct {
     protected void onCreate(Bundle savedInstanceState) {
         //What is StatusBarCompat?
         StatusBarCompat.fitPage(this);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            getWindow().setEnterTransition(new Fade());
+//            getWindow().setExitTransition(new Fade());
+//        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -142,16 +151,16 @@ public class LoginActivity extends BaseFrameAct {
             focusView.requestFocus();
         } else {
             ActUtil.KeyBoardCancle(this);
+            progressBar.setVisibility(View.VISIBLE);
             CircularAnim.init(800, 500, R.color.dark_orange);
             CircularAnim.hide(loginBtn).endRadius(progressBar.getHeight() / 2)
                     .go(new CircularAnim.OnAnimationEndListener() {
                         @Override
                         public void onAnimationEnd() {
-                            progressBar.setVisibility(View.VISIBLE);
                             pressTime=System.currentTimeMillis();
                             handler.login(name, password);
                         }
-                    });
+                    }, this);
         }
     }
 
@@ -197,12 +206,14 @@ public class LoginActivity extends BaseFrameAct {
             @Override
             public void onHTTPException(String method, String jsonMessage) {
                 super.onHTTPException(method, jsonMessage);
+                progressBar.setVisibility(View.GONE);
                 CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }
 
             @Override
             public void onFailure(String method, JsonMessage jsonMessage) {
                 super.onFailure(method, jsonMessage);
+                progressBar.setVisibility(View.GONE);
                 CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }
         });

@@ -1,5 +1,6 @@
 package com.education.online.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,8 +17,15 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avoscloud.leanchatlib.controller.ChatManager;
+import com.avoscloud.leanchatlib.utils.LogUtils;
 import com.education.online.R;
+import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 
 public abstract class BaseFrameAct extends AppCompatActivity {
@@ -168,7 +176,13 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ImageUtil.initImageLoader(this);
+//		if (ChatManager.getInstance().getSelfId() == null&&!SharedPreferencesUtil.getSessionid(this).equals(SharedPreferencesUtil.FAILURE_STRING)) {
+//			Intent intent = new Intent(this, MainPage.class);
+//			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			intent.putExtra("Login", true);
+//			startActivity(intent);
+//		}else
+			ImageUtil.initImageLoader(this);
 	}
 
 	@Override

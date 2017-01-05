@@ -1,10 +1,14 @@
 package com.education.online.act;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
+import android.widget.Button;
 
 import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
@@ -33,6 +37,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
 
 
     private RecyclerView recyclerList;
+    private View loginBtn, registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +66,25 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     }
 
     private void initView() {
-        findViewById(R.id.loginBtn).setOnClickListener(this);
-        findViewById(R.id.registerBtn).setOnClickListener(this);
+        loginBtn= findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(this);
+        registerBtn= findViewById(R.id.registerBtn);
+        registerBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loginBtn:
-
-//                String url="mqqwpa://im/chat?chat_type=wpa&uin=215337591";
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                startActivity(new Intent(FirstPage.this, LoginActivity.class));
+                Intent i=new Intent(FirstPage.this, LoginActivity.class);
+                if(Build.VERSION.SDK_INT>=21) {
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(FirstPage.this,
+                            /*Pair.create(loginBtn, "login_btn"),*/ Pair.create(registerBtn, "reg_btn"));
+                    Bundle bundle = options.toBundle();
+                    startActivity(i, bundle);
+                }else{
+                    startActivity(i);
+                }
                 break;
             case R.id.registerBtn:
                 Intent intent = new Intent();

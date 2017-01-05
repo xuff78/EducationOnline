@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 
 import com.education.online.act.FirstPage;
+import com.education.online.act.MainPage;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.bean.JsonMessage;
 import com.education.online.util.DialogUtil;
@@ -45,8 +46,9 @@ public class CallBack {
 				doSuccess(method, JsonUtil.getJsonData(jsonMessage));
 			else if (msg.getCode().equals("-232030")) {
 				ToastUtils.displayTextShort(mContext, "会话失效，请重新登录");
-				Intent i = new Intent(mContext, LoginActivity.class);
-				i.putExtra("TimeOut", true);
+				Intent i = new Intent(mContext, MainPage.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				i.putExtra("Login", true);
 				mContext.startActivity(i);
 			} else {
 				onFailure(method, msg);

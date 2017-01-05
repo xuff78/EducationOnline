@@ -40,6 +40,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+
 
     <application
         android:name=".EduApplication"
@@ -443,7 +445,12 @@
             android:exported="false"
             android:screenOrientation="behind" >
         </activity>
-
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"
+            android:permission="android.permission.BAIDU_LOCATION_SERVICE">
+        </service>
     </application>
 
 </manifest>

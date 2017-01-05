@@ -58,6 +58,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
             case R.id.exitlogin:
                 Intent intent = new Intent(Settings.this, MainPage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("Login", true);
                 startActivity(intent);
             break;
             case R.id.aboutLayout:

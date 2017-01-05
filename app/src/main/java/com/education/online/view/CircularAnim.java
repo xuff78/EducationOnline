@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 /**
@@ -106,10 +107,14 @@ public class CircularAnim {
         }
 
         public void go() {
-            go(null);
+            go(null, null);
         }
 
-        public void go(OnAnimationEndListener onAnimationEndListener) {
+        public void go(Activity act) {
+            go(null, act);
+        }
+
+        public void go(OnAnimationEndListener onAnimationEndListener, Activity act) {
             mOnAnimationEndListener = onAnimationEndListener;
 
             // 版本判断
@@ -168,7 +173,8 @@ public class CircularAnim {
                 Animator anim = ViewAnimationUtils.createCircularReveal(
                         mAnimView, rippleCX, rippleCY, mStartRadius, mEndRadius);
 
-
+                if(act!=null)
+                anim.setInterpolator(AnimationUtils.loadInterpolator(act, android.R.anim.decelerate_interpolator));
                 mAnimView.setVisibility(View.VISIBLE);
                 anim.setDuration(mDurationMills);
 
