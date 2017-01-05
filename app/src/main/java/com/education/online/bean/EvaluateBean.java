@@ -16,6 +16,24 @@ public class EvaluateBean implements Serializable{
     private String user_name=""; // 用户名
     private String avatar=""; // 头像
     private String course_name=""; // 课程名称
+    private String reply_info="";
+    private String evaluate_id="";
+
+    public String getReply_info() {
+        return reply_info;
+    }
+
+    public void setReply_info(String reply_info) {
+        this.reply_info = reply_info;
+    }
+
+    public String getEvaluate_id() {
+        return evaluate_id;
+    }
+
+    public void setEvaluate_id(String evaluate_id) {
+        this.evaluate_id = evaluate_id;
+    }
 
     public String getInfo() {
         return info;

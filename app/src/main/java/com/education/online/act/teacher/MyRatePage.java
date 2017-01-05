@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
@@ -37,6 +40,10 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
     private RateAdapter adapter;
     private String  usercode="";
     private String star=null;
+    private View bottomLayout;
+    private EditText feedbackEdt;
+    private Button feedbackSubmit;
+    private EvaluateBean feebackEvaluate;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -69,7 +76,7 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_page);
+        setContentView(R.layout.recylist_with_edit);
 
         _setHeaderTitle("我的评价");
 
@@ -80,6 +87,9 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
     }
 
     private void initView() {
+        feedbackSubmit=(Button)findViewById(R.id.feedbackSubmit);
+        feedbackEdt=(EditText)findViewById(R.id.feedbackEdt);
+        bottomLayout=findViewById(R.id.bottomLayout);
         recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -105,6 +115,8 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
 
     @Override
     public void delitem(View v, int i) {
-
+        int pressPos=i-2;
+        feedbackSubmit.setVisibility(View.VISIBLE);
+        feebackEvaluate=evaluations.get(pressPos);
     }
 }

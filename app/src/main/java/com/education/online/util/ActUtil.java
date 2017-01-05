@@ -447,4 +447,14 @@ public class ActUtil {
         String secTxt=sec>9?String.valueOf(sec):("0"+sec);
         return hourTxt + ":" +minTxt + ":" +  secTxt;
     }
+
+    public static void KeyBoardCancle(Activity act) {
+
+        View view = act.getWindow().peekDecorView();
+        if (view != null) {
+
+            InputMethodManager inputmanger = (InputMethodManager) act.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 }

@@ -168,6 +168,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		ImageUtil.initImageLoader(this);
 	}
 
 	@Override

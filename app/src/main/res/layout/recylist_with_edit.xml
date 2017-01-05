@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/bottomLayout"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/whitesmoke"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <View
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+        <EditText
+            android:id="@+id/feedbackEdt"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/feedbackSubmit"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_nocorner_lightgray"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <Button
+            android:id="@+id/feedbackSubmit"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="提交"
+            android:background="@drawable/shape_red_with_corner"
+            style="@style/txt_white_12"
+            android:layout_width="50dp"
+            android:layout_height="35dp" />
+    </RelativeLayout>
+</RelativeLayout>

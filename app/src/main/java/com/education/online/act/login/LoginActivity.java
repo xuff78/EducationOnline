@@ -9,12 +9,14 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
+import com.education.online.bean.JsonMessage;
 import com.education.online.bean.LoginInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
@@ -24,6 +26,7 @@ import com.education.online.util.JsonUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
+import com.education.online.view.CircularAnim;
 
 import org.json.JSONException;
 
@@ -38,6 +41,9 @@ public class LoginActivity extends BaseFrameAct {
     private EditText userPsd;
     private TextView retrievepassword;
     HttpHandler handler;
+    private Button loginBtn;
+    private ProgressBar progressBar;
+    private long pressTime=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +80,9 @@ public class LoginActivity extends BaseFrameAct {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
+        loginBtn = (Button) findViewById(R.id.email_sign_in_button);
+        loginBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -110,9 +117,9 @@ public class LoginActivity extends BaseFrameAct {
         userName.setError(null);
         userPsd.setError(null);
 
-        String name = userName.getText().toString();
+        final String name = userName.getText().toString();
         String uncodepassword=userPsd.getText().toString();
-        String password = SHA.getSHA(uncodepassword);
+        final String password = SHA.getSHA(uncodepassword);
 
         //String password = userPsd.getText().toString();
 
@@ -134,8 +141,17 @@ public class LoginActivity extends BaseFrameAct {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            handler.login(name, password);
-//            RetrofitHandler.login(this, name, password, new RCallBack(this));
+            ActUtil.KeyBoardCancle(this);
+            CircularAnim.init(800, 500, R.color.dark_orange);
+            CircularAnim.hide(loginBtn).endRadius(progressBar.getHeight() / 2)
+                    .go(new CircularAnim.OnAnimationEndListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            progressBar.setVisibility(View.VISIBLE);
+                            pressTime=System.currentTimeMillis();
+                            handler.login(name, password);
+                        }
+                    });
         }
     }
 
@@ -165,8 +181,29 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectName, user.getSubject_name());
 
                 ActUtil.initChatUser(LoginActivity.this, user.getAvatar(), user.getNickname());
+                long left=System.currentTimeMillis()-pressTime;
+                if(left>=2500)
+                    left=0;
+                else
+                    left=2500-left;
+                progressBar.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, left);
+            }
 
-                finish();
+            @Override
+            public void onHTTPException(String method, String jsonMessage) {
+                super.onHTTPException(method, jsonMessage);
+                CircularAnim.show(loginBtn).triggerView(loginBtn).go();
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+                super.onFailure(method, jsonMessage);
+                CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }
         });
     }

@@ -82,15 +82,25 @@
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="45dp">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:indeterminateDrawable="@drawable/progress_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
             <Button
                 android:id="@+id/email_sign_in_button"
                 android:background="@drawable/shape_oranged_with_corner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
+                android:layout_height="match_parent"
                 style="@style/txt_white_16"
                 android:text="登  录"
                 android:textStyle="bold" />
+            </FrameLayout>
 
             <TextView
                 android:textSize="13sp"

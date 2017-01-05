@@ -44,7 +44,7 @@ public class HttpHandler extends Handle {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("phone", phone);
 		paramMap.put("password", password);
-		requestPostUser(Method.Login, paramMap, true);
+		requestPostUser(Method.Login, paramMap, false);
 	}
 
 	public void getSms(String phone, String sms_type) {

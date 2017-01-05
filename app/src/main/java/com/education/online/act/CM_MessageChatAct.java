@@ -21,6 +21,7 @@ import com.avoscloud.leanchatlib.utils.NotificationUtils;
 import com.education.online.R;
 import com.education.online.act.discovery.ChatSetting;
 import com.education.online.util.Constant;
+import com.education.online.util.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -52,6 +53,7 @@ public class CM_MessageChatAct extends ChatActivity {
 
     @Override
     protected void onResume() {
+        ImageUtil.initImageLoader(this);
         NotificationUtils.cancelNotification(this);
         super.onResume();
     }

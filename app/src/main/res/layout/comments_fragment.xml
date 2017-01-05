@@ -50,27 +50,26 @@
             hedgehog:starImagePadding="3dp"/>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/userComments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:maxLines="4"
-        android:textColor="@color/normal_gray"
-        android:textSize="13sp"
-        android:text="就是测试啊" />
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <TextView
+            android:id="@+id/userComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLines="4"
+            android:textColor="@color/normal_gray"
+            android:textSize="13sp"
+            android:text="就是测试啊" />
+        <TextView
+            android:layout_below="@+id/userComments"
+            android:layout_marginTop="10dp"
             android:textSize="13sp"
             android:id="@+id/commentDate"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textColor="@color/normal_gray"
             android:text="2016-08-07" />
@@ -85,7 +84,19 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:text="12:00" />
-    </LinearLayout>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/startfeedBack"
+            android:textSize="12sp"
+            android:text="点击评论"
+            android:gravity="center"
+            android:textColor="@color/normal_red"
+            android:background="@drawable/shape_smallcorner_redline"
+            android:layout_alignBottom="@+id/commentDate"
+            android:layout_alignParentRight="true"
+            android:layout_width="80dp"
+            android:layout_height="30dp" />
+    </RelativeLayout>
     <TextView
         android:visibility="gone"
         android:id="@+id/replyTxt"

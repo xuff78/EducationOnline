@@ -120,7 +120,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
         videoView= (VideoView) findViewById(R.id.upVideoView);
 //        RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, videoHeight);
 //        videoView.setLayoutParams(rlp);
-        videoView.setVideoPath(path); //LiveCourseUrl+bean.getCourse_id());
+        videoView.setVideoPath(LiveCourseUrl+bean.getCourse_id());
 //        MediaController controller=new MediaController(this);
 //        videoView.setMediaController(controller);
         videoView.start();

@@ -59,6 +59,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private ArrayList<CourseBean> courses=new ArrayList<>();
     private boolean onloading=false, complete=false;
     private LinearLayoutManager layoutManager;
+    private View headerLayout;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
@@ -154,42 +155,45 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-        final View headerLayout=v.findViewById(R.id.headerLayout);
-        recyclerList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            int lastVisibleItem=0;
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                listScrollY+=dy;
-                float alpha=Math.abs(Float.valueOf(listScrollY))/firstItemHeight;
-                headerLayout.setAlpha(alpha);
-
-
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                LogUtil.i("test", "listScrollY: "+listScrollY);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem + 1 == adapter.getItemCount()) {
-                    if(!onloading){
-                        if(!complete){
-                            onloading = true;
-                            handler.getRecommentCourses(page);
-                            adapter.setLoadingHint("正在加载");
-                        }else
-                            adapter.setLoadingHint("");
-                    }
-                }
-            }
-        });
+        headerLayout=v.findViewById(R.id.headerLayout);
+        recyclerList.addOnScrollListener(recyclerListener);
 
     }
+
+    RecyclerView.OnScrollListener recyclerListener=new RecyclerView.OnScrollListener() {
+
+        int lastVisibleItem=0;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            listScrollY+=dy;
+            float alpha=Math.abs(Float.valueOf(listScrollY))/firstItemHeight;
+            headerLayout.setAlpha(alpha);
+
+
+            super.onScrolled(recyclerView, dx, dy);
+            lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+            LogUtil.i("test", "listScrollY: "+listScrollY);
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(adapter!=null)
+            if (newState == RecyclerView.SCROLL_STATE_IDLE
+                    && lastVisibleItem + 1 == adapter.getItemCount()) {
+                if(!onloading){
+                    if(!complete){
+                        onloading = true;
+                        handler.getRecommentCourses(page);
+                        adapter.setLoadingHint("正在加载");
+                    }else
+                        adapter.setLoadingHint("");
+                }
+            }
+        }
+    };
 
     @Override
     public void onRefresh() {

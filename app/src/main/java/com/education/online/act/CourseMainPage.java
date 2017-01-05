@@ -234,6 +234,11 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
         recyclerList.addOnScrollListener(srcollListener);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ImageUtil.initImageLoader(this);
+    }
 
     @Override
     public void onClick(View view) {

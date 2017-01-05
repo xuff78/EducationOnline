@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.bean.EvaluateBean;
-import com.education.online.bean.EvaluatePage;
-import com.education.online.bean.OnlineCourseBean;
 import com.education.online.inter.AdapterCallback;
 import com.education.online.util.ImageUtil;
 import com.education.online.view.RatingBar;
@@ -177,9 +175,9 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
     public class CommentsHolder extends RecyclerView.ViewHolder {
         ImageView potrait;
         RatingBar ratingbar;
-        TextView userName, userComments, commentDate, commentTime;
+        TextView userName, userComments, commentDate, commentTime, startfeedBack, replyTxt;
 
-        public CommentsHolder(View v, int pos) {
+        public CommentsHolder(View v, final int pos) {
             super(v);
             ratingbar= (RatingBar) v.findViewById(R.id.ratingbar);
             potrait = (ImageView) v.findViewById(R.id.potrait);
@@ -187,6 +185,15 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             userComments = (TextView) v.findViewById(R.id.userComments);
             commentDate = (TextView) v.findViewById(R.id.commentDate);
             commentTime = (TextView) v.findViewById(R.id.commentTime);
+            startfeedBack = (TextView) v.findViewById(R.id.startfeedBack);
+            replyTxt = (TextView) v.findViewById(R.id.replyTxt);
+            startfeedBack.setVisibility(View.VISIBLE);
+            startfeedBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cb.delitem(view, pos);
+                }
+            });
         }
     }
 }
