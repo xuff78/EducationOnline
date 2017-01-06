@@ -55,6 +55,7 @@ public class SelectorPage extends BaseFragment {
             }
         }
     };
+    private String lastCate;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
@@ -158,6 +159,10 @@ public class SelectorPage extends BaseFragment {
         recyclerList.setLayoutManager(layoutManager);
         menuLeft= (ListView) v.findViewById(R.id.menuLeft);
 
+    }
+
+    public void setLastCate(String lastCate) {
+        this.lastCate = lastCate;
     }
 
     public class MenuLeftAdapter extends BaseAdapter {

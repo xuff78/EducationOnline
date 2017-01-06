@@ -18,20 +18,35 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:background="@mipmap/icon_head" />
-
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:textColor="@color/hard_gray"
-            android:layout_centerVertical="true"
+        <LinearLayout
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/potrait"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ratingbar"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:maxLines="1"
-            android:textSize="14sp"
-            android:text="用户名" />
-
+            android:layout_toRightOf="@+id/potrait"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/userName"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/hard_gray"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:text="用户名" />
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="2dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="11sp"
+                android:id="@+id/courseName"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
         <com.education.online.view.RatingBar
             android:layout_alignParentRight="true"
             android:id="@+id/ratingbar"
@@ -46,7 +61,7 @@
             hedgehog:starFill="@mipmap/icon_star_red"
             hedgehog:starHalf="@mipmap/icon_star_gray"
             hedgehog:starImageHeight="30dp"
-            hedgehog:starImageWidth="20dp"
+            hedgehog:starImageWidth="15dp"
             hedgehog:starImagePadding="3dp"/>
     </RelativeLayout>
 

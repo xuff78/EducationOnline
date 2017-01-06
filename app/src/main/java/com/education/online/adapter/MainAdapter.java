@@ -267,7 +267,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 animation.addAnimation(scaleAnimation);
                 animation.setInterpolator(act, android.R.anim.decelerate_interpolator);
 //                animation.addAnimation(AnimationUtils.loadAnimation(act, android.R.anim.slide_in_left));
-                int offset=((i+1)/5-1)*200;
+                int offset=((i+1)/5-1)*150;
                 animation.setStartOffset(offset);
                 LayoutAnimationController lac = new LayoutAnimationController(animation);
                 lac.setOrder(LayoutAnimationController.ORDER_NORMAL);
@@ -313,6 +313,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     SubjectBean subject = (SubjectBean) object;
                     Intent i = new Intent(act, SearchResultAct.class);
                     i.putExtra(Constant.SearchSubject, subject.getChild_subject_ids());
+                    i.putExtra(Constant.SearchCate, subject.getSubject_id());
                     i.putExtra(Constant.SearchWords, subject.getSubject_name());
                     act.startActivity(i);
                 }else{

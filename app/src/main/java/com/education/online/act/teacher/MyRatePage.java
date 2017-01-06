@@ -6,14 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
-import com.education.online.adapter.MainAdapter;
 import com.education.online.adapter.RateAdapter;
-import com.education.online.adapter.RateListAdapter;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluatePage;
 import com.education.online.http.CallBack;
@@ -45,6 +42,7 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
     private EditText feedbackEdt;
     private Button feedbackSubmit;
     private EvaluateBean feebackEvaluate;
+    private String replyTxt;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -72,6 +70,8 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
                 }else if(method.equals(Method.submitEvaluateReply)){
                     bottomLayout.setVisibility(View.GONE);
                     ToastUtils.displayTextShort(MyRatePage.this, "回复已提交");
+                    feebackEvaluate.setReply_info(replyTxt);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -95,9 +95,9 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
         feedbackSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String words=feedbackEdt.getText().toString().trim();
-                if(words.length()>0){
-                    handler.submitEvaluateReply(feebackEvaluate.getEvaluate_id(), words);
+                replyTxt=feedbackEdt.getText().toString().trim();
+                if(replyTxt.length()>0){
+                    handler.submitEvaluateReply(feebackEvaluate.getEvaluate_id(), replyTxt);
                 }
             }
         });

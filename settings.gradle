@@ -1,1 +1,1 @@
-include ':app', ':mediapicker', ':ijkplayer-java', ':upplayer', ':uppush', 'leanchatlib',":vitamio"
+include ':app', ':mediapicker',':uppush', 'leanchatlib',":vitamio"

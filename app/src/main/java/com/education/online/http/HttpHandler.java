@@ -73,7 +73,7 @@ public class HttpHandler extends Handle {
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("evaluate_id", evaluate_id);
 		paramMap.put("message", message);
-		requestPostUser(Method.submitEvaluateReply, paramMap, true);
+		requestPostEdu(Method.submitEvaluateReply, paramMap, true);
 	}
 
 	public void RetrievePassword(String phone,String password, String verify_code) {
@@ -104,7 +104,7 @@ public class HttpHandler extends Handle {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("course_id", course_id);
-		requestPostPayment(Method.startCourse, paramMap, true);
+		requestPostEdu(Method.startCourse, paramMap, true);
 	}
 
 	public void getSubjectList() {
@@ -553,6 +553,19 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.evaluate,paraMap,true);
 
 	}
+
+	public void evaluateModify(String evaluate_id,String star,String message){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("evaluate_id",evaluate_id);
+		if(star.length()>0)
+			paraMap.put("star",star);
+		if(message.length()>0)
+			paraMap.put("message",message);
+		requestPostEdu(Method.evaluateModify,paraMap,true);
+
+	}
+
 	public  void getQuestionList(String query_type, String status, String subject_id, String page_size, String page, String sort){
 		HashMap<String, String > paraMap =new HashMap<>();
 

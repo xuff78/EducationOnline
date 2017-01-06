@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback, SelectorPage.CourseSelector{
 
-    private TextView typeTxt, selectTypeView, selectTypeView2, selectTypeView3;
+    private TextView typeTxt, selectTypeView, selectTypeView2, selectTypeView3, menuFilterTxt1;
     private EditText searchEdt;
     private View typeLayout, menuBtn1, menuBtn2, menuBtn3, transblackBg, courseTypeLayout;
     private FrameLayout filterDetailLayout;
@@ -128,6 +128,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
             courseFilter.setSubject_ids(subject_id);
             ((SelectorPage)selectorPage).setLastSelection(subject_id);
+            menuFilterTxt1.setText(getIntent().getStringExtra(Constant.SearchWords));
+            if(getIntent().hasExtra(Constant.SearchCate)){
+                ((SelectorPage)selectorPage).setLastCate(getIntent().getStringExtra(Constant.SearchCate));
+            }
         }else if(getIntent().hasExtra(Constant.SearchWords)) {
             AllCate=false;
             String searchwords = getIntent().getStringExtra(Constant.SearchWords);
@@ -241,6 +245,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                         courseFilter.setSubject_ids(null);
                     searchWord=searchwords;
                     AllCate=false;
+
+                    menuFilterTxt1.setText(searchWord);
                     handler.getCourseList(courseFilter);
                 }
                 return false;
@@ -263,6 +269,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         selectTypeView2.setOnClickListener(typeListener);
         selectTypeView3= (TextView) findViewById(R.id.courseTypeTxt3);
         selectTypeView3.setOnClickListener(typeListener);
+        menuFilterTxt1=(TextView) findViewById(R.id.menuFilterTxt1);
     }
 
     private void setFirstFilter(ArrayList<FilterInfo> list){
@@ -393,6 +400,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         page=1;
         courseFilter.setPage(String.valueOf(page));
         handler.getCourseList(courseFilter);
+        menuFilterTxt1.setText(subject.getSubject_name());
     }
 
     @Override

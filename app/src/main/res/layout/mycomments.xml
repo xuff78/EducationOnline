@@ -112,16 +112,15 @@
     <EditText
         android:id="@+id/comment"
         android:gravity="top"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:hint="   在这里留下您要评价的内容哦~"
+        android:padding="8dp"
+        android:hint="在这里留下您要评价的内容哦~"
         android:textSize="12sp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/shape_grayline_with_corner"/>
+        android:background="@drawable/shape_blackline_with_smallcorner"/>
 
     <View
         android:layout_marginLeft="20dp"

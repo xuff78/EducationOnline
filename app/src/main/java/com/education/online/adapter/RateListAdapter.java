@@ -2,6 +2,7 @@ package com.education.online.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.Mine.EvaluationEdit;
+import com.education.online.act.video.Comment;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.util.ImageUtil;
 import com.education.online.view.RatingBar;
@@ -30,11 +32,13 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     private int listType=0;
     private List<EvaluateBean> evaluations=new ArrayList<>();
     private ImageLoader imageLoader=ImageLoader.getInstance();
+    private View.OnClickListener listener;
 
-    public RateListAdapter(Activity activity, List<EvaluateBean> evaluations){
+    public RateListAdapter(Activity activity, List<EvaluateBean> evaluations, View.OnClickListener listener){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         this.evaluations=evaluations;
+        this.listener=listener;
     }
 
     @Override
@@ -63,6 +67,11 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
         imageLoader.displayImage(ImageUtil.getImageUrl(evaluateBean.getAvatar()), vh.potrait);
         vh.userName.setText(evaluateBean.getUser_name());
         vh.userComments.setText(evaluateBean.getInfo());
+        vh.courseName.setText(evaluateBean.getCourse_name());
+        if(evaluateBean.getReply_info().length()>0){
+            vh.replyTxt.setText("老师回复： "+evaluateBean.getReply_info());
+            vh.replyTxt.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -73,10 +82,11 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
     public class CommentsHolder extends RecyclerView.ViewHolder {
         ImageView potrait;
         RatingBar ratingbar;
-        TextView userName, userComments, commentDate, commentTime, replyTxt;
+        TextView userName, userComments, commentDate, commentTime, replyTxt, courseName, startfeedBack;
 
         public CommentsHolder(View v, int pos) {
             super(v);
+
             ratingbar= (RatingBar) v.findViewById(R.id.ratingbar);
             potrait = (ImageView) v.findViewById(R.id.potrait);
             userName = (TextView) v.findViewById(R.id.userName);
@@ -84,12 +94,13 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
             commentDate = (TextView) v.findViewById(R.id.commentDate);
             commentTime = (TextView) v.findViewById(R.id.commentTime);
             replyTxt = (TextView) v.findViewById(R.id.replyTxt);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.startActivity(new Intent(activity, EvaluationEdit.class));
-                }
-            });
+            courseName = (TextView) v.findViewById(R.id.courseName);
+            courseName.setVisibility(View.VISIBLE);
+            startfeedBack = (TextView) v.findViewById(R.id.startfeedBack);
+            startfeedBack.setVisibility(View.VISIBLE);
+            startfeedBack.setText("修改评论");
+            startfeedBack.setTag(pos);
+            startfeedBack.setOnClickListener(listener);
         }
     }
 }

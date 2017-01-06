@@ -199,9 +199,9 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     mLocationClient = null;
                 }
                 handler.updateLocation("" + location.getLatitude(), "" + location.getLongitude());
-                String address=location.getAddrStr();
-                SharedPreferencesUtil.setString(MainPage.this, Constant.Addr, address);
-                LogUtil.d("totp", "addr:" + address);
+//                String address=location.getAddrStr();
+//                SharedPreferencesUtil.setString(MainPage.this, Constant.Addr, address);
+//                LogUtil.d("totp", "addr:" + address);
 //                _setLeftBackText(location.getCity(), null);
             }
 

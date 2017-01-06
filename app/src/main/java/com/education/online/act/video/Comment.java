@@ -65,7 +65,7 @@ public class Comment extends BaseFrameAct implements View.OnClickListener, Ratin
     private String course_id="";
     private String is_secret = "0";//1-是 0-否
     private String evaluate_info="";
-
+    private String evaluate_id=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +106,13 @@ public class Comment extends BaseFrameAct implements View.OnClickListener, Ratin
         courseBrief.setText(temp);
         course_id=intent.getStringExtra("course_id");
         initHandler();
+        if(getIntent().hasExtra("evaluate_id")){
+            evaluate_id=getIntent().getStringExtra("evaluate_id");
+            comment.setText(getIntent().getStringExtra("message"));
+            star=getIntent().getStringExtra("star");
+            if(star!=null&&star.length()>0)
+                ratingBar.setStar(Float.valueOf(star));
+        }
     }
 
     @Override
@@ -132,11 +139,15 @@ public class Comment extends BaseFrameAct implements View.OnClickListener, Ratin
                 break;
             case R.id.submitbtn:
                 evaluate_info=comment.getText().toString();
-                if (star.length() == 0 || comment.getText().length() == 0)
+                if (star==null || star.length() == 0 || comment.getText().length() == 0)
                     Toast.makeText(Comment.this, "请输入完整的评价哦~", Toast.LENGTH_SHORT).show();
-                else
-               httphandler.evaluate(course_id,star,evaluate_info,is_secret);
-                    break;
+                else {
+                    if(evaluate_id!=null){
+                        httphandler.evaluateModify(evaluate_id, star, evaluate_info);
+                    }else
+                        httphandler.evaluate(course_id, star, evaluate_info, is_secret);
+                }
+                break;
         }
     }
 
@@ -149,8 +160,18 @@ public class Comment extends BaseFrameAct implements View.OnClickListener, Ratin
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
-                Toast.makeText(Comment.this,"评论成功",Toast.LENGTH_SHORT).show();
-                finish();
+                if(method.equals(Method.evaluateModify)) {
+                    Toast.makeText(Comment.this, "修改成功", Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent();
+                    i.putExtra("star", star);
+                    i.putExtra("message", evaluate_info);
+                    setResult(0x22, i);
+                    finish();
+                }else if(method.equals(Method.evaluate)) {
+
+                    Toast.makeText(Comment.this, "评论成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
     }

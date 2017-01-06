@@ -191,10 +191,10 @@ public class LoginActivity extends BaseFrameAct {
 
                 ActUtil.initChatUser(LoginActivity.this, user.getAvatar(), user.getNickname());
                 long left=System.currentTimeMillis()-pressTime;
-                if(left>=2500)
+                if(left>=2000)
                     left=0;
                 else
-                    left=2500-left;
+                    left=2000-left;
                 progressBar.postDelayed(new Runnable() {
                     @Override
                     public void run() {

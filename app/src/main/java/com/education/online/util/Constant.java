@@ -20,6 +20,7 @@ public class Constant {
     public static final String Pic_Savepath="picSavePath";
     public static final String SearchWords="SearchWords";
     public static final String SearchSubject="SearchSubject";
+    public static final String SearchCate="SearchCate";
     public static final String UserInfo="UserInfo";
     public static final String NickName="NickName";
     public static final String Avatar="Avatar";
