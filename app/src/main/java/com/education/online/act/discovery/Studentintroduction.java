@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class Studentintroduction extends SwipeBackActivity implements View.OnClickListener{
 
     private HttpHandler mHandler;
-    private TeacherBean teacherInfo;
+    private TeacherBean teacherInfo=new TeacherBean();
     private ImageLoader imageLoader;
     private String myUsercode;
     private ImageView starIcon;

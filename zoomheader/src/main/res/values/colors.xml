@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="white">#FFFFFF</color><!--白色 -->
+  <color name="transparent">#00000000</color><!--透明 -->
+  <color name="red">#FF1493</color><!-- 红色-->
+  <color name="darkred">#CE021B</color><!-- 深红色-->
+  <color name="black_p50">#7f000000</color>
+
+
+  <color name="translucent_background">#dd000000</color>
+
+  <color name="normal_red">#F95850</color>
+  <color name="dark_orange">#fe5900</color>
+  <color name="normal_orange">#f96450</color>
+  <color name="headerbg">#364e5e</color>
+  <color name="hard_blue">#0173b1</color>
+  <color name="light_trans_white">#22ffffff</color><!--高亮灰 -->
+  <color name="trans_white">#88ffffff</color><!--高亮灰 -->
+  <color name="light_trans_black">#22000000</color><!--高亮灰 -->
+  <color name="hard_trans_black">#66000000</color><!--高亮灰 -->
+  <color name="comment_gray">#D6D6D6</color><!---评价灰 -->
+  <color name="view_gray">#D8D8D8</color><!--成长灰-->
+  <color name="strage_gray">#F8F8F8</color><!---什么灰 -->
+  <color name="what_gray">#B8B8B8</color><!---什么灰 -->
+  <!-- 商城使用字体颜色 -->
+  <color name="highlight_gray">#eaeaea</color><!--高亮灰 -->
+  <color name="light_blue">#ADD8E6</color><!--亮蓝色 -->
+  <color name="normal_blue">#1b93e5</color><!--蓝色 -->
+  <color name="verylight_gray">#dadada</color><!--亮浅 -->
+  <color name="light_gray">#C0C0C0</color><!--浅灰 -->
+  <color name="normal_gray">#818181</color><!--中灰 -->
+  <color name="hard_gray">#343434</color><!--深灰 -->
+  <color name="coffee">#72452C</color><!--咖啡色 -->
+  <color name="bg_gray">#d8dbde</color><!--咖啡色 -->
+  <color name="whitesmoke">#F5F5F5</color><!--烟白色 -->
+  <color name="highwhite">#FAFAFA</color><!--烟白色 -->
+  <color name="half_visibily">#90000000</color><!--半透明-->
+  <color name="ruby_blue">#3C4E64</color><!--宝石蓝-->
+  <color name="normal">#737373</color><!--正常颜色-->
+  <color name="black">#000000</color><!--正常颜色-->
+</resources>
