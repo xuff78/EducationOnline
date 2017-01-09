@@ -19,6 +19,35 @@ public class EvaluateBean implements Serializable{
     private String reply_info="";
     private String evaluate_id="";
 
+    //老师信息
+    private String introduction="";
+    private String img="";
+    private String usercode="";
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getUsercode() {
+        return usercode;
+    }
+
+    public void setUsercode(String usercode) {
+        this.usercode = usercode;
+    }
+
     public String getReply_info() {
         return reply_info;
     }

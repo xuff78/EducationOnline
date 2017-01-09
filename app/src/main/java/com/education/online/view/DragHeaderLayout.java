@@ -1,6 +1,5 @@
-package com.wingsofts.zoomimageheader;
+package com.education.online.view;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,8 +12,9 @@ import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+
+import com.education.online.R;
 
 /**
  * Created by 可爱的蘑菇 on 2017/1/7.

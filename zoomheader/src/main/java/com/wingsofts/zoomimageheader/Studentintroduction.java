@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class Studentintroduction extends Activity implements View.OnClickListene
     private ScrollView mScrollView;
     private ViewPager mViewPager;
     private ImageView topbg;
+    private float rate=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +41,31 @@ public class Studentintroduction extends Activity implements View.OnClickListene
     private void initView() {
         topbg= (ImageView) findViewById(R.id.topbg);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new Adapter());
-        mScrollView= (ScrollView) findViewById(R.id.mScrollView);
-        draglayout= (DragHeaderLayout) findViewById(R.id.draglayout);
-
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
+        rate=dm.widthPixels/Float.valueOf(dip2px(this, 240));
+        int imgheight=dip2px(Studentintroduction.this, 180);
+        mViewPager.setLayoutParams(new LinearLayout.LayoutParams((int)(rate*imgheight),dip2px(this, 380)));
+        mViewPager.setAdapter(new Adapter());
 
-        draglayout.setListLayoutInfo(mScrollView, dip2px(this, 440), dm.widthPixels, dip2px(this, 240), new DragHeaderLayout.DragViewCallback() {
+        mScrollView= (ScrollView) findViewById(R.id.mScrollView);
+        draglayout= (DragHeaderLayout) findViewById(R.id.draglayout);
+        int scrollOffset=dip2px(this, 100);
+        mScrollView.setAlpha(0);
+        mScrollView.setTranslationY(scrollOffset);
+
+        draglayout.setListLayoutInfo(mScrollView, scrollOffset, dip2px(this, 440), dm.widthPixels, dip2px(this, 240),
+                new DragHeaderLayout.DragViewCallback() {
             @Override
             public void showTopImage(Bitmap bmp) {
-                topbg.setImageBitmap(bmp);
+                if(bmp!=null)
+                    topbg.setImageBitmap(bmp);
+                topbg.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void hideTopImage() {
+                topbg.setVisibility(View.GONE);
             }
         });
         findViewById(R.id.myQrcode).setOnClickListener(this);

@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.discovery.Studentintroduction;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.inter.AdapterCallback;
 import com.education.online.util.ImageUtil;
@@ -107,8 +109,20 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             }else{
 
             }
+            vh.potrait.setTag(evaluateBean);
+            vh.potrait.setOnClickListener(listener);
         }
     }
+
+    View.OnClickListener listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            EvaluateBean evaluateBean = (EvaluateBean) view.getTag();
+            Intent intent=new Intent(activity, Studentintroduction.class);
+            intent.putExtra("usercode", evaluateBean.getUsercode());
+            activity.startActivity(intent);
+        }
+    };
 
     @Override
     public int getItemCount() {

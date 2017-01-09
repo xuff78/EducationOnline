@@ -142,9 +142,9 @@ public class MyEvaluation extends BaseFrameAct implements View.OnClickListener {
 
             bean = evaluations.get((Integer) view.getTag());
             Intent intent=new Intent(MyEvaluation.this, Comment.class);
-            intent.putExtra("courseImg", bean.getAvatar());
+            intent.putExtra("courseImg", bean.getImg());
             intent.putExtra("courseName", bean.getCourse_name());
-            intent.putExtra("courseIntroduction", "");
+            intent.putExtra("courseIntroduction", bean.getIntroduction());
             intent.putExtra("course_id", "");
             intent.putExtra("evaluate_id", bean.getEvaluate_id());
             intent.putExtra("message", bean.getInfo());

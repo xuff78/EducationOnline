@@ -13,8 +13,12 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.Mine.EvaluationEdit;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.act.video.Comment;
+import com.education.online.bean.CreatUserInfo;
 import com.education.online.bean.EvaluateBean;
+import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.view.RatingBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -72,7 +76,23 @@ public class RateListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHold
             vh.replyTxt.setText("老师回复： "+evaluateBean.getReply_info());
             vh.replyTxt.setVisibility(View.VISIBLE);
         }
+        vh.potrait.setTag(evaluateBean);
+        vh.potrait.setOnClickListener(clickListener);
     }
+
+    View.OnClickListener clickListener=new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view) {
+            EvaluateBean evaluateBean= (EvaluateBean) view.getTag();
+            Intent intent=new Intent();
+            intent.setClass(activity, TeacherInformationPage.class);
+            intent.putExtra("Avatar", evaluateBean.getAvatar());
+            intent.putExtra("Name", evaluateBean.getUser_name());
+            intent.putExtra(Constant.UserCode, evaluateBean.getUsercode());
+            ActUtil.startAnimActivity(activity, intent, view, "headIcon");
+        }
+    };
 
     @Override
     public int getItemCount() {

@@ -22,6 +22,8 @@
                 android:layout_height="240dp">
                 <ImageView
                     android:id="@+id/topbg"
+                    android:visibility="gone"
+                    android:background="@mipmap/student_bg"
                     android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -226,6 +228,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
+                android:paddingBottom="200dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RelativeLayout
@@ -251,7 +254,7 @@
                 <RelativeLayout
                     android:id="@+id/myQrcode"
                     android:layout_width="wrap_content"
-                    android:layout_height="940dp">
+                    android:layout_height="45dp">
                     <TextView
                         android:layout_centerVertical="true"
                         android:text="二维码名片"
@@ -312,13 +315,13 @@
         android:id="@+id/draglayout"
         android:clipChildren="false"
         android:gravity="center"
-        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+        <!--必须顶住上面，不然没法放大-->
         <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             />
     <com.wingsofts.zoomimageheader.ZoomHeaderViewPager
         android:layout_centerInParent="true"
