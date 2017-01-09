@@ -27,48 +27,48 @@
                     android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            <LinearLayout
-                android:layout_marginTop="35dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/teacherImg"
-                    android:transitionName="headIcon"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp" />
                 <LinearLayout
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_centerInParent="false"
+                    android:layout_marginTop="35dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/teacherImg"
+                        android:transitionName="headIcon"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp" />
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/nameTxt"
+                            android:text="ADOBE 小方方"
+                            style="@style/txt_white_12" />
+                        <TextView
+                            android:id="@+id/sexTxt"
+                            android:layout_marginLeft="6dp"
+                            android:text="女"
+                            android:textSize="10sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            style="@style/txt_white_12" />
+                    </LinearLayout>
                     <TextView
-                        android:id="@+id/nameTxt"
-                        android:text="ADOBE 小方方"
-                        style="@style/txt_white_12" />
-                    <TextView
-                        android:id="@+id/sexTxt"
-                        android:layout_marginLeft="6dp"
-                        android:text="女"
+                        android:layout_alignLeft="@+id/nameTxt"
+                        android:layout_below="@+id/nameTxt"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/descTxt"
                         android:textSize="10sp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="3dp"
+                        android:text="美丽就是革命"
                         style="@style/txt_white_12" />
                 </LinearLayout>
-                <TextView
-                    android:layout_alignLeft="@+id/nameTxt"
-                    android:layout_below="@+id/nameTxt"
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/descTxt"
-                    android:textSize="10sp"
-                    android:text="美丽就是革命"
-                    style="@style/txt_white_12" />
-            </LinearLayout>
                 <LinearLayout
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="20dp"
@@ -323,7 +323,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             />
-    <com.wingsofts.zoomimageheader.ZoomHeaderViewPager
+    <android.support.v4.view.ViewPager
         android:layout_centerInParent="true"
         android:id="@+id/viewpager"
         android:layout_width="340dp"

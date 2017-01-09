@@ -1,5 +1,6 @@
 package com.education.online.view;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -118,7 +119,7 @@ public class DragHeaderLayout extends LinearLayout {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                if(currentY<-dragToListDis/2&&currentY>-dragToListDis){
+                if(currentY<=-dragToListDis/2&&currentY>-dragToListDis){
                     startTransYAnimation(currentY, -dragToListDis);
                 }else if(currentY>-dragToListDis/2&&currentY<0){
                     startTransYAnimation(currentY, 0);
@@ -204,6 +205,29 @@ public class DragHeaderLayout extends LinearLayout {
                 setTranslationY(currentY);
             }
         });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if(currentY==dragOutDis){
+                    callback.onFinish();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
         animator.start();
     }
 
@@ -212,5 +236,6 @@ public class DragHeaderLayout extends LinearLayout {
     public interface DragViewCallback{
         void showTopImage(Bitmap bmp);
         void hideTopImage();
+        void onFinish();
     }
 }

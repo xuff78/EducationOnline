@@ -1,5 +1,6 @@
 package com.education.online.act.teacher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.discovery.StudentNew;
 import com.education.online.adapter.RateAdapter;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluatePage;
@@ -17,6 +19,7 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.AdapterCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
@@ -72,6 +75,11 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
                     ToastUtils.displayTextShort(MyRatePage.this, "回复已提交");
                     feebackEvaluate.setReply_info(replyTxt);
                     adapter.notifyDataSetChanged();
+                }else if(method.equals(Method.getUserInfo)){
+                    Intent intent=new Intent(MyRatePage.this, StudentNew.class);
+                    intent.putExtra("jsonData", jsonData);
+                    ActUtil.startAnimActivity(MyRatePage.this, intent);
+//                  activity.startActivity(intent);
                 }
             }
         });
@@ -107,9 +115,17 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-        adapter=new RateAdapter(this, evaluations, this);
+        adapter=new RateAdapter(this, evaluations, this, listener);
         recyclerList.setAdapter(adapter);
     }
+
+    View.OnClickListener listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            EvaluateBean evaluateBean = (EvaluateBean) view.getTag();
+            handler.getUserInfo(evaluateBean.getUsercode());
+        }
+    };
 
     @Override
     public void onClick(View v, int i) {

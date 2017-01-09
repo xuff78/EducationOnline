@@ -2,13 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <View
+        android:id="@+id/shadowBg"
+        android:background="@color/hard_trans_black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <LinearLayout
         android:id="@+id/listLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ScrollView
-            android:background="@color/white"
             android:id="@+id/mScrollView"
             android:layout_above="@+id/bottomLayout"
             android:layout_width="match_parent"
@@ -28,12 +32,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                     <LinearLayout
-                        android:gravity="center"
+                        android:layout_marginTop="35dp"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:id="@+id/teacherImg"
                             android:transitionName="headIcon"
                             android:layout_width="75dp"
@@ -107,12 +111,18 @@
                         </LinearLayout>
                     </LinearLayout>
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/roundLeftBack"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:padding="15dp"
                         android:src="@mipmap/icon_round_back" />
                 </RelativeLayout>
+                <LinearLayout
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <LinearLayout
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
@@ -198,7 +208,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:gravity="center_vertical"
-                        android:layout_marginTop="13dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
@@ -267,31 +277,15 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp" />
                     </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"/>
                 </LinearLayout>
+            </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
-    <com.education.online.view.DragHeaderLayout
-        android:id="@+id/draglayout"
-        android:clipChildren="false"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <!--必须顶住上面，不然没法放大-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            />
-        <android.support.v4.view.ViewPager
-            android:layout_centerInParent="true"
-            android:id="@+id/viewpager"
-            android:layout_width="340dp"
-            android:layout_height="380dp"
-            android:clipChildren="false"
-            />
-    </com.education.online.view.DragHeaderLayout>
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/bottomLayout"
@@ -335,4 +329,26 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.education.online.view.DragHeaderLayout
+        android:id="@+id/draglayout"
+        android:clipChildren="false"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <!--必须顶住上面，不然没法放大-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+        <android.support.v4.view.ViewPager
+            android:layout_centerInParent="true"
+            android:id="@+id/viewpager"
+            android:layout_width="340dp"
+            android:layout_height="380dp"
+            android:clipChildren="false"
+            />
+    </com.education.online.view.DragHeaderLayout>
+
 </RelativeLayout>

@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="180dp" />
         <View
-            android:background="@color/white"
             android:layout_below="@id/scaleImg"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
@@ -39,7 +38,7 @@
             android:layout_height="75dp" />
         <LinearLayout
             android:gravity="center_vertical"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -56,6 +55,7 @@
                 android:paddingBottom="2dp"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
+                android:background="@drawable/shape_red_with_corner"
                 style="@style/txt_white_12" />
         </LinearLayout>
         <TextView
@@ -73,7 +73,7 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="200dp">
 
         <TextView
@@ -154,7 +154,7 @@
         </LinearLayout>
         <LinearLayout
             android:gravity="center_vertical"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

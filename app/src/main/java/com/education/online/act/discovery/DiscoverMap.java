@@ -36,6 +36,7 @@ import com.education.online.bean.VideoImgItem;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
@@ -92,7 +93,8 @@ public class DiscoverMap extends BaseFrameAct implements View.OnClickListener, B
                 }else if(method.equals(Method.getUserInfo)){
                     Intent intent=new Intent(DiscoverMap.this, StudentNew.class);
                     intent.putExtra("jsonData", jsonData);
-                    startActivity(intent);
+//                    startActivity(intent);
+                    ActUtil.startAnimActivity(DiscoverMap.this, intent);
                 }
             }
         });

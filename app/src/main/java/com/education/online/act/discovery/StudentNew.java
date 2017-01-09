@@ -1,10 +1,12 @@
 package com.education.online.act.discovery;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +83,10 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(new Fade());
+            getWindow().setExitTransition(new Fade());
+        }
         setContentView(R.layout.student_new);
 
         initHandler();
@@ -89,8 +95,10 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         if(getIntent().hasExtra("jsonData")) {
             teacherInfo = JSON.parseObject(getIntent().getStringExtra("jsonData"), TeacherBean.class);
             initView();
-        }else
-            mHandler.getUserInfo(getIntent().getStringExtra("usercode"));
+        }else {
+            ToastUtils.displayTextShort(this, "无法获取用户信息");
+            onBackPressed();
+        }
 
     }
 
@@ -121,6 +129,11 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void hideTopImage() {
                         topLayout.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        onBackPressed();
                     }
                 });
         
@@ -216,8 +229,38 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         }
 
         @Override public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(views.get(position));
+            View v=views.get(position);
+            container.addView(v);
 
+            ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg2);
+            imageLoader.displayImage(ImageUtil.getImageUrl(teacherInfo.getAvatar()), teacherImg);
+            TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt2);
+            nameTxt.setText(teacherInfo.getName());
+            TextView sexTxt= (TextView) v.findViewById(R.id.sexTxt2);
+            if(teacherInfo.getGender().equals("1")){
+                sexTxt.setText("男");
+            }else if(teacherInfo.getGender().equals("0")){
+                sexTxt.setText("女");
+            }
+            TextView descTxt= (TextView) v.findViewById(R.id.descTxt2);
+            descTxt.setText(teacherInfo.getIntroduction());
+            TextView nickName= (TextView) v.findViewById(R.id.nickName2);
+            nickName.setText(teacherInfo.getName());
+            TextView sexType= (TextView) v.findViewById(R.id.sexType2);
+            if(teacherInfo.getGender().equals("1")){
+                sexType.setText("男");
+            }else if(teacherInfo.getGender().equals("0")){
+                sexType.setText("女");
+            }
+            TextView xingzuo= (TextView) v.findViewById(R.id.xingzuo2);
+            if(teacherInfo.getBirthday().length()>0&&teacherInfo.getBirthday().contains("-")) {
+                String[] birthday = teacherInfo.getBirthday().split("-");
+                xingzuo.setText(ActUtil.getConstellation(Integer.valueOf(birthday[1]), Integer.valueOf(birthday[2])));
+            }
+            TextView detailTxt= (TextView) v.findViewById(R.id.detailTxt2);
+            detailTxt.setText(teacherInfo.getIntroduction());
+            TextView interestingCourse= (TextView) v.findViewById(R.id.interestingCourse2);
+            interestingCourse.setText(teacherInfo.getInterest_info());
             return views.get(position);
         }
 

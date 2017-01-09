@@ -12,9 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.education.online.R;
+import com.education.online.act.discovery.StudentNew;
 import com.education.online.act.discovery.Studentintroduction;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.inter.AdapterCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.view.RatingBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,12 +37,14 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
     private ImageLoader imageLoader=ImageLoader.getInstance();
     private AdapterCallback cb;
     private int e1=0,e2=0,e3=0,e4=0,e5=0;
+    private View.OnClickListener listener;
 
-    public RateAdapter(Activity activity, List<EvaluateBean> evaluations, AdapterCallback cb){
+    public RateAdapter(Activity activity, List<EvaluateBean> evaluations, AdapterCallback cb, View.OnClickListener listener){
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         this.evaluations=evaluations;
         this.cb=cb;
+        this.listener=listener;
     }
 
     @Override
@@ -114,15 +118,7 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
         }
     }
 
-    View.OnClickListener listener=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            EvaluateBean evaluateBean = (EvaluateBean) view.getTag();
-            Intent intent=new Intent(activity, Studentintroduction.class);
-            intent.putExtra("usercode", evaluateBean.getUsercode());
-            activity.startActivity(intent);
-        }
-    };
+
 
     @Override
     public int getItemCount() {

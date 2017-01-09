@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <stroke android:width="2px" android:color="@color/light_gray"/>
-    <solid android:color="@null"/>
+    <solid android:color="@color/white"/>
 </shape>
