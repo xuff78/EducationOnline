@@ -10,6 +10,10 @@
     <color name="black_p50">#7f000000</color>
 
 
+    <color name="mb_gray">#ffdedede</color>
+    <color name="mb_blue">#ff0099cc</color>
+    <color name="mb_blue_dark">#ff00719b</color>
+
 
     <color name="normal_red">#F95850</color>
     <color name="dark_orange">#fe5900</color>

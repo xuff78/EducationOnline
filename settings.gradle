@@ -1,1 +1,1 @@
-include ':app', ':mediapicker',':uppush', 'leanchatlib',":vitamio",':zoomheader'
+include ':app', ':mediapicker',':uppush', 'leanchatlib',":vitamio"

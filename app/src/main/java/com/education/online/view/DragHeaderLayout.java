@@ -112,7 +112,7 @@ public class DragHeaderLayout extends LinearLayout {
                         listLayout.setAlpha(0);
                         scaleLayout.setScaleX(1);
                         scaleLayout.setScaleY(1);
-                    }else if(moveY>0&&-dragToListDis==currentY-moveY){
+                    }else if(moveY>0&&-dragToListDis==currentY-moveY){  //从最大开始变小的时候
                         setAlpha(1);
                         callback.hideTopImage();
                     }
