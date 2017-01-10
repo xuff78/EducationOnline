@@ -164,6 +164,8 @@
             <TextView
                 android:id="@+id/interestingCourse2"
                 android:layout_marginLeft="6dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="xx, xx, xx"
                 style="@style/txt_black_12" />
         </LinearLayout>

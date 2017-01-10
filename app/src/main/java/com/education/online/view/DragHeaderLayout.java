@@ -101,15 +101,20 @@ public class DragHeaderLayout extends LinearLayout {
                     currentY = currentY + moveY;
                     scaleHeadView();
                     if (currentY <= -dragToListDis) {  //从小变大重合的时候
-                        currentY = -dragToListDis;
-                        listLayout.setTranslationY(0);
-                        listLayout.setAlpha(1);
+                        if(moveY<0) {
+                            currentY = -dragToListDis;
+                            listLayout.setTranslationY(0);
+                            listLayout.setAlpha(1);
+                        }
                     }else if(currentY >= 0&&moveY>0){  //由大变成初始状态的时候
                         contentLayout.setTranslationX(0);
                         topInfoLayout.setTranslationY(0);
                         listLayout.setAlpha(0);
                         scaleLayout.setScaleX(1);
                         scaleLayout.setScaleY(1);
+                    }else if(moveY>0&&-dragToListDis==currentY-moveY){
+                        setAlpha(1);
+                        callback.hideTopImage();
                     }
                     setTranslationY(currentY);
 //                    Log.i("DragInfo", "currentY: " + currentY);
@@ -166,8 +171,6 @@ public class DragHeaderLayout extends LinearLayout {
             }
             setAlpha(0);
         }else if(currentY<0){
-            setAlpha(1);
-            callback.hideTopImage();
             float scaleX=-currentY/dragToListDis*expandScaleX+1;
             float scaleY=-currentY/dragToListDis*expandScaleY+1;
 

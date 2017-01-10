@@ -1,5 +1,7 @@
 package com.education.online.act.discovery;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.transition.Fade;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,6 +50,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
     private TeacherBean teacherInfo=new TeacherBean();
     private ImageLoader imageLoader;
     private String myUsercode;
+    private View bottomLayout;
     private ImageView starIcon;
 
     private DragHeaderLayout draglayout;
@@ -117,6 +121,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         mScrollView.setAlpha(0);
         mScrollView.setTranslationY(scrollOffset);
 
+        final int bottomLayoutHeight=ImageUtil.dip2px(this, 50);
         draglayout.setListLayoutInfo(mScrollView, scrollOffset, ImageUtil.dip2px(this, 440), ScreenUtil.getWidth(this),
                 ImageUtil.dip2px(this, 240), new DragHeaderLayout.DragViewCallback() {
                     @Override
@@ -124,10 +129,12 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
                         if(bmp!=null)
                             topbg.setImageBitmap(bmp);
                         topLayout.setVisibility(View.VISIBLE);
+                        startTransYAnimation(bottomLayoutHeight, 0);
                     }
 
                     @Override
                     public void hideTopImage() {
+                        startTransYAnimation(0,bottomLayoutHeight);
                         topLayout.setVisibility(View.INVISIBLE);
                     }
 
@@ -143,8 +150,10 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         }else if(teacherInfo.getIs_attention().equals("1")) {
             starIcon.setImageResource(R.mipmap.icon_star_red);
         }
+        bottomLayout=findViewById(R.id.bottomLayout);
+        bottomLayout.setTranslationY(bottomLayoutHeight);
         if(myUsercode.equals(teacherInfo.getUsercode()))
-            findViewById(R.id.bottomLayout).setVisibility(View.GONE);
+            bottomLayout.setVisibility(View.GONE);
         findViewById(R.id.myQrcode).setOnClickListener(this);
         findViewById(R.id.toChatBtn).setOnClickListener(this);
         findViewById(R.id.payattentionBtn).setOnClickListener(this);
@@ -267,5 +276,21 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         @Override public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView(views.get(position));
         }
+    }
+
+    public void startTransYAnimation(float start, float end) {
+        // 开启移动动画
+        ValueAnimator animator=new ValueAnimator().ofFloat(start, end).setDuration(300);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                // TODO Auto-generated method stub
+                float currentY = (float) valueAnimator.getAnimatedValue();
+                bottomLayout.setTranslationY(currentY);
+            }
+        });
+        animator.start();
     }
 }

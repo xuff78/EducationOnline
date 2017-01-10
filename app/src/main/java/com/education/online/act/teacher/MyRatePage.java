@@ -1,10 +1,12 @@
 package com.education.online.act.teacher;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.discovery.StudentNew;
+import com.education.online.act.discovery.Studentintroduction;
 import com.education.online.adapter.RateAdapter;
 import com.education.online.bean.EvaluateBean;
 import com.education.online.bean.EvaluatePage;
@@ -74,12 +77,12 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
                     bottomLayout.setVisibility(View.GONE);
                     ToastUtils.displayTextShort(MyRatePage.this, "回复已提交");
                     feebackEvaluate.setReply_info(replyTxt);
+                    feedbackEdt.setText("");
                     adapter.notifyDataSetChanged();
                 }else if(method.equals(Method.getUserInfo)){
-                    Intent intent=new Intent(MyRatePage.this, StudentNew.class);
+                    Intent intent=new Intent(MyRatePage.this, Studentintroduction.class);
                     intent.putExtra("jsonData", jsonData);
-                    ActUtil.startAnimActivity(MyRatePage.this, intent);
-//                  activity.startActivity(intent);
+                    ActUtil.startAnimActivity(MyRatePage.this, intent, selectedView, "headIcon");
                 }
             }
         });
@@ -119,9 +122,12 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
         recyclerList.setAdapter(adapter);
     }
 
+    private View selectedView=null;
+
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            selectedView=view;
             EvaluateBean evaluateBean = (EvaluateBean) view.getTag();
             handler.getUserInfo(evaluateBean.getUsercode());
         }
@@ -146,6 +152,9 @@ public class MyRatePage extends BaseFrameAct implements AdapterCallback{
     public void delitem(View v, int i) {
         int pressPos=i-2;
         bottomLayout.setVisibility(View.VISIBLE);
+        feedbackEdt.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(feedbackEdt, InputMethodManager.SHOW_FORCED);
         feebackEvaluate=evaluations.get(pressPos);
     }
 }
