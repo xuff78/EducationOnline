@@ -20,6 +20,7 @@ import com.education.online.retrofit.RCallBack;
 import com.education.online.retrofit.RetrofitAPIManager;
 import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -47,6 +48,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         _setHeaderGone();
         initView();
 
+        SharedPreferencesUtil.setString(this, Constant.isLogin, SharedPreferencesUtil.FAILURE_STRING);
         ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
 

@@ -199,6 +199,13 @@ public class ActUtil {
         }
     }
 
+    public static boolean isLogin(Context context) {
+        if(SharedPreferencesUtil.getString(context, Constant.isLogin).equals(SharedPreferencesUtil.FAILURE_STRING))
+            return false;
+        else
+            return true;
+    }
+
     public static boolean isCash(String moneyStr, Activity con) {
         String hinttxt=null;
         if (moneyStr.length() == 0) {

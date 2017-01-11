@@ -312,7 +312,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (object != null) {
                     SubjectBean subject = (SubjectBean) object;
                     Intent i = new Intent(act, SearchResultAct.class);
-                    i.putExtra(Constant.SearchSubject, subject.getChild_subject_ids());
+                    String ids=subject.getChild_subject_ids();
+                    if(ids.length()==0)
+                        ids="-1";
+                    i.putExtra(Constant.SearchSubject, ids);
                     i.putExtra(Constant.SearchCate, subject.getSubject_id());
                     i.putExtra(Constant.SearchWords, subject.getSubject_name());
                     act.startActivity(i);

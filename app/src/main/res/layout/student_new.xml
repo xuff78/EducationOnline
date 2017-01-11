@@ -351,6 +351,10 @@
             android:layout_height="380dp"
             android:clipChildren="false"
             />
+        <View
+            android:id="@+id/blankLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </com.education.online.view.DragHeaderLayout>
 
 </RelativeLayout>

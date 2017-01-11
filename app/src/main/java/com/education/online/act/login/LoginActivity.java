@@ -179,6 +179,7 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserIdentity, user_identity);
                 SharedPreferencesUtil.setUsercode(LoginActivity.this, usercode);
                 SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);//保存sessionid
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.isLogin, sessionid);
 
                 LoginInfo user= JSON.parseObject(jsonData, LoginInfo.class);
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.Avatar, user.getAvatar());

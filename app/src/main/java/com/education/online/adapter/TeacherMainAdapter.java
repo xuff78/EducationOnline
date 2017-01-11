@@ -217,13 +217,15 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }else if (pos > 0){
             if (i==2) {
                 CourseHolder vh = (CourseHolder) holder;
-                CourseBean courseBean=teacherBean.getCourse_info().get(pos-1);
+                CourseBean courseBean=teacherBean.getCourse_info().get(pos);
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), vh.teacherImage);
                 vh.coursePrice.setText(ActUtil.getPrice(courseBean.getPrice()));
                 vh.courseName.setText(courseBean.getCourse_name());
                 vh.totallength.setText("共"+courseBean.getCount()+"节");
                 vh.totallength.setVisibility(View.VISIBLE);
                 vh.followNum.setText(courseBean.getFollow()+"人报名");
+                vh.itemView.setTag(courseBean);
+                vh.itemView.setOnClickListener(courseListener);
             }else if (i==4){
                 if(pos<getItemCount()-1) {
                     CommentsHolder vh = (CommentsHolder) holder;

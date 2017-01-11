@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 
+import com.education.online.act.BaseFrameAct;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -530,5 +532,4 @@ public final class SharedPreferencesUtil {
 		}
 		return mOtherContext;
 	}
-	
 }

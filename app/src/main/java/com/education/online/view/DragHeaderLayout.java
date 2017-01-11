@@ -35,9 +35,10 @@ public class DragHeaderLayout extends LinearLayout {
     private ImageView scaleImg;
     private float mTouchSlop;
     private ViewPager viewpager;
-    private View scaleLayout, contentLayout, topInfoLayout;
+    private View scaleLayout, contentLayout, topInfoLayout, blankLayout;
     private int imgHeight;
     private boolean setDetailImg=false;
+    private boolean clickOutside=false;
 
     public DragHeaderLayout(Context context) {
         super(context);
@@ -59,12 +60,31 @@ public class DragHeaderLayout extends LinearLayout {
         this.imgHeight=imgHeight;
         this.callback=callback;
         this.listStartY=listStartY;
+        setOnClickListener(listener);
     }
+
+    View.OnClickListener listener=new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.blankLayout:
+                    startTransYAnimation(currentY, dragOutDis);
+                    break;
+                case R.id.draglayout:
+                    if(clickOutside)
+                        startTransYAnimation(currentY, dragOutDis);
+                    clickOutside=false;
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         if(!init) {
+            blankLayout=findViewById(R.id.blankLayout);
+            blankLayout.setOnClickListener(listener);
             topInfoLayout=findViewById(R.id.topInfoLayout);
             scaleLayout=findViewById(R.id.scaleLayout);
             contentLayout=findViewById(R.id.contentLayout);
@@ -85,9 +105,11 @@ public class DragHeaderLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 lastMoveY= event.getRawY ();
+                clickOutside=true;   //点viewpager时候down传进去了，不会走这
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float moveY= event.getRawY ()-lastMoveY;
@@ -102,11 +124,13 @@ public class DragHeaderLayout extends LinearLayout {
                     scaleHeadView();
                     if (currentY <= -dragToListDis) {  //从小变大重合的时候
                         if(moveY<0) {
+                            blankLayout.setVisibility(View.GONE);
                             currentY = -dragToListDis;
                             listLayout.setTranslationY(0);
                             listLayout.setAlpha(1);
                         }
                     }else if(currentY >= 0&&moveY>0){  //由大变成初始状态的时候
+                        blankLayout.setVisibility(View.VISIBLE);
                         contentLayout.setTranslationX(0);
                         topInfoLayout.setTranslationY(0);
                         listLayout.setAlpha(0);
