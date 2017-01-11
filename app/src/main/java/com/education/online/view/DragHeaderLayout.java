@@ -39,6 +39,8 @@ public class DragHeaderLayout extends LinearLayout {
     private int imgHeight;
     private boolean setDetailImg=false;
     private boolean clickOutside=false;
+    private enum State { DIALOG, LIST, DRAG};
+    private State viewtype=State.DIALOG;
 
     public DragHeaderLayout(Context context) {
         super(context);
@@ -71,7 +73,7 @@ public class DragHeaderLayout extends LinearLayout {
                     startTransYAnimation(currentY, dragOutDis);
                     break;
                 case R.id.draglayout:
-                    if(clickOutside)
+                    if(clickOutside&&viewtype==State.DIALOG)
                         startTransYAnimation(currentY, dragOutDis);
                     clickOutside=false;
                     break;
@@ -118,6 +120,7 @@ public class DragHeaderLayout extends LinearLayout {
                 if(listLayout.getScrollY()!=0){
                     listLayout.scrollBy(0, -(int) moveY);
                 }else if(!(currentY==-dragToListDis&&moveY<0)) {
+                    viewtype=State.DRAG;
                     if(moveY>0&&currentY>=0)
                         moveY=moveY/3;
                     currentY = currentY + moveY;
@@ -148,6 +151,7 @@ public class DragHeaderLayout extends LinearLayout {
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                if(!clickOutside)
                 if(currentY<=-dragToListDis/2&&currentY>-dragToListDis){
                     startTransYAnimation(currentY, -dragToListDis);
                 }else if(currentY>-dragToListDis/2&&currentY<0){
@@ -156,6 +160,9 @@ public class DragHeaderLayout extends LinearLayout {
                     startTransYAnimation(currentY, 0);
                 }else if(currentY>dragOutDis/2)
                     startTransYAnimation(currentY, dragOutDis);
+                else{
+                    setState();
+                }
                 return true;
         }
         return false;
@@ -243,6 +250,7 @@ public class DragHeaderLayout extends LinearLayout {
                 if(currentY==dragOutDis){
                     callback.onFinish();
                 }
+                setState();
             }
 
             @Override
@@ -256,6 +264,14 @@ public class DragHeaderLayout extends LinearLayout {
             }
         });
         animator.start();
+    }
+
+    private void setState(){
+        if(currentY==-dragOutDis){
+            viewtype=State.LIST;
+        }else if(currentY==0){
+            viewtype=State.DIALOG;
+        }
     }
 
     private DragViewCallback callback;
