@@ -1,5 +1,6 @@
 package com.education.online.act;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,8 @@ import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
@@ -297,30 +300,47 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                         ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
                     }
                 } else if(courseDetailBean.getIs_buy().equals("1")){
-                    if(ConversationId.length()>0){
-                        ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback(){
-
-                            @Override
-                            public void done(AVIMException e) {
-                                if(e==null) {
-                                    Intent intent = new Intent(CourseMainPage.this, LiveCourseDetail.class);
-                                    intent.putExtra(CourseDetailBean.Name, courseDetailBean);
-                                    intent.putExtra("Name", courseDetailBean.getCourse_name());
-                                    intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
-                                    startActivity(intent);
-                                }else
-                                    ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
-                            }
-                        });
-                    }else {
-                        ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
-                    }
+                    if(SharedPreferencesUtil.getValue(CourseMainPage.this, Constant.APPID, true)){
+                        if (ActUtil.isWifi(CourseMainPage.this)) {
+                            studyLiveCourse();
+                        }else{
+                            DialogUtil.showConfirmDialog(CourseMainPage.this, "提示", "正在使用流量，是否继续？", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    studyLiveCourse();
+                                }
+                            });
+                        }
+                    }else
+                        studyLiveCourse();
                 }else {
                     Intent i = new Intent(CourseMainPage.this, SubmitOrder.class);
                     i.putExtra(CourseDetailBean.Name, courseDetailBean);
                     startActivity(i);
                 }
                 break;
+        }
+    }
+
+    private void studyLiveCourse(){
+        if (ConversationId.length() > 0) {
+            ChatManager.getInstance().joinCoversation(ConversationId, new AVIMConversationCallback() {
+
+                @Override
+                public void done(AVIMException e) {
+                    if (e == null) {
+                        Intent intent = new Intent(CourseMainPage.this, LiveCourseDetail.class);
+                        intent.putExtra(CourseDetailBean.Name, courseDetailBean);
+                        intent.putExtra("Name", courseDetailBean.getCourse_name());
+                        intent.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
+                        startActivity(intent);
+                    } else
+                        ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                }
+            });
+        } else {
+            ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
         }
     }
 

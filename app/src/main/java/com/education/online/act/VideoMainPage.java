@@ -1,6 +1,7 @@
 package com.education.online.act;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
@@ -34,6 +35,9 @@ import com.education.online.download.ThreadInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
+import com.education.online.util.ActUtil;
+import com.education.online.util.Constant;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.OpenfileUtil;
@@ -70,6 +74,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private RecyclerView recyclerList;
     private View lastSelectedview;
     private int lastSelectedPosition;
+    private boolean warnVideo=false;
+    private boolean warnDownload=false;
 //    private RelativeLayout videorelated;
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks/";
     private VideoView upVideoView;
@@ -365,9 +371,21 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
                         break;
                     case R.id.downloadlayout:
-                        downLoadDialog=new DownLoadDialog(VideoMainPage.this, VideoMainPage.this, files,
-                                ImageUtil.dip2px(VideoMainPage.this, 90)+recyclerList.getHeight());
-                        downLoadDialog.show();
+                        if(!warnDownload&&SharedPreferencesUtil.getValue(VideoMainPage.this, Constant.APPID, true)){
+                            if (ActUtil.isWifi(VideoMainPage.this)) {
+                                selectDownload();
+                            }else{
+                                DialogUtil.showConfirmDialog(VideoMainPage.this, "提示", "正在使用流量，是否继续？", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        warnDownload=true;
+                                        dialogInterface.dismiss();
+                                        selectDownload();
+                                    }
+                                });
+                            }
+                        }else
+                            selectDownload();
                         break;
                     case R.id.addorbuy:
                         //do sth;
@@ -409,22 +427,22 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             stopPlay();
                         } else {
 //                            MediaController mediaController=new MediaController(VideoMainPage.this);
-                            upVideoView.setMediaController(mediaController);
-                            if(files.get(openFilePos).getStatus()==3){
-                                path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
-                            }
-                            upVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    upVideoView.seekTo(0);
-                                    upVideoView.pause();
+                            if(!warnVideo&&SharedPreferencesUtil.getValue(VideoMainPage.this, Constant.APPID, true)){
+                                if (ActUtil.isWifi(VideoMainPage.this)) {
+                                    playVideo();
+                                }else{
+                                    DialogUtil.showConfirmDialog(VideoMainPage.this, "提示", "正在使用流量，是否继续？", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            warnVideo=true;
+                                            dialogInterface.dismiss();
+                                            playVideo();
+                                        }
+                                    });
                                 }
-                            });
-                            upVideoView.setVideoPath(path);
-                            //开始播放
-                            upVideoView.start();
-                            videoMask.setVisibility(View.GONE);
-                            video_play.setVisibility(View.GONE);
+                            }else
+                                playVideo();
+
                         }
                         break;
                     case R.id.expendBtn:
@@ -516,6 +534,31 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         detailsAdapter = new DetailsAdapter(this, courseDetailBean);
         recyclerList.setAdapter(detailsAdapter);
 
+    }
+
+    private void selectDownload() {
+        downLoadDialog=new DownLoadDialog(VideoMainPage.this, VideoMainPage.this, files,
+                ImageUtil.dip2px(VideoMainPage.this, 90)+recyclerList.getHeight());
+        downLoadDialog.show();
+    }
+
+    private void playVideo() {
+        upVideoView.setMediaController(mediaController);
+        if(files.get(openFilePos).getStatus()==3){
+            path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
+        }
+        upVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                upVideoView.seekTo(0);
+                upVideoView.pause();
+            }
+        });
+        upVideoView.setVideoPath(path);
+        //开始播放
+        upVideoView.start();
+        videoMask.setVisibility(View.GONE);
+        video_play.setVisibility(View.GONE);
     }
 
     private void stopPlay() {

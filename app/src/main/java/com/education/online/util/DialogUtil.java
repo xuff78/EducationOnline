@@ -36,4 +36,20 @@ public class DialogUtil {
         builder4.setItems(item, listener);
         builder4.create().show();
     }
+
+    public static void showConfirmDialog(Context con, String title, String content, DialogInterface.OnClickListener listener){
+        AlertDialog.Builder builder=new AlertDialog.Builder(con);  //先得到构造器
+        builder.setTitle(title); //设置标题
+        builder.setMessage(content); //设置内容
+//        builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
+        builder.setPositiveButton("确定", listener);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        //参数都设置完成了，创建并显示出来
+        builder.create().show();
+    }
 }
