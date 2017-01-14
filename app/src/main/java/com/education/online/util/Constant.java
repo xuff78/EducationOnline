@@ -28,6 +28,7 @@ public class Constant {
     public static final String UserPSW="UserPSW";
     public static final String UserCode="UserCode";
     public static final String UserIdentity="user_identity";
+    public static final String WIFIWarning="WIFIWarning";
     public static final String SavePath = Environment.getExternalStorageDirectory().getAbsolutePath()
             + "/EduOL";
     public static final String SubjectId="SubjectId";
