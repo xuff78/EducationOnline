@@ -1,6 +1,7 @@
 package com.education.online.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -33,8 +34,11 @@ import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
+import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.view.ExtendedViewPager;
+import com.education.online.view.circularbtn.MorphingAnimation;
+import com.education.online.view.circularbtn.MorphingButton;
 
 import org.json.JSONException;
 
@@ -60,12 +64,16 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private boolean onloading=false, complete=false;
     private LinearLayoutManager layoutManager;
     private View headerLayout;
+    private MorphingButton.Params paramStart, paramEnd;
+    private MorphingButton toolbarIconRight;
+    private boolean btnRound=true;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
+                if(getActivity()!=null)
                 if (method.equals(Method.getHomePage)) {
                     jsonStr = jsonData;
                     info = JSON.parseObject(jsonData, HomePageInfo.class);
@@ -144,12 +152,41 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_blue_dark,
                 android.R.color.holo_green_light);
 
-        v.findViewById(R.id.toolbarIconRight).setOnClickListener(new View.OnClickListener() {
+        toolbarIconRight= (MorphingButton) v.findViewById(R.id.toolbarIconRight);
+        toolbarIconRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActUtil.startAnimActivity(getActivity(), new Intent(getActivity(), SearchAct.class));
             }
         });
+        paramStart= MorphingButton.Params.create()
+                .strokeColor(getResources().getColor(R.color.light_gray))
+                .strokeWidth(2)
+                .color(Color.WHITE)
+                .colorPressed(Color.WHITE)
+                .duration(300)
+                .height(ImageUtil.dip2px(getActivity(),32))
+                .width(ImageUtil.dip2px(getActivity(),32))
+                .cornerRadius(ImageUtil.dip2px(getActivity(), 16))
+                .icon(R.mipmap.icon_query);
+        int width= ScreenUtil.getWidth(getActivity())-ImageUtil.dip2px(getActivity(),20);
+        paramEnd= MorphingButton.Params.create()
+                .strokeColor(getResources().getColor(R.color.light_gray))
+                .strokeWidth(2)
+                .color(Color.WHITE)
+                .colorPressed(Color.WHITE)
+                .duration(300)
+                .height(ImageUtil.dip2px(getActivity(),32))
+                .width(width)
+                .cornerRadius(ImageUtil.dip2px(getActivity(), 16))
+                .animationListener(new MorphingAnimation.Listener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        toolbarIconRight.setPadding(0,10,0,10);
+                        toolbarIconRight.setText("点击搜索关键字");
+                    }
+                });
+        toolbarIconRight.morph(paramStart);
 
         recyclerList=(RecyclerView)v.findViewById(R.id.recyclerList);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -170,7 +207,18 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             listScrollY+=dy;
             float alpha=Math.abs(Float.valueOf(listScrollY))/firstItemHeight;
             headerLayout.setAlpha(alpha);
-
+            if(alpha>1){
+                if(btnRound) {
+                    toolbarIconRight.morph(paramEnd);
+                    btnRound=false;
+                }
+            }else if(alpha==0){
+                if(!btnRound) {
+                    toolbarIconRight.morph(paramStart);
+                    toolbarIconRight.setText("");
+                    btnRound=true;
+                }
+            }
 
             super.onScrolled(recyclerView, dx, dy);
             lastVisibleItem = layoutManager.findLastVisibleItemPosition();

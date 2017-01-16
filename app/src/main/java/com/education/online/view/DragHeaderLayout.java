@@ -39,7 +39,7 @@ public class DragHeaderLayout extends LinearLayout {
     private int imgHeight;
     private boolean setDetailImg=false;
     private boolean clickOutside=false;
-    private enum State { DIALOG, LIST, DRAG};
+    private enum State { DIALOG, LIST, DRAG, AUTOSCROLL};
     private State viewtype=State.DIALOG;
 
     public DragHeaderLayout(Context context) {
@@ -112,8 +112,10 @@ public class DragHeaderLayout extends LinearLayout {
             case MotionEvent.ACTION_DOWN:
                 lastMoveY= event.getRawY ();
                 clickOutside=true;   //点viewpager时候down传进去了，不会走这
-                return true;
+                break;
             case MotionEvent.ACTION_MOVE:
+                if(clickOutside)
+                    break;
                 float moveY= event.getRawY ()-lastMoveY;
                 lastMoveY= event.getRawY ();
 //                Log.i("DragInfo", "moveY: " + moveY);
@@ -143,6 +145,7 @@ public class DragHeaderLayout extends LinearLayout {
                         setAlpha(1);
                         callback.hideTopImage();
                     }
+
                     setTranslationY(currentY);
 //                    Log.i("DragInfo", "currentY: " + currentY);
                     return true;
@@ -151,7 +154,8 @@ public class DragHeaderLayout extends LinearLayout {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                if(!clickOutside)
+                if(clickOutside&&viewtype==State.DIALOG)
+                    break;
                 if(currentY<=-dragToListDis/2&&currentY>-dragToListDis){
                     startTransYAnimation(currentY, -dragToListDis);
                 }else if(currentY>-dragToListDis/2&&currentY<0){
@@ -165,7 +169,7 @@ public class DragHeaderLayout extends LinearLayout {
                 }
                 return true;
         }
-        return false;
+        return super.onTouchEvent(event);
     }
 
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -227,6 +231,7 @@ public class DragHeaderLayout extends LinearLayout {
 
     public void startTransYAnimation(float start, float end) {
         // 开启移动动画
+        viewtype=State.AUTOSCROLL;
         ValueAnimator animator=new ValueAnimator().ofFloat(start, end).setDuration(300);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
