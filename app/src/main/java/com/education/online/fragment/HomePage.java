@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -39,6 +40,8 @@ import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.view.ExtendedViewPager;
 import com.education.online.view.circularbtn.MorphingAnimation;
 import com.education.online.view.circularbtn.MorphingButton;
+import com.education.online.view.refreshlayout.MaterialRefreshLayout;
+import com.education.online.view.refreshlayout.MaterialRefreshListener;
 
 import org.json.JSONException;
 
@@ -58,7 +61,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private HomePageInfo info;
     private int firstItemHeight;
     private int listScrollY=0;
-    private SwipeRefreshLayout mSwipeLayout;
+    private MaterialRefreshLayout mSwipeLayout;
     private int page=1;
     private ArrayList<CourseBean> courses=new ArrayList<>();
     private boolean onloading=false, complete=false;
@@ -79,7 +82,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                     info = JSON.parseObject(jsonData, HomePageInfo.class);
                     adapter = new MainAdapter(getActivity(), info, courses);
                     recyclerList.setAdapter(adapter);
-                    mSwipeLayout.setRefreshing(false);
+                    mSwipeLayout.finishRefresh();
                     page=1;
                     listScrollY=0;
                     courses.clear();
@@ -105,7 +108,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             public void onFailure(String method, JsonMessage jsonMessage) {
                 super.onFailure(method, jsonMessage);
                 if (method.equals(Method.getHomePage))
-                    mSwipeLayout.setRefreshing(false);
+                    mSwipeLayout.finishRefresh();
                 else if (method.equals(Method.getRecommentCourses)) {
                     onloading=false;
                     adapter.setLoadingHint("加载失败");
@@ -116,7 +119,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             public void onHTTPException(String method, String jsonMessage) {
                 super.onHTTPException(method, jsonMessage);
                 if (method.equals(Method.getHomePage))
-                    mSwipeLayout.setRefreshing(false);
+                    mSwipeLayout.finishRefresh();
                 else if (method.equals(Method.getRecommentCourses)) {
                     onloading=false;
                     adapter.setLoadingHint("加载失败");
@@ -135,7 +138,6 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
         if(jsonStr==null) {
             initHandler();
             handler.getHomepage();
-            mSwipeLayout.setRefreshing(true);
         }else{
             recyclerList.setAdapter(adapter);
 //            mViewPager.setAdapter(new ActivityTopGalleryAdapter(getActivity(), info.getAdverts_info()));
@@ -146,11 +148,24 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
 
     private void initView(View v) {
 
-        mSwipeLayout = (SwipeRefreshLayout)v.findViewById(R.id.id_swipe_ly);
+        mSwipeLayout = (MaterialRefreshLayout)v.findViewById(R.id.id_swipe_ly);
+        mSwipeLayout.setSunStyle(false);
+        mSwipeLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
+                handler.getHomepage();
+            }
 
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_blue_dark,
-                android.R.color.holo_green_light);
+            @Override
+            public void onfinish() {
+
+            }
+
+
+        });
+//        mSwipeLayout.setOnRefreshListener(this);
+//        mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_blue_dark,
+//                android.R.color.holo_green_light);
 
         toolbarIconRight= (MorphingButton) v.findViewById(R.id.toolbarIconRight);
         toolbarIconRight.setOnClickListener(new View.OnClickListener() {

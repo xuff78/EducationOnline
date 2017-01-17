@@ -9,6 +9,11 @@
     <color name="darkred">#CE021B</color><!-- 深红色-->
     <color name="black_p50">#7f000000</color>
 
+    <color name="material_red">#ffF44336</color>
+    <color name="material_green">#ff4CAF50</color>
+    <color name="material_blue">#ff03A9F4</color>
+    <color name="material_yellow">#ffFFEB3B</color>
+
 
     <color name="mb_gray">#ffdedede</color>
     <color name="mb_blue">#ff0099cc</color>

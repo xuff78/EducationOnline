@@ -17,6 +17,14 @@
     <string name="faliure_phonechanged">手机号码已变更，请重新获取验证码！</string>
     <string name="enter_valid_phone">请输入正确的手机号</string>
 
+
+    <integer-array name="material_colors">
+        <item>@color/material_red</item>
+        <item>@color/material_green</item>
+        <item>@color/material_blue</item>
+        <item>@color/material_yellow</item>
+    </integer-array>
+
     <string name="smssdk_back">返回 </string>
     <string name="smssdk_regist">使用手机号码注册</string>
     <string name="smssdk_make_sure_country_mobile">请确认你的国家或地区并输入手机号码</string>

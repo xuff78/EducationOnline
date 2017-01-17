@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -16,6 +18,8 @@ import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.inter.CourseUpdate;
 import com.education.online.inter.LoadMoreScrollerListener;
+import com.education.online.view.recylistanima.animators.LandingAnimator;
+import com.education.online.view.recylistanima.animators.SlideInUpAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +31,7 @@ import java.util.List;
 public class OnlineCoursePage extends CourseUpdate{
 
     private RecyclerView OnlineCoursePageRecycleList;
-    private OnlineCourseAdapter adapter;
-    private MyOnlineCourseAdapter myOnlineCourseAdapter;
+    private RecyclerView.Adapter adapter;
 
     public void setType(int type) {
         this.type = type;
@@ -48,30 +51,35 @@ public class OnlineCoursePage extends CourseUpdate{
     }
 
     public void addCourses(List<CourseBean> courses, boolean isNew){
-        if(isNew)
+        if(isNew) {
             onlineCourseBeanArrayList.clear();
-        onlineCourseBeanArrayList.addAll(courses);
-        if(type==0){
-            myOnlineCourseAdapter.notifyDataSetChanged();
-        }else if (type==1){
-            adapter.notifyDataSetChanged();
         }
+        int startPos=onlineCourseBeanArrayList.size();
+        onlineCourseBeanArrayList.addAll(courses);
+        if(!isNew)
+            adapter.notifyItemRangeChanged(startPos, courses.size());
+        else
+            adapter.notifyDataSetChanged();
     }
 
     private void initView(View v) {
 
         OnlineCoursePageRecycleList = (RecyclerView) v.findViewById(R.id.OnlineCoursePageRecycleList);
+        OnlineCoursePageRecycleList.setItemAnimator(new SlideInUpAnimator(new DecelerateInterpolator(1f)));
+        OnlineCoursePageRecycleList.getItemAnimator().setAddDuration(500);
+        OnlineCoursePageRecycleList.getItemAnimator().setRemoveDuration(500);
+        OnlineCoursePageRecycleList.getItemAnimator().setMoveDuration(500);
+        OnlineCoursePageRecycleList.getItemAnimator().setChangeDuration(500);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         OnlineCoursePageRecycleList.setLayoutManager(layoutManager);
         if(type==0){
-            myOnlineCourseAdapter = new MyOnlineCourseAdapter(getActivity(),onlineCourseBeanArrayList);
-            OnlineCoursePageRecycleList.setAdapter(myOnlineCourseAdapter);
+            adapter = new MyOnlineCourseAdapter(getActivity(),onlineCourseBeanArrayList);
         }
         else if(type==1) {
             adapter = new OnlineCourseAdapter(getActivity(), onlineCourseBeanArrayList);
-            OnlineCoursePageRecycleList.setAdapter(adapter);
         }
+        OnlineCoursePageRecycleList.setAdapter(adapter);
 
         OnlineCoursePageRecycleList.addOnScrollListener(new LoadMoreScrollerListener(layoutManager) {
             @Override

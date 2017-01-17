@@ -26,6 +26,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/22.
@@ -33,12 +34,13 @@ import java.util.Calendar;
 public class LiveTelecast extends BaseFrameAct {
 
     private TextView Today;
-    private CourseUpdate onlineCourse;
     private TextView Day2, Day3, Day4, Day5, Day6, Day7;
     private HttpHandler handler;
     private ArrayList<TextView> txts=new ArrayList<>();
     private boolean siNew=false;
-    private int pos=0;
+    private int pos=1;
+    private CourseUpdate onlineCourse;
+    private CourseUpdate[] lists=new CourseUpdate[7];
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -48,7 +50,8 @@ public class LiveTelecast extends BaseFrameAct {
                 if(method.equals(Method.getlistByDate)){
                     ArrayList<CourseBean> items= JSON.parseObject(JsonUtil.getString(jsonData, "course_info"),
                             new TypeReference<ArrayList<CourseBean>>(){});
-                    onlineCourse.addCourses(items, siNew);
+
+                    onlineCourse.addCourses(items, false);
                 }
             }
         });
@@ -63,12 +66,10 @@ public class LiveTelecast extends BaseFrameAct {
         initView();
         initHandler();
 
-        handler.getlistByDate(ActUtil.getDate());
+        Today.callOnClick();
     }
 
     private void initView() {
-        onlineCourse=new OnlineCoursePage();
-        openFragment(R.id.fragment_list, onlineCourse);
 
         Today = (TextView) findViewById(R.id.Today);
         txts.add(Today);
@@ -105,7 +106,16 @@ public class LiveTelecast extends BaseFrameAct {
                 pos = pressPos;
                 siNew = true;
                 txts.get(pos).setTextColor(getResources().getColor(R.color.normal_blue));
-                handler.getlistByDate(ActUtil.getChangedDate(Calendar.DAY_OF_YEAR, pos));
+
+                onlineCourse=lists[pos];
+                if(onlineCourse!=null) {
+                    openFragment(R.id.fragment_list, onlineCourse);
+                }else {
+                    lists[pos]=new OnlineCoursePage();
+                    onlineCourse=lists[pos];
+                    openFragment(R.id.fragment_list, onlineCourse);
+                    handler.getlistByDate(ActUtil.getChangedDate(Calendar.DAY_OF_YEAR, pos));
+                }
             }
         }
     };
