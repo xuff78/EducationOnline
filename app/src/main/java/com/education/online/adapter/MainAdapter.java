@@ -2,6 +2,7 @@ package com.education.online.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -38,8 +39,12 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
+import com.education.online.view.LoadingImageView;
 import com.education.online.view.MenuAnimationController;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -348,6 +353,19 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LinearLayout itemlayout1, itemlayout2;
         TextView subjectName;
         int pos = 0;
+        DisplayImageOptions options=ImageUtil.getImageOption(R.color.white);
+        SimpleImageLoadingListener imageLoadingListener=new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                ((ImageView)view).setImageBitmap(loadedImage);
+            }
+        };
+        ImageLoadingProgressListener loadingProgressListener=new ImageLoadingProgressListener() {
+            @Override
+            public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                ((LoadingImageView)view).setProgress(current, total);
+            }
+        };
 
         public CourseLayoutHolder(View v, int pos) {
             super(v);
@@ -365,7 +383,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         addLayout=itemlayout2;
                     CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     LiveCourse live = liveCourses.get(i);
-                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, options,
+                            imageLoadingListener, loadingProgressListener);
                     ivh.titleTxt.setText(live.getCourse_name());
                     ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
                     ivh.timeTxt.setText(live.getCourseware_date());
@@ -379,7 +398,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         addLayout=itemlayout2;
                     CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     VideoCourse live = liveCourses.get(i);
-                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, options,
+                            imageLoadingListener, loadingProgressListener);
                     ivh.titleTxt.setText(live.getCourse_name());
                     ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
                     ivh.timeTxt.setVisibility(View.GONE);
@@ -392,8 +412,9 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     if(i>1)
                         addLayout=itemlayout2;
                     CourseViewHolder ivh=getCourseHolder(addLayout, i);
-                    WareCourse live = liveCourses.get(0);
-                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1);
+                    WareCourse live = liveCourses.get(i);
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, options,
+                            imageLoadingListener, loadingProgressListener);
                     if(live.getCourse_img().length()==0)
                         ivh.courseImg1.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     ivh.titleTxt.setText(live.getCourse_name());

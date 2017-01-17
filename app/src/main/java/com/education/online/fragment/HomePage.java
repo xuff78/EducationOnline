@@ -198,7 +198,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                     @Override
                     public void onAnimationEnd() {
                         toolbarIconRight.setPadding(0,10,0,10);
-                        toolbarIconRight.setText("点击搜索关键字");
+                        toolbarIconRight.setText("点击搜索课程");
                     }
                 });
         toolbarIconRight.morph(paramStart);

@@ -167,8 +167,8 @@ public class MorphingButton extends Button {
 
         Resources resources = getResources();
         int cornerRadius = (int) resources.getDimension(R.dimen.mb_corner_radius_2);
-        int blue = resources.getColor(R.color.dark_orange);
-        int blueDark = resources.getColor(R.color.dark_orange);
+        int blue = resources.getColor(R.color.whitesmoke);
+        int blueDark = resources.getColor(R.color.whitesmoke);
 
         StateListDrawable background = new StateListDrawable();
         mDrawableNormal = createDrawable(blue, cornerRadius, 0);

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingBottom="20dp">
 
-    <ImageView
+    <com.education.online.view.LoadingImageView
         android:id="@+id/courseImg"
         android:layout_width="match_parent"
         android:layout_height="245dp"

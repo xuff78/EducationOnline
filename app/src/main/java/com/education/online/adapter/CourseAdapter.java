@@ -3,7 +3,10 @@ package com.education.online.adapter;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -27,8 +30,11 @@ import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.view.LoadingImageView;
 import com.education.online.view.RatingBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,9 +118,19 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 fvh.footerHint.setText("暂无评价");
             }
         } else if (pos == 0) {
-            CourseHolder vh = (CourseHolder) holder;
+            final CourseHolder vh = (CourseHolder) holder;
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg,
-                    ImageUtil.getImageOption(0));
+                    ImageUtil.getImageOption(R.color.white), new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            vh.courseImg.setImageBitmap(loadedImage);
+                        }
+                    }, new ImageLoadingProgressListener() {
+                        @Override
+                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                            ((LoadingImageView)vh.courseImg).setProgress(current, total);
+                        }
+                    });
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
             vh.courseoldprice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);

@@ -24,6 +24,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import io.vov.vitamio.LibsChecker;
 import retrofit2.Call;
@@ -47,6 +48,9 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
 
         _setHeaderGone();
         initView();
+
+//        ImageLoader.getInstance().clearDiskCache();
+//        ImageLoader.getInstance().clearMemoryCache();
 
         SharedPreferencesUtil.setString(this, Constant.isLogin, SharedPreferencesUtil.FAILURE_STRING);
         ActUtil.initData(this);
