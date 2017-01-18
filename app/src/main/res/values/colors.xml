@@ -26,7 +26,7 @@
     <color name="headerbg">#364e5e</color>
     <color name="hard_blue">#0173b1</color>
     <color name="light_trans_white">#22ffffff</color><!--高亮灰 -->
-    <color name="trans_white">#88ffffff</color><!--高亮灰 -->
+    <color name="trans_white">#aaffffff</color><!--高亮灰 -->
     <color name="light_trans_black">#22000000</color><!--高亮灰 -->
     <color name="hard_trans_black">#66000000</color><!--高亮灰 -->
     <color name="comment_gray">#D6D6D6</color><!---评价灰 -->

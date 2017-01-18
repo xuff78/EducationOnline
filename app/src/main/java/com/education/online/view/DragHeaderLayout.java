@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.education.online.R;
+import com.education.online.util.LogUtil;
 
 /**
  * Created by 可爱的蘑菇 on 2017/1/7.
@@ -29,7 +31,7 @@ public class DragHeaderLayout extends LinearLayout {
     private int topHeadHeight, topHeadWidth;
     private ScrollView listLayout;
     private boolean init=false;
-    private float lastMoveY=0;
+    private float lastMoveY=0, pressDown=0;
     private float currentY=0;
     private float expandScaleX,expandScaleY, expandImageScaleY;
     private ImageView scaleImg;
@@ -41,6 +43,7 @@ public class DragHeaderLayout extends LinearLayout {
     private boolean clickOutside=false;
     private enum State { DIALOG, LIST, DRAG, AUTOSCROLL};
     private State viewtype=State.DIALOG;
+    private GestureDetector detector;
 
     public DragHeaderLayout(Context context) {
         super(context);
@@ -62,8 +65,43 @@ public class DragHeaderLayout extends LinearLayout {
         this.imgHeight=imgHeight;
         this.callback=callback;
         this.listStartY=listStartY;
-        setOnClickListener(listener);
+        detector=new GestureDetector(getContext(), onGestureListener);
     }
+
+    private GestureDetector.OnGestureListener onGestureListener=new GestureDetector.OnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent motionEvent) {
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent motionEvent) {
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent motionEvent) {
+            if(clickOutside&&viewtype==State.DIALOG)
+                startTransYAnimation(currentY, dragOutDis);
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            LogUtil.d("Srcoll", "onScrollY: " + v1);
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent motionEvent) {
+
+        }
+
+        @Override
+        public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            Log.d("Srcoll", "onFlingY: " + v1);
+            return false;
+        }
+    };
 
     View.OnClickListener listener=new OnClickListener() {
         @Override
@@ -71,11 +109,6 @@ public class DragHeaderLayout extends LinearLayout {
             switch (view.getId()){
                 case R.id.blankLayout:
                     startTransYAnimation(currentY, dragOutDis);
-                    break;
-                case R.id.draglayout:
-                    if(clickOutside&&viewtype==State.DIALOG)
-                        startTransYAnimation(currentY, dragOutDis);
-                    clickOutside=false;
                     break;
             }
         }
@@ -107,21 +140,21 @@ public class DragHeaderLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        super.onTouchEvent(event);
+        detector.onTouchEvent(event);
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 lastMoveY= event.getRawY ();
                 clickOutside=true;   //点viewpager时候down传进去了，不会走这
-                break;
+//                if(viewtype==State.DIALOG)
+                    return true;
+//                break;
             case MotionEvent.ACTION_MOVE:
-                if(clickOutside)
+                if(clickOutside&&viewtype==State.DIALOG)
                     break;
                 float moveY= event.getRawY ()-lastMoveY;
                 lastMoveY= event.getRawY ();
 //                Log.i("DragInfo", "moveY: " + moveY);
-                if(listLayout.getScrollY()!=0){
-                    listLayout.scrollBy(0, -(int) moveY);
-                }else if(!(currentY==-dragToListDis&&moveY<0)) {
+                if((listLayout.getScrollY()==0)&&(currentY<-dragToListDis||!(currentY==-dragToListDis&&moveY<0))){
                     viewtype=State.DRAG;
                     if(moveY>0&&currentY>=0)
                         moveY=moveY/3;
@@ -148,45 +181,43 @@ public class DragHeaderLayout extends LinearLayout {
 
                     setTranslationY(currentY);
 //                    Log.i("DragInfo", "currentY: " + currentY);
-                    return true;
                 }else{
-                    listLayout.scrollBy(0, -(int) moveY);
+//                    if(viewtype==State.DRAG)
+                        listLayout.scrollBy(0, -(int) moveY);
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                if(clickOutside&&viewtype==State.DIALOG)
-                    break;
-                if(currentY<=-dragToListDis/2&&currentY>-dragToListDis){
-                    startTransYAnimation(currentY, -dragToListDis);
-                }else if(currentY>-dragToListDis/2&&currentY<0){
-                    startTransYAnimation(currentY, 0);
-                }else if(currentY<dragOutDis/2&&currentY>0){
-                    startTransYAnimation(currentY, 0);
-                }else if(currentY>dragOutDis/2)
-                    startTransYAnimation(currentY, dragOutDis);
-                else{
-                    setState();
+                if(viewtype!=State.LIST){
+                    if (currentY <= -dragToListDis / 2 && currentY > -dragToListDis) {
+                        startTransYAnimation(currentY, -dragToListDis);
+                    } else if (currentY > -dragToListDis / 2 && currentY < 0) {
+                        startTransYAnimation(currentY, 0);
+                    } else if (currentY < dragOutDis / 2 && currentY > 0) {
+                        startTransYAnimation(currentY, 0);
+                    } else if (currentY > dragOutDis / 2)
+                        startTransYAnimation(currentY, dragOutDis);
+                    else {
+                        setState();
+                    }
                 }
-                return true;
         }
         return super.onTouchEvent(event);
     }
 
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-
-        int action = ev.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                lastMoveY = (int) ev.getRawY();
-
-                break;
-            case MotionEvent.ACTION_MOVE:
-                int moveY = (int) ev.getRawY();
-                if (Math.abs(moveY - lastMoveY) > mTouchSlop) {
-
-                    return true;
-                }
-        }
+            int action = ev.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    pressDown = (int) ev.getRawY();
+                    lastMoveY = pressDown;
+                    clickOutside = false;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int moveY = (int) ev.getRawY();
+                    if (Math.abs(moveY - pressDown) > mTouchSlop||viewtype!=State.DIALOG) {
+                        return true;
+                    }
+            }
         return super.onInterceptTouchEvent(ev);
     }
 
