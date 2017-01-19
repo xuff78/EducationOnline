@@ -29,7 +29,7 @@ public class DragHeaderLayout extends LinearLayout {
     private int listStartY=0;  //list层初始位置
     private int width=0, height=0, top=0; //滑动的view距离顶部初始位置
     private int topHeadHeight, topHeadWidth;
-    private ScrollView listLayout;
+    private LScrollView listLayout;
     private boolean init=false;
     private float lastMoveY=0, pressDown=0;
     private float currentY=0;
@@ -58,7 +58,7 @@ public class DragHeaderLayout extends LinearLayout {
     }
 
     //设置页面信息
-    public void setListLayoutInfo(ScrollView listLayout, int listStartY, int topHeadHeight, int topHeadWidth, int imgHeight, DragViewCallback callback){
+    public void setListLayoutInfo(LScrollView listLayout, int listStartY, int topHeadHeight, int topHeadWidth, int imgHeight, DragViewCallback callback){
         this.listLayout=listLayout;
         this.topHeadHeight=topHeadHeight;
         this.topHeadWidth=topHeadWidth;
@@ -66,6 +66,19 @@ public class DragHeaderLayout extends LinearLayout {
         this.callback=callback;
         this.listStartY=listStartY;
         detector=new GestureDetector(getContext(), onGestureListener);
+        listLayout.setScrollViewListener(new LScrollView.ScrollViewListener() {
+            @Override
+            public void onScrollChanged(ScrollView scrollView, int x, int y, int oldx, int oldy) {
+                currentY=-dragToListDis-y;
+                setTranslationY(currentY);
+//                if(y==0) {
+//                    setAlpha(1);
+//                    DragHeaderLayout.this.callback.hideTopImage();
+//                    LogUtil.i("Scroll", "从最大开始变小的时候");
+//                }
+//                LogUtil.i("Scroll", "scrollView Y:  "+y);
+            }
+        });
     }
 
     private GestureDetector.OnGestureListener onGestureListener=new GestureDetector.OnGestureListener() {
@@ -87,7 +100,7 @@ public class DragHeaderLayout extends LinearLayout {
 
         @Override
         public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            LogUtil.d("Srcoll", "onScrollY: " + v1);
+//            LogUtil.d("Srcoll", "onScrollY: " + v1);
             return false;
         }
 
@@ -98,7 +111,7 @@ public class DragHeaderLayout extends LinearLayout {
 
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            Log.d("Srcoll", "onFlingY: " + v1);
+//            Log.d("Srcoll", "onFlingY: " + v1);
             return false;
         }
     };
@@ -134,7 +147,7 @@ public class DragHeaderLayout extends LinearLayout {
             expandImageScaleY=(imgHeight-scaleImg.getHeight())/(float)scaleImg.getHeight();
             expandScaleY=(topHeadHeight-height)/(float)height;
             expandScaleX=(topHeadWidth-width)/(float)width;
-            Log.i("DragInfo", "width: " + width + "  height: " + height + "  top: " + top + "  dragToListDis: " + dragToListDis);
+//            Log.i("DragInfo", "width: " + width + "  height: " + height + "  top: " + top + "  dragToListDis: " + dragToListDis);
         }
     }
 
@@ -151,40 +164,39 @@ public class DragHeaderLayout extends LinearLayout {
             case MotionEvent.ACTION_MOVE:
                 if(clickOutside&&viewtype==State.DIALOG)
                     break;
+//                currentY+=listLayout.getScrollY();
+                LogUtil.d("Srcoll", "drag");
+                viewtype=State.DRAG;
                 float moveY= event.getRawY ()-lastMoveY;
                 lastMoveY= event.getRawY ();
-//                Log.i("DragInfo", "moveY: " + moveY);
-                if((listLayout.getScrollY()==0)&&(currentY<-dragToListDis||!(currentY==-dragToListDis&&moveY<0))){
-                    viewtype=State.DRAG;
-                    if(moveY>0&&currentY>=0)
-                        moveY=moveY/3;
-                    currentY = currentY + moveY;
-                    scaleHeadView();
-                    if (currentY <= -dragToListDis) {  //从小变大重合的时候
-                        if(moveY<0) {
-                            blankLayout.setVisibility(View.GONE);
-                            currentY = -dragToListDis;
-                            listLayout.setTranslationY(0);
-                            listLayout.setAlpha(1);
-                        }
-                    }else if(currentY >= 0&&moveY>0){  //由大变成初始状态的时候
-                        blankLayout.setVisibility(View.VISIBLE);
-                        contentLayout.setTranslationX(0);
-                        topInfoLayout.setTranslationY(0);
-                        listLayout.setAlpha(0);
-                        scaleLayout.setScaleX(1);
-                        scaleLayout.setScaleY(1);
-                    }else if(moveY>0&&-dragToListDis==currentY-moveY){  //从最大开始变小的时候
-                        setAlpha(1);
-                        callback.hideTopImage();
-                    }
-
-                    setTranslationY(currentY);
-//                    Log.i("DragInfo", "currentY: " + currentY);
-                }else{
-//                    if(viewtype==State.DRAG)
-                        listLayout.scrollBy(0, -(int) moveY);
+                float lastY = currentY;
+                if(moveY>0&&currentY>=0)
+                    moveY=moveY/3;
+                currentY = currentY + moveY;
+                scaleHeadView();
+                if (lastY>-dragToListDis&&currentY <= -dragToListDis&&moveY<0) {  //从小变大重合的时候
+                    blankLayout.setVisibility(View.GONE);
+                    currentY=-dragToListDis;
+                    listLayout.setTranslationY(0);
+                    listLayout.setAlpha(1);
+                    LogUtil.i("Scroll", "从小变大重合的时候");
+                }else if(lastY<0&&currentY >= 0&&moveY>0){  //由大变成初始状态的时候
+                    blankLayout.setVisibility(View.VISIBLE);
+                    contentLayout.setTranslationX(0);
+                    topInfoLayout.setTranslationY(0);
+                    listLayout.setAlpha(0);
+                    scaleLayout.setScaleX(1);
+                    scaleLayout.setScaleY(1);
+                    LogUtil.i("Scroll", "由大变成初始状态的时候");
+                }else if(moveY>0&&-dragToListDis<=currentY&&lastY<=-dragToListDis){  //从最大开始变小的时候
+                    setAlpha(1);
+                    callback.hideTopImage();
+                    LogUtil.i("Scroll", "从最大开始变小的时候");
                 }
+
+                setTranslationY(currentY);
+                if(lastY<-dragToListDis||(lastY==-dragToListDis&&moveY<0))
+                    listLayout.scrollBy(0, -(int) moveY);
                 break;
             case MotionEvent.ACTION_UP:
                 if(viewtype!=State.LIST){
@@ -199,7 +211,8 @@ public class DragHeaderLayout extends LinearLayout {
                     else {
                         setState();
                     }
-                }
+                }else
+                    setState();
         }
         return super.onTouchEvent(event);
     }
@@ -234,6 +247,7 @@ public class DragHeaderLayout extends LinearLayout {
                     setDetailImg = true;
                 }
                 callback.showTopImage(bmp);
+                LogUtil.i("scroll", "show menu!!");
             }
             setAlpha(0);
         }else if(currentY<0){
@@ -243,7 +257,7 @@ public class DragHeaderLayout extends LinearLayout {
             contentLayout.setTranslationX((scaleLayout.getWidth()-scaleX*scaleLayout.getWidth())/2);
             topInfoLayout.setTranslationY((scaleLayout.getHeight()-scaleY*scaleLayout.getHeight())+2);
 
-            Log.i("DragInfo", "scaleX: " + scaleX);
+            Log.i("DragInfo", "scaleX: " + scaleX+"    currentY: "+currentY);
             scaleLayout.setPivotY(scaleLayout.getHeight());
             scaleLayout.setScaleX(scaleX);
             scaleLayout.setScaleY(scaleY);
@@ -303,7 +317,7 @@ public class DragHeaderLayout extends LinearLayout {
     }
 
     private void setState(){
-        if(currentY==-dragOutDis){
+        if(currentY<=-dragOutDis){
             viewtype=State.LIST;
         }else if(currentY==0){
             viewtype=State.DIALOG;

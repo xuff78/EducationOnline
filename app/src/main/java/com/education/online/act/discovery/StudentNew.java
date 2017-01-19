@@ -34,6 +34,7 @@ import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.DragHeaderLayout;
+import com.education.online.view.LScrollView;
 import com.education.online.view.QrcodeDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -54,7 +55,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
     private ImageView starIcon;
 
     private DragHeaderLayout draglayout;
-    private ScrollView mScrollView;
+    private LScrollView mScrollView;
     private ViewPager mViewPager;
     private ImageView topbg;
     private RelativeLayout topLayout;
@@ -115,7 +116,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         mViewPager.setLayoutParams(new LinearLayout.LayoutParams((int)(rate*imgheight),ImageUtil.dip2px(this, 380)));
         mViewPager.setAdapter(new Adapter());
 
-        mScrollView= (ScrollView) findViewById(R.id.mScrollView);
+        mScrollView= (LScrollView) findViewById(R.id.mScrollView);
         draglayout= (DragHeaderLayout) findViewById(R.id.draglayout);
         int scrollOffset=ImageUtil.dip2px(this, 100);
         mScrollView.setAlpha(0);
@@ -128,8 +129,10 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
                     public void showTopImage(Bitmap bmp) {
                         if(bmp!=null)
                             topbg.setImageBitmap(bmp);
-                        topLayout.setVisibility(View.VISIBLE);
-                        startTransYAnimation(bottomLayoutHeight, 0);
+                        if(!topLayout.isShown()) {
+                            topLayout.setVisibility(View.VISIBLE);
+                            startTransYAnimation(bottomLayoutHeight, 0);
+                        }
                     }
 
                     @Override
