@@ -67,7 +67,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, ImageView child, View dependency) {
-        return dependency instanceof Toolbar;
+        return dependency.getId()==R.id.tool_bar;
     }
 
     @Override

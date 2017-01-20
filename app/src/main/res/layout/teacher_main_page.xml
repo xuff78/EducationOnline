@@ -397,7 +397,7 @@
         </android.support.v7.widget.Toolbar>
         <ImageView
             android:id="@+id/teacherpotrait"
-            android:transitionName="headIcon"
+            android:transitionName="headIconNotAvailable"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
