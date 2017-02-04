@@ -2,35 +2,21 @@ package com.education.online.act;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
-import android.widget.Button;
 
 import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
-import com.education.online.http.CallBack;
-import com.education.online.http.HttpHandler;
-import com.education.online.retrofit.IHandler;
-import com.education.online.retrofit.RCallBack;
-import com.education.online.retrofit.RetrofitAPIManager;
-import com.education.online.retrofit.RetrofitHandler;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
-import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import io.vov.vitamio.LibsChecker;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by Administrator on 2016/8/11.

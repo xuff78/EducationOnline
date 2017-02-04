@@ -11,7 +11,10 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -20,20 +23,27 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class RetrofitAPIManager {
 
-    public static Retrofit getRetrofit(Context con) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.API_Url_User)
-                .client(genericClient())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        return retrofit;
+    private static Converter.Factory strConverterFactory = StringConverterFactory.create();
+    private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
+
+    private static UserHandler userHandler;
+
+    public static UserHandler getUserRetrofit() {
+        if(userHandler==null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constant.API_Url_User)
+                    .client(genericClient())
+                    .addConverterFactory(strConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            userHandler = retrofit.create(UserHandler.class);
+        }
+        return userHandler;
     }
 
     private static OkHttpClient mOkHttpClient =null;
 
-    public static OkHttpClient genericClient() {
+    private static OkHttpClient genericClient() {
         if(mOkHttpClient==null) {
             mOkHttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new Interceptor() {

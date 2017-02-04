@@ -11,11 +11,12 @@ import com.education.online.util.LogUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observer;
 
 /**
  * Created by Administrator on 2016/10/8.
  */
-public class RCallBack implements Callback<String> {
+public class RCallBack implements Observer<String> {
 
     private Activity act;
 
@@ -23,10 +24,31 @@ public class RCallBack implements Callback<String> {
         this.act=act;
     }
 
+    private void oServerException(String jsonMessage) {
+        DialogUtil.showInfoDailog(act, "提示", "服务器内部错误");
+    }
+
+    protected void doSuccess(String jsonData) {
+
+    }
+
+    protected void doFailure(JsonMessage jsonMessage) {
+        DialogUtil.showInfoDailog(act, jsonMessage.getCode(), jsonMessage.getMsg());
+    }
+
     @Override
-    public void onResponse(Call<String> call, Response<String> response) {
-        String jsonMessage=response.body();
-        LogUtil.i("resp", response.body());
+    public void onCompleted() {
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        DialogUtil.showInfoDailog(act, "提示", GlbsNet.HTTP_ERROR_MESSAGE);
+    }
+
+    @Override
+    public void onNext(String jsonMessage) {
+        LogUtil.i("resp", jsonMessage);
         JsonMessage msg= JsonUtil.getJsonMessage(jsonMessage);
         if(msg.getCode()==null){
             oServerException(jsonMessage);
@@ -35,23 +57,5 @@ public class RCallBack implements Callback<String> {
         else{
             doFailure(msg);
         }
-    }
-
-    private void oServerException(String jsonMessage) {
-        DialogUtil.showInfoDailog(act, "提示", "服务器内部错误");
-    }
-
-    private void doSuccess(String jsonData) {
-
-    }
-
-    private void doFailure(JsonMessage jsonMessage) {
-        DialogUtil.showInfoDailog(act, jsonMessage.getCode(), jsonMessage.getMsg());
-    }
-
-
-    @Override
-    public void onFailure(Call<String> call, Throwable t) {
-        DialogUtil.showInfoDailog(act, "提示", GlbsNet.HTTP_ERROR_MESSAGE);
     }
 }

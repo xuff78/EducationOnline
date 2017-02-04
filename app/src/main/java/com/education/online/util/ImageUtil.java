@@ -44,7 +44,7 @@ import java.util.HashMap;
 
 public class ImageUtil {
 
-	public static void initImageLoader(Context context) {
+	public static ImageLoader initImageLoader(Context context) {
 		if(context!=null){
 			if(!ImageLoader.getInstance().isInited()){
 				ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
@@ -59,7 +59,9 @@ public class ImageUtil {
 						.build();
 				ImageLoader.getInstance().init(config);
 			}
-		}
+			return ImageLoader.getInstance();
+		}else
+			return null;
 	}
 
 	public static DisplayImageOptions getImageOption(int Resid){

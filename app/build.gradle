@@ -62,11 +62,14 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.kyleduo.switchbutton:library:1.4.4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-    compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'io.reactivex:rxjava:1.0.10'
     //    compile 'com.alibaba:fastjson:1.2.17'
     compile files('libs/BaiduLBS_Android.jar')
-    compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/wheelview_1.3.3.jar')
     compile files('libs/core-3.1.0.jar')
@@ -79,7 +82,6 @@ dependencies {
 //    compile project(path: ':upplayer')
     compile project(':vitamio')
     compile files('libs/upyun-lib-1.0.2.jar')
-    compile files('libs/okio-1.7.0.jar')
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile files('libs/alipaySdk-20161129.jar')
 }

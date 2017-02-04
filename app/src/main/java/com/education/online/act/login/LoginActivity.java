@@ -3,6 +3,9 @@ package com.education.online.act.login;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Explode;
 import android.transition.Fade;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
@@ -24,9 +28,15 @@ import com.education.online.bean.JsonMessage;
 import com.education.online.bean.LoginInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
+import com.education.online.retrofit.RCallBack;
+import com.education.online.retrofit.RequestStrUtil;
+import com.education.online.retrofit.RetrofitAPIManager;
+import com.education.online.retrofit.UserHandler;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.LeanSignatureUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
@@ -35,41 +45,71 @@ import com.education.online.view.CircularAnim;
 import org.json.JSONException;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import okhttp3.RequestBody;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.education.online.retrofit.RetrofitAPIManager.getUserRetrofit;
+import static okhttp3.RequestBody.create;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends BaseFrameAct {
 
-    private EditText userName;
-    private EditText userPsd;
-    private TextView retrievepassword;
-    HttpHandler handler;
-    private Button loginBtn;
-    private ProgressBar progressBar;
+    @Bind(R.id.userName)EditText userName;
+    @Bind(R.id.userPsd)EditText userPsd;
+    @Bind(R.id.retrievepassword)TextView retrievepassword;
+    @Bind(R.id.email_sign_in_button)Button loginBtn;
+    @Bind(R.id.progressBar)ProgressBar progressBar;
     private long pressTime=0;
+    private RCallBack callBack;
+    private Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //What is StatusBarCompat?
         StatusBarCompat.fitPage(this);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            getWindow().setEnterTransition(new Fade());
-//            getWindow().setExitTransition(new Fade());
-//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        initHandler();
         _setHeaderGone();
+        initHandler();
         initView();
     }
 
+    @OnClick({R.id.registerBtn, R.id.email_sign_in_button, R.id.retrievepassword})
+    public void onClick(View view) {
+        Intent intent = new Intent();
+        switch (view.getId()){
+            case R.id.registerBtn:
+                intent.setClass(LoginActivity.this, RegisterPage1.class);
+                intent.putExtra("type","regist");
+                startActivity(intent);
+                break;
+            case R.id.email_sign_in_button:
+                attemptLogin();
+                break;
+            case R.id.retrievepassword:
+                intent.setClass(LoginActivity.this, RegisterPage1.class);
+                intent.putExtra("type","retrievepassword");
+                startActivity(intent);
+                break;
+        }
+    }
+
+
     private void initView() {
-        userName = (EditText) findViewById(R.id.userName);
-        userPsd = (EditText) findViewById(R.id.userPsd);
-        retrievepassword = (TextView) findViewById(R.id.retrievepassword);
         String loginName=SharedPreferencesUtil.getString(this, Constant.UserName);//保存用户名在本地
         String psw=SharedPreferencesUtil.getString(this, Constant.UserPSW);//保存用户名在本地
         if(!loginName.equals(SharedPreferencesUtil.FAILURE_STRING)){//有数据时自动填写
@@ -88,41 +128,10 @@ public class LoginActivity extends BaseFrameAct {
                 return false;
             }
         });
-
-        progressBar= (ProgressBar) findViewById(R.id.progressBar);
-        loginBtn = (Button) findViewById(R.id.email_sign_in_button);
-        loginBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
-        findViewById(R.id.registerBtn).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, RegisterPage1.class);
-                intent.putExtra("type","regist");
-                startActivity(intent);
-            }
-        });
-        retrievepassword.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, RegisterPage1.class);
-                intent.putExtra("type","retrievepassword");
-                startActivity(intent);
-            }
-        });
     }
 
 
     private void attemptLogin() {
-
-
-//        startActivity(new Intent(LoginActivity.this, MainPage.class));
-        // Reset errors.
         userName.setError(null);
         userPsd.setError(null);
 
@@ -158,7 +167,12 @@ public class LoginActivity extends BaseFrameAct {
                         @Override
                         public void onAnimationEnd() {
                             pressTime=System.currentTimeMillis();
-                            handler.login(name, password);
+//                            handler.login(name, password);
+                            subscription=RetrofitAPIManager.getUserRetrofit()
+                                    .login(RequestStrUtil.getLoginStr(LoginActivity.this, name, password))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(callBack);
                         }
                     }, this);
         }
@@ -168,11 +182,36 @@ public class LoginActivity extends BaseFrameAct {
         return password.length() > 4;
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getIntent().hasExtra("TimeOut")){
+            Intent i=new Intent(this, MainPage.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("Exit", true);
+            startActivity(i);
+            finish();
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unsubscribe();
+        super.onDestroy();
+    }
+
+    protected void unsubscribe() {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
+
     private void initHandler() {
-        handler = new HttpHandler(this, new CallBack(this) {
+        callBack = new RCallBack(this){
+
             @Override
-            public void doSuccess(String method, String jsonData) throws JSONException {
-                super.doSuccess(method, jsonData);
+            public void doSuccess(String jsonData){
                 String sessionid = JsonUtil.getString(jsonData, "sessionid");
                 String usercode = JsonUtil.getString(jsonData, "usercode");
                 String user_identity = JsonUtil.getString(jsonData, "user_identity");
@@ -205,32 +244,16 @@ public class LoginActivity extends BaseFrameAct {
             }
 
             @Override
-            public void onHTTPException(String method, String jsonMessage) {
-                super.onHTTPException(method, jsonMessage);
+            public void doFailure(JsonMessage jsonMessage) {
                 progressBar.setVisibility(View.GONE);
                 CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }
 
-            @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
+            public void onError(Throwable e) {
                 progressBar.setVisibility(View.GONE);
                 CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }
-        });
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(getIntent().hasExtra("TimeOut")){
-            Intent i=new Intent(this, MainPage.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("Exit", true);
-            startActivity(i);
-            finish();
-        }else {
-            super.onBackPressed();
-        }
+        };
     }
 }
 

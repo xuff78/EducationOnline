@@ -1,21 +1,19 @@
 package com.education.online.retrofit;
 
+
 import com.education.online.http.Method;
 
-import java.util.List;
-
 import okhttp3.RequestBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
+import rx.Observable;
 
 /**
  * Created by Administrator on 2016/8/12.
  */
-public interface IHandler {
+public interface UserHandler {
 
     @POST(Method.Login)
-    Call<String> login(@Body RequestBody signStr);
+    Observable<String> login(@Body RequestBody signStr);
 
 }
