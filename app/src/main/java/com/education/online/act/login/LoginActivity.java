@@ -1,24 +1,15 @@
 package com.education.online.act.login;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.education.online.R;
@@ -26,40 +17,23 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.LoginInfo;
-import com.education.online.http.CallBack;
-import com.education.online.http.HttpHandler;
-import com.education.online.http.Method;
 import com.education.online.retrofit.RCallBack;
 import com.education.online.retrofit.RequestStrUtil;
 import com.education.online.retrofit.RetrofitAPIManager;
-import com.education.online.retrofit.UserHandler;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
-import com.education.online.util.LeanSignatureUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
 import com.education.online.view.CircularAnim;
 
-import org.json.JSONException;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import okhttp3.RequestBody;
-import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static com.education.online.retrofit.RetrofitAPIManager.getUserRetrofit;
-import static okhttp3.RequestBody.create;
 
 /**
  * A login screen that offers login via email/password.

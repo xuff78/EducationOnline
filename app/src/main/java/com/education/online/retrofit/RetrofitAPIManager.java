@@ -1,9 +1,6 @@
 package com.education.online.retrofit;
 
-import android.content.Context;
-
 import com.education.online.util.Constant;
-import com.education.online.util.SharedPreferencesUtil;
 
 import java.io.IOException;
 
@@ -15,8 +12,6 @@ import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by Administrator on 2016/8/12.

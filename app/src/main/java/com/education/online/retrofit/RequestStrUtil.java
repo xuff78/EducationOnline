@@ -9,8 +9,6 @@ import com.education.online.util.LeanSignatureUtil;
 import java.util.HashMap;
 
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Retrofit;
 
 /**
  * Created by Administrator on 2017/2/4.

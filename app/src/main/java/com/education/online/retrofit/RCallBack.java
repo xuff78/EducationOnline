@@ -8,9 +8,6 @@ import com.education.online.util.DialogUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observer;
 
 /**
