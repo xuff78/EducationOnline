@@ -19,6 +19,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 public class RetrofitAPIManager {
 
     private static Converter.Factory strConverterFactory = StringConverterFactory.create();
+//    private static Converter.Factory jsonConverterFactory = FastJsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
     private static UserHandler userHandler;
