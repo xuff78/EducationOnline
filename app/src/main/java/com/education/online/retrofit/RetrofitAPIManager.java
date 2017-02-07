@@ -5,6 +5,7 @@ import com.education.online.retrofit.Converter.StringConverterFactory;
 import com.education.online.util.Constant;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -44,6 +45,7 @@ public class RetrofitAPIManager {
     private static OkHttpClient genericClient() {
         if(mOkHttpClient==null) {
             mOkHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(20, TimeUnit.SECONDS)//设置超时时间
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
