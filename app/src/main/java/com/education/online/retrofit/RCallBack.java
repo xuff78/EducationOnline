@@ -1,6 +1,7 @@
 package com.education.online.retrofit;
 
 import android.app.Activity;
+import android.app.Dialog;
 
 import com.education.online.http.GlbsNet;
 import com.education.online.util.DialogUtil;
@@ -13,14 +14,14 @@ import rx.Observer;
 public abstract class RCallBack<T> implements Observer<HttpResult<T>> {
 
     private Activity act;
-    private boolean showDialog=true;
+    private Dialog dialog=null;
 
     public RCallBack(Activity act){
         this.act=act;
     }
 
-    public RCallBack(Activity act, boolean showDialog){
-        this.showDialog=showDialog;
+    public RCallBack(Activity act, Dialog dialog){
+        this.dialog=dialog;
         this.act=act;
     }
 
@@ -36,6 +37,8 @@ public abstract class RCallBack<T> implements Observer<HttpResult<T>> {
 
     @Override
     public void onError(Throwable e) {
+        if(dialog!=null)
+            dialog.dismiss();
         DialogUtil.showInfoDailog(act, "提示", GlbsNet.HTTP_ERROR_MESSAGE);
     }
 
@@ -52,5 +55,8 @@ public abstract class RCallBack<T> implements Observer<HttpResult<T>> {
     }
 
     @Override
-    public void onCompleted() {}
+    public void onCompleted() {
+        if(dialog!=null)
+            dialog.dismiss();
+    }
 }
