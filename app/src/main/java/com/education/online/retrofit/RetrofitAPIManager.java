@@ -1,5 +1,7 @@
 package com.education.online.retrofit;
 
+import com.education.online.retrofit.Converter.FastJsonConverterFactory;
+import com.education.online.retrofit.Converter.StringConverterFactory;
 import com.education.online.util.Constant;
 
 import java.io.IOException;
@@ -19,7 +21,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 public class RetrofitAPIManager {
 
     private static Converter.Factory strConverterFactory = StringConverterFactory.create();
-//    private static Converter.Factory jsonConverterFactory = FastJsonConverterFactory.create();
+    private static Converter.Factory jsonConverterFactory = FastJsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
     private static UserHandler userHandler;
@@ -29,7 +31,7 @@ public class RetrofitAPIManager {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Constant.API_Url_User)
                     .client(genericClient())
-                    .addConverterFactory(strConverterFactory)
+                    .addConverterFactory(jsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             userHandler = retrofit.create(UserHandler.class);

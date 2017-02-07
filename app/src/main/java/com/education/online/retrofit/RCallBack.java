@@ -2,40 +2,36 @@ package com.education.online.retrofit;
 
 import android.app.Activity;
 
-import com.education.online.bean.JsonMessage;
 import com.education.online.http.GlbsNet;
 import com.education.online.util.DialogUtil;
-import com.education.online.util.JsonUtil;
-import com.education.online.util.LogUtil;
 
 import rx.Observer;
 
 /**
  * Created by Administrator on 2016/10/8.
  */
-public class RCallBack implements Observer<String> {
+public abstract class RCallBack<T> implements Observer<HttpResult<T>> {
 
     private Activity act;
+    private boolean showDialog=true;
 
     public RCallBack(Activity act){
         this.act=act;
     }
 
-    private void oServerException(String jsonMessage) {
+    public RCallBack(Activity act, boolean showDialog){
+        this.showDialog=showDialog;
+        this.act=act;
+    }
+
+    private void onServerException() {
         DialogUtil.showInfoDailog(act, "提示", "服务器内部错误");
     }
 
-    protected void doSuccess(String jsonData) {
+    public abstract void doSuccess(HttpResult<T> result);
 
-    }
-
-    protected void doFailure(JsonMessage jsonMessage) {
-        DialogUtil.showInfoDailog(act, jsonMessage.getCode(), jsonMessage.getMsg());
-    }
-
-    @Override
-    public void onCompleted() {
-
+    protected void doFailure(HttpResult<T> result) {
+        DialogUtil.showInfoDailog(act, result.getReturn_code()+"", result.getReturn_message());
     }
 
     @Override
@@ -44,15 +40,17 @@ public class RCallBack implements Observer<String> {
     }
 
     @Override
-    public void onNext(String jsonMessage) {
-        LogUtil.i("resp", jsonMessage);
-        JsonMessage msg= JsonUtil.getJsonMessage(jsonMessage);
-        if(msg.getCode()==null){
-            oServerException(jsonMessage);
-        }else if(msg.getCode().equals("0"))
-            doSuccess(JsonUtil.getJsonData(jsonMessage));
+    public void onNext(HttpResult<T> result) {
+        if(result.getReturn_code()<0){
+            onError(null);
+//            onServerException();
+        }else if(result.getReturn_code()==0)
+            doSuccess(result);
         else{
-            doFailure(msg);
+            doFailure(result);
         }
     }
+
+    @Override
+    public void onCompleted() {}
 }

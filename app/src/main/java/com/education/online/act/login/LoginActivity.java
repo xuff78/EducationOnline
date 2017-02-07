@@ -17,6 +17,7 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.act.MainPage;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.LoginInfo;
+import com.education.online.retrofit.HttpResult;
 import com.education.online.retrofit.RCallBack;
 import com.education.online.retrofit.RequestStrUtil;
 import com.education.online.retrofit.RetrofitAPIManager;
@@ -182,28 +183,24 @@ public class LoginActivity extends BaseFrameAct {
     }
 
     private void initHandler() {
-        callBack = new RCallBack(this){
+        callBack = new RCallBack<LoginInfo>(this){
 
             @Override
-            public void doSuccess(String jsonData){
-                String sessionid = JsonUtil.getString(jsonData, "sessionid");
-                String usercode = JsonUtil.getString(jsonData, "usercode");
-                String user_identity = JsonUtil.getString(jsonData, "user_identity");
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserIdentity, user_identity);
-                SharedPreferencesUtil.setUsercode(LoginActivity.this, usercode);
-                SharedPreferencesUtil.setSessionid(LoginActivity.this, sessionid);//保存sessionid
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.isLogin, sessionid);
-
-                LoginInfo user= JSON.parseObject(jsonData, LoginInfo.class);
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.Avatar, user.getAvatar());
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.NickName, user.getNickname());
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, jsonData);
+            public void doSuccess(HttpResult<LoginInfo> result) {
+                LoginInfo loginInfo=result.getData();
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserIdentity, loginInfo.getUser_identity());
+                SharedPreferencesUtil.setUsercode(LoginActivity.this, loginInfo.getUsercode());
+                SharedPreferencesUtil.setSessionid(LoginActivity.this, loginInfo.getSessionid());//保存sessionid
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.isLogin, loginInfo.getSessionid());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.Avatar, loginInfo.getAvatar());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.NickName, loginInfo.getNickname());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserName, userName.getText().toString());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserPSW, userPsd.getText().toString());
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectId, user.getSubject_id());
-                SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectName, user.getSubject_name());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectId, loginInfo.getSubject_id());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectName, loginInfo.getSubject_name());
+                SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, JSON.toJSONString(loginInfo));
 
-                ActUtil.initChatUser(LoginActivity.this, user.getAvatar(), user.getNickname());
+                ActUtil.initChatUser(LoginActivity.this, loginInfo.getAvatar(), loginInfo.getNickname());
                 long left=System.currentTimeMillis()-pressTime;
                 if(left>=1500)
                     left=0;
@@ -218,12 +215,15 @@ public class LoginActivity extends BaseFrameAct {
             }
 
             @Override
-            public void doFailure(JsonMessage jsonMessage) {
+            protected void doFailure(HttpResult<LoginInfo> result) {
+                super.doFailure(result);
                 progressBar.setVisibility(View.GONE);
                 CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }
 
+            @Override
             public void onError(Throwable e) {
+                super.onError(e);
                 progressBar.setVisibility(View.GONE);
                 CircularAnim.show(loginBtn).triggerView(loginBtn).go();
             }

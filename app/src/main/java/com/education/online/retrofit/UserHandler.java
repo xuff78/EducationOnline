@@ -1,6 +1,7 @@
 package com.education.online.retrofit;
 
 
+import com.education.online.bean.LoginInfo;
 import com.education.online.http.Method;
 
 import okhttp3.RequestBody;
@@ -14,6 +15,6 @@ import rx.Observable;
 public interface UserHandler {
 
     @POST(Method.Login)
-    Observable<String> login(@Body RequestBody signStr);
+    Observable<HttpResult<LoginInfo>> login(@Body RequestBody signStr);
 
 }

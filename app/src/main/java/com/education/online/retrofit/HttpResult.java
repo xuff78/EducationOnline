@@ -4,25 +4,24 @@ package com.education.online.retrofit;
  * Created by liukun on 16/3/5.
  */
 public class HttpResult<T> {
-    private int resultCode;
-    private String resultMessage;
-
+    private int return_code;
+    private String return_message;
     private T data;
 
-    public int getResultCode() {
-        return resultCode;
+    public int getReturn_code() {
+        return return_code;
     }
 
-    public void setResultCode(int resultCode) {
-        this.resultCode = resultCode;
+    public void setReturn_code(int return_code) {
+        this.return_code = return_code;
     }
 
-    public String getResultMessage() {
-        return resultMessage;
+    public String getReturn_message() {
+        return return_message;
     }
 
-    public void setResultMessage(String resultMessage) {
-        this.resultMessage = resultMessage;
+    public void setReturn_message(String return_message) {
+        this.return_message = return_message;
     }
 
     public T getData() {
