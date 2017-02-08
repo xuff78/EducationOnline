@@ -72,7 +72,6 @@ public class RetrofitAPIManager {
                                 FormBody oldFormBody = (FormBody) request.body();
                                 Map<String, String> params=new HashMap<>();
                                 for (int i = 0; i < oldFormBody.size(); i++) {
-                                    LogUtil.i("okhttp", "key: " + oldFormBody.encodedName(i) + "   value:" + oldFormBody.encodedValue(i));
                                     params.put(oldFormBody.encodedName(i), oldFormBody.encodedValue(i));
                                 }
                                 FormBody.Builder newFormBody=LeanSignatureUtil.sign(con, API_Url_User, params);
