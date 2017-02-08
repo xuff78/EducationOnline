@@ -6,6 +6,8 @@ import com.education.online.http.Method;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -17,4 +19,7 @@ public interface UserHandler {
     @POST(Method.Login)
     Observable<HttpResult<LoginInfo>> login(@Body RequestBody signStr);
 
+    @FormUrlEncoded
+    @POST(Method.Login)
+    Observable<HttpResult<LoginInfo>> login(@Field("phone") String phone, @Field("password") String password);
 }

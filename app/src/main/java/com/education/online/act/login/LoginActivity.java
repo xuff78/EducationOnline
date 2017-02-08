@@ -148,8 +148,9 @@ public class LoginActivity extends BaseFrameAct {
                         public void onAnimationEnd() {
                             pressTime=System.currentTimeMillis();
 //                            handler.login(name, password);
-                            subscription=RetrofitAPIManager.getUserRetrofit()
-                                    .login(RequestStrUtil.getLoginStr(LoginActivity.this, name, password))
+                            subscription=RetrofitAPIManager.getUserRetrofit(LoginActivity.this)
+//                                    .login(RequestStrUtil.getLoginStr(LoginActivity.this, name, password))
+                                    .login(name, password)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(callBack);
