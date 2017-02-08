@@ -29,11 +29,16 @@ import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
 import com.education.online.view.CircularAnim;
 
+import java.util.Observable;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -47,7 +52,7 @@ public class LoginActivity extends BaseFrameAct {
     @Bind(R.id.email_sign_in_button)Button loginBtn;
     @Bind(R.id.progressBar)ProgressBar progressBar;
     private long pressTime=0;
-    private RCallBack callBack;
+    private Subscriber callBack;
     private Subscription subscription;
 
     @Override

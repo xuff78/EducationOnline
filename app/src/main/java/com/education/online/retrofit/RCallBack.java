@@ -5,13 +5,16 @@ import android.app.Dialog;
 
 import com.education.online.http.GlbsNet;
 import com.education.online.util.DialogUtil;
+import com.education.online.util.ToastUtils;
 
 import rx.Observer;
+import rx.Subscriber;
+import rx.Subscription;
 
 /**
  * Created by Administrator on 2016/10/8.
  */
-public abstract class RCallBack<T> implements Observer<HttpResult<T>> {
+public abstract class RCallBack<T> extends Subscriber<HttpResult<T>> {
 
     private Activity act;
     private Dialog dialog=null;
@@ -40,6 +43,12 @@ public abstract class RCallBack<T> implements Observer<HttpResult<T>> {
         if(dialog!=null)
             dialog.dismiss();
         DialogUtil.showInfoDailog(act, "提示", GlbsNet.HTTP_ERROR_MESSAGE);
+    }
+
+    @Override
+    public void onStart() {
+        if(dialog!=null)
+            dialog.show();
     }
 
     @Override
