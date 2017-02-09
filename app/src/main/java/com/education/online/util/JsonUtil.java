@@ -371,6 +371,8 @@ public class JsonUtil {
         JSONObject jsonObject = new JSONObject(jsonStr);
         if (!jsonObject.isNull("advert_id"))
             advertsBean.setAdvert_id(jsonObject.getString("advert_id"));
+        if (!jsonObject.isNull("is_arrange"))
+            advertsBean.setIs_arrange(jsonObject.getString("is_arrange"));
         if (!jsonObject.isNull("title"))
             advertsBean.setTitle(jsonObject.getString("title"));
         if (!jsonObject.isNull("img"))

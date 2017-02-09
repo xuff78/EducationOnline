@@ -75,16 +75,18 @@ public class AdvertPage extends BaseFrameAct {
                 if(method.equals(Method.getAdvert)){
                     infos = JsonUtil.getAdvert(jsonData);
                     _setHeaderTitle(infos.getTitle());
-                    courseList = infos.getCourseInfos();
-                            Comparator <CourseBean> comparator = new Comparator<CourseBean>() {
-                                @Override
-                                public int compare(CourseBean lhs, CourseBean rhs) {
-                                    int a = Integer.parseInt(lhs.getFollow());
-                                    int b = Integer.parseInt(rhs.getFollow());
-                                    return b-a;
-                                }
-                            };
-                            Collections.sort(courseList,comparator);
+                    if(infos.getIs_arrange().equals("1")) {
+                        courseList = infos.getCourseInfos();
+                        Comparator<CourseBean> comparator = new Comparator<CourseBean>() {
+                            @Override
+                            public int compare(CourseBean lhs, CourseBean rhs) {
+                                int a = Integer.parseInt(lhs.getFollow());
+                                int b = Integer.parseInt(rhs.getFollow());
+                                return b - a;
+                            }
+                        };
+                        Collections.sort(courseList, comparator);
+                    }
                     advertAdapter = new AdvertAdapter(AdvertPage.this, infos, courseList);
                     recyclerView.setAdapter(advertAdapter);
                 }

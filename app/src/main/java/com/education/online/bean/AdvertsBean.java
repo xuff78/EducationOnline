@@ -9,6 +9,16 @@ import java.util.List;
 public class AdvertsBean {
 
     private String advert_id=""; // 广告ID
+
+    public String getIs_arrange() {
+        return is_arrange;
+    }
+
+    public void setIs_arrange(String is_arrange) {
+        this.is_arrange = is_arrange;
+    }
+
+    private String is_arrange = "";//是否需要排序
     private String title=""; // 标题
     private String introduction=""; // 介绍
     private String img=""; // 图片地址
