@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <View
+        android:id="@+id/topline"
         android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="1px" />
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
     <View
+        android:id="@+id/splitline"
         android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="1px" />

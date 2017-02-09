@@ -119,22 +119,24 @@ for (CourseBean course :courseList) {
             convertView.setLayoutParams(alp);
             PagerHolder pagerHolder = (PagerHolder) vh;
             imageLoader.displayImage(ImageUtil.getImageUrl(info.getImg()), ((PagerHolder) vh).imageView);
-        } else if (pos == 1) {
-            TitleHolder ivh = (TitleHolder) vh;
-
-        }  else if (pos >1 && pos <2+num3){
+        }  else if (pos >0 && pos <1+num3){
             RankCourseHolder ivh = (RankCourseHolder) vh;
-            rankNum = pos-2;
+            rankNum = pos-1;
+            if(pos==1)
+                ivh.toplayout.setVisibility(View.VISIBLE);
             CourseBean courseBean = courseList.get(rankNum);
             ivh.followNum.setText(courseBean.getFollow());
             float percentage = Integer.parseInt(courseBean.getFollow())*100/totalFollow;
             ivh.percent.setText(String.valueOf(percentage)+"%");
             ivh.progressBar.setProgress((int)percentage);
-            ivh.rank.setText(String.valueOf(rankNum));
+            ivh.rank.setText(String.valueOf(rankNum+1));
             ivh.teacher_name.setText(courseBean.getUser_name());
             ivh.coursename.setText(courseBean.getCourse_name());
 
-        }else if (pos > 1+num3&& pos < (2 + num3+num1)) {
+        }else if (pos == 1+num3) {
+            TitleHolder ivh = (TitleHolder) vh;
+
+        } else if (pos > 1+num3&& pos < (2 + num3+num1)) {
             CourseHolder ivh = (CourseHolder) vh;
             currentpos = pos-num3-2;
             ivh.item2.setTag(pos);
@@ -201,15 +203,15 @@ for (CourseBean course :courseList) {
             RecyclerView.LayoutParams alp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
             convertView.setLayoutParams(alp);
             vh = new PagerHolder(convertView);
-        } else if (pos == 1) {
-            View convertView = listInflater.inflate(R.layout.home_title_bar, null);
-            convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
-            vh = new TitleHolder(convertView);
-        } else if (pos >1 && pos <2+num3){
+        } else if (pos >0 && pos <1+num3){
             View convertView = listInflater.inflate(R.layout.course_rank_item, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new RankCourseHolder(convertView);
-        }else if (pos > 1+num3 && pos < (2+ num1+num3)) {
+        }else if (pos == 1+num3) {
+            View convertView = listInflater.inflate(R.layout.home_title_bar, null);
+            convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+            vh = new TitleHolder(convertView);
+        } else if (pos > 1+num3 && pos < (2+ num1+num3)) {
             View convertView = listInflater.inflate(R.layout.advert_courseitem, null);
             vh = new CourseHolder(convertView, pos);
         } else if (pos == -1) {
@@ -246,9 +248,11 @@ for (CourseBean course :courseList) {
     public class RankCourseHolder extends RecyclerView.ViewHolder {
         TextView rank,teacher_name,followNum,percent ,coursename;
         ProgressBar progressBar;
+        LinearLayout toplayout;
 
         public RankCourseHolder(View convertView) {
             super(convertView);
+            toplayout = (LinearLayout) convertView.findViewById(R.id.toplayout);
              rank= (TextView) convertView.findViewById(R.id.rank);
              teacher_name= (TextView) convertView.findViewById(R.id.teacher_name);
              followNum= (TextView) convertView.findViewById(R.id.followNum);
@@ -313,12 +317,16 @@ for (CourseBean course :courseList) {
 
     public class TitleHolder extends RecyclerView.ViewHolder {
         TextView forYouTitle;
-        View hintview;
+        View hintview,splitline,topline;
 
         public TitleHolder(View convertView) {
             super(convertView);
             hintview = convertView.findViewById(R.id.hintview);
+            splitline=convertView.findViewById(R.id.splitline);
+            topline=convertView.findViewById(R.id.topline);
+            splitline.setVisibility(View.GONE);
             hintview.setVisibility(View.GONE);
+            topline.setVisibility(View.GONE);
             forYouTitle = (TextView) convertView.findViewById(R.id.forYouTitle);
             forYouTitle.setText("你要的好课，都在这里");
             forYouTitle.setTextSize(14);

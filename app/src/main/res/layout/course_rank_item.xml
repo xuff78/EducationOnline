@@ -5,6 +5,34 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/toplayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/topline"
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+        <View
+            android:id="@+id/splitline"
+            android:background="@color/light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px" />
+        <TextView
+            android:id="@+id/forYouTitle"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:text="最受欢迎的课程评选"
+            android:textColor="@color/hard_gray"
+            style="@style/txt_gray_14" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="5dp"
@@ -48,6 +76,7 @@
         android:gravity="center_vertical">
 
         <TextView
+            android:textSize="14sp"
             android:id="@+id/teacher_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,9 +90,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
+            android:textSize="14sp"
             android:text="人在学习" />
 
         <TextView
+            android:textSize="14sp"
             android:layout_toLeftOf="@+id/learn"
             android:id="@+id/followNum"
             android:layout_width="wrap_content"
@@ -89,6 +120,7 @@
             android:progress="10" />
 
         <TextView
+            android:textSize="12sp"
             android:id="@+id/percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
