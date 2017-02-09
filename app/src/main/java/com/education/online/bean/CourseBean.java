@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/10/24.
  */
-public class CourseBean implements Serializable{
+public class CourseBean implements Serializable,Comparable<CourseBean>{
 
     public CourseBean() {
     }
@@ -200,5 +200,23 @@ public class CourseBean implements Serializable{
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
+    }
+
+    @Override
+    public int compareTo(CourseBean another) {
+        int course_a = Integer.parseInt(follow);
+        int course_b= Integer.parseInt(another.follow);
+            if(course_b<course_a)
+            {
+                return 1;
+            }
+            else if(course_b > course_a)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
     }
 }

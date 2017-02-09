@@ -4,10 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EducationOnline.iml" filepath="$PROJECT_DIR$/EducationOnline.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" filepath="$PROJECT_DIR$/ijkplayer-java/ijkplayer-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/leanchatlib/leanchatlib.iml" filepath="$PROJECT_DIR$/leanchatlib/leanchatlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/mediapicker/mediapicker.iml" filepath="$PROJECT_DIR$/mediapicker/mediapicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/upplayer/upplayer.iml" filepath="$PROJECT_DIR$/upplayer/upplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/uppush/uppush.iml" filepath="$PROJECT_DIR$/uppush/uppush.iml" />
       <module fileurl="file://$PROJECT_DIR$/vitamio/vitamio.iml" filepath="$PROJECT_DIR$/vitamio/vitamio.iml" />
     </modules>

@@ -14,6 +14,7 @@ import android.view.animation.LayoutAnimationController;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.education.online.R;
@@ -35,6 +36,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.ExtendedViewPager;
+import com.education.online.view.circularbtn.IndeterminateProgressButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -52,19 +54,24 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private int padding10 = 0;
     private AdvertsBean info;
     private String loadingHint = "";
+    private List <CourseBean> courseList = new ArrayList<>();
     private List<CourseBean> courseBeen;
     private List<TeacherBean> teacherBeen;
-    private int num1, num2;
+    private int num1=0, num2=0,num3=0;
     private int currentpos = 0;
+    private int rankNum =0;
+    private int totalFollow = 0;
+
 
     public void setLoadingHint(String hint) {
         loadingHint = hint;
         notifyDataSetChanged();
     }
 
-    public AdvertAdapter(Activity act, AdvertsBean info) {
+    public AdvertAdapter(Activity act, AdvertsBean info,List CourseList) {
         this.act = act;
         this.info = info;
+        this.courseList = CourseList;
         imageLoader = ImageLoader.getInstance();
         listInflater = LayoutInflater.from(act);
         padding10 = ImageUtil.dip2px(act, 10);
@@ -72,15 +79,23 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         imgHeight = itemWidth - 2 * padding10; //cour
         courseBeen = info.getCourseInfos();
         teacherBeen = info.getTeachetInfos();
+        if(!courseBeen.isEmpty())
         num1 = (courseBeen.size() % 2 == 0) ? (courseBeen.size() / 2) : (courseBeen.size() / 2 + 1);
-        //  num2 = (teacherBeen.size() % 2 == 0) ? (teacherBeen.size() / 2) : (teacherBeen.size() / 2 + 1);
-
+        if(!courseList.isEmpty())
+        num3 = courseList.size();
+        if(!teacherBeen.isEmpty())
+         num2 = (teacherBeen.size() % 2 == 0) ? (teacherBeen.size() / 2) : (teacherBeen.size() / 2 + 1);
+for (CourseBean course :courseList) {
+    int follow = Integer.parseInt(course.getFollow());
+    totalFollow +=follow;
+}
     }
 
     @Override
     public int getItemCount() {
         // TODO Auto-generated method stub
-        return 3 + num1;
+        int count =3 + num1+num2+num3;
+        return count;
     }
 
     @Override
@@ -94,7 +109,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (vh instanceof FooterViewHolder) {
             FooterViewHolder fvh = (FooterViewHolder) vh;
             fvh.footerHint.setText(loadingHint);
-            if ((num1 + num2) == 0) {
+            if ((num1 + num2+num3) == 0) {
                 fvh.footerHint.setText("暂时没有更多推荐");
             }
         } else if (pos == 0) {
@@ -105,9 +120,23 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             PagerHolder pagerHolder = (PagerHolder) vh;
             imageLoader.displayImage(ImageUtil.getImageUrl(info.getImg()), ((PagerHolder) vh).imageView);
         } else if (pos == 1) {
-            TitleHolder titleHolder = (TitleHolder) vh;
-        } else if (pos > 1&& pos < (3 + num1)) {
+            TitleHolder ivh = (TitleHolder) vh;
+
+        }  else if (pos >1 && pos <2+num3){
+            RankCourseHolder ivh = (RankCourseHolder) vh;
+            rankNum = pos-2;
+            CourseBean courseBean = courseList.get(rankNum);
+            ivh.followNum.setText(courseBean.getFollow());
+            float percentage = Integer.parseInt(courseBean.getFollow())*100/totalFollow;
+            ivh.percent.setText(String.valueOf(percentage)+"%");
+            ivh.progressBar.setProgress((int)percentage);
+            ivh.rank.setText(String.valueOf(rankNum));
+            ivh.teacher_name.setText(courseBean.getUser_name());
+            ivh.coursename.setText(courseBean.getCourse_name());
+
+        }else if (pos > 1+num3&& pos < (2 + num3+num1)) {
             CourseHolder ivh = (CourseHolder) vh;
+            currentpos = pos-num3-2;
             ivh.item2.setTag(pos);
             ivh.item1.setTag(pos);
             if (currentpos < courseBeen.size()) {
@@ -154,7 +183,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ivh.titleTxt2.setText(courseBean.getCourse_name());
                 ivh.timeTxt2.setText(courseBean.getCourseware_date());
                 ivh.item2.setTag(currentpos);
-                currentpos++;
+            //    currentpos++;
             } else {
                 ivh.item2.setVisibility(View.INVISIBLE);
             }
@@ -176,7 +205,11 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View convertView = listInflater.inflate(R.layout.home_title_bar, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new TitleHolder(convertView);
-        } else if (pos > 1 && pos < (4 + num1)) {
+        } else if (pos >1 && pos <2+num3){
+            View convertView = listInflater.inflate(R.layout.course_rank_item, null);
+            convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
+            vh = new RankCourseHolder(convertView);
+        }else if (pos > 1+num3 && pos < (2+ num1+num3)) {
             View convertView = listInflater.inflate(R.layout.advert_courseitem, null);
             vh = new CourseHolder(convertView, pos);
         } else if (pos == -1) {
@@ -207,6 +240,21 @@ public class AdvertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public PagerHolder(View convertView) {
             super(convertView);
             imageView = (ImageView) convertView.findViewById(R.id.image);
+        }
+    }
+
+    public class RankCourseHolder extends RecyclerView.ViewHolder {
+        TextView rank,teacher_name,followNum,percent ,coursename;
+        ProgressBar progressBar;
+
+        public RankCourseHolder(View convertView) {
+            super(convertView);
+             rank= (TextView) convertView.findViewById(R.id.rank);
+             teacher_name= (TextView) convertView.findViewById(R.id.teacher_name);
+             followNum= (TextView) convertView.findViewById(R.id.followNum);
+             percent= (TextView) convertView.findViewById(R.id.percent);
+             coursename= (TextView) convertView.findViewById(R.id.coursename);
+             progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
         }
     }
 
