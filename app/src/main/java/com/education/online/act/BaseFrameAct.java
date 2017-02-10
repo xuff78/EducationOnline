@@ -27,6 +27,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public abstract class BaseFrameAct extends AppCompatActivity {
 
@@ -38,13 +39,14 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	private RelativeLayout rl;
 	private ClickListener listener;
 	protected Fragment currentFrg;
+	protected ImageLoader loader;
 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		ImageUtil.initImageLoader(this);
+		loader=ImageUtil.initImageLoader(this);
 	}
 	
 	
@@ -182,7 +184,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 			intent.putExtra("Login", true);
 			startActivity(intent);
 		}else
-			ImageUtil.initImageLoader(this);
+			loader=ImageUtil.initImageLoader(this);
 	}
 
 	@Override

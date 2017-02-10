@@ -300,7 +300,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                         ToastUtils.displayTextShort(CourseMainPage.this, "未找到直播室");
                     }
                 } else if(courseDetailBean.getIs_buy().equals("1")){
-                    if(SharedPreferencesUtil.getValue(CourseMainPage.this, Constant.APPID, true)){
+                    if(SharedPreferencesUtil.getValue(CourseMainPage.this, Constant.WIFIWarning, true)){
                         if (ActUtil.isWifi(CourseMainPage.this)) {
                             studyLiveCourse();
                         }else{

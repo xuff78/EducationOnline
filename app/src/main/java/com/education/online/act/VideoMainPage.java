@@ -371,7 +371,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
                         break;
                     case R.id.downloadlayout:
-                        if(!warnDownload&&SharedPreferencesUtil.getValue(VideoMainPage.this, Constant.APPID, true)){
+                        if(!warnDownload&&SharedPreferencesUtil.getValue(VideoMainPage.this, Constant.WIFIWarning, true)){
                             if (ActUtil.isWifi(VideoMainPage.this)) {
                                 selectDownload();
                             }else{
@@ -427,7 +427,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             stopPlay();
                         } else {
 //                            MediaController mediaController=new MediaController(VideoMainPage.this);
-                            if(!warnVideo&&SharedPreferencesUtil.getValue(VideoMainPage.this, Constant.APPID, true)){
+                            if(!warnVideo&&SharedPreferencesUtil.getValue(VideoMainPage.this, Constant.WIFIWarning, true)){
                                 if (ActUtil.isWifi(VideoMainPage.this)) {
                                     playVideo();
                                 }else{

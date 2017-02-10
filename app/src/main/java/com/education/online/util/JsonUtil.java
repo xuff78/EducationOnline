@@ -404,6 +404,9 @@ public class JsonUtil {
                     courseBean.setCourseware_date(item.getString("courseware_date"));
                 if (!item.isNull("conversationId"))
                     courseBean.setConversationId(item.getString("conversationId"));
+                if (!item.isNull("user_name"))
+                    courseBean.setUser_name(item.getString("user_name"));
+
                 courseBeen.add(courseBean);
             }
         }

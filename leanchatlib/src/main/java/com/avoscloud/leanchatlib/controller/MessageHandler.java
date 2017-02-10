@@ -11,6 +11,7 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avoscloud.leanchatlib.event.ImTypeMessageEvent;
+import com.avoscloud.leanchatlib.model.ConversationType;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.avoscloud.leanchatlib.utils.Constants;
 import com.avoscloud.leanchatlib.utils.LogUtils;
@@ -112,12 +113,10 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
       Intent intent =  new Intent(context, mLoadClass);
       intent.putExtra(Constants.CONVERSATION_ID, conversation.getConversationId());
       intent.putExtra(Constants.MEMBER_ID, message.getFrom());
-//      if (ConversationHelper.typeOfConversation(conversation) == ConversationType.Single) {
-//        intent.putExtra(Constants.NOTOFICATION_TAG, Constants.NOTIFICATION_SINGLE_CHAT);
-//      } else {
-//        intent.putExtra(Constants.NOTOFICATION_TAG, Constants.NOTIFICATION_SINGLE_CHAT);
-//      }
-      NotificationUtils.showNotificationForActivity(context, title, notificationContent, null, intent);
+      if (ConversationHelper.typeOfConversation(conversation) == ConversationType.Single) {
+        intent.putExtra(Constants.NOTOFICATION_TAG, Constants.NOTIFICATION_SINGLE_CHAT);
+        NotificationUtils.showNotificationForActivity(context, title, notificationContent, null, intent);
+      }
     }
   }
 

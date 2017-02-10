@@ -38,6 +38,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
         servicephone= (TextView) findViewById(R.id.servicephone);
         exitlogin= (TextView) findViewById(R.id.exitlogin);
         exitlogin.setOnClickListener(this);
+        downloadsetting.setOnClickListener(this);
         findViewById(R.id.aboutLayout).setOnClickListener(this);
     }
 
@@ -50,6 +51,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
             case R.id.privacy:
             break;
             case R.id.downloadsetting:
+                startActivity(new Intent(this, SettingDownload.class));
             break;
             case R.id.servicenum:
             break;

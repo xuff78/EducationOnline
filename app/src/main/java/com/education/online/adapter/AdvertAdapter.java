@@ -157,7 +157,7 @@ for (CourseBean course :courseList) {
                 if (courseBean.getPrice().equals("0.00"))
                     ivh.priceTxt1.setText("免费");
                 else ivh.priceTxt1.setText(ActUtil.getPrice(courseBean.getPrice()));
-                ivh.timeTxt1.setText(courseBean.getPlan());
+                ivh.timeTxt1.setText(courseBean.getUser_name());
                 ivh.titleTxt1.setText(courseBean.getCourse_name());
                 ivh.timeTxt1.setText(courseBean.getCourseware_date());
                 ivh.item1.setTag(currentpos);
@@ -181,7 +181,7 @@ for (CourseBean course :courseList) {
                 if (courseBean.getPrice().equals("0.00"))
                     ivh.priceTxt2.setText("免费");
                 else ivh.priceTxt2.setText(ActUtil.getPrice( courseBean.getPrice()));
-                ivh.timeTxt2.setText(courseBean.getPlan());
+                ivh.timeTxt2.setText(courseBean.getUser_name());
                 ivh.titleTxt2.setText(courseBean.getCourse_name());
                 ivh.timeTxt2.setText(courseBean.getCourseware_date());
                 ivh.item2.setTag(currentpos);
@@ -329,7 +329,6 @@ for (CourseBean course :courseList) {
             topline.setVisibility(View.GONE);
             forYouTitle = (TextView) convertView.findViewById(R.id.forYouTitle);
             forYouTitle.setText("你要的好课，都在这里");
-            forYouTitle.setTextSize(14);
            // forYouTitle.setPadding(0,10,0,10);
             forYouTitle.setTextColor(act.getResources().getColor(R.color.hard_gray));
         }

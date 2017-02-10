@@ -20,9 +20,10 @@
         android:layout_height="1px" />
     <TextView
         android:id="@+id/forYouTitle"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
         android:text="为你定制"
-        style="@style/txt_gray_14" />
+        android:textSize="16sp"
+        style="@style/txt_black_14" />
 </LinearLayout>
