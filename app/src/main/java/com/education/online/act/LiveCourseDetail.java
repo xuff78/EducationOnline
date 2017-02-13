@@ -82,7 +82,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
     private VideoView videoView;
 //    private View videoBottomLayout;
-    String LiveCourseUrl="rtmp://pull.live.iqkui.com/live/";
+    String LiveCourseUrl="rtmp://pull.live.longforlearn.com/live/";
     String path = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
     protected LiveChatAdapter itemAdapter;
     protected RelativeLayout inputBottomBar;

@@ -59,7 +59,7 @@ public class Config {
         Orientation orientation;
 
         public Builder() {
-            url = "rtmp://push.live.iqkui.com/live/";  //rtmp://testlivesdk.v0.upaiyun.com/live/upyunab
+            url = "rtmp://push.live.longforlearn.com/live/";  //rtmp://testlivesdk.v0.upaiyun.com/live/upyunab
             bitRate = 600000;
             fps = 30;
             cameraType = Camera.CameraInfo.CAMERA_FACING_BACK;
