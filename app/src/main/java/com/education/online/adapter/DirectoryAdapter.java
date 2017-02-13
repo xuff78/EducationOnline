@@ -85,7 +85,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
 
     public class DirectoryHolder extends RecyclerView.ViewHolder{
 
-        TextView directorytext, statusTxt;
+        TextView directorytext, statusTxt, fileName;
         LinearLayout textholder;
         ThreadInfo info;
         int pos=0;
@@ -97,14 +97,20 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
             statusTxt = (TextView) v.findViewById(R.id.statusTxt);
             directorytext = (TextView) v.findViewById(R.id.textdirectory);
             textholder = (LinearLayout) v.findViewById(R.id.textholder);
+            fileName= (TextView) v.findViewById(R.id.fileName);
             textholder.setOnClickListener(listener);
             boolean isDownloading=myBinder.setCallbackHandker(info.getUrl(), handler);
             switch (info.getStatus()){
                 case 2:
                     statusTxt.setText(info.getFinished()*100/info.getEnd()+"%");
+                    fileName.setText("下载中");
                     break;
                 case 3:
                     statusTxt.setText("已下载");
+                    fileName.setText(info.getFileName());
+                    break;
+                default:
+                    fileName.setText("未下载");
                     break;
             }
         }
@@ -117,11 +123,13 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
                     case Constant.updateDownload:
                         long finished=msg.getData().getLong("finished");
                         statusTxt.setText(finished*100/info.getEnd()+"%");
+                        fileName.setText("下载中");
                         break;
                     case Constant.finishDownload:
                         LogUtil.i("download", "downloadFinishHandler");
                         statusTxt.setText("已下载");
                         ((VideoMainPage)act).files.get(pos).setStatus(3);
+                        fileName.setText(info.getFileName());
                         break;
                 }
             }

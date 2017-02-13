@@ -7,14 +7,15 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
     <RelativeLayout
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/statusTxt"
             android:id="@+id/textdirectory"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:singleLine="true"
             android:ellipsize="end"
@@ -24,13 +25,19 @@
         <TextView
             android:id="@+id/statusTxt"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:textColor="@color/normal_blue"
             android:text=""
             android:layout_alignParentRight="true"
             android:lineSpacingMultiplier="1.5"
             android:textSize="14sp"/>
+        <TextView
+            android:text="xxx"
+            android:layout_below="@+id/textdirectory"
+            android:id="@+id/fileName"
+            android:layout_marginTop="2dp"
+            style="@style/txt_gray_12"/>
     </RelativeLayout>
     <View
         android:id="@+id/line"
