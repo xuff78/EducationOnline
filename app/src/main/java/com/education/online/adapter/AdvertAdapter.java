@@ -159,7 +159,6 @@ for (CourseBean course :courseList) {
                 else ivh.priceTxt1.setText(ActUtil.getPrice(courseBean.getPrice()));
                 ivh.timeTxt1.setText(courseBean.getUser_name());
                 ivh.titleTxt1.setText(courseBean.getCourse_name());
-                ivh.timeTxt1.setText(courseBean.getCourseware_date());
                 ivh.item1.setTag(currentpos);
                 currentpos++;
 
@@ -183,7 +182,6 @@ for (CourseBean course :courseList) {
                 else ivh.priceTxt2.setText(ActUtil.getPrice( courseBean.getPrice()));
                 ivh.timeTxt2.setText(courseBean.getUser_name());
                 ivh.titleTxt2.setText(courseBean.getCourse_name());
-                ivh.timeTxt2.setText(courseBean.getCourseware_date());
                 ivh.item2.setTag(currentpos);
             //    currentpos++;
             } else {

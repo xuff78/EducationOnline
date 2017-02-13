@@ -35,6 +35,13 @@ public class ThreadDAOImpl{
 
     }
 
+    public void clearData() {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        db.execSQL("delete from thread_info");
+        db.close();
+
+    }
+
     public void updateThread(String url,int finished) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.execSQL("update thread_info set finished=? where url=?",

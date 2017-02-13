@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.VideoMainPage;
+import com.education.online.download.DBHelper;
 import com.education.online.download.DownloadService;
+import com.education.online.download.ThreadDAOImpl;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.FileUtil;
@@ -45,6 +47,7 @@ public class SettingDownload extends BaseFrameAct {
     @Bind(R.id.warnCheckbox)AppCompatCheckBox warnCheckbox;
     private Subscription subscription, loadFileSize;
     private ProgressDialog progressDialog;
+    private ThreadDAOImpl mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class SettingDownload extends BaseFrameAct {
 
         if(SharedPreferencesUtil.getValue(this, Constant.WIFIWarning, true))
             warnCheckbox.setChecked(true);
+        mHelper = new ThreadDAOImpl(this);
         initData();
     }
 
@@ -67,6 +71,7 @@ public class SettingDownload extends BaseFrameAct {
                 File dec=new File(DownloadService.DOWNLOAD_PATH);
                 if(dec.exists())
                     size=FileUtil.getFileSizes(dec);
+                mHelper.clearData();
                 subscriber.onNext(size);
             }
         });

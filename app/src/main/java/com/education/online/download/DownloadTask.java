@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.education.online.util.Constant;
+import com.education.online.util.LogUtil;
 
 import org.apache.http.HttpStatus;
 
@@ -16,6 +17,8 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by 可爱的蘑菇 on 2016/12/4.
@@ -134,7 +137,9 @@ public class DownloadTask {
                         }
                     }
                     //删除数据库中的线程信息
+                    LogUtil.i("download", "downloadFinish");
                     mDao.updateThreadComplete(mThreadInfo.getUrl(), 1);
+                    EventBus.getDefault().post(mThreadInfo);
                     if(handler!=null)
                         handler.sendEmptyMessage(Constant.finishDownload);
                 }

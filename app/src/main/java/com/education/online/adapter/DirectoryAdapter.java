@@ -15,6 +15,7 @@ import com.education.online.act.VideoMainPage;
 import com.education.online.download.DownloadService;
 import com.education.online.download.ThreadInfo;
 import com.education.online.util.Constant;
+import com.education.online.util.LogUtil;
 
 import java.util.ArrayList;
 
@@ -118,6 +119,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
                         statusTxt.setText(finished*100/info.getEnd()+"%");
                         break;
                     case Constant.finishDownload:
+                        LogUtil.i("download", "downloadFinishHandler");
                         statusTxt.setText("已下载");
                         ((VideoMainPage)act).files.get(pos).setStatus(3);
                         break;

@@ -38,6 +38,7 @@ import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
+import com.education.online.util.FileUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.OpenfileUtil;
@@ -51,9 +52,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
@@ -91,7 +94,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private ThreadDAOImpl mDao;
     private CourseDetailBean courseDetailBean = new CourseDetailBean();
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
-    private int openFilePos=0;
+    private int openFilePos=-1;
     public  ArrayList<ThreadInfo> files=new ArrayList<>();
 
     private String course_id;
@@ -258,11 +261,15 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void SetplayerOrImageState(int i) {
+        boolean isSamePos=openFilePos==i?true:false;
         openFilePos=i;
         String relativepath = courseDetailBean.getCourse_extm().get(i).getUrl();
         path = VideoUtil.getVideoUrl(relativepath);
 
-        if (relativepath.length() > 0){
+        if(files.get(openFilePos).getStatus()==3&&isSamePos){  //再次点击同一个条目就调用系统支持的应用打开
+            File file = new File(DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName());
+            FileUtil.openFile(this, file);
+        }else if (relativepath.length() > 0){
             String type = "";
             type = OpenfileUtil.getFiletype(relativepath);
             if (type == "image") {
@@ -313,6 +320,10 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                 videoMask.setVisibility(View.GONE);
                 background.setVisibility(View.VISIBLE);
                 imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), background);
+                if(files.get(openFilePos).getStatus()==3){
+                    File file = new File(DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName());
+                    FileUtil.openFile(this, file);
+                }
             }
         } else {
             if (upVideoView.isPlaying()) {
@@ -331,6 +342,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.videodetail);
 
+
+        EventBus.getDefault().register(this);
         _setHeaderGone();
         mDao = new ThreadDAOImpl(this);
         initiHandler();
@@ -647,10 +660,15 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         }
     };
 
+    public void onEventMainThread(ThreadInfo info) {
+        info.setStatus(3);
+    }
+
     @Override
     protected void onDestroy() {
         upVideoView.stopPlayback();
         unbindService(connection);
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
