@@ -18,7 +18,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by wli on 15/7/24.
  */
-public class AVBaseActivity extends FragmentActivity {
+public class AVBaseActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

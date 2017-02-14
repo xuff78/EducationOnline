@@ -130,8 +130,12 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                             textaddorbuy.setText("已拒绝");
                         }
                     }else if(courseDetailBean.getIs_buy().equals("1")) {
-                        textaddorbuy.setText("进入课程");
-                        textaddorbuy.setOnClickListener(CourseMainPage.this);
+                        if(ActUtil.canStartLive(startDateTime)) {
+                            textaddorbuy.setText("进入课程");
+                            textaddorbuy.setOnClickListener(CourseMainPage.this);
+                        }else {
+                            textaddorbuy.setText("尚未开始");
+                        }
                     }else {
                         textaddorbuy.setText("立即报名");
                         textaddorbuy.setOnClickListener(CourseMainPage.this);

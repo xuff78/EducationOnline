@@ -102,18 +102,19 @@ public class ActUtil {
     }
 
     public static boolean canStartLive(String datestring) {
+        boolean startCourse=false;
         try {
             Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
             long nowTime=mCalendar.getTimeInMillis();
             SimpleDateFormat dateData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dateStart = dateData.parse(datestring);
             long startTime=dateStart.getTime();
-            if(nowTime-startTime<3600)
-                return true;
+            if(nowTime-startTime<1800)
+                startCourse=true;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return false;
+        return startCourse;
     }
 
     public  static boolean isWifi(Context mContext) {

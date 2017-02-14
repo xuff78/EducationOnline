@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text=""
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textColor="@color/normal_gray"
                 android:singleLine="true"
                 android:ellipsize="end" />
@@ -61,7 +61,8 @@
                 android:id="@+id/chat_left_text_tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:textColor="@color/hard_gray"
                 android:gravity="center_vertical"/>
         </LinearLayout>
         <FrameLayout

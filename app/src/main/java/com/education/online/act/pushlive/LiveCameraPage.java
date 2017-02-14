@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,11 +23,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationEventHandler;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationMemberCountCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avoscloud.leanchatlib.activity.AVBaseActivity;
 import com.avoscloud.leanchatlib.controller.ChatManager;
@@ -45,6 +50,7 @@ import com.education.online.R;
 import com.education.online.adapter.LiveChatAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.view.ResolutionSelectDialog;
 import com.upyun.hardware.Config;
 import com.upyun.hardware.PushClient;
 
@@ -63,7 +69,7 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
     private ImageView mBtSetting;
     private ImageView mBtconvert;
     private ImageView mImgFlash;
-    private Config config;
+    public Config config;
     private String mNotifyMsg;
     private XListView pulltorefresh;
     protected LiveChatAdapter itemAdapter;
@@ -73,6 +79,8 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
     protected AVIMConversation imConversation;
     protected MessageAgent messageAgent;
     private TextView liveInfo;
+    private ResolutionSelectDialog dialog;
+    private int numcount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,9 +179,31 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.bt_setting:
-                mClient.stopPush();
-                mBtToggle.setAlpha(255);
+//                mClient.stopPush();
+//                mBtToggle.setAlpha(255);
 //                startActivity(new Intent(this, SettingActivity.class));
+                dialog=new ResolutionSelectDialog(LiveCameraPage.this, config.resolution, new ResolutionSelectDialog.OnClickCallBack() {
+                    @Override
+                    public void onItemClick(Config.Resolution resolution) {
+                        if(resolution!=config.resolution){
+                            boolean isStart=mClient.isStart();
+                            if (isStart)
+                                mClient.stopPush();
+                            config.resolution=resolution;
+                            changeSurfaceSize(surface, config);
+                            if(isStart) {
+                                try {
+                                    mClient.startPush();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG, e.toString());
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                });
+                dialog.show();
                 break;
 
             case R.id.btn_camera_switch:
@@ -360,10 +390,55 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
         super.onDestroy();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        imConversation.quit(new AVIMConversationCallback(){
+            @Override
+            public void done(AVIMException e){
+                if(e==null){
+                    //退出成功
+                }
+            }
+        });
+        super.onBackPressed();
+    }
+
     public void setConversation(AVIMConversation conversation) {
+        AVIMMessageManager.setConversationEventHandler(new AVIMConversationEventHandler() {
+            @Override
+            public void onMemberLeft(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
+                liveInfo.setText(--numcount+"人在观看");
+            }
+
+            @Override
+            public void onMemberJoined(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
+                liveInfo.setText(++numcount+"人在观看");
+            }
+
+            @Override
+            public void onKicked(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
+
+            }
+
+            @Override
+            public void onInvited(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
+
+            }
+        });
         imConversation = conversation;
         pulltorefresh.setEnabled(true);
-        liveInfo.setText(conversation.getMembers().size()+"人在观看");
+        conversation.getMemberCount(new AVIMConversationMemberCountCallback(){
+
+            @Override
+            public void done(Integer count,AVIMException e){
+                if(e==null){
+                    Log.d("Tom & Jerry","conversation got "+count+" members");
+                    numcount+=count;
+                    liveInfo.setText(numcount+"人在观看");
+                }
+            }
+        });
         fetchMessages();
         NotificationUtils.addTag(conversation.getConversationId());
         messageAgent = new MessageAgent(conversation);

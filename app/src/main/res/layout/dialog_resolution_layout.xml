@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/shape_trans_black_with_corner"
+    android:paddingBottom="10dp"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:gravity="center"
+        android:layout_height="40dp"
+        android:text="请选择分辨率"
+        style="@style/txt_white_14"/>
+    <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray"/>
+
+    <RadioGroup
+        android:layout_marginTop="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatRadioButton
+            android:text=" 高清 1280x720"
+            android:id="@+id/rescb1"
+            android:gravity="center_vertical"
+            style="@style/txt_white_14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <android.support.v7.widget.AppCompatRadioButton
+            android:text=" 标清 640x380"
+            android:id="@+id/rescb2"
+            android:gravity="center_vertical"
+            style="@style/txt_white_14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <android.support.v7.widget.AppCompatRadioButton
+            android:text=" 低清 320x240"
+            android:id="@+id/rescb3"
+            android:gravity="center_vertical"
+            style="@style/txt_white_14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </RadioGroup>
+</LinearLayout>
