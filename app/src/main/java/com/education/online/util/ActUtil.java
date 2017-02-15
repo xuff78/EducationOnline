@@ -18,6 +18,7 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avoscloud.leanchatlib.controller.ChatManager;
@@ -27,6 +28,7 @@ import com.avoscloud.leanchatlib.utils.LogUtils;
 import com.education.online.R;
 import com.education.online.act.CM_MessageChatAct;
 import com.education.online.act.SearchAct;
+import com.education.online.retrofit.LiveConversationEventHandler;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -109,7 +111,7 @@ public class ActUtil {
             SimpleDateFormat dateData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dateStart = dateData.parse(datestring);
             long startTime=dateStart.getTime();
-            if(nowTime-startTime<1800)
+            if(startTime-nowTime<1800000)
                 startCourse=true;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -433,6 +435,7 @@ public class ActUtil {
                     if (e != null) {
                         LogUtils.logException(e);
                     }
+                    AVIMMessageManager.setConversationEventHandler(new LiveConversationEventHandler());
                 }
             });
         }

@@ -9,6 +9,7 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.controller.MessageHandler;
 import com.baidu.mapapi.SDKInitializer;
+import com.education.online.retrofit.LiveConversationEventHandler;
 import com.education.online.util.SharedPreferencesUtil;
 
 

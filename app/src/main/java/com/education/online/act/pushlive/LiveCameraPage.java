@@ -3,32 +3,24 @@ package com.education.online.act.pushlive;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.im.v2.AVIMClient;
-import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.avos.avoscloud.im.v2.AVIMConversation;
-import com.avos.avoscloud.im.v2.AVIMConversationEventHandler;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationMemberCountCallback;
@@ -39,26 +31,22 @@ import com.avoscloud.leanchatlib.controller.ConversationHelper;
 import com.avoscloud.leanchatlib.controller.MessageAgent;
 import com.avoscloud.leanchatlib.event.ImTypeMessageEvent;
 import com.avoscloud.leanchatlib.event.ImTypeMessageResendEvent;
-import com.avoscloud.leanchatlib.event.InputBottomBarEvent;
-import com.avoscloud.leanchatlib.event.InputBottomBarRecordEvent;
-import com.avoscloud.leanchatlib.event.InputBottomBarTextEvent;
 import com.avoscloud.leanchatlib.model.ConversationType;
 import com.avoscloud.leanchatlib.utils.Constants;
 import com.avoscloud.leanchatlib.utils.NotificationUtils;
 import com.avoscloud.leanchatlib.xlist.XListView;
 import com.education.online.R;
 import com.education.online.adapter.LiveChatAdapter;
+import com.education.online.bean.ConversationEvent;
 import com.education.online.bean.CourseDetailBean;
-import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.view.ResolutionSelectDialog;
 import com.upyun.hardware.Config;
 import com.upyun.hardware.PushClient;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class LiveCameraPage extends AVBaseActivity implements View.OnClickListener {
@@ -81,6 +69,7 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
     private TextView liveInfo;
     private ResolutionSelectDialog dialog;
     private int numcount=0;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -343,6 +332,30 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
 
             }
         });
+
+        if(timer==null) {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    setMemberNum();
+                }
+            }, 15000);
+        }
+    }
+
+    private void setMemberNum(){
+        imConversation.getMemberCount(new AVIMConversationMemberCountCallback(){
+
+            @Override
+            public void done(Integer count,AVIMException e){
+                if(e==null){
+                    Log.d("Tom & Jerry","conversation got "+count+" members");
+                    numcount=count;
+                    liveInfo.setText(numcount+"人在观看");
+                }
+            }
+        });
     }
 
     protected void updateConversation(AVIMConversation conversation) {
@@ -386,7 +399,6 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
         if (mClient != null) {
             mClient.stopPush();
         }
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -405,40 +417,9 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
     }
 
     public void setConversation(AVIMConversation conversation) {
-        AVIMMessageManager.setConversationEventHandler(new AVIMConversationEventHandler() {
-            @Override
-            public void onMemberLeft(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
-                liveInfo.setText(--numcount+"人在观看");
-            }
-
-            @Override
-            public void onMemberJoined(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
-                liveInfo.setText(++numcount+"人在观看");
-            }
-
-            @Override
-            public void onKicked(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
-
-            }
-
-            @Override
-            public void onInvited(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
-
-            }
-        });
         imConversation = conversation;
         pulltorefresh.setEnabled(true);
-        conversation.getMemberCount(new AVIMConversationMemberCountCallback(){
-
-            @Override
-            public void done(Integer count,AVIMException e){
-                if(e==null){
-                    Log.d("Tom & Jerry","conversation got "+count+" members");
-                    numcount+=count;
-                    liveInfo.setText(numcount+"人在观看");
-                }
-            }
-        });
+        setMemberNum();
         fetchMessages();
         NotificationUtils.addTag(conversation.getConversationId());
         messageAgent = new MessageAgent(conversation);
@@ -494,6 +475,13 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                 itemAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    public void onEventMainThread(ConversationEvent event){
+        if(event.getType()== ConversationEvent.EventType.add)
+            liveInfo.setText(++numcount+"人在观看");
+        if(event.getType()== ConversationEvent.EventType.left)
+            liveInfo.setText(--numcount+"人在观看");
     }
 
     private void scrollToBottom() {

@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,11 +24,14 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationEventHandler;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationMemberCountCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
@@ -55,14 +59,18 @@ import com.avoscloud.leanchatlib.utils.Utils;
 import com.avoscloud.leanchatlib.xlist.XListView;
 import com.education.online.R;
 import com.education.online.adapter.LiveChatAdapter;
+import com.education.online.bean.ConversationEvent;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.LogUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 import io.vov.vitamio.widget.VideoView;
@@ -95,6 +103,8 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
     private TextView liveInfo;
     private Map<String, Object> attr=new HashMap<>();
     private int chatListHeight=0;
+    private int numcount=0;
+    private Timer timer;
 //    private int videoHeight=0, videoWidth=0;
 
     @Override
@@ -246,7 +256,6 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
     @Override
     public void onBackPressed() {
-
         if (videoView.isFullState) {
             //退出全屏
             RelativeLayout.LayoutParams rlp=new RelativeLayout.LayoutParams(-1, chatListHeight);
@@ -254,14 +263,26 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
             chatListLayout.setLayoutParams(rlp);
             videoView.fullScreen(LiveCourseDetail.this);
             videoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
-            return;
+        }else{
+            imConversation.quit(new AVIMConversationCallback(){
+                @Override
+                public void done(AVIMException e){
+                    if(e==null){
+                        //退出成功
+                    }
+                }
+            });
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        if(timer!=null) {
+            timer.cancel();
+            timer=null;
+        }
         videoView.pause();
     }
 
@@ -303,6 +324,15 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
             }
         });
+        if(timer==null) {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    setMemberNum();
+                }
+            }, 15000);
+        }
     }
 
     @Override
@@ -375,15 +405,28 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
         videoView.stopPlayback();
         super.onDestroy();
     }
 
+    private void setMemberNum(){
+        imConversation.getMemberCount(new AVIMConversationMemberCountCallback(){
+
+            @Override
+            public void done(Integer count,AVIMException e){
+                if(e==null){
+                    Log.d("Tom & Jerry","conversation got "+count+" members");
+                    numcount=count;
+                    liveInfo.setText(numcount+"人在观看");
+                }
+            }
+        });
+    }
+
     public void setConversation(AVIMConversation conversation) {
         imConversation = conversation;
+        setMemberNum();
         pulltorefresh.setEnabled(true);
-        liveInfo.setText(conversation.getMembers().size()+"人在观看");
         inputBottomBar.setTag(imConversation.getConversationId());
         fetchMessages();
         NotificationUtils.addTag(conversation.getConversationId());
@@ -433,6 +476,13 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
             itemAdapter.addMessage(event.message);
             itemAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void onEventMainThread(ConversationEvent event){
+        if(event.getType()== ConversationEvent.EventType.add)
+            liveInfo.setText(++numcount+"人在观看");
+        if(event.getType()== ConversationEvent.EventType.left)
+            liveInfo.setText(--numcount+"人在观看");
     }
 
     /**
