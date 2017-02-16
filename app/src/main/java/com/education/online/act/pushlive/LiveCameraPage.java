@@ -340,7 +340,7 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                 public void run() {
                     setMemberNum();
                 }
-            }, 15000);
+            }, 0, 10000);
         }
     }
 
@@ -419,7 +419,7 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
     public void setConversation(AVIMConversation conversation) {
         imConversation = conversation;
         pulltorefresh.setEnabled(true);
-        setMemberNum();
+//        setMemberNum();
         fetchMessages();
         NotificationUtils.addTag(conversation.getConversationId());
         messageAgent = new MessageAgent(conversation);

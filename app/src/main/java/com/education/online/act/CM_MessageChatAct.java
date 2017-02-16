@@ -13,6 +13,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMLocationMessage;
 import com.avoscloud.leanchatlib.activity.ChatActivity;
 import com.avoscloud.leanchatlib.controller.MessageHelper;
+import com.avoscloud.leanchatlib.event.HeadIconClickEvent;
 import com.avoscloud.leanchatlib.event.ImageItemClickEvent;
 import com.avoscloud.leanchatlib.event.InputBottomBarLocationClickEvent;
 import com.avoscloud.leanchatlib.event.LocationItemClickEvent;
@@ -20,6 +21,7 @@ import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.NotificationUtils;
 import com.education.online.R;
 import com.education.online.act.discovery.ChatSetting;
+import com.education.online.act.discovery.Studentintroduction;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 
@@ -119,6 +121,12 @@ public class CM_MessageChatAct extends ChatActivity {
             startActivity(i);
 //            ImageBrowserActivity.go(this, MessageHelper.getFilePath(imageMessage), imageMessage.getFileUrl());
         }
+    }
+
+    public void onEvent(HeadIconClickEvent event){
+        Intent i=new Intent(this, Studentintroduction.class);
+        i.putExtra("usercode", event.getUsercode());
+        startActivity(i);
     }
 
     public void KeyBoardCancle() {

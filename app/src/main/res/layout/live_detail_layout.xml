@@ -48,7 +48,7 @@
         android:id="@+id/chatListLayout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="200dp">
         <com.avoscloud.leanchatlib.xlist.XListView
             android:id="@+id/refreshListView"
             android:layout_above="@+id/controlLayout"

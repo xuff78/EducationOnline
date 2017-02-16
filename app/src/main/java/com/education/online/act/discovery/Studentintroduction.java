@@ -55,7 +55,8 @@ public class Studentintroduction extends SwipeBackActivity implements View.OnCli
                     teacherInfo = JSON.parseObject(jsonData, TeacherBean.class);
                     initView();
                 }else if(method.equals(Method.getUserInfo)){
-
+                    teacherInfo = JSON.parseObject(jsonData, TeacherBean.class);
+                    initView();
                 }else if(method.equals(Method.addAttention)){
                     if(teacherInfo.getIs_attention().equals("0")) {
                         starIcon.setImageResource(R.mipmap.icon_star_red);

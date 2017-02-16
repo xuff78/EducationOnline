@@ -331,7 +331,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
                 public void run() {
                     setMemberNum();
                 }
-            }, 15000);
+            }, 0, 10000);
         }
     }
 
@@ -425,7 +425,7 @@ public class LiveCourseDetail extends AVBaseActivity implements InputBottomBar.E
 
     public void setConversation(AVIMConversation conversation) {
         imConversation = conversation;
-        setMemberNum();
+//        setMemberNum();
         pulltorefresh.setEnabled(true);
         inputBottomBar.setTag(imConversation.getConversationId());
         fetchMessages();

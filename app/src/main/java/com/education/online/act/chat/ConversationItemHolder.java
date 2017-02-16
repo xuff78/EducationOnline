@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avoscloud.leanchatlib.controller.ConversationHelper;
 import com.avoscloud.leanchatlib.controller.MessageHelper;
@@ -78,9 +79,11 @@ public class ConversationItemHolder extends CommonViewHolder {
           mHandler.getUserInfoNoDialog(usercode);
         }
       } else {
-        recentAvatarView.setImageBitmap(ConversationManager.getConversationIcon(conversation));
-        recentNameView.setText(ConversationHelper.nameOfConversation(conversation));
+        recentAvatarView.setImageResource(R.mipmap.icon_group);
+        recentNameView.setText(conversation.getName());
       }
+
+      setLastMessage(room.getLastMessage());
 
       int num = room.getUnreadCount();
       if (num > 0) {
@@ -88,14 +91,6 @@ public class ConversationItemHolder extends CommonViewHolder {
         recentUnreadView.setText(num + "");
       } else {
         recentUnreadView.setVisibility(View.GONE);
-      }
-
-      if (room.getLastMessage() != null) {
-        Date date = new Date(room.getLastMessage().getTimestamp());
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
-        recentTimeView.setText(format.format(date));
-
-        recentMsgView.setText(MessageHelper.outlineOfMsg((AVIMTypedMessage) room.getLastMessage()));
       }
 
       itemView.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +101,15 @@ public class ConversationItemHolder extends CommonViewHolder {
           EventBus.getDefault().post(itemClickEvent);
         }
       });
+    }
+  }
+
+  private void setLastMessage(AVIMMessage msg){
+    if (msg != null) {
+      Date date = new Date(msg.getTimestamp());
+      SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+      recentTimeView.setText(format.format(date));
+      recentMsgView.setText(MessageHelper.outlineOfMsg((AVIMTypedMessage) msg));
     }
   }
 

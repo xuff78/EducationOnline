@@ -15,7 +15,9 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.avoscloud.leanchatlib.R;
 import com.avoscloud.leanchatlib.controller.ChatManager;
+import com.avoscloud.leanchatlib.event.HeadIconClickEvent;
 import com.avoscloud.leanchatlib.event.ImTypeMessageResendEvent;
+import com.avoscloud.leanchatlib.event.ImageItemClickEvent;
 import com.avoscloud.leanchatlib.event.LeftChatItemClickEvent;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
@@ -77,6 +79,14 @@ public class ChatItemHolder extends CommonViewHolder {
     message = (AVIMMessage)o;
     long gap = System.currentTimeMillis() - message.getTimestamp();
     timeView.setText(Utils.millisecsToDateString(message.getTimestamp()));
+    avatarView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        HeadIconClickEvent clickEvent = new HeadIconClickEvent();
+        clickEvent.setUsercode(message.getFrom());
+        EventBus.getDefault().post(clickEvent);
+      }
+    });
 
     LeanchatUser user = AVUserCacheUtils.getCachedUser(message.getFrom());
     if (null != user) {

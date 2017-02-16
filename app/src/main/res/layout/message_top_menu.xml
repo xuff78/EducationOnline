@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:background="@color/highlight_gray"
+        android:background="@drawable/shape_nocorner_lightgray"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="@dimen/padding_left"
-        android:layout_marginRight="@dimen/padding_left"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <ImageView
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_qrcode_small"
             android:layout_width="20dp"
