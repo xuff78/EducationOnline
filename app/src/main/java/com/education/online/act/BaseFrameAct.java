@@ -179,12 +179,14 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 		if (ActUtil.isLogin(this)&&ChatManager.getInstance().getSelfId() == null) {
-			Intent intent = new Intent(this, MainPage.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra("Login", true);
-			startActivity(intent);
-		}else
-			loader=ImageUtil.initImageLoader(this);
+			ActUtil.initChatUser(this);
+		}
+//			Intent intent = new Intent(this, MainPage.class);
+//			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			intent.putExtra("Login", true);
+//			startActivity(intent);
+//		}else
+		loader=ImageUtil.initImageLoader(this);
 	}
 
 	@Override

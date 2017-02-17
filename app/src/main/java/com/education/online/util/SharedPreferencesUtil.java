@@ -420,11 +420,11 @@ public final class SharedPreferencesUtil {
 	 * @param userid 用户ID
 	 */
 	public static void setSessionid(Context context, String sessionid) {
-		addData(context, "sessionid", "" + sessionid);
+		setString(context, "sessionid", "" + sessionid);
 	}
 
 	public static String getSessionid(Context context) {
-		final String sessionidStr = getData(context, "sessionid");
+		final String sessionidStr = getString(context, "sessionid");
 		return sessionidStr;
 	}
 

@@ -115,8 +115,10 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                                                     i.putExtra(CourseDetailBean.Name, courseDetailBean);
                                                     i.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
                                                     startActivity(i);
-                                                }else
+                                                }else {
                                                     ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         });
                                         return true;
@@ -181,8 +183,10 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                                 i.putExtra(CourseDetailBean.Name, courseDetailBean);
                                 i.putExtra(com.avoscloud.leanchatlib.utils.Constants.CONVERSATION_ID, ConversationId);
                                 startActivity(i);
-                            }else
+                            }else {
                                 ToastUtils.displayTextShort(CourseMainPage.this, "加入失败请稍后重试");
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }

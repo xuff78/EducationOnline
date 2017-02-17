@@ -206,7 +206,6 @@ public class LoginActivity extends BaseFrameAct {
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.SubjectName, loginInfo.getSubject_name());
                 SharedPreferencesUtil.setString(LoginActivity.this, Constant.UserInfo, JSON.toJSONString(loginInfo));
 
-                ActUtil.initChatUser(LoginActivity.this, loginInfo.getAvatar(), loginInfo.getNickname());
                 long left=System.currentTimeMillis()-pressTime;
                 if(left>=1500)
                     left=0;

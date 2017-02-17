@@ -76,7 +76,7 @@ public class XListView extends ListView implements OnScrollListener {
 														// load more.
 	private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
 													// feature.
-	private int alphaHeight=150;
+	private int alphaHeight=180;
 
 	/**
 	 * @param context

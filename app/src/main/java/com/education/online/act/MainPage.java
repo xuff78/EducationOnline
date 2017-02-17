@@ -20,6 +20,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.education.online.R;
+import com.education.online.act.login.LoginActivity;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.SubjectBean;
@@ -236,6 +237,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             exithandler.sendEmptyMessageDelayed(0, 2000);
         } else {
 //            SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
+            ActUtil.exitChat();
             finish();
         }
     }

@@ -455,6 +455,7 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                 imConversation.getConversationId().equals(event.conversation.getConversationId())) {
             itemAdapter.addMessage(event.message);
             itemAdapter.notifyDataSetChanged();
+            scrollToBottom();
         }
     }
 

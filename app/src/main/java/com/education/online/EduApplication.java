@@ -28,7 +28,7 @@ public class EduApplication extends MultiDexApplication {
 
 
         SDKInitializer.initialize(getApplicationContext());
-        SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
+//        SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
 
         String appId =  "V6AsD9B9FIFsF3nrpsJUJ5px-gzGzoHsz";
         String appKey = "RCycwUSj1KsLTg1HDTVYxRa9";

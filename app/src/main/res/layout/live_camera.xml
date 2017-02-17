@@ -106,5 +106,5 @@
         android:stackFromBottom="false"
         android:transcriptMode="normal"
         android:layout_width="240dp"
-        android:layout_height="200dp"/>
+        android:layout_height="190dp"/>
 </RelativeLayout>

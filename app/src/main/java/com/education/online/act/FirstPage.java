@@ -37,8 +37,7 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
 
 //        ImageLoader.getInstance().clearDiskCache();
 //        ImageLoader.getInstance().clearMemoryCache();
-
-        SharedPreferencesUtil.setString(this, Constant.isLogin, SharedPreferencesUtil.FAILURE_STRING);
+//        SharedPreferencesUtil.setString(this, Constant.isLogin, SharedPreferencesUtil.FAILURE_STRING);
         ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
 

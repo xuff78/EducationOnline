@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
@@ -28,6 +29,7 @@ import com.avoscloud.leanchatlib.utils.LogUtils;
 import com.education.online.R;
 import com.education.online.act.CM_MessageChatAct;
 import com.education.online.act.SearchAct;
+import com.education.online.bean.LoginInfo;
 import com.education.online.retrofit.LiveConversationEventHandler;
 
 import java.lang.reflect.Method;
@@ -216,7 +218,7 @@ public class ActUtil {
     }
 
     public static boolean isLogin(Context context) {
-        if(SharedPreferencesUtil.getString(context, Constant.isLogin).equals(SharedPreferencesUtil.FAILURE_STRING))
+        if(SharedPreferencesUtil.getSessionid(context).equals(SharedPreferencesUtil.FAILURE_STRING))
             return false;
         else
             return true;
@@ -415,29 +417,38 @@ public class ActUtil {
         return res;
     }
 
-    public static  void initChatUser(Context con, String imageUrl, String username){
+    public static  void initChatUser(Context con){
         LogUtil.i("Chat", "initChat");
-        LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
-        if(imageUrl.length()>0)
-            user.put("avatar", ImageUtil.getImageUrl(imageUrl));
-        user.put("username", username);
-        user.setObjectId(SharedPreferencesUtil.getString(con, "usercode"));
-        AVUser.changeCurrentUser(user, true);
-        AVUserCacheUtils.cacheUser(user.getObjectId(), user);
-
         ChatManager chatManager=ChatManager.getInstance();
-        String usercode= AVUser.getCurrentUser().getObjectId();
-        if(usercode!=null&&usercode.length()>0) {
-            chatManager.setupManagerWithUserId(usercode);
-            chatManager.openClient(new AVIMClientCallback() {
-                @Override
-                public void done(AVIMClient avimClient, AVIMException e) {
-                    if (e != null) {
-                        LogUtils.logException(e);
+
+        if(!chatManager.isConnect()) {
+            String loginJson = SharedPreferencesUtil.getString(con, Constant.UserInfo);
+            LoginInfo loginInfo = JSON.parseObject(loginJson, LoginInfo.class);
+            LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
+
+            if (loginInfo.getAvatar().length() > 0)
+                user.put("avatar", ImageUtil.getImageUrl(loginInfo.getAvatar()));
+            String name = loginInfo.getNickname();
+            if (name.length() == 0)
+                name = loginInfo.getUsername();
+            user.put("username", name);
+            user.setObjectId(loginInfo.getUsercode());
+            AVUser.changeCurrentUser(user, true);
+            AVUserCacheUtils.cacheUser(user.getObjectId(), user);
+
+            String usercode = AVUser.getCurrentUser().getObjectId();
+            if (usercode != null && usercode.length() > 0) {
+                chatManager.setupManagerWithUserId(usercode);
+                chatManager.openClient(new AVIMClientCallback() {
+                    @Override
+                    public void done(AVIMClient avimClient, AVIMException e) {
+                        if (e != null) {
+                            LogUtils.logException(e);
+                        }
+//                    AVIMMessageManager.setConversationEventHandler(new LiveConversationEventHandler());
                     }
-                    AVIMMessageManager.setConversationEventHandler(new LiveConversationEventHandler());
-                }
-            });
+                });
+            }
         }
     }
 
@@ -479,6 +490,21 @@ public class ActUtil {
 
             InputMethodManager inputmanger = (InputMethodManager) act.getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static void exitChat() {
+        AVIMClient imClient = ChatManager.getInstance().getImClient();
+        if(imClient!=null) {
+            imClient.close(new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient client, AVIMException e) {
+                    if (e == null) {
+                        //登出成功
+                    }else
+                        e.printStackTrace();
+                }
+            });
         }
     }
 }

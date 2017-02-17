@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
@@ -11,18 +12,19 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="140dp">
-        <ImageView
-            android:layout_marginLeft="15dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            android:layout_marginLeft="30dp"
             android:layout_centerVertical="true"
             android:id="@+id/teacherImg"
-            android:layout_width="65dp"
-            android:layout_height="65dp" />
-
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
         <TextView
             android:layout_alignTop="@+id/teacherImg"
             android:layout_toRightOf="@+id/teacherImg"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
             android:id="@+id/nameTxt"
             android:text="ADOBE 小方方"
             style="@style/txt_white_12" />
