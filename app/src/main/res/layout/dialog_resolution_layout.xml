@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp" />
         <android.support.v7.widget.AppCompatRadioButton
-            android:text=" 标清 640x380"
+            android:text=" 标清 640x480"
             android:id="@+id/rescb2"
             android:gravity="center_vertical"
             style="@style/txt_white_14"

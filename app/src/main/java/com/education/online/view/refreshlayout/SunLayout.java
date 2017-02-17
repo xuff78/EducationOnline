@@ -16,13 +16,13 @@ import android.widget.FrameLayout;
 public class SunLayout extends FrameLayout implements MaterialHeadListener {
 
     private final static String Tag = SunLayout.class.getSimpleName();
-    protected static final int DEFAULT_SUN_RADIUS = 12;//太阳的半径
+    protected static final int DEFAULT_SUN_RADIUS = 18;//太阳的半径
     private static final int DEFAULT_SUN_COLOR = Color.RED;
     private static final int DEFAULT_SUN_EYES_SIZE = 2;
-    private static final int DEFAULT_LINE_HEIGHT = 3;
+    private static final int DEFAULT_LINE_HEIGHT = 5;
     private static final int DEFAULT_LINE_WIDTH = 1;
     private static final int DEFAULT_LINE_LEVEL = 30;
-    private static final int DEFAULT_MOUTH_WIDTH = 3;
+    private static final int DEFAULT_MOUTH_WIDTH = 4;
     private static final int DEFAULT_LINE_COLOR = Color.RED;
 
     protected SunFaceView mSunView;

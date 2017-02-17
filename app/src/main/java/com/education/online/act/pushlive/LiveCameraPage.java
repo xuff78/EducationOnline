@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -47,6 +48,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.RunnableFuture;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class LiveCameraPage extends AVBaseActivity implements View.OnClickListener {
@@ -181,13 +183,17 @@ public class LiveCameraPage extends AVBaseActivity implements View.OnClickListen
                             config.resolution=resolution;
                             changeSurfaceSize(surface, config);
                             if(isStart) {
-                                try {
-                                    mClient.startPush();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Log.e(TAG, e.toString());
-                                    return;
-                                }
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            mClient.startPush();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            Log.e(TAG, e.toString());
+                                        }
+                                    }
+                                },500);
                             }
                         }
                     }
