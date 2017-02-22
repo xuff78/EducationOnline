@@ -213,40 +213,24 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         }
     }
 
-    private static boolean isExit = false;
-
-    Handler exithandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isExit = false;
-        }
-    };
-
     @Override
     public void onBackPressed() {
         exit();
     }
 
+    private long firstBack=-1;
+
     private void exit() {
-        if (!isExit) {
-            isExit = true;
+        if (firstBack==-1||System.currentTimeMillis()-firstBack>2000) {
+            firstBack=System.currentTimeMillis();
             Toast.makeText(getApplicationContext(), "再按一次退出程序",
                     Toast.LENGTH_SHORT).show();
-            exithandler.sendEmptyMessageDelayed(0, 2000);
         } else {
-//            SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
+            if(mLocationClient!=null){
+                mLocationClient.stop();
+            }
             ActUtil.exitChat();
-            finish();
+            super.onBackPressed();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(mLocationClient!=null){
-            mLocationClient.stop();
-        }
-        super.onDestroy();
     }
 }

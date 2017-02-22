@@ -104,6 +104,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }else if (pos == 0) {
             PagerHolder ivh = (PagerHolder) vh;
+            ivh.mViewPager.startAutoScroll();
         } else if (pos == 1) {
             SubjectHolder ivh = (SubjectHolder) vh;
        /* } else if (pos == 2) {
@@ -192,6 +193,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if(holder instanceof PagerHolder) {
+            ((PagerHolder)holder).mViewPager.stopAutoScroll();
+            LogUtil.i("Adapter", "stop autoscroll");
+        }
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup arg0, int pos) {
         RecyclerView.ViewHolder vh = null;
         if (pos == 0) {
@@ -225,13 +235,13 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class PagerHolder extends RecyclerView.ViewHolder {
-        ExtendedViewPager mViewPager;
+
+        private ExtendedViewPager mViewPager;
 
         public PagerHolder(View convertView) {
             super(convertView);
             mViewPager = (ExtendedViewPager) convertView.findViewById(R.id.galleryImgs);
             mViewPager.setAdapter(new ActivityTopGalleryAdapter(act, info.getAdverts_info()));
-            mViewPager.startAutoScroll();
         }
     }
 

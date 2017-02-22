@@ -186,7 +186,7 @@ public abstract class BaseFrameAct extends AppCompatActivity {
 //			intent.putExtra("Login", true);
 //			startActivity(intent);
 //		}else
-		loader=ImageUtil.initImageLoader(this);
+		loader=ImageUtil.initImageLoader(getApplicationContext());
 	}
 
 	@Override

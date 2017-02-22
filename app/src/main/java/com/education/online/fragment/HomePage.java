@@ -149,7 +149,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private void initView(View v) {
 
         mSwipeLayout = (MaterialRefreshLayout)v.findViewById(R.id.id_swipe_ly);
-        mSwipeLayout.setSunStyle(false);
+        mSwipeLayout.setSunStyle(true);
         mSwipeLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
@@ -237,7 +237,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
 
             super.onScrolled(recyclerView, dx, dy);
             lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-            LogUtil.i("test", "listScrollY: "+listScrollY);
+//            LogUtil.i("test", "listScrollY: "+listScrollY);
         }
 
         @Override

@@ -501,6 +501,7 @@ public class ActUtil {
                 public void done(AVIMClient client, AVIMException e) {
                     if (e == null) {
                         //登出成功
+                        LogUtil.i("Chat", "Login out successfull");
                     }else
                         e.printStackTrace();
                 }
