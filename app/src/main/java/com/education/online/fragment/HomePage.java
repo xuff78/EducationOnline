@@ -86,12 +86,14 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
                     page=1;
                     listScrollY=0;
                     courses.clear();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            handler.getRecommentCourses(page);
-                        }
-                    },2000);
+                    complete=false;
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            onloading=true;
+//                            handler.getRecommentCourses(page);
+//                        }
+//                    },2000);
                 }else if (method.equals(Method.getRecommentCourses)) {
                     int totalpage= JsonUtil.getJsonInt(jsonData, "page_total");
                     if(totalpage==page){

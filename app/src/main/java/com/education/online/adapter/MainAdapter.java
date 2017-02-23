@@ -98,10 +98,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (vh instanceof FooterViewHolder) {
             FooterViewHolder fvh = (FooterViewHolder) vh;
             fvh.footerHint.setText(loadingHint);
-            if(courses.size()==0)
-            {
-                fvh.footerHint.setText("");
-            }
         }else if (pos == 0) {
             PagerHolder ivh = (PagerHolder) vh;
             ivh.mViewPager.startAutoScroll();

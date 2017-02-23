@@ -3,13 +3,20 @@ package com.education.online;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.PushService;
+import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.controller.MessageHandler;
 import com.baidu.mapapi.SDKInitializer;
+import com.education.online.act.discovery.SystemMessagePage;
 import com.education.online.retrofit.LiveConversationEventHandler;
+import com.education.online.util.Constant;
+import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 
 
@@ -38,6 +45,22 @@ public class EduApplication extends MultiDexApplication {
         ChatManager.getInstance().init(getApplicationContext());
         AVOSCloud.setLastModifyEnabled(true);
         AVOSCloud.setDebugLogEnabled(debug);
+
+        PushService.setDefaultPushCallback(this, SystemMessagePage.class);
+        PushService.subscribe(this, "public", SystemMessagePage.class);
+        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            public void done(AVException e) {
+                if (e == null) {
+                    // 保存成功
+                    String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                    LogUtil.i("PushId", "installationId: "+installationId);
+                    SharedPreferencesUtil.setString(EduApplication.this, Constant.PushmsgId, installationId);
+                } else {
+                    // 保存失败，输出错误信息
+                    SharedPreferencesUtil.setString(EduApplication.this, Constant.PushmsgId, SharedPreferencesUtil.FAILURE_STRING);
+                }
+            }
+        });
 
         if (EduApplication.debug) {
             openStrictMode();

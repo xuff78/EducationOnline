@@ -23,6 +23,7 @@ public class Constant {
     public static final String SearchCate="SearchCate";
     public static final String UserInfo="UserInfo";
     public static final String NickName="NickName";
+    public static final String PushmsgId="PushmsgId";
     public static final String Avatar="Avatar";
     public static final String UserName="UserName";
     public static final String UserPSW="UserPSW";

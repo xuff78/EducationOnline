@@ -110,7 +110,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                 }
             });
             changePage(home);
-            initLocation();
+//            initLocation();
             if (!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")) {
                 menuBtn5.setVisibility(View.GONE);
             }
