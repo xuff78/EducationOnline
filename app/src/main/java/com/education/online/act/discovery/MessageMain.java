@@ -13,10 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMSingleMessageQueryCallback;
+import com.avoscloud.leanchatlib.controller.ChatManager;
 import com.avoscloud.leanchatlib.controller.ConversationHelper;
 import com.avoscloud.leanchatlib.event.ImTypeMessageEvent;
 import com.avoscloud.leanchatlib.model.ConversationType;
@@ -58,6 +62,7 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     private ConversationManager conversationManager;
     private EditText usercodeEdt;
     private HttpHandler httpHandler;
+    private boolean firstOpen=true;
 
     public void initiHandler() {
         httpHandler = new HttpHandler(this, new CallBack(this) {
@@ -78,9 +83,35 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_top_menu);
 
+        firstOpen=SharedPreferencesUtil.getValue(this, "FirstOpen", true);
         initiHandler();
         _setHeaderTitle("消息");
         initView();
+    }
+
+    private void requestConversation() {
+        if(firstOpen) {
+            ChatManager chatManager = ChatManager.getInstance();
+            if (chatManager.getSelfId() != null) {
+                AVIMConversationQuery query = chatManager.getConversationQuery();
+                List<String> member = new ArrayList<>();
+                member.add(chatManager.getSelfId());
+                query.containsMembers(member);
+                query.limit(20);
+                query.findInBackground(new AVIMConversationQueryCallback() {
+
+                    @Override
+                    public void done(List<AVIMConversation> list, AVIMException e) {
+                        for (AVIMConversation con : list) {
+                            ChatManager.getInstance().getRoomsTable().insertRoom(con.getConversationId());
+                        }
+                        updateConversationList();
+                    }
+                });
+            }
+        }else{
+            updateConversationList();
+        }
     }
 
     private void initView() {
@@ -179,7 +210,7 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        updateConversationList();
+        requestConversation();
     }
 
     public void onEvent(ConversationItemClickEvent event) {
@@ -210,6 +241,9 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     }
 
     private void updateLastMessage(final List<Room> roomList) {
+        if(firstOpen){
+            AVIMClient.setMessageQueryCacheEnable(false);
+        }
         for (final Room room : roomList) {
             AVIMConversation conversation = room.getConversation();
             if (null != conversation) {
@@ -224,6 +258,11 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
                     }
                 });
             }
+        }
+        if(firstOpen){
+            AVIMClient.setMessageQueryCacheEnable(true);
+            firstOpen=false;
+            SharedPreferencesUtil.setValue(MessageMain.this, "FirstOpen", false);
         }
     }
 
