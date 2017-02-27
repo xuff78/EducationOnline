@@ -139,14 +139,13 @@ public class CourseBaseInfoEdit extends BaseFrameAct implements View.OnClickList
                 break;
             case R.id.submitCourseBtn:
                 addClassBean.setIntroduction(courseDesc.getText().toString().trim());
-                addClassBean.setName(subjectTxt.getText().toString());
+                addClassBean.setName(courseName.getText().toString());
                 if (addClassBean.getName().length() == 0 || addClassBean.getIntroduction().length() == 0 || addClassBean.getCourse_type().length() == 0 || addClassBean.getSubject_id().length() == 0
                         || addClassBean.getOriginal_price().length() == 0 || addClassBean.getPrice().length() == 0 || addClassBean.getMin_follow().length() == 0
                         || addClassBean.getMax_follow().length() == 0 || addClassBean.getImg().length() == 0) {
                     Toast.makeText(CourseBaseInfoEdit.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    addClassBean.setName(courseName.getText().toString());
                     Intent intent = new Intent();
                     intent.setClass(CourseBaseInfoEdit.this, CourseBaseInfoEdit2.class);
                     intent.putExtra("addClassBean", addClassBean);

@@ -131,6 +131,13 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        if(adapter!=null)
+            adapter.stopAutoScroll();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homepage_fragment, container, false);

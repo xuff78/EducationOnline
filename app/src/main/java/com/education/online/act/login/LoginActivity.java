@@ -150,7 +150,7 @@ public class LoginActivity extends BaseFrameAct {
 //                            handler.login(name, password);
                             subscription=RetrofitAPIManager.getUserRetrofit(LoginActivity.this)
 //                                    .login(RequestStrUtil.getLoginStr(LoginActivity.this, name, password))
-                                    .login(name, password)
+                                    .login(name, password, SharedPreferencesUtil.getString(LoginActivity.this, Constant.PushmsgId))
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(callBack);

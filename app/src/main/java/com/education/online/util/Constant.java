@@ -42,8 +42,10 @@ public class Constant {
     public static final String TypeCourse="course";
 
     //微信的
-    public static final String WXAppId="WXAppId";
-    public static final String WXAppSecret="WXAppSecret";
+    public static final String WXAppId="wxd09179661c6e5d64";
+    public static final String WXAppSecret="94a1f4de4f5011e6b0ee525400b263eb";
+    public static final String WXPayResult="WXPayResult";
+    public static final String WXLOGIN_CODE="WXLOGIN_CODE";
 
 
     public static final String API_BASE = "ih.base.";

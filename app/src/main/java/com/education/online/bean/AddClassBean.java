@@ -19,7 +19,7 @@ public class AddClassBean implements Serializable{
     private String max_follow = ""; // 班级最高人数
     private String course_url="";
     private String refund="always"; // 退款设置（always-随时退 non-不可退 defore-开课前一小时可退 after-开课十分钟后不可退）  无
-    private String transfer="non"; // 插班类型（always-随时插班 non-不可插班）  无
+    private String transfer="always"; // 插班类型（always-随时插班 non-不可插班）  无
     private String plan = ""; // 教学计划  无
     private String  courseware_time = ""; // 具体上课时间，多个时间用逗号','隔开  无
     private String  time_len ="";//

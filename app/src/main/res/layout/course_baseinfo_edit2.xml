@@ -159,7 +159,7 @@
                     android:id="@+id/insertTxt"
                     android:layout_toLeftOf="@+id/arrowRight2"
                     android:layout_centerVertical="true"
-                    android:text="不可插班"
+                    android:text="随时插班"
                     style="@style/txt_black_14" />
                 <View
                     android:id="@+id/arrowRight2"
@@ -187,13 +187,13 @@
                     <TextView
                         android:id="@+id/insert1Text"
                         android:text="不可插班"
-                        android:textColor="@color/normal_red"
                         android:gravity="center"
                         style="@style/txt_black_14"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                     <ImageView
                         android:id="@+id/insert1Icon"
+                        android:visibility="gone"
                         android:layout_marginRight="60dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
@@ -212,13 +212,13 @@
                     <TextView
                         android:id="@+id/insert2Text"
                         android:text="随时插班"
+                        android:textColor="@color/normal_red"
                         android:gravity="center"
                         style="@style/txt_black_14"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                     <ImageView
                         android:id="@+id/insert2Icon"
-                        android:visibility="gone"
                         android:layout_marginRight="60dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"

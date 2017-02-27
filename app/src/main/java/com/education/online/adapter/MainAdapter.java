@@ -63,6 +63,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private HomePageInfo info;
     private ArrayList<CourseBean> courses=new ArrayList<>();
     private String loadingHint = "";
+    private ExtendedViewPager viewpage;
 
     public void setLoadingHint(String hint) {
         loadingHint = hint;
@@ -101,6 +102,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else if (pos == 0) {
             PagerHolder ivh = (PagerHolder) vh;
             ivh.mViewPager.startAutoScroll();
+            LogUtil.i("Adapter", "start autoscroll");
         } else if (pos == 1) {
             SubjectHolder ivh = (SubjectHolder) vh;
        /* } else if (pos == 2) {
@@ -191,9 +193,26 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
+//        if(holder instanceof PagerHolder) {
+//            ((PagerHolder)holder).mViewPager.stopAutoScroll();
+//            LogUtil.i("Adapter", "stop autoscroll");
+//        }
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
         if(holder instanceof PagerHolder) {
             ((PagerHolder)holder).mViewPager.stopAutoScroll();
             LogUtil.i("Adapter", "stop autoscroll");
+        }
+    }
+
+    public void stopAutoScroll() {
+        if(viewpage!=null) {
+            LogUtil.i("Adapter", "finish autoscroll");
+            viewpage.stopAutoScroll();
+            viewpage=null;
         }
     }
 
@@ -237,6 +256,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public PagerHolder(View convertView) {
             super(convertView);
             mViewPager = (ExtendedViewPager) convertView.findViewById(R.id.galleryImgs);
+            viewpage=mViewPager;
             mViewPager.setAdapter(new ActivityTopGalleryAdapter(act, info.getAdverts_info()));
         }
     }

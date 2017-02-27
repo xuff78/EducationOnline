@@ -76,7 +76,7 @@ public class ActUtil {
 //        SharedPreferencesUtil.setString(con, Constant.App_Key,
 //                "600025");
         SharedPreferencesUtil.setString(con, Constant.WXAppId,
-                "wxc1fdc3e0a84ff533");
+                Constant.WXAppId);
         SharedPreferencesUtil.setString(con, Constant.WXAppSecret,
                 "94a1f4de4f5011e6b0ee525400b263eb");
         SharedPreferencesUtil.setString(con, Constant.App_Secret,

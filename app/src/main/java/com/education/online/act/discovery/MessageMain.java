@@ -251,19 +251,18 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
                     @Override
                     public void done(AVIMMessage avimMessage, AVIMException e) {
                         if (filterException(e) && null != avimMessage) {
-                            room.setLastMessage(avimMessage);
-                            int index = roomList.indexOf(room);
-                            itemAdapter.notifyItemChanged(index);
+                            if(!MessageMain.this.isFinishing()) {
+                                room.setLastMessage(avimMessage);
+                                int index = roomList.indexOf(room);
+                                itemAdapter.notifyItemChanged(index);
+                            }
                         }
                     }
                 });
             }
         }
-        if(firstOpen){
-            AVIMClient.setMessageQueryCacheEnable(true);
-            firstOpen=false;
-            SharedPreferencesUtil.setValue(MessageMain.this, "FirstOpen", false);
-        }
+        AVIMClient.setMessageQueryCacheEnable(true);
+        firstOpen=false;
     }
 
     /*private void cacheRelatedUsers(List<Room> rooms) {

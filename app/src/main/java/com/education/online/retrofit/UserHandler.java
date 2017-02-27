@@ -21,5 +21,6 @@ public interface UserHandler {
 
     @FormUrlEncoded
     @POST(Method.Login)
-    Observable<HttpResult<LoginInfo>> login(@Field("phone") String phone, @Field("password") String password);
+    Observable<HttpResult<LoginInfo>> login(@Field("phone") String phone, @Field("password") String password,
+                                            @Field("leancloud_id") String leancloud_id);
 }
