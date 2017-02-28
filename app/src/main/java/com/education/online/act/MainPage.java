@@ -110,7 +110,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                 }
             });
             changePage(home);
-//            initLocation();
+            initLocation();
             if (!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")) {
                 menuBtn5.setVisibility(View.GONE);
             }
@@ -221,16 +221,19 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private long firstBack=-1;
 
     private void exit() {
-        if (firstBack==-1||System.currentTimeMillis()-firstBack>2000) {
-            firstBack=System.currentTimeMillis();
-            Toast.makeText(getApplicationContext(), "再按一次退出程序",
-                    Toast.LENGTH_SHORT).show();
-        } else {
+//        if (firstBack==-1||System.currentTimeMillis()-firstBack>2000) {
+//            firstBack=System.currentTimeMillis();
+//            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+//                    Toast.LENGTH_SHORT).show();
+//        } else {
             if(mLocationClient!=null){
                 mLocationClient.stop();
             }
-            ActUtil.exitChat();
-            super.onBackPressed();
-        }
+//            ActUtil.exitChat();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+//        }
     }
 }
