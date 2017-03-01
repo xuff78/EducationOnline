@@ -135,12 +135,6 @@ public class ModifyPassword extends BaseFrameAct {
                 }
             }
 
-            @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
-
-
-            }
         });
     }
 

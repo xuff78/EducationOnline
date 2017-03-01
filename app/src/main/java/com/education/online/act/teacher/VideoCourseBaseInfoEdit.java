@@ -467,8 +467,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
             }
 
             @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
+                super.onFailure(method, jsonMessage, jsonData);
                 //
             }
         });

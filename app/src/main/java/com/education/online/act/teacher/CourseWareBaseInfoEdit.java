@@ -451,11 +451,6 @@ public class CourseWareBaseInfoEdit extends BaseFrameAct {
                 finish();
             }
 
-            @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
-                //
-            }
         });
     }
 

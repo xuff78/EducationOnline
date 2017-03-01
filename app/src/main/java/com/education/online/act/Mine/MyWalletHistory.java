@@ -71,7 +71,7 @@ public class MyWalletHistory extends BaseFrameAct {
             }
 
             @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
                 if(method.equals(Method.getWalletInfo)){
                     onloading = false;
                     adapter.setLoadingHint("加载失败");

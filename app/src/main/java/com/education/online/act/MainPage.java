@@ -65,11 +65,6 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             public void onHTTPException(String method, String jsonMessage) {
 
             }
-
-            @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-
-            }
         });
     }
 

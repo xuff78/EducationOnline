@@ -51,7 +51,7 @@ public class CallBack {
 				i.putExtra("Login", true);
 				mContext.startActivity(i);
 			} else {
-				onFailure(method, msg);
+				onFailure(method, msg, JsonUtil.getJsonData(jsonMessage));
 			}
 		}
 	}
@@ -64,7 +64,7 @@ public class CallBack {
 	 *
 	 * @param jsonMessage 回调失败字符串信息
 	 */
-	public void onFailure(String method, JsonMessage jsonMessage){
+	public void onFailure(String method, JsonMessage jsonMessage, String json){
 //		LogUtil.e(TAG, "onFailure:" + jsonMessage);
 		DialogUtil.showInfoDailog(mContext, jsonMessage.getCode(), jsonMessage.getMsg());
 	}

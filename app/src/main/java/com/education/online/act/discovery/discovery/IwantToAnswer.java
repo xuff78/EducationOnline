@@ -137,8 +137,8 @@ public class IwantToAnswer extends BaseFrameAct implements View.OnClickListener 
             }
 
             @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
+                super.onFailure(method, jsonMessage, jsonData);
                 if(method == Method.askOrAnswer) {
                     ToastUtils.displayTextShort(IwantToAnswer.this, "回答失败！");
                 }

@@ -193,8 +193,8 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
+                super.onFailure(method, jsonMessage, jsonData);
                 if(method.equals(Method.getEvaluateList)){
                     onloading=false;
                     adapter.setLoadingHint("加载失败");

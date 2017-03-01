@@ -107,8 +107,8 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             }
 
             @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
+                super.onFailure(method, jsonMessage, jsonData);
                 if (method.equals(Method.getHomePage))
                     mSwipeLayout.finishRefresh();
                 else if (method.equals(Method.getRecommentCourses)) {

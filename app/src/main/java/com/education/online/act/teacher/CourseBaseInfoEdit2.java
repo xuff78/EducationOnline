@@ -97,12 +97,6 @@ public class CourseBaseInfoEdit2 extends BaseFrameAct implements View.OnClickLis
 
 
             }
-
-            @Override
-            public void onFailure(String method, JsonMessage jsonMessage) {
-                super.onFailure(method, jsonMessage);
-                //
-            }
         });
   }
 

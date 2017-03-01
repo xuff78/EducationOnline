@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.bean.JsonMessage;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
@@ -26,6 +27,14 @@ public class SignEveryday extends BaseFrameAct {
             public void doSuccess(String method, String jsonData) throws JSONException {
                 if(method.equals(Method.signin)){
                     hintInfo.setText("我的积分： "+ JsonUtil.getString(jsonData, "integral")+"     此次增加积分： "+
+                            JsonUtil.getString(jsonData, "signin_integral"));
+                }
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
+                if(method.equals(Method.signin)) {
+                    hintInfo.setText("我的积分： " + JsonUtil.getString(jsonData, "integral") + "     此次增加积分： " +
                             JsonUtil.getString(jsonData, "signin_integral"));
                 }
             }
