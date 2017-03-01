@@ -340,7 +340,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
         <!--必须顶住上面，不然没法放大-->
-        <View
+        <TextView
+            style="@style/txt_white_12"
+            android:gravity="center"
+            android:text="上滑查看详情"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             />

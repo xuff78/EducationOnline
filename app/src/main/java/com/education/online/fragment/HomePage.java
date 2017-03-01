@@ -158,7 +158,7 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
     private void initView(View v) {
 
         mSwipeLayout = (MaterialRefreshLayout)v.findViewById(R.id.id_swipe_ly);
-        mSwipeLayout.setSunStyle(true);
+        mSwipeLayout.setSunStyle(false);
         mSwipeLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {

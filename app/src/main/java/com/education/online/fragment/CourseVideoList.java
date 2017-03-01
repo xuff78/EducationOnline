@@ -14,6 +14,7 @@ import com.education.online.adapter.VideoListAdapter;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.inter.CourseUpdate;
+import com.education.online.inter.ListCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class CourseVideoList extends CourseUpdate {
     private RecyclerView teacherList;
     ArrayList<CourseBean> onlineCourseBeanArrayList = new ArrayList<>();
     VideoListAdapter adapter;
+    ListCallback callback;
     MyVideoListAdapter myVideoListAdapteradapter;
     private int type =1;
     public void setType(int type) {
@@ -38,6 +40,10 @@ public class CourseVideoList extends CourseUpdate {
 
         initView(view);
         return view;
+    }
+
+    public void setListCallback(ListCallback callback){
+        this.callback=callback;
     }
 
     public void addCourses(List<CourseBean> courses, boolean isNew){
@@ -54,14 +60,41 @@ public class CourseVideoList extends CourseUpdate {
 
     private void initView(View v) {
         teacherList = (RecyclerView) v.findViewById(R.id.OnlineCoursePageRecycleList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         teacherList.setLayoutManager(layoutManager);
         if(type ==1){
-        adapter=new VideoListAdapter(getActivity(), onlineCourseBeanArrayList);
-        teacherList.setAdapter(adapter);}
-    else if (type ==0){
-        myVideoListAdapteradapter=new MyVideoListAdapter(getActivity(), onlineCourseBeanArrayList);
-        teacherList.setAdapter(myVideoListAdapteradapter);}
+            adapter=new VideoListAdapter(getActivity(), onlineCourseBeanArrayList);
+            teacherList.setAdapter(adapter);
+        }else if (type ==0){
+            myVideoListAdapteradapter=new MyVideoListAdapter(getActivity(), onlineCourseBeanArrayList);
+            teacherList.setAdapter(myVideoListAdapteradapter);
+        }
+
+        RecyclerView.OnScrollListener recyclerListener=new RecyclerView.OnScrollListener() {
+
+            int lastVisibleItem=0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+//            LogUtil.i("test", "listScrollY: "+listScrollY);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(adapter!=null)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE
+                            && lastVisibleItem + 1 == adapter.getItemCount()) {
+                                if(callback!=null)
+                                    callback.requestNextpage();
+                    }
+            }
+        };
+        teacherList.addOnScrollListener(recyclerListener);
     }
+
+
 }

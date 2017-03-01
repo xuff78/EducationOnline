@@ -17,6 +17,7 @@ import com.education.online.adapter.OnlineCourseAdapter;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.inter.CourseUpdate;
+import com.education.online.inter.ListCallback;
 import com.education.online.inter.LoadMoreScrollerListener;
 import com.education.online.view.recylistanima.animators.LandingAnimator;
 import com.education.online.view.recylistanima.animators.SlideInUpAnimator;
@@ -32,7 +33,7 @@ public class OnlineCoursePage extends CourseUpdate{
 
     private RecyclerView OnlineCoursePageRecycleList;
     private RecyclerView.Adapter adapter;
-
+    ListCallback callback;
     public void setType(int type) {
         this.type = type;
     }
@@ -48,6 +49,10 @@ public class OnlineCoursePage extends CourseUpdate{
 
         initView(view);
         return view;
+    }
+
+    public void setListCallback(ListCallback callback){
+        this.callback=callback;
     }
 
     public void addCourses(List<CourseBean> courses, boolean isNew){
@@ -70,7 +75,7 @@ public class OnlineCoursePage extends CourseUpdate{
         OnlineCoursePageRecycleList.getItemAnimator().setRemoveDuration(500);
         OnlineCoursePageRecycleList.getItemAnimator().setMoveDuration(500);
         OnlineCoursePageRecycleList.getItemAnimator().setChangeDuration(500);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         OnlineCoursePageRecycleList.setLayoutManager(layoutManager);
         if(type==0){
@@ -81,11 +86,29 @@ public class OnlineCoursePage extends CourseUpdate{
         }
         OnlineCoursePageRecycleList.setAdapter(adapter);
 
-        OnlineCoursePageRecycleList.addOnScrollListener(new LoadMoreScrollerListener(layoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
 
+        RecyclerView.OnScrollListener recyclerListener=new RecyclerView.OnScrollListener() {
+
+            int lastVisibleItem=0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+//            LogUtil.i("test", "listScrollY: "+listScrollY);
             }
-        });
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(adapter!=null)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE
+                            && lastVisibleItem + 1 == adapter.getItemCount()) {
+                        if(callback!=null)
+                            callback.requestNextpage();
+                    }
+            }
+        };
+        OnlineCoursePageRecycleList.addOnScrollListener(recyclerListener);
     }
 }

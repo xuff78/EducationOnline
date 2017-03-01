@@ -36,6 +36,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -71,6 +72,18 @@ public class ImageUtil {
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
 				.considerExifParams(true)
+				.build();
+		return options;
+	}
+
+	public static DisplayImageOptions getImageOptionRound(int Resid, int roundSize){
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				.showImageForEmptyUri(Resid)
+				.showImageOnFail(Resid)
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
+				.considerExifParams(true)
+				.displayer(new RoundedBitmapDisplayer(roundSize))
 				.build();
 		return options;
 	}

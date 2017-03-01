@@ -23,6 +23,7 @@ import com.education.online.bean.CourseBean;
 import com.education.online.bean.CourseFilter;
 import com.education.online.bean.FilterAll;
 import com.education.online.bean.FilterInfo;
+import com.education.online.bean.JsonMessage;
 import com.education.online.bean.SubjectBean;
 import com.education.online.bean.TeacherWithCourse;
 import com.education.online.fragment.CourseVideoList;
@@ -36,6 +37,7 @@ import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.CourseUpdate;
 import com.education.online.inter.DialogCallback;
+import com.education.online.inter.ListCallback;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
@@ -52,7 +54,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback, SelectorPage.CourseSelector{
+public class SearchResultAct extends BaseFrameAct implements View.OnClickListener, DialogCallback, SelectorPage.CourseSelector,
+        ListCallback{
 
     private TextView typeTxt, selectTypeView, selectTypeView2, selectTypeView3, menuFilterTxt1;
     private EditText searchEdt;
@@ -69,7 +72,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
     private CourseVideoList coursewareList = new CourseVideoList();
     private TeacherList teacherList = new TeacherList();
     private HttpHandler handler;
-    private String pageSize="20";
+    private boolean onloading=false, complete=false;
     private int page=1;
     private List<CourseBean> items=new ArrayList<>();
     private List<TeacherWithCourse> teacheritems=new ArrayList<>();
@@ -87,10 +90,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     String courseInfo=JsonUtil.getString(jsonData, "course_info");
                     if(type==0) {
                         items = JSON.parseObject(courseInfo, new TypeReference<List<CourseBean>>() {});
-                        currentCourseFrg.addCourses(items, true);
+                        currentCourseFrg.addCourses(items, !isloadMore);
                     }else if(type==1){
                         teacheritems = JSON.parseObject(courseInfo,  new TypeReference<List<TeacherWithCourse>>() {});
-                        teacherList.addTeacherCourses(teacheritems, true);
+                        teacherList.addTeacherCourses(teacheritems, !isloadMore);
                     }
                     page++;
                     if(!AllCate) {
@@ -100,10 +103,30 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     }else{
                         ((SelectorPage) selectorPage).clearCate();
                     }
-                    courseFilter.setPage(String.valueOf(page));
+
+                    String page_total=JsonUtil.getString(jsonData, "page_total");
+                    if(page_total.equals(courseFilter.getPage())) {
+                        complete = true;
+                    }else {
+                        complete = false;
+                        courseFilter.setPage(String.valueOf(page));
+                    }
+                    onloading=false;
                 }else if(method.equals(Method.updateSortList)){
                 }else if(method.equals(Method.updateSortList)){
                 }
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage) {
+                super.onFailure(method, jsonMessage);
+                onloading=false;
+            }
+
+            @Override
+            public void onHTTPException(String method, String jsonMessage) {
+                super.onHTTPException(method, jsonMessage);
+                onloading=false;
             }
         });
     }
@@ -238,6 +261,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId== EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_UNSPECIFIED||actionId==EditorInfo.IME_ACTION_SEARCH){
                     page=1;
+                    isloadMore=false;
                     courseFilter.setPage(String.valueOf(page));
                     String searchwords=searchEdt.getText().toString();
                     courseFilter.setKey_word(searchwords);
@@ -270,6 +294,10 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         selectTypeView3= (TextView) findViewById(R.id.courseTypeTxt3);
         selectTypeView3.setOnClickListener(typeListener);
         menuFilterTxt1=(TextView) findViewById(R.id.menuFilterTxt1);
+
+        courseVideoList.setListCallback(this);
+        onlinecoursePage.setListCallback(this);
+        teacherList.setListCallback(this);
     }
 
     private void setFirstFilter(ArrayList<FilterInfo> list){
@@ -317,6 +345,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         public void onClick(View view) {
             TextView txt= (TextView) view;
             page=1;
+            isloadMore=false;
             courseFilter.setPage(String.valueOf(page));
             if(txt!=selectTypeView) {
                 selectTypeView.setTextColor(getResources().getColor(R.color.hard_gray));
@@ -398,6 +427,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         closeDialog();
         courseFilter.setSubject_ids(subject.getSubject_id());
         page=1;
+        isloadMore=false;
         courseFilter.setPage(String.valueOf(page));
         handler.getCourseList(courseFilter);
         menuFilterTxt1.setText(subject.getSubject_name());
@@ -467,6 +497,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             }
         }
         page=1;
+        isloadMore=false;
         courseFilter.setPage(String.valueOf(page));
         handler.getCourseList(courseFilter);
     }
@@ -483,7 +514,21 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             courseFilter.setSort("price");
         }
         page=1;
+        isloadMore=false;
         courseFilter.setPage(String.valueOf(page));
         handler.getCourseList(courseFilter);
+    }
+
+    private boolean isloadMore=false;
+
+    @Override
+    public void requestNextpage() {
+        if(!onloading) {
+            if (!complete) {
+                onloading = true;
+                isloadMore=true;
+                handler.getCourseList(courseFilter);
+            }
+        }
     }
 }

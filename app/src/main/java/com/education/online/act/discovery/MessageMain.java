@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVConstants;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
@@ -193,7 +194,9 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.systemMessageLayout:
-                startActivity(new Intent(MessageMain.this, SystemMessagePage.class));
+                Intent intent=new Intent(MessageMain.this, SystemMessagePage.class);
+                intent.putExtra(AVConstants.PUSH_INTENT_KEY, 1);
+                startActivity(intent);
                 break;
             case R.id.myFavorite:
                 startActivity(new Intent(MessageMain.this, MyFavoriteList.class));
@@ -241,9 +244,9 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
     }
 
     private void updateLastMessage(final List<Room> roomList) {
-        if(firstOpen){
+//        if(firstOpen){
             AVIMClient.setMessageQueryCacheEnable(false);
-        }
+//        }
         for (final Room room : roomList) {
             AVIMConversation conversation = room.getConversation();
             if (null != conversation) {

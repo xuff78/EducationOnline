@@ -14,6 +14,7 @@ import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.bean.TeacherWithCourse;
 import com.education.online.inter.CourseUpdate;
+import com.education.online.inter.ListCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class TeacherList extends CourseUpdate {
 
     private RecyclerView teacherList;
     private TeacherAdapter adapter;
+    ListCallback callback;
     private List<TeacherWithCourse> onlineCourseBeanArrayList = new ArrayList<>();
 
     @Override
@@ -36,6 +38,10 @@ public class TeacherList extends CourseUpdate {
         return view;
     }
 
+    public void setListCallback(ListCallback callback){
+        this.callback=callback;
+    }
+
     public void addTeacherCourses(List<TeacherWithCourse> courses, boolean isNew){
         if(isNew)
             onlineCourseBeanArrayList.clear();
@@ -45,10 +51,36 @@ public class TeacherList extends CourseUpdate {
 
     private void initView(View v) {
         teacherList = (RecyclerView) v.findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         teacherList.setLayoutManager(layoutManager);
         adapter=new TeacherAdapter(getActivity(), onlineCourseBeanArrayList);
         teacherList.setAdapter(adapter);
+
+
+
+        RecyclerView.OnScrollListener recyclerListener=new RecyclerView.OnScrollListener() {
+
+            int lastVisibleItem=0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+//            LogUtil.i("test", "listScrollY: "+listScrollY);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(adapter!=null)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE
+                            && lastVisibleItem + 1 == adapter.getItemCount()) {
+                        if(callback!=null)
+                            callback.requestNextpage();
+                    }
+            }
+        };
+        teacherList.addOnScrollListener(recyclerListener);
     }
 }

@@ -64,6 +64,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<CourseBean> courses=new ArrayList<>();
     private String loadingHint = "";
     private ExtendedViewPager viewpage;
+    private DisplayImageOptions roundOptions;
 
     public void setLoadingHint(String hint) {
         loadingHint = hint;
@@ -80,6 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         imgHeight = itemWidth - 2 * padding10; //小图片的边长
         courseWidth = (ScreenUtil.getWidth(act) - 5 * padding10) / 2;
         this.courses=courses;
+        roundOptions=ImageUtil.getImageOptionRound(R.color.white,10);
     }
 
     @Override
@@ -184,7 +186,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             cvh.titleTxt.setText(courseBean.getCourse_name());
             cvh.statusTxt.setText(courseBean.getFollow()+"人正在学习");
             cvh.priceTxt.setText(ActUtil.getPrice(courseBean.getPrice()));
-            imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), cvh.courseImg);
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), cvh.courseImg, roundOptions);
             cvh.itemView.setTag(courseBean);
             cvh.itemView.setOnClickListener(listener);
         }
@@ -379,7 +381,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LinearLayout itemlayout1, itemlayout2;
         TextView subjectName;
         int pos = 0;
-        DisplayImageOptions options=ImageUtil.getImageOption(R.color.white);
         SimpleImageLoadingListener imageLoadingListener=new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -409,7 +410,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         addLayout=itemlayout2;
                     CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     LiveCourse live = liveCourses.get(i);
-                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, options,
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, roundOptions,
                             imageLoadingListener, loadingProgressListener);
                     ivh.titleTxt.setText(live.getCourse_name());
                     ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
@@ -424,7 +425,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         addLayout=itemlayout2;
                     CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     VideoCourse live = liveCourses.get(i);
-                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, options,
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, roundOptions,
                             imageLoadingListener, loadingProgressListener);
                     ivh.titleTxt.setText(live.getCourse_name());
                     ivh.priceTxt.setText(ActUtil.getPrice(live.getPrice()));
@@ -439,7 +440,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         addLayout=itemlayout2;
                     CourseViewHolder ivh=getCourseHolder(addLayout, i);
                     WareCourse live = liveCourses.get(i);
-                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, options,
+                    imageLoader.displayImage(ImageUtil.getImageUrl(live.getCourse_img()), ivh.courseImg1, roundOptions,
                             imageLoadingListener, loadingProgressListener);
                     if(live.getCourse_img().length()==0)
                         ivh.courseImg1.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

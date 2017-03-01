@@ -64,7 +64,6 @@ public class LoginActivity extends BaseFrameAct {
         ButterKnife.bind(this);
 
         _setHeaderGone();
-        initHandler();
         initView();
     }
 
@@ -139,6 +138,7 @@ public class LoginActivity extends BaseFrameAct {
         if (cancel) {
             focusView.requestFocus();
         } else {
+            initHandler();
             ActUtil.KeyBoardCancle(this);
             progressBar.setVisibility(View.VISIBLE);
             CircularAnim.init(800, 500, R.color.dark_orange);
