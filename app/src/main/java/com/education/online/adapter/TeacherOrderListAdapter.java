@@ -65,7 +65,7 @@ public class TeacherOrderListAdapter extends RecyclerView.Adapter <RecyclerView.
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, ImageUtil.dip2px(activity, 45)));
             vh = new FooterViewHolder(view);
         } else {
-            View convertView = inflater.inflate(R.layout.system_message_listitem, null);
+            View convertView = inflater.inflate(R.layout.teacher_order_item_new, null);
             vh = new OrderItem(convertView, pos);
         }
         return vh;
