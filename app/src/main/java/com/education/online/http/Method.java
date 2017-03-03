@@ -11,9 +11,10 @@ public class Method {
     public static final String updateLocation = "uc/user/location";
     public static final String nearUser = "uc/user/near";
     public static final String signin = "uc/user/signin";
+    public static final String signToday = "uc/user/signInToday";
     public static final String getIntegral= "uc/user/integral";
 
-
+    public static final String getSystemMessage = "education/user/message";
     public static final String getRecommentCourses = "education/homepage/interest";
     public static final String updateValidate = "education/user/validate";
     public static final String getValidateView = "education/user/validateView";
@@ -35,6 +36,7 @@ public class Method {
     public static final String dispose = "education/user/dispose";
     public static final String getCourseCollections = "education/user/collections";
     public static final String submitEvaluateReply = "education/course/evaluateReply";
+    public static final String editCourse = "education/course/alter";
 
     public static final String submitOrder = "education/order/save";
     public static final String getOrderDetail = "education/order/view";

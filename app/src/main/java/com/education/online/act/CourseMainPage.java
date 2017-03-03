@@ -26,6 +26,7 @@ import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
 import com.education.online.R;
 import com.education.online.act.order.SubmitOrder;
 import com.education.online.act.pushlive.LiveCameraPage;
+import com.education.online.act.teacher.CourseBaseInfoModify;
 import com.education.online.adapter.CourseAdapter;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CourseExtm;
@@ -58,9 +59,9 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
     private LinearLayoutManager layoutManager;
     private CourseAdapter adapter;
     private List<EvaluateBean> evaluateList=new ArrayList<>();
-    private LinearLayout addfavorite_layout, share_layout, download_layout;
-    private TextView textaddfavorite, textshare, textdownload, textaddorbuy, header_title_tv;
-    private ImageView addfavorite, share, download, roundBackBtn;
+    private LinearLayout addfavorite_layout, share_layout, editlayout;
+    private TextView textaddfavorite, textshare, textaddorbuy, header_title_tv;
+    private ImageView addfavorite, share, roundBackBtn;
     private CourseDetailBean courseDetailBean=new CourseDetailBean();
     private String course_id;
     private int page=1;
@@ -98,6 +99,9 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                     if(!isValid){
                         textaddorbuy.setText("已结束");
                     }else if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())) {
+                        editlayout.setVisibility(View.VISIBLE);
+                        addfavorite_layout.setVisibility(View.GONE);
+                        share_layout.setVisibility(View.GONE);
                         if(!intent.hasExtra("status")||intent.getStringExtra("status").equals("1")) {
                             if(ActUtil.canStartLive(startDateTime)) {
                                 textaddorbuy.setText("开始直播");
@@ -145,14 +149,6 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                     header_title_tv.setText(courseDetailBean.getCourse_name());
                     adapter.notifyDataSetChanged();
 
-                    if(my_usercode.equals(courseDetailBean.getUsercode())){
-                        share.setVisibility(View.INVISIBLE);
-                        addfavorite.setVisibility(View.INVISIBLE);
-                        download.setVisibility(View.INVISIBLE);
-                        textaddfavorite.setVisibility(View.INVISIBLE);
-                        textshare.setVisibility(View.INVISIBLE);
-                        textdownload.setVisibility(View.INVISIBLE);
-                    }
                     if (courseDetailBean.getIs_collection().equals("0"))
                     {
                         flag=false;
@@ -233,22 +229,18 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
         addfavorite = (ImageView) findViewById(R.id.addfavorite);
         share = (ImageView) findViewById(R.id.share);
         roundBackBtn = (ImageView) findViewById(R.id.roundBackBtn);
-        download = (ImageView) findViewById(R.id.download);
         textaddfavorite = (TextView) findViewById(R.id.textAddFavorite);
         textshare = (TextView) findViewById(R.id.textShare);
-        textdownload = (TextView) findViewById(R.id.textDownload);
         textaddorbuy = (TextView) findViewById(R.id.addorbuy);
         addfavorite_layout = (LinearLayout) findViewById(R.id.addfavoritelayout);
         addfavorite_layout.setOnClickListener(this);
         share_layout = (LinearLayout) findViewById(R.id.sharelayout);
         share_layout.setOnClickListener(this);
-        download_layout = (LinearLayout) findViewById(R.id.downloadlayout);
-        download_layout.setOnClickListener(this);
+        editlayout = (LinearLayout) findViewById(R.id.editlayout);
+        editlayout.setOnClickListener(this);
 
         share.setImageResource(R.mipmap.icon_telphone);
         textshare.setText("咨询");
-        textdownload.setVisibility(View.INVISIBLE);
-        download.setVisibility(View.INVISIBLE);
 
         recyclerList=(ZoomRecyclerView)findViewById(R.id.recyclerList);
         recyclerList.setHeadView(header, roundBackBtn);
@@ -327,6 +319,12 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                     i.putExtra(CourseDetailBean.Name, courseDetailBean);
                     startActivity(i);
                 }
+                break;
+
+            case R.id.editlayout:
+                Intent intent=new Intent(CourseMainPage.this, CourseBaseInfoModify.class);
+                intent.putExtra(CourseDetailBean.Name, courseDetailBean);
+                startActivity(intent);
                 break;
         }
     }

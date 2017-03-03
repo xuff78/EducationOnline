@@ -3,10 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/highwhite"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/submitCourseBtn"
+            style="@style/txt_white_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_normalredline_with_corner"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="5dp"
+            android:text="开课"
+            android:textColor="@color/normal_red" />
+    </LinearLayout>
+
     <ScrollView
+        android:layout_above="@+id/bottomLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomLayout">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -83,12 +109,13 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_black_arrow_right" />
-                </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/light_gray" />
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/light_gray" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/priceLayout"
@@ -116,12 +143,14 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_black_arrow_right" />
+
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/light_gray" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/light_gray" />
 
                 <RelativeLayout
                     android:id="@+id/joinNumLayout"
@@ -158,6 +187,7 @@
                         android:background="@color/light_gray" />
                 </RelativeLayout>
 
+
                 <RelativeLayout
                     android:id="@+id/courseImgLayout"
                     android:layout_width="match_parent"
@@ -174,9 +204,10 @@
                         android:id="@+id/courseImg"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
+                        android:scaleType="centerCrop"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/arrowRight2"
-                        android:background="@color/light_gray" />
+                        android:background="@color/whitesmoke" />
 
                     <View
                         android:id="@+id/arrowRight2"
@@ -185,6 +216,79 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_black_arrow_right" />
+
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/light_gray" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/feedbackLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        style="@style/txt_gray_14"
+                        android:layout_centerVertical="true"
+                        android:text="退款设置" />
+
+
+                    <TextView
+                        android:id="@+id/feedbackTxt"
+                        style="@style/txt_black_14"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/arrowRight4"
+                        android:text="" />
+
+                    <View
+                        android:id="@+id/arrowRight4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/icon_black_arrow_right" />
+
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/light_gray" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/insertTypeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        style="@style/txt_gray_14"
+                        android:layout_centerVertical="true"
+                        android:text="插班类型" />
+
+                    <TextView
+                        android:id="@+id/insertTypeTxt"
+                        style="@style/txt_black_14"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/arrowRight6"
+                        android:text="" />
+
+                    <View
+                        android:id="@+id/arrowRight6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/icon_black_arrow_right" />
+
                 </RelativeLayout>
 
                 <View
@@ -252,13 +356,25 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout3"
                 android:orientation="vertical">
-
-                <TextView
-                    style="@style/txt_gray_14"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="20dp"
-                    android:text="课程详情" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/txt_gray_14"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="20dp"
+                        android:text="课程详情" />
+                    <TextView
+                        android:id="@+id/useExample"
+                        android:layout_alignParentRight="true"
+                        style="@style/txt_gray_14"
+                        android:textColor="@color/normal_blue"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp"
+                        android:text="使用模板填写" />
+                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/courseDesc"
@@ -268,34 +384,16 @@
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:gravity="left|top"
-                    android:hint="课程详情..."
+                    android:hint=" 填写课程相关信息\n
+课程适应的学生群体\n
+能够解决学生遇到的什么问题\n
+独特鲜明的教学方法\n
+可以实现的教学目标\n
+自己在教学过程中的见解等."
                     android:lineSpacingExtra="5dp"
                     android:padding="20dp" />
             </LinearLayout>
 
         </RelativeLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/bottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/highwhite"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/submitCourseBtn"
-            style="@style/txt_white_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_normalredline_with_corner"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:paddingTop="5dp"
-            android:text="开课"
-            android:textColor="@color/normal_red" />
-    </LinearLayout>
 </RelativeLayout>

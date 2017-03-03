@@ -17,6 +17,17 @@
     <string name="faliure_phonechanged">手机号码已变更，请重新获取验证码！</string>
     <string name="enter_valid_phone">请输入正确的手机号</string>
 
+    <string-array name="refund_typestr">
+        <item>随时退</item>
+        <item>不可退</item>
+        <item>开课前一小时可退</item>
+        <item>开课十分钟后不可退</item>
+    </string-array>
+
+    <string-array name="insert_typestr">
+        <item>随时插班</item>
+        <item>不可插班</item>
+    </string-array>
 
     <integer-array name="material_colors">
         <item>@color/material_red</item>

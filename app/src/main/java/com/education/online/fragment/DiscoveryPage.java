@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.education.online.R;
+import com.education.online.act.DevPage;
 import com.education.online.act.discovery.DiscoverMap;
 import com.education.online.act.discovery.InvitePage;
 import com.education.online.act.discovery.MessageMain;
@@ -46,8 +47,8 @@ public class DiscoveryPage extends BaseFragment implements View.OnClickListener{
 //                startActivity(new Intent(getActivity(), TeacherHomePage.class));
                 break;
             case R.id.growSpaceLayout:
-                startActivity(new Intent(getActivity(), GrowingSpace.class));
-
+//                startActivity(new Intent(getActivity(), GrowingSpace.class));
+                startActivity(new Intent(getActivity(), DevPage.class));
                 break;
             case R.id.signLayout:
                 startActivity(new Intent(getActivity(), SignEveryday.class));
@@ -59,6 +60,7 @@ public class DiscoveryPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), InvitePage.class));
                 break;
             case R.id.testLayout:
+                startActivity(new Intent(getActivity(), DevPage.class));
 //                startActivity(new Intent(getActivity(), MessageMain.class));
                 break;
         }

@@ -37,6 +37,7 @@ import com.education.online.bean.SubjectBean;
 import com.education.online.bean.UploadVideoProgress;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.inter.CourseUpdateListener;
 import com.education.online.util.Constant;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.FileUtil;
@@ -452,34 +453,6 @@ public class CourseWareBaseInfoEdit extends BaseFrameAct {
             }
 
         });
-    }
-
-
-    public class CourseUpdateListener implements UpCompleteListener, UpProgressListener {
-
-        private int pos = -1;
-
-        public CourseUpdateListener(int pos) {
-            this.pos = pos;
-        }
-
-        public int getPos() {
-            return pos;
-        }
-
-        public void setPos(int pos) {
-            this.pos = pos;
-        }
-
-        @Override
-        public void onComplete(boolean b, String s) {
-
-        }
-
-        @Override
-        public void onRequestProgress(long l, long l1) {
-
-        }
     }
 
 }

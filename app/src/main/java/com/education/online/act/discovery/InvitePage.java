@@ -27,7 +27,6 @@ import java.io.ByteArrayOutputStream;
 public class InvitePage extends BaseFrameAct implements View.OnClickListener{
 
     private IWXAPI wxApi;
-    private WXMediaMessage wxmsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,5 +89,11 @@ public class InvitePage extends BaseFrameAct implements View.OnClickListener{
         }
         request.message=getWXMediaMessage(this, "向学","爱学不学，就这么任性", "http://www.baidu.com", null);
         wxApi.sendReq(request);
+    }
+
+    @Override
+    protected void onDestroy() {
+        wxApi.unregisterApp();
+        super.onDestroy();
     }
 }

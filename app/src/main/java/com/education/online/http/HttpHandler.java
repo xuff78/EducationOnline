@@ -76,6 +76,27 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.submitEvaluateReply, paramMap, true);
 	}
 
+	public void editCourse(AddClassBean addclass, String course_id) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("subject_id", addclass.getSubject_id());
+		paramMap.put("course_id", course_id);
+		paramMap.put("name", addclass.getName());
+		paramMap.put("img", addclass.getImg());
+		paramMap.put("introduction", addclass.getIntroduction());
+		if(addclass.getCourse_url().length()>0)
+			paramMap.put("course_detail", addclass.getCourse_url());
+		if(addclass.getMin_follow().length()>0)
+			paramMap.put("min_follow", addclass.getMin_follow());
+		if(addclass.getMax_follow().length()>0)
+			paramMap.put("max_follow", addclass.getMax_follow());
+		if(addclass.getRefund().length()>0)
+			paramMap.put("refund", addclass.getRefund());
+		if(addclass.getTransfer().length()>0)
+			paramMap.put("transfer", addclass.getTransfer());
+		requestPostEdu(Method.editCourse, paramMap, true);
+	}
+
 	public void RetrievePassword(String phone,String password, String verify_code) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
@@ -230,6 +251,12 @@ public class HttpHandler extends Handle {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		requestPostUser(Method.signin, paramMap, true);
+	}
+
+	public void signToday() {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostUser(Method.signToday, paramMap, true);
 	}
 
 	public void submitOrder(String course_id, String remark) {
@@ -404,6 +431,14 @@ public class HttpHandler extends Handle {
 		paraMap.put("page_size","20");
 		paraMap.put("page", String.valueOf(page));
 		requestPostEdu(Method.getRecommentCourses,paraMap,false);
+	}
+
+	public  void getSystemMessage(int page){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paraMap.put("page_size","20");
+		paraMap.put("page",page+"");
+		requestPostEdu(Method.getSystemMessage,paraMap,true);
 	}
 
 	public  void getEvaluateOthers(int page){

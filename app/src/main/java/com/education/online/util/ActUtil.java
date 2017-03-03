@@ -299,6 +299,42 @@ public class ActUtil {
         return courseStatusTxt;
     }
 
+    public static String getRefundState(String state) {
+        String txt="";
+        if(state!=null&&state.length()>0) {
+            switch (Integer.valueOf(state)) {
+                case 1:
+                    txt = "随时退";
+                    break;
+                case 2:
+                    txt = "不可退";
+                    break;
+                case 3:
+                    txt = "开课前一小时可退 ";
+                    break;
+                case 4:
+                    txt = "开课十分钟后不可退 ";
+                    break;
+            }
+        }
+        return txt;
+    }
+
+    public static String getInsertState(String state) {
+        String txt="";
+        if(state!=null&&state.length()>0) {
+            switch (Integer.valueOf(state)) {
+                case 1:
+                    txt = "随时插班";
+                    break;
+                case 2:
+                    txt = "不可插班";
+                    break;
+            }
+        }
+        return txt;
+    }
+
     public static String getCourseStateTxt(String state) {
         String txt="";
         if(state!=null&&state.length()>0) {

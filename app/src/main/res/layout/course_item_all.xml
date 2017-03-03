@@ -11,8 +11,8 @@
         android:layout_marginRight="10dp"
         android:scaleType="centerCrop"
         android:id="@+id/courseImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_width="140dp"
+        android:layout_height="70dp" />
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_marginTop="15dp"

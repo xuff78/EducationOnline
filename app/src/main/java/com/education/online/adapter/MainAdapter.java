@@ -81,7 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         imgHeight = itemWidth - 2 * padding10; //小图片的边长
         courseWidth = (ScreenUtil.getWidth(act) - 5 * padding10) / 2;
         this.courses=courses;
-        roundOptions=ImageUtil.getImageOptionRound(R.color.white,10);
+        roundOptions=ImageUtil.getImageOption(R.color.white);
     }
 
     @Override
@@ -186,7 +186,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             cvh.titleTxt.setText(courseBean.getCourse_name());
             cvh.statusTxt.setText(courseBean.getFollow()+"人正在学习");
             cvh.priceTxt.setText(ActUtil.getPrice(courseBean.getPrice()));
-            imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), cvh.courseImg, roundOptions);
+            imageLoader.displayImage(ImageUtil.getImageUrl(courseBean.getImg()), cvh.courseImg);
             cvh.itemView.setTag(courseBean);
             cvh.itemView.setOnClickListener(listener);
         }

@@ -122,6 +122,8 @@ public class JsonUtil {
             courseDetailBean.setCourse_name(jsonObject.getString("course_name"));
         if (!jsonObject.isNull("subject_name"))
             courseDetailBean.setSubject_name(jsonObject.getString("subject_name"));
+        if (!jsonObject.isNull("subject_id"))
+            courseDetailBean.setSubject_id(jsonObject.getString("subject_id"));
         if (!jsonObject.isNull("img"))
             courseDetailBean.setImg(jsonObject.getString("img"));
         if (!jsonObject.isNull("original_price"))

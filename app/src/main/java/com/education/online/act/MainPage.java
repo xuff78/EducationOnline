@@ -57,7 +57,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
-            public void onSuccess(String method, String jsonData) throws JSONException {
+            public void doSuccess(String method, String jsonData) throws JSONException {
 
             }
 

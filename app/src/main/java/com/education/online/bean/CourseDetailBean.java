@@ -11,6 +11,7 @@ public class CourseDetailBean implements Serializable{
     private String course_id = "";
     private String course_name = "";
     private String subject_name = "";
+    private String subject_id="";
     private String img = "";
     private String original_price = "";
     private String price = "";
@@ -33,6 +34,14 @@ public class CourseDetailBean implements Serializable{
     private CreatUserInfo user_info = new CreatUserInfo();
     private List<CourseExtm> course_extm = new ArrayList<>();
     private CourseEvaluate course_evaluate =new CourseEvaluate();
+
+    public String getSubject_id() {
+        return subject_id;
+    }
+
+    public void setSubject_id(String subject_id) {
+        this.subject_id = subject_id;
+    }
 
     public String getIs_buy() {
         return is_buy;

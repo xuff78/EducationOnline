@@ -341,8 +341,12 @@
         android:layout_height="wrap_content" >
         <!--必须顶住上面，不然没法放大-->
         <TextView
-            style="@style/txt_white_12"
-            android:gravity="center"
+            android:id="@+id/hintTopTxt"
+            style="@style/txt_white_14"
+            android:textColor="@color/whitesmoke"
+            android:gravity="center_horizontal"
+            android:textSize="15sp"
+            android:paddingTop="60dp"
             android:text="上滑查看详情"
             android:layout_width="match_parent"
             android:layout_height="100dp"

@@ -14,10 +14,19 @@ public class UploadVideoProgress {
         this.description = description;
     }
 
+    private String id="";
     private int progress=0;
-    private Uri uri = getUri();
+    private Uri uri = null;
     private String description;
     private String url = "";
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUrl() {
         return url;

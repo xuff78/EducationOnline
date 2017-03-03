@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/whitesmoke"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:background="@mipmap/sign_bg"
         android:layout_width="match_parent"
-        android:layout_height="230dp">
-        <TextView
-            android:id="@+id/hintInfo"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="我的学分： "
-            style="@style/txt_white_14"/>
-        <TextView
+        android:layout_height="240dp">
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/hintInfoLayout"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_centerInParent="true"
-            android:text="签到成功"
-            style="@style/blue_text_white_shadow"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                android:id="@+id/teacherImg"
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_centerInParent="true"
+                android:text="签到成功"
+                style="@style/blue_text_white_shadow"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/hintInfo"
+                android:text="我的学分： "
+                style="@style/txt_white_14"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/signBtn"
+            android:visibility="gone"
+            android:text="签到"
+            android:elevation="5dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@style/txt_white_16"
+            android:background="@drawable/shape_oranged_round_with_shadow"
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
     </RelativeLayout>
+
     <TextView
         android:lineSpacingExtra="4dp"
         android:padding="20dp"
         android:text="用户签到，积分规则：\n第一天5分，第二天10分，第三天15，第四天20，第五天25封顶\n断签重新开始累积"
         style="@style/txt_black_14"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/textView3" />
 </LinearLayout>

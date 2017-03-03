@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:orientation="horizontal"
         android:paddingLeft="20dp"
@@ -17,7 +18,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp" />
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
@@ -28,18 +29,23 @@
             android:layout_toRightOf="@id/userIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textSize="11sp"
+                android:id="@+id/timeTxt"
+                style="@style/txt_gray_12" />
+
             <TextView
                 android:text="课堂"
                 android:textSize="13sp"
                 android:id="@+id/titleTxt"
-                style="@style/txt_black_14" />
-            <TextView
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="2dp"
-                android:text="2016.10.7 14:21"
-                android:textSize="11sp"
-                android:id="@+id/timeTxt"
-                style="@style/txt_gray_12" />
+                style="@style/txt_black_14"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
         <TextView
             android:layout_alignParentRight="true"
@@ -51,6 +57,7 @@
             style="@style/txt_gray_12" />
     </LinearLayout>
 </LinearLayout>
+
     <View
         android:layout_marginTop="13dp"
         android:background="@color/light_gray"

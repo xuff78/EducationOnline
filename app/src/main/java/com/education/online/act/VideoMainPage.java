@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.education.online.R;
 import com.education.online.act.order.SubmitOrder;
+import com.education.online.act.teacher.CourseBaseInfoModify;
+import com.education.online.act.video.VideoMain;
 import com.education.online.adapter.CommentsAdapter;
 import com.education.online.adapter.DetailsAdapter;
 import com.education.online.adapter.DirectoryAdapter;
@@ -67,7 +69,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private LinearLayout addfavorite_layout, share_layout, download_layout;
     private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
     private ImageView addfavorite, share, download, background;
-    private View lastSelectedView = null;
+    private View lastSelectedView = null, editlayout;
     private LinearLayoutManager layoutManager;
     private TextView paytips, payBtn;
     private LinearLayout details, directory, comments;
@@ -171,12 +173,10 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                     _setHeaderTitle(courseDetailBean.getCourse_name());
 
                     if (my_usercode.equals(courseDetailBean.getUsercode())) {
-                        share.setVisibility(View.INVISIBLE);
-                        addfavorite.setVisibility(View.INVISIBLE);
-                        download.setVisibility(View.INVISIBLE);
-                        textaddfavorite.setVisibility(View.INVISIBLE);
-                        textshare.setVisibility(View.INVISIBLE);
-                        textdownload.setVisibility(View.INVISIBLE);
+                        editlayout.setVisibility(View.VISIBLE);
+                        addfavorite_layout.setVisibility(View.GONE);
+                        download_layout.setVisibility(View.GONE);
+                        share_layout.setVisibility(View.GONE);
                     }
 
                     detailsAdapter.notifyDataSetChanged();
@@ -478,6 +478,11 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         int pos = (int) view.getTag();
                         SetplayerOrImageState(pos);
                         break;
+                    case R.id.editlayout:
+                        Intent intent=new Intent(VideoMainPage.this, CourseBaseInfoModify.class);
+                        intent.putExtra(CourseDetailBean.Name, courseDetailBean);
+                        startActivity(intent);
+                        break;
                 }
 
             }
@@ -504,6 +509,8 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         download_layout = (LinearLayout) findViewById(R.id.downloadlayout);
         download_layout.setOnClickListener(listener);
 
+        editlayout=findViewById(R.id.editlayout);
+        editlayout.setOnClickListener(listener);
         recyclerList = (RecyclerView) findViewById(R.id.courseRecycleView);
         details = (LinearLayout) findViewById(R.id.details);
         details.setOnClickListener(listener);

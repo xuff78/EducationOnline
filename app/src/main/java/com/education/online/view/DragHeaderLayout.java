@@ -44,6 +44,7 @@ public class DragHeaderLayout extends LinearLayout {
     private enum State { DIALOG, LIST, DRAG, AUTOSCROLL};
     private State viewtype=State.DIALOG;
     private GestureDetector detector;
+    private View hintTopTxt;
 
     public DragHeaderLayout(Context context) {
         super(context);
@@ -79,6 +80,7 @@ public class DragHeaderLayout extends LinearLayout {
 //                LogUtil.i("Scroll", "scrollView Y:  "+y);
             }
         });
+        hintTopTxt=findViewById(R.id.hintTopTxt);
     }
 
     private GestureDetector.OnGestureListener onGestureListener=new GestureDetector.OnGestureListener() {
@@ -266,6 +268,7 @@ public class DragHeaderLayout extends LinearLayout {
             scaleImg.setPivotY(0);
             scaleImg.setScaleY(ImageScaleY);
 
+            hintTopTxt.setAlpha(1-currentY/dragOutDis);
             listLayout.setAlpha(-currentY/dragToListDis);
             listLayout.setTranslationY(listStartY+currentY/dragToListDis*listStartY);
         }else if(currentY<dragOutDis){

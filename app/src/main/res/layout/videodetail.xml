@@ -344,7 +344,29 @@
                     android:text="下载"
                     android:textSize="10sp" />
             </LinearLayout>
+            <LinearLayout
+                android:visibility="invisible"
+                android:background="@color/whitesmoke"
+                android:id="@+id/editlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:src="@mipmap/iconfontfenxiang" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:gravity="center"
+                    android:text="编辑"
+                    android:textSize="10sp" />
+            </LinearLayout>
         </LinearLayout>
 
 
