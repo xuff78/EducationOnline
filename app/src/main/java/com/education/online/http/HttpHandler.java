@@ -287,6 +287,23 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getOrderList, paramMap, true);
 	}
 
+	public void getTeacherOrderList(int page) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("page_size","20");
+		paramMap.put("page",page+"");
+		requestPostEdu(Method.getTeacherOrderList, paramMap, true);
+	}
+
+	public void getOrdersInCourse(String course_id, int page) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("page_size","20");
+		paramMap.put("course_id", course_id);
+		paramMap.put("page",page+"");
+		requestPostEdu(Method.getOrderList, paramMap, true);
+	}
+
 
 	public void dispose(String url, String media_type, String dispose_type) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();

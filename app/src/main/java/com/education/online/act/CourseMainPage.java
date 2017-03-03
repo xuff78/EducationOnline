@@ -324,7 +324,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
             case R.id.editlayout:
                 Intent intent=new Intent(CourseMainPage.this, CourseBaseInfoModify.class);
                 intent.putExtra(CourseDetailBean.Name, courseDetailBean);
-                startActivity(intent);
+                startActivityForResult(intent, 0x12);
                 break;
         }
     }
@@ -376,4 +376,12 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
             lastVisibleItem = layoutManager.findLastVisibleItemPosition();
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0x22){
+            httpHandler.getCourseDetail(course_id);
+        }
+    }
 }

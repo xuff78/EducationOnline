@@ -96,6 +96,7 @@ public class CourseBaseInfoModify extends BaseFrameAct implements View.OnClickLi
                 super.doSuccess(method, jsonData);
                 if (method.equals(Method.editCourse)) {
                     ToastUtils.displayTextShort(CourseBaseInfoModify.this, "修改成功");
+                    setResult(0x22);
                     finish();
                 }
             }
@@ -234,11 +235,13 @@ public class CourseBaseInfoModify extends BaseFrameAct implements View.OnClickLi
             case R.id.submitCourseBtn:
                 addClassBean.setIntroduction(courseDesc.getText().toString().trim());
                 addClassBean.setName(courseName.getText().toString());
-                if (addClassBean.getName().length() == 0 || addClassBean.getIntroduction().length() == 0 || addClassBean.getSubject_id().length() == 0
-                        || addClassBean.getMin_follow().length() == 0
-                        || addClassBean.getMax_follow().length() == 0 || addClassBean.getImg().length() == 0) {
-                    Toast.makeText(CourseBaseInfoModify.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
+                if (addClassBean.getName().length() == 0 || addClassBean.getIntroduction().length() == 0
+                        || addClassBean.getSubject_id().length() == 0 || addClassBean.getImg().length() == 0||
+                (type==3&&(addClassBean.getMin_follow().length() == 0 || addClassBean.getMax_follow().length() == 0))) {
+                        Toast.makeText(CourseBaseInfoModify.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    JSONArray jsonArray=new JSONArray();
                     boolean iscompeleteupload = false;
                     if(type==3)
                         iscompeleteupload=true;
@@ -251,14 +254,6 @@ public class CourseBaseInfoModify extends BaseFrameAct implements View.OnClickLi
                             }
                             iscompeleteupload = true;
                         }
-                    }
-
-                    if(type!=3&&uploadVideoProgresses.size()==0) {
-                        Toast.makeText(CourseBaseInfoModify.this, "请至少上传一个视频或课件！", Toast.LENGTH_SHORT).show();
-                    }if (!iscompeleteupload) {
-                        Toast.makeText(CourseBaseInfoModify.this, "请等待文件上传完成！", Toast.LENGTH_SHORT).show();
-                    } else {
-                        JSONArray jsonArray=new JSONArray();
                         for (int j = 0; j < uploadVideoProgresses.size(); j++) {
                             View childView = listView.getChildAt(j);
                             UploadVideoProgress progress=uploadVideoProgresses.get(j);
@@ -269,17 +264,29 @@ public class CourseBaseInfoModify extends BaseFrameAct implements View.OnClickLi
                                 if (description.length() == 0)
                                     description = "课件" + (j + 1);
 
+                                String url=progress.getUrl();
+                                if (url.length() == 0) {
+                                    iscompeleteupload = false;
+                                    break;
+                                }
                                 try {
-                                    object.put("id", progress.getId());
                                     object.put("name", description);
-                                    object.put("url", progress.getUrl());
+                                    object.put("url", url);
                                     jsonArray.put(object);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                        addClassBean.setCourse_url(jsonArray.toString());
+                        if(iscompeleteupload)
+                            addClassBean.setCourse_url(jsonArray.toString());
+                    }
+
+                    if(type!=3&&uploadVideoProgresses.size()==0) {
+                        Toast.makeText(CourseBaseInfoModify.this, "请至少上传一个视频或课件！", Toast.LENGTH_SHORT).show();
+                    }if (!iscompeleteupload) {
+                        Toast.makeText(CourseBaseInfoModify.this, "请等待文件上传完成！", Toast.LENGTH_SHORT).show();
+                    } else {
                         httpHandler.editCourse(addClassBean, courseDetail.getCourse_id());
                     }
                 }

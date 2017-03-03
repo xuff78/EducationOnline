@@ -1,6 +1,7 @@
 package com.education.online.adapter;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,13 @@ public class CourseWareEditAdapter extends BaseAdapter {
         TextView open = (TextView) convertView.findViewById(R.id.open);
         ImageView videoImage = (ImageView) convertView.findViewById(R.id.videoImage);
 
-        ImageLoader.getInstance().displayImage(ImageUtil.getImageUrl(uploadVideoProgresses.get(position).getUrl()), videoImage);
+        Uri uri=uploadVideoProgresses.get(position).getUri();
+        String imgUrl="";
+        if(uri!=null)
+            imgUrl=uri.toString();
+        else
+            imgUrl=ImageUtil.getImageUrl(uploadVideoProgresses.get(position).getUrl());
+        ImageLoader.getInstance().displayImage(imgUrl, videoImage);
 
         ProgressBar progress = (ProgressBar) convertView.findViewById(R.id.progress);
         EditText resourseName = (EditText) convertView.findViewById(R.id.resourseName);

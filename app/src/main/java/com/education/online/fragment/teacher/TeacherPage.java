@@ -19,6 +19,7 @@ import com.education.online.act.teacher.TeacherCourseStart;
 import com.education.online.act.teacher.TeacherHomePage;
 import com.education.online.act.teacher.TeacherInfoEdit;
 import com.education.online.act.teacher.TeacherInformationPage;
+import com.education.online.act.teacher.TeacherOrderList;
 import com.education.online.bean.CategoryBean;
 import com.education.online.bean.LoginInfo;
 import com.education.online.bean.UserInfo;
@@ -106,7 +107,7 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), TeacherHomePage.class));
                 break;
             case R.id.orderLayout:
-                startActivity(new Intent(getActivity(), MyOrders.class));
+                startActivity(new Intent(getActivity(), TeacherOrderList.class));
                 break;
             case R.id.authLayout:
                 handler.getValidateView();

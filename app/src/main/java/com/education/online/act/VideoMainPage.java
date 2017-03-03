@@ -234,6 +234,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void queryDB() {
+        files.clear();
         for (CourseExtm extm:courseDetailBean.getCourse_extm()){
             ThreadInfo fileInfo=new ThreadInfo();
             fileInfo.setSubname(extm.getName());
@@ -481,7 +482,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                     case R.id.editlayout:
                         Intent intent=new Intent(VideoMainPage.this, CourseBaseInfoModify.class);
                         intent.putExtra(CourseDetailBean.Name, courseDetailBean);
-                        startActivity(intent);
+                        startActivityForResult(intent, 0x13);
                         break;
                 }
 
@@ -697,5 +698,13 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             }
         },1000);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0x22){
+            httpHandler.getCourseDetail(course_id);
+        }
     }
 }

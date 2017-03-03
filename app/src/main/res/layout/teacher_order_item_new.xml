@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:layout_height="40dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="课题"
+        android:id="@+id/titleTxt"
+        style="@style/txt_black_14" />
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:background="@color/whitesmoke"
+            android:layout_marginTop="13dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/messageIcon"
+            android:layout_width="140dp"
+            android:layout_height="70dp" />
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_toRightOf="@id/userIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="2dp"
+                    android:text=""
+                    android:textSize="11sp"
+                    android:id="@+id/timeTxt"
+                    style="@style/txt_gray_12" />
+
+                <TextView
+                    android:text="课堂"
+                    android:textSize="13sp"
+                    android:id="@+id/planTxt"
+                    style="@style/txt_black_14"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="4dp"
+                android:lineSpacingExtra="2dp"
+                android:text="上课提醒：真的要上课了~~~"
+                android:textSize="11sp"
+                android:id="@+id/followNum"
+                style="@style/txt_gray_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="13dp"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+    <View
+        android:background="@color/whitesmoke"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</LinearLayout>
