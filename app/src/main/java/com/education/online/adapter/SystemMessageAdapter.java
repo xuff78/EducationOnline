@@ -26,6 +26,7 @@ public class SystemMessageAdapter extends RecyclerView.Adapter <RecyclerView.Vie
     private int imgLength=0;
     private LinearLayout.LayoutParams llp;
     private String loadingHint = "";
+    private View.OnClickListener listener;
     private ArrayList<SystemMessage> datalist=new ArrayList<>();
 
     public void setLoadingHint(String hint) {
@@ -33,13 +34,14 @@ public class SystemMessageAdapter extends RecyclerView.Adapter <RecyclerView.Vie
         notifyDataSetChanged();
     }
 
-    public SystemMessageAdapter(Activity activity, ArrayList<SystemMessage> datalist){
+    public SystemMessageAdapter(Activity activity, ArrayList<SystemMessage> datalist, View.OnClickListener listener){
         this.datalist=datalist;
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         imgLength= (ScreenUtil.getWidth(activity)- ImageUtil.dip2px(activity, 70))/4; //左右边距40， 中间3*10
         llp=new LinearLayout.LayoutParams(imgLength, imgLength);
         llp.rightMargin=ImageUtil.dip2px(activity, 10);
+        this.listener=listener;
     }
 
     @Override
@@ -99,6 +101,8 @@ public class SystemMessageAdapter extends RecyclerView.Adapter <RecyclerView.Vie
             descTxt = (TextView) v.findViewById(R.id.descTxt);
             timeTxt = (TextView) v.findViewById(R.id.timeTxt);
             titleTxt = (TextView) v.findViewById(R.id.titleTxt);
+            v.setTag(position);
+            v.setOnClickListener(listener);
         }
 
     }

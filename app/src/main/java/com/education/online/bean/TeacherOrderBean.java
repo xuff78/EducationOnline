@@ -1,10 +1,12 @@
 package com.education.online.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/3/3.
  */
 
-public class TeacherOrderBean {
+public class TeacherOrderBean implements Serializable{
 
     private String course_id=""; // 课程ID
     private String course_name=""; // 课程名称
@@ -12,6 +14,25 @@ public class TeacherOrderBean {
     private String plan=""; // 教学计划
     private String paid_number=""; // 订单已支付人数
     private String unpaid_number=""; // 订单未支付人数
+    private String img="";
+    private String course_type="";
+    public static final String Name="TeacherOrderBean";
+
+    public String getCourse_type() {
+        return course_type;
+    }
+
+    public void setCourse_type(String course_type) {
+        this.course_type = course_type;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public String getCourse_id() {
         return course_id;

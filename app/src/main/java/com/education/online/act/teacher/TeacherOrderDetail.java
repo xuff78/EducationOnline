@@ -11,13 +11,21 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.CM_MessageChatAct;
 import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.act.discovery.ChatPage;
+import com.education.online.act.discovery.Studentintroduction;
+import com.education.online.adapter.OrderPayListAdapter;
+import com.education.online.adapter.TeacherOrderListAdapter;
 import com.education.online.adapter.UserOrderAdapter;
 import com.education.online.bean.OrderDetailBean;
+import com.education.online.bean.OrderPayInfo;
+import com.education.online.bean.TeacherOrderBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.SimpleAdapterCallback;
+import com.education.online.util.ActUtil;
 import com.education.online.util.JsonUtil;
 
 import java.util.ArrayList;
@@ -30,22 +38,32 @@ import java.util.List;
 public class TeacherOrderDetail extends BaseFrameAct implements View.OnClickListener{
 
     private RecyclerView recyclerList;
-    private TextView selectTypeView, selectStatus, statusAll, statusFinish, statusToPay, statusToComment;
     HttpHandler handler;
     private String status = null;
     private String course_type = null;
     private int page = 1;
-    private UserOrderAdapter adapter;
-    private List<OrderDetailBean> orders = new ArrayList<>();
+    private boolean onloading=false, complete=false;
+    private OrderPayListAdapter adapter;
+    private List<OrderPayInfo> orders = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
+    private String course_id;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonData) {
                 if (method.equals(Method.getOrderList)) {
-
-                } else if (method.equals(Method.getOrderDetail)) {
-
+                    String orderInfo = JsonUtil.getString(jsonData, "order_info");
+                    List<OrderPayInfo> addOrders = JSON.parseObject(orderInfo, new TypeReference<List<OrderPayInfo>>(){});
+                    orders.addAll(addOrders);
+                    int totalpage= JsonUtil.getJsonInt(jsonData, "page_total");
+                    if(totalpage==page){
+                        adapter.setLoadingHint("");
+                        complete=true;
+                    }else
+                        page++;
+                    adapter.notifyDataSetChanged();
+                    onloading=false;
                 }
             }
         });
@@ -54,51 +72,67 @@ public class TeacherOrderDetail extends BaseFrameAct implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.teacher_orders);
+        setContentView(R.layout.home_page);
 
-        _setHeaderTitle("我的订单");
+        TeacherOrderBean bean= (TeacherOrderBean) getIntent().getSerializableExtra(TeacherOrderBean.Name);
+        course_id=bean.getCourse_id();
+        _setHeaderTitle("订单列表");
         initHandler();
         initView();
-        handler.getOrderList(course_type, page, status);
+        handler.getOrderListByTeacher(course_id, course_type, page, status);
     }
 
     private void initView() {
-        findViewById(R.id.courseTypeLayout).setVisibility(View.GONE);
-        statusAll = (TextView) findViewById(R.id.statusAll);
-        statusAll.setOnClickListener(this);
-        selectStatus = statusAll;
-        statusFinish = (TextView) findViewById(R.id.statusFinish);
-        statusFinish.setOnClickListener(this);
-        statusToPay = (TextView) findViewById(R.id.statusToPay);
-        statusToPay.setOnClickListener(this);
-        statusToComment = (TextView) findViewById(R.id.statusToComment);
-        statusToComment.setOnClickListener(this);
+        recyclerList = (RecyclerView) findViewById(R.id.recyclerList);
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerList.setLayoutManager(layoutManager);
+        adapter = new OrderPayListAdapter(this, orders, loader, this);
+        recyclerList.setAdapter(adapter);
+        recyclerList.addOnScrollListener(recyclerListener);
     }
+
+    RecyclerView.OnScrollListener recyclerListener=new RecyclerView.OnScrollListener() {
+
+        int lastVisibleItem=0;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(adapter!=null)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    if(!onloading){
+                        if(!complete){
+                            onloading = true;
+                            handler.getOrderListByTeacher(course_id, course_type, page, status);
+                            adapter.setLoadingHint("正在加载");
+                        }else
+                            adapter.setLoadingHint("");
+                    }
+                }
+        }
+    };
 
     @Override
     public void onClick(View view) {
-        TextView txt = (TextView) view;
-        if (txt != selectStatus) {
-            selectStatus.setTextColor(getResources().getColor(R.color.normal_gray));
-            txt.setTextColor(getResources().getColor(R.color.normal_blue));
-            selectStatus = txt;
-            page = 1;
-            orders.clear();
-            switch (view.getId()) {
-                case R.id.statusAll:
-                    status = null;
-                    break;
-                case R.id.statusFinish:
-                    status = "complete";
-                    break;
-                case R.id.statusToPay:
-                    status = "no_pay";
-                    break;
-                case R.id.statusToComment:
-                    status = "no_evaluate";
-                    break;
-            }
-            handler.getOrderList(course_type, page, status);
+        OrderPayInfo bean=orders.get((Integer) view.getTag());
+        Intent i=new Intent();
+        switch (view.getId()){
+            case R.id.teacherImg:
+                i.setClass(this, Studentintroduction.class);
+                i.putExtra("usercode", bean.getUsercode());
+                ActUtil.startAnimActivity(this, i, view, "headIcon");
+                break;
+            case R.id.totalk:
+                ActUtil.goChat(bean.getUsercode(),  this, bean.getUser_name());
+                break;
         }
     }
 }

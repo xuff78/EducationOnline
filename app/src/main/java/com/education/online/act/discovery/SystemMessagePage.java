@@ -10,7 +10,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.CourseMainPage;
 import com.education.online.act.Mine.MyCourseMuti;
+import com.education.online.act.VideoMainPage;
 import com.education.online.adapter.SystemMessageAdapter;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.JsonMessage;
@@ -77,6 +79,7 @@ public class SystemMessagePage extends BaseFrameAct implements View.OnClickListe
                     onloading=false;
                     int totalpage= JsonUtil.getJsonInt(jsonData, "page_total");
                     if(totalpage==page){
+                        adapter.setLoadingHint("");
                         complete=true;
                     }else
                         page++;
@@ -104,7 +107,7 @@ public class SystemMessagePage extends BaseFrameAct implements View.OnClickListe
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
-        adapter=new SystemMessageAdapter(this, datalist);
+        adapter=new SystemMessageAdapter(this, datalist,this);
         recyclerList.setAdapter(adapter);
         recyclerList.addOnScrollListener(recyclerListener);
     }
@@ -140,6 +143,15 @@ public class SystemMessagePage extends BaseFrameAct implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
+        SystemMessage sm=datalist.get((int) view.getTag());
+        if(sm.getMessage_type()!=3) {
+            Intent intent = new Intent();
+            if(sm.getCourse_type().equals("3"))
+                intent.setClass(this, CourseMainPage.class);
+            else
+                intent.setClass(this, VideoMainPage.class);
+            intent.putExtra("course_id", sm.getRelated_id());
+            startActivity(intent);
+        }
     }
 }

@@ -82,7 +82,7 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
     String phoneTxtName = "";
     private String course = "";
     private Dialog progressDialog;
-    private TextView submitCourseBtn, uploadBtn, subjectTxt, priceTxt, joinNum;
+    private TextView submitCourseBtn, uploadBtn, subjectTxt, priceTxt, joinNum, useExample;
     private ImageView courseImg;
     private EditText courseName, courseDesc;
     private int type = 0; // 0课件， 1视频, 2直播
@@ -134,6 +134,9 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
+                    case R.id.useExample:
+                        courseDesc.setText("课程面向【学生群体】，通过【教学方法】，在【课程时间】内，帮助学生达到【教学目标】的教学目标。");
+                        break;
                     case R.id.joinNumLayout:
                         startActivityForResult(new Intent(VideoCourseBaseInfoEdit.this, CourseMemberEdit.class), 0x10);
                         break;
@@ -249,6 +252,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
         courseImg = (ImageView) findViewById(R.id.courseImg);
         courseName = (EditText) findViewById(R.id.courseName);
         courseDesc = (EditText) findViewById(R.id.courseDesc);
+        useExample = (TextView) findViewById(R.id.useExample);
+        useExample.setOnClickListener(listener);
         joinNum = (TextView) findViewById(R.id.joinNum);
         submitCourseBtn = (TextView) findViewById(R.id.submitCourseBtn);
         submitCourseBtn.setOnClickListener(listener);

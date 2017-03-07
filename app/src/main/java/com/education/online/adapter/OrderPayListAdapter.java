@@ -10,7 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.education.online.R;
-import com.education.online.bean.SystemMessage;
+import com.education.online.bean.OrderDetailBean;
+import com.education.online.bean.OrderPayInfo;
 import com.education.online.bean.TeacherOrderBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
@@ -22,16 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/3/3.
+ * Created by Administrator on 2017/3/6.
  */
 
-public class TeacherOrderListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
-        private Activity activity;
-        private LayoutInflater inflater;
-        private int imgLength=0;
-        private LinearLayout.LayoutParams llp;
-        private String loadingHint = "";
-        private List<TeacherOrderBean> datalist=new ArrayList<>();
+public class OrderPayListAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
+    private Activity activity;
+    private LayoutInflater inflater;
+    private int imgLength=0;
+    private LinearLayout.LayoutParams llp;
+    private String loadingHint = "";
+    private List<OrderPayInfo> datalist=new ArrayList<>();
     private ImageLoader loader;
     private DisplayImageOptions options;
     private View.OnClickListener listener;
@@ -41,8 +42,8 @@ public class TeacherOrderListAdapter extends RecyclerView.Adapter <RecyclerView.
         notifyDataSetChanged();
     }
 
-    public TeacherOrderListAdapter(Activity activity, List<TeacherOrderBean> datalist, ImageLoader loader,
-                                   View.OnClickListener listener){
+    public OrderPayListAdapter(Activity activity, List<OrderPayInfo> datalist, ImageLoader loader,
+                               View.OnClickListener listener){
         this.datalist=datalist;
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
@@ -75,7 +76,7 @@ public class TeacherOrderListAdapter extends RecyclerView.Adapter <RecyclerView.
             view.setLayoutParams(new RecyclerView.LayoutParams(-1, ImageUtil.dip2px(activity, 45)));
             vh = new FooterViewHolder(view);
         } else {
-            View convertView = inflater.inflate(R.layout.teacher_order_item_new, null);
+            View convertView = inflater.inflate(R.layout.order_payinfo_item, null);
             convertView.setLayoutParams(new RecyclerView.LayoutParams(-1, -2));
             vh = new OrderItem(convertView, pos);
         }
@@ -90,30 +91,39 @@ public class TeacherOrderListAdapter extends RecyclerView.Adapter <RecyclerView.
             fvh.footerHint.setText(loadingHint);
         }else{
             OrderItem ivh = (OrderItem) holder;
-            TeacherOrderBean msg=datalist.get(position);
-            ivh.planTxt.setText(msg.getCourse_name());
-            ActUtil.getCourseTypeTxt(msg.getCourse_type(), ivh.titleTxt);
-            loader.displayImage(ImageUtil.getImageUrl(msg.getImg()), ivh.messageIcon, options);
-            ivh.followNum.setText(msg.getFollow()+"人在学习");
-            ivh.payInfo.setText(msg.getPaid_number()+"人已支付    "+msg.getUnpaid_number()+"人未支付");
+            OrderPayInfo msg=datalist.get(position);
+            ivh.orderId.setText(msg.getOrder_number());
+            ivh.orderStatus.setText(ActUtil.getOrderStatsTxts(msg.getState()));
+            loader.displayImage(ImageUtil.getImageUrl(msg.getAvatar()), ivh.headIcon, options);
+            ivh.courseNum.setText(ActUtil.getCourseTypeTxt(msg.getCourse_type())+"   "+msg.getCourse_count()+" 课时");
+            ivh.orderTime.setText(msg.getBuy_time());
+            ivh.totalPrice.setText("总价: "+ActUtil.twoDecimal(msg.getOriginal_price()));
+            ivh.payPrice.setText(ActUtil.twoDecimal(msg.getPrice()));
+            ivh.teacherName.setText(msg.getUser_name());
         }
 
 
     }
 
     public class OrderItem extends RecyclerView.ViewHolder{
-        ImageView messageIcon;
-        TextView planTxt, followNum, titleTxt, payInfo;
+        ImageView headIcon;
+        TextView orderId, orderStatus, courseNum, orderTime, totalPrice, payPrice, teacherName;
         public OrderItem(View v, final int position)
         {
             super(v);
-            v.setTag(position);
-            v.setOnClickListener(listener);
-            messageIcon = (ImageView) v.findViewById(R.id.messageIcon);
-            planTxt = (TextView) v.findViewById(R.id.planTxt);
-            followNum = (TextView) v.findViewById(R.id.followNum);
-            titleTxt = (TextView) v.findViewById(R.id.titleTxt);
-            payInfo = (TextView) v.findViewById(R.id.payInfo);
+            headIcon = (ImageView) v.findViewById(R.id.teacherImg);
+            orderId = (TextView) v.findViewById(R.id.orderId);
+            orderStatus = (TextView) v.findViewById(R.id.orderStatus);
+            courseNum = (TextView) v.findViewById(R.id.courseNum);
+            orderTime = (TextView) v.findViewById(R.id.orderTime);
+            totalPrice = (TextView) v.findViewById(R.id.totalPrice);
+            teacherName = (TextView) v.findViewById(R.id.teacherName);
+            payPrice = (TextView) v.findViewById(R.id.payPrice);
+            View totalk=v.findViewById(R.id.totalk);
+            totalk.setTag(position);
+            headIcon.setTag(position);
+            totalk.setOnClickListener(listener);
+            headIcon.setOnClickListener(listener);
         }
 
     }

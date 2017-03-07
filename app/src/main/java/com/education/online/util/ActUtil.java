@@ -373,6 +373,24 @@ public class ActUtil {
         return txt;
     }
 
+    public static String getCourseTypeTxt(String course_type) {
+        String txt="";
+        if(course_type!=null&&course_type.length()>0) {
+            switch (Integer.valueOf(course_type)) {
+                case 1:
+                    txt = "课件";
+                    break;
+                case 2:
+                    txt = "视频";
+                    break;
+                case 3:
+                    txt = "直播课";
+                    break;
+            }
+        }
+        return txt;
+    }
+
     public static <T> T updateInfo(Class<T> clazz, T oldbean, T newbean) {
         try {
             Method[] methods = clazz.getMethods();
