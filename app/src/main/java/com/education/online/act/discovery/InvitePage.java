@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 public class InvitePage extends BaseFrameAct implements View.OnClickListener{
 
     private IWXAPI wxApi;
+    private Bitmap qrcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class InvitePage extends BaseFrameAct implements View.OnClickListener{
     private void initView() {
         ImageView iv=(ImageView)findViewById(R.id.qrcodeImg);
         try {
-            Bitmap qrcode = ImageUtil.Create2DCode(InvitePage.this,"jffdslkfjs83293jksand");
+            qrcode = ImageUtil.Create2DCode(InvitePage.this,"jffdslkfjs83293jksand");
             iv.setImageBitmap(qrcode);
         } catch (WriterException e) {
             e.printStackTrace();
@@ -95,5 +96,7 @@ public class InvitePage extends BaseFrameAct implements View.OnClickListener{
     protected void onDestroy() {
         wxApi.unregisterApp();
         super.onDestroy();
+        if(qrcode!=null&&!qrcode.isRecycled())
+            qrcode.recycle();
     }
 }

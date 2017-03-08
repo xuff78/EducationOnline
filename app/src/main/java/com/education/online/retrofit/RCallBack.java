@@ -56,10 +56,7 @@ public abstract class RCallBack<T> extends Subscriber<HttpResult<T>> {
 
     @Override
     public void onNext(HttpResult<T> result) {
-        if(result.getReturn_code()<0){
-            onError(null);
-//            onServerException();
-        }else if(result.getReturn_code()==0)
+        if(result.getReturn_code()==0)
             doSuccess(result);
         else{
             doFailure(result);

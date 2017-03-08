@@ -29,6 +29,7 @@ import com.education.online.bean.EvaluateListBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.view.LoadingImageView;
 import com.education.online.view.RatingBar;
@@ -123,7 +124,9 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ImageUtil.getImageOption(R.mipmap.icon_download), new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            vh.courseImg.setImageBitmap(loadedImage);
+//                            LogUtil.i("image", "load image  "+loadedImage.getByteCount());
+                            if(loadedImage.getByteCount()!=90000)
+                                vh.courseImg.setImageBitmap(loadedImage);
                         }
                     }, new ImageLoadingProgressListener() {
                         @Override
