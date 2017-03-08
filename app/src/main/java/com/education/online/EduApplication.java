@@ -15,6 +15,7 @@ import com.avoscloud.leanchatlib.controller.MessageHandler;
 import com.baidu.mapapi.SDKInitializer;
 import com.education.online.act.discovery.SystemMessagePage;
 import com.education.online.retrofit.LiveConversationEventHandler;
+import com.education.online.util.AppExceptionHanlder;
 import com.education.online.util.Constant;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
@@ -34,6 +35,9 @@ public class EduApplication extends MultiDexApplication {
 //        Utils.fixAsyncTaskBug();
 
 
+
+        AppExceptionHanlder crashHandler = AppExceptionHanlder.getInstance();
+        crashHandler.init(getApplicationContext());
         SDKInitializer.initialize(getApplicationContext());
 //        SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
 

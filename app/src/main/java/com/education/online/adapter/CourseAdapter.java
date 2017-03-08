@@ -120,7 +120,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (pos == 0) {
             final CourseHolder vh = (CourseHolder) holder;
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg,
-                    ImageUtil.getImageOption(R.color.white), new SimpleImageLoadingListener() {
+                    ImageUtil.getImageOption(R.mipmap.icon_download), new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                             vh.courseImg.setImageBitmap(loadedImage);
