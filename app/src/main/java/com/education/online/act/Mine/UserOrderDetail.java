@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.avos.avoscloud.AVUser;
 import com.avoscloud.leanchatlib.model.LeanchatUser;
 import com.avoscloud.leanchatlib.utils.AVUserCacheUtils;
@@ -18,6 +20,9 @@ import com.education.online.act.CourseMainPage;
 import com.education.online.act.VideoMainPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OrderDetailBean;
+import com.education.online.http.CallBack;
+import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
@@ -28,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by 可爱的蘑菇 on 2016/9/16.
  */
@@ -35,16 +42,31 @@ public class UserOrderDetail extends BaseFrameAct {
 
 
     private ImageView teacherImg;
-    private TextView payMoney, orderId, createTime, teacherName, courseTitle, courseNum, priceTxt, payTxt, labelTxt,orderStatus;
+    private Button refundBtn;
+    private TextView payMoney, orderId, createTime, teacherName, courseTitle, courseNum, priceTxt, payTxt, labelTxt,orderStatus, cashHint;
     private LinearLayout courseLayout;
     private OrderDetailBean orderDetailBean;
     private String jsonData="";
+    private HttpHandler handler;
+
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData){
+                if(method.equals(Method.getOrderDetail)){
+                    orderDetailBean= JSON.parseObject(jsonData, OrderDetailBean.class);
+                    initView();
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_order_detail);
 
+        initHandler();
         jsonData=getIntent().getStringExtra("jsonData");
         orderDetailBean= JSON.parseObject(jsonData, OrderDetailBean.class);
         _setHeaderTitle("订单详情");
@@ -54,11 +76,39 @@ public class UserOrderDetail extends BaseFrameAct {
     private void initView() {
         String user_info=JsonUtil.getString(jsonData, "user_info");
         teacherImg= (ImageView) findViewById(R.id.teacherImg);
+        refundBtn= (Button) findViewById(R.id.refundBtn);
+        refundBtn.setOnClickListener(listener);
+        if(orderDetailBean.getCourse_type().equals("3")) {
+            String orderstate=orderDetailBean.getState();
+            if(orderstate.equals("2"))
+                refundBtn.setVisibility(View.VISIBLE);
+            else
+                refundBtn.setVisibility(View.GONE);
+        }
+
+        payMoney= (TextView) findViewById(R.id.payMoney);
+        cashHint= (TextView) findViewById(R.id.cashHint);
+        TextView refundTime= (TextView) findViewById(R.id.refundTime);
+        TextView refundHint= (TextView) findViewById(R.id.refundHint);
+        if(orderDetailBean.getState().equals("3")||orderDetailBean.getState().equals("4")) {
+            refundHint.setVisibility(View.VISIBLE);
+            refundHint.setText("退款状态：    "+ActUtil.getRefund(orderDetailBean.getRefund_state())+"   "
+                    +orderDetailBean.getApprover_info());
+            cashHint.setText("退款金额：");
+            payMoney.setText("￥" + orderDetailBean.getRefund_price());
+            refundTime.setText(orderDetailBean.getRefund_time());
+        }else if(orderDetailBean.getState().equals("0")||orderDetailBean.getState().equals("1")){
+            refundHint.setVisibility(View.GONE);
+            cashHint.setText("待付金额：");
+            payMoney.setText("￥" + orderDetailBean.getPrice());
+        }else {
+            refundHint.setVisibility(View.GONE);
+            cashHint.setText("实付金额：");
+            payMoney.setText("￥" + orderDetailBean.getOrder_price());
+        }
         ImageLoader.getInstance().displayImage(ImageUtil.getImageUrl(JsonUtil.getString(user_info, "avatar")), teacherImg);
         orderStatus=(TextView) findViewById(R.id.orderStatus);
         orderStatus.setText(ActUtil.getOrderStatsTxts(orderDetailBean.getState()));
-        payMoney= (TextView) findViewById(R.id.payMoney);
-        payMoney.setText("￥"+orderDetailBean.getOrder_price());
         orderId= (TextView) findViewById(R.id.orderId);
         orderId.setText("订单编号： "+orderDetailBean.getOrder_number());
         createTime= (TextView) findViewById(R.id.createTime);
@@ -111,14 +161,32 @@ public class UserOrderDetail extends BaseFrameAct {
         @Override
         public void onClick(View view) {
             Intent intent=new Intent();
-            if(orderDetailBean.getCourse_type().equals("3"))
-                intent.setClass(UserOrderDetail.this, CourseMainPage.class);
-            else
-                intent.setClass(UserOrderDetail.this, VideoMainPage.class);
-            intent.putExtra("course_name", orderDetailBean.getCourse_name());
-            intent.putExtra("course_img", orderDetailBean.getImg());
-            intent.putExtra("course_id", orderDetailBean.getCourse_id());
-            startActivity(intent);
+            switch (view.getId()){
+                case R.id.courseLayout:
+                    if(orderDetailBean.getCourse_type().equals("3"))
+                        intent.setClass(UserOrderDetail.this, CourseMainPage.class);
+                    else
+                        intent.setClass(UserOrderDetail.this, VideoMainPage.class);
+                    intent.putExtra("course_name", orderDetailBean.getCourse_name());
+                    intent.putExtra("course_img", orderDetailBean.getImg());
+                    intent.putExtra("course_id", orderDetailBean.getCourse_id());
+                    startActivity(intent);
+                    break;
+                case R.id.refundBtn:
+                    intent.setClass(UserOrderDetail.this, RefundSubmit.class);
+                    intent.putExtra("Order", orderDetailBean);
+                    startActivityForResult(intent, 0x11);
+                    break;
+            }
+
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0x12){
+            handler.getOrderDetail(orderDetailBean.getOrder_number());
+        }
+    }
 }

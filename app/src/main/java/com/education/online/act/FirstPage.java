@@ -30,6 +30,8 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTheme(R.style.AppTheme);
         setContentView(R.layout.first_page);
 
         _setHeaderGone();

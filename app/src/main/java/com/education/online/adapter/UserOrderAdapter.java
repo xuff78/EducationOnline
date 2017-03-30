@@ -74,7 +74,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         ActUtil.getCourseTypeTxt(bean.getCourse_type(), courseHolder.CoursePrice);
         courseHolder.CoursePrice.setText(courseHolder.CoursePrice.getText().toString()+"   "+ActUtil.getPrice(bean.getPrice()));
         courseHolder.statusTxt.setText(ActUtil.getOrderStatsTxts(bean.getState()));
-        if(bean.getState().equals("5")){
+        if(bean.getState().equals("2")){
             courseHolder.addEvaluate.setVisibility(View.VISIBLE);
         }else if(bean.getState().equals("1")){
             courseHolder.addEvaluate.setVisibility(View.VISIBLE);
@@ -106,7 +106,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
             addEvaluate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(bean.getState().equals("5")) {
+                    if(bean.getState().equals("2")) {
                         Intent intent=new Intent(activity, Comment.class);
                         intent.putExtra("courseImg", bean.getImg());
                         intent.putExtra("courseName", bean.getCourse_name());

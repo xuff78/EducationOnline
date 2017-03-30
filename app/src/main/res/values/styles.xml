@@ -1,5 +1,14 @@
 <resources>
 
+    <style name="AppTheme.Launcher">
+        <!--品牌展示-->
+        <!--<item name="android:windowBackground">@drawable/branded_launch_screens</item>-->
+        <!--主页预加载-->
+        <item name="android:windowBackground">@drawable/launch_page_bg</item>
+        <!--关闭启动窗口-->
+        <!--<item name="android:windowDisablePreview">true</item>-->
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -26,6 +35,14 @@
         <item name="android:textColor">@color/hard_gray</item>
     </style>
 
+    <style name="txt_black_16">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/hard_gray</item>
+    </style>
+
     <style name="txt_black_12">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -38,6 +55,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14.0sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/normal_gray</item>
+    </style>
+
+    <style name="txt_gray_16">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16.0sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/normal_gray</item>
     </style>

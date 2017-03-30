@@ -32,6 +32,51 @@ public class OrderDetailBean implements Serializable{
     private String usercode=""; // 创建人数字账号
     private String is_collection=""; // 是否已收藏改课程
     private String user_name="";
+    private String is_evaluate="";
+    private String refund_price="";
+    private String refund_state="";
+    private String refund_time="";
+    private String approver_info="";
+
+    public String getRefund_time() {
+        return refund_time;
+    }
+
+    public void setRefund_time(String refund_time) {
+        this.refund_time = refund_time;
+    }
+
+    public String getRefund_price() {
+        return refund_price;
+    }
+
+    public void setRefund_price(String refund_price) {
+        this.refund_price = refund_price;
+    }
+
+    public String getRefund_state() {
+        return refund_state;
+    }
+
+    public void setRefund_state(String refund_state) {
+        this.refund_state = refund_state;
+    }
+
+    public String getApprover_info() {
+        return approver_info;
+    }
+
+    public void setApprover_info(String approver_info) {
+        this.approver_info = approver_info;
+    }
+
+    public String getIs_evaluate() {
+        return is_evaluate;
+    }
+
+    public void setIs_evaluate(String is_evaluate) {
+        this.is_evaluate = is_evaluate;
+    }
 
     public String getUser_name() {
         return user_name;

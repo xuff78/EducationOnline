@@ -391,6 +391,30 @@ public class ActUtil {
         return txt;
     }
 
+    public static String getRefund(String course_type) {
+        String txt="";
+        if(course_type!=null&&course_type.length()>0) {
+            switch (Integer.valueOf(course_type)) {
+                case 1:
+                    txt = "申请";
+                    break;
+                case 2:
+                    txt = "拒绝";
+                    break;
+                case 3:
+                    txt = "退款中";
+                    break;
+                case 4:
+                    txt = "已退款";
+                    break;
+                case 5:
+                    txt = "退款失败";
+                    break;
+            }
+        }
+        return txt;
+    }
+
     public static <T> T updateInfo(Class<T> clazz, T oldbean, T newbean) {
         try {
             Method[] methods = clazz.getMethods();
@@ -455,10 +479,10 @@ public class ActUtil {
                     res= "已完成";
                     break;
                 case 3:
-                    res= "申诉";
+                    res= "退款中";
                     break;
                 case 4:
-                    res= "退款";
+                    res= "已退款";
                     break;
                 case 5:
                     res= "待评价";

@@ -408,6 +408,17 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getUserInfo, paramMap, false);
 	}
 
+	public void refundOrder(String order_number, String remark, String media_path) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("order_number",order_number);
+		if(remark!=null&&remark.length()>0)
+			paramMap.put("remark",remark);
+		if(media_path!=null&&media_path.length()>0)
+			paramMap.put("media_path",media_path);
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getRefund, paramMap, false);
+	}
+
 	public void regist(String phone, String password,String identity,String nickname,String gender,String avatar,String subject_id)
 	{
 		HashMap<String, String> paraMap = new HashMap<>();

@@ -19,6 +19,7 @@ import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.bean.AdvertsBean;
 import com.education.online.fragment.teacher.TeacherInfoPage;
 import com.education.online.util.ImageUtil;
+import com.education.online.weex.AdvPageWeex;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -80,6 +81,7 @@ public class ActivityTopGalleryAdapter extends PagerAdapter {
                     }
                 }else if(Integer.parseInt(details_count)>1){
                     intent.putExtra("advert_id",advertsBean.getAdvert_id());
+//                    intent.setClass(con,AdvPageWeex.class);
                     intent.setClass(con,AdvertPage.class);
                     con.startActivity(intent);
 

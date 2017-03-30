@@ -6,40 +6,65 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:background="@color/normal_red"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:layout_marginLeft="25dp"
             android:src="@mipmap/order_status1"
             android:id="@+id/statusIcon"
             android:layout_width="20dp"
             android:layout_height="20dp" />
-        <TextView
-            android:id="@+id/orderStatus"
-            android:layout_marginLeft="10dp"
-            android:text="已支付"
-            android:textSize="18sp"
-            style="@style/txt_white_16" />
+
+            <TextView
+                android:id="@+id/orderStatus"
+                android:layout_marginLeft="10dp"
+                android:text="已支付"
+                android:textSize="18sp"
+                style="@style/txt_white_16" />
+            <TextView
+                android:layout_marginLeft="25dp"
+                android:id="@+id/refundTime"
+                android:text=""
+                style="@style/txt_white_12" />
+
+        </LinearLayout>
         <LinearLayout
+            android:layout_marginLeft="55dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:text="实付金额: "
-            style="@style/txt_white_12" />
-        <TextView
-            android:id="@+id/payMoney"
-            android:layout_marginLeft="10dp"
-            android:text="¥100"
-            android:textSize="18sp"
-            style="@style/txt_white_16" />
+            <TextView
+                android:id="@+id/cashHint"
+                android:text="实付金额: "
+                style="@style/txt_white_12" />
+            <TextView
+                android:id="@+id/payMoney"
+                android:layout_marginLeft="10dp"
+                android:text="¥0"
+                android:textSize="18sp"
+                style="@style/txt_white_16" />
         </LinearLayout>
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:id="@+id/refundHint"
+            android:layout_marginLeft="55dp"
+            android:text="状态"
+            style="@style/txt_white_12" />
     </LinearLayout>
+
     <LinearLayout
         android:paddingLeft="25dp"
         android:gravity="center_vertical"
@@ -57,6 +82,7 @@
             android:id="@+id/createTime"
             style="@style/txt_black_14"/>
         </LinearLayout>
+
     <LinearLayout
         android:paddingLeft="20dp"
         android:orientation="vertical"
@@ -234,5 +260,18 @@
         android:background="@color/whitesmoke"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/refundBtn"
+        style="@style/txt_black_16"
+        android:text="申请退款"
+        android:background="@drawable/shape_nocorner_black"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </LinearLayout>
 </ScrollView>

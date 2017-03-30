@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -23,4 +24,5 @@ public interface UserHandler {
     @POST(Method.Login)
     Observable<HttpResult<LoginInfo>> login(@Field("phone") String phone, @Field("password") String password,
                                             @Field("leancloud_id") String leancloud_id);
+
 }

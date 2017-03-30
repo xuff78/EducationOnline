@@ -8,17 +8,18 @@ import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
-import com.avos.avoscloud.im.v2.AVIMMessageManager;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avoscloud.leanchatlib.controller.ChatManager;
-import com.avoscloud.leanchatlib.controller.MessageHandler;
 import com.baidu.mapapi.SDKInitializer;
 import com.education.online.act.discovery.SystemMessagePage;
-import com.education.online.retrofit.LiveConversationEventHandler;
 import com.education.online.util.AppExceptionHanlder;
 import com.education.online.util.Constant;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.weex.ImageAdapter;
+import com.education.online.weex.WeexUtilModule;
+import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXSDKEngine;
+import com.taobao.weex.common.WXException;
 
 
 /**
@@ -68,6 +69,14 @@ public class EduApplication extends MultiDexApplication {
 
         if (EduApplication.debug) {
             openStrictMode();
+        }
+
+        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+        WXSDKEngine.initialize(this, config);
+        try {
+            WXSDKEngine.registerModule("wxmodule", WeexUtilModule.class);
+        } catch (WXException e) {
+            e.printStackTrace();
         }
     }
 

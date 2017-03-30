@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/whitesmoke"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:padding="25dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/courseName"
+        style="@style/txt_gray_16"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_blackline_with_graybg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <EditText
+        android:id="@+id/reasonEdt"
+        android:layout_marginTop="20dp"
+        android:hint="退款原因"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:maxLines="10"
+        style="@style/txt_black_14"
+        android:gravity="top"
+        android:background="@drawable/shape_blackline_with_smallcorner"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:text="上次图片，最多三张"
+        style="@style/txt_gray_14" />
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/imgsLayout"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"/>
+        <ImageView
+            android:background="@drawable/shape_nocorner_lightgray"
+            android:id="@+id/addBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="12dp"
+            android:src="@mipmap/icon_redcross1"
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/submitBtn"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="提  交"
+        android:background="@color/normal_red"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+</LinearLayout>
+</ScrollView>

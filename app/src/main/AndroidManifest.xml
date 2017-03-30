@@ -53,6 +53,7 @@
         <activity
             android:name=".act.FirstPage"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.Launcher"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -327,6 +328,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
         <activity
+            android:name=".act.Mine.RefundSubmit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
+        <activity
             android:name=".act.order.GetVeriCode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
@@ -441,6 +446,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
         <activity android:name=".act.order.WalletPay"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustUnspecified" />
+        <activity android:name=".weex.AdvPageWeex"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustUnspecified" />
 

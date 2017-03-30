@@ -5,6 +5,11 @@ android {
     buildToolsVersion "23.0.1"
     useLibrary 'org.apache.http.legacy'
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -69,6 +74,10 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'io.reactivex:rxjava:1.0.10'
+
+    compile 'com.android.support:recyclerview-v7:23.+'
+    compile 'com.android.support:support-v4:23.+'
+    compile 'com.taobao.android:weex_sdk:0.10.0@aar'
     //    compile 'com.alibaba:fastjson:1.2.17'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/libammsdk.jar')
