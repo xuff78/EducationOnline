@@ -72,7 +72,6 @@
                 style="@style/txt_gray_14"/>
             <ImageView
                 android:id="@+id/checkIcon"
-                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/icon_round_right"
                 android:layout_alignParentRight="true"
@@ -144,6 +143,7 @@
                 android:layout_height="1px" />
         </RelativeLayout>
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/unionPayLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp">

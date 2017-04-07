@@ -23,7 +23,13 @@ import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
+import com.education.online.util.JsonUtil;
+import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.ToastUtils;
 import com.education.online.view.PayTypeDialog;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -148,7 +154,29 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                         };
                         Thread payThread = new Thread(payRunnable);
                         payThread.start();
-                    }else if(status==STATUS.AliPay) {
+                    }else if(status==STATUS.WeChat) {
+                        String appid = Constant.WXAppId;
+                        IWXAPI wxApi = WXAPIFactory.createWXAPI(OrderPay.this, appid, true);
+                        wxApi.registerApp(appid);
+                        if(!wxApi.isWXAppInstalled())
+                        {
+                            ToastUtils.displayTextShort(OrderPay.this, "没有安装微信");
+                            return;
+                        }
+                        if(!wxApi.isWXAppSupportAPI())
+                        {
+                            ToastUtils.displayTextShort(OrderPay.this, "没有安装微信");
+                            return;
+                        }
+                        PayReq request = new PayReq();
+                        request.appId = JsonUtil.getString(jsonData, "appid");
+                        request.partnerId = JsonUtil.getString(jsonData, "partnerid");
+                        request.prepayId= JsonUtil.getString(jsonData, "prepayid");
+                        request.packageValue = JsonUtil.getString(jsonData, "package");
+                        request.nonceStr= JsonUtil.getString(jsonData, "noncestr");
+                        request.timeStamp= JsonUtil.getString(jsonData, "timestamp");
+                        request.sign = JsonUtil.getString(jsonData, "sign");
+                        wxApi.sendReq(request);
                     }
                 }else if(method.equals(Method.payWallet)){
                     toCompletePage();
@@ -205,6 +233,20 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
     }
 
     @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        int resultcode=SharedPreferencesUtil.getInt(this, "WXPayResult", -999);
+        if(resultcode==0){
+            SharedPreferencesUtil.setInt(this, "WXPayResult", -999);
+            Toast.makeText(OrderPay.this, "支付成功", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(OrderPay.this, PaymentCompletePage.class);
+            i.putExtra("Order", orderDetailBean);
+            startActivity(i);
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.rechargeBtn:
@@ -234,6 +276,7 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                 break;
             case PayTypeDialog.WechatPay:
                 status=STATUS.WeChat;
+                handler.getPayment(orderDetailBean.getOrder_number(), "wechat");
                 break;
             case PayTypeDialog.UnionPay:
                 status=STATUS.UnionPay;

@@ -28,7 +28,7 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
     public static final int UnionPay=3;
     private View checkedIcon=null;
     private View checkIcon, checkIcon2, checkIcon3, checkIcon4;
-    private int choice=-1;
+    private int choice=0;
     private String price="";
 
     public PayTypeDialog(Context context, boolean showWallet, PayDialogCallBack cb, String price) {
@@ -72,6 +72,7 @@ public class PayTypeDialog extends Dialog implements View.OnClickListener {
         checkIcon3.setOnClickListener(this);
         checkIcon4=findViewById(R.id.checkIcon4);
         checkIcon4.setOnClickListener(this);
+        checkedIcon=checkIcon;
         findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
