@@ -106,11 +106,26 @@ public class HttpHandler extends Handle {
 		requestPostUser(Method.retrievePassword, paramMap, true);
 	}
 
-	public void rechargeWallet(String amount) {
+	public void rechargeWallet(String amount, String recharge_type) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("amount", amount);
+		paramMap.put("recharge_type", recharge_type);
 		requestPostEdu(Method.rechargeWallet, paramMap, true);
+	}
+
+	public void transfer(String amount, String payee_code) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("amount", amount);
+		paramMap.put("payee_code", payee_code);  //WX-微信, ALI-支付宝
+		requestPostEdu(Method.transfer, paramMap, true);
+	}
+
+	public void getUserAccount() {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		requestPostEdu(Method.getUserAccount, paramMap, true);
 	}
 
 	public void payWallet(String order_number,String pay_pwd) {

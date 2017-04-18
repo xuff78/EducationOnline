@@ -69,5 +69,7 @@ public class Method {
     public static final String getPayment= "payment/payment/info";
     public static final String rechargeWallet= "education/user/recharge";
     public static final String payWallet= "payment/payment/wallet";
+    public static final String transfer = "education/user/transfer";
+    public static final String getUserAccount = "education/user/account";
 
 }

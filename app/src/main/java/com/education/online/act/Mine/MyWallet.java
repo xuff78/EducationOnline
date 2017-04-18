@@ -6,10 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.parser.deserializer.ArrayListTypeFieldDeserializer;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
 import com.education.online.act.order.GetVeriCode;
 import com.education.online.act.order.SetPayPwd;
+import com.education.online.bean.AccountInfo;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
@@ -18,6 +21,8 @@ import com.education.online.util.JsonUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -61,7 +66,7 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                 startActivity(new Intent(MyWallet.this, GetVeriCode.class));
                 break;
             case R.id.tixianLayout:
-//                startActivity(new Intent(getActivity(), AuthMenu.class));
+                httpHandler.getUserAccount();
                 break;
             case R.id.historyLayout:
                 startActivity(new Intent(MyWallet.this, MyWalletHistory.class));
@@ -80,10 +85,16 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                         String balance = jsonObject.getString("balance");
                         walletBalance.setText(balance);
                     }
-
+                }else if(method.equals(Method.getUserAccount)){
+                    ArrayList<AccountInfo> accounts=JSON.parseObject(jsonData, new TypeReference<ArrayList<AccountInfo>>(){});
+                    if(accounts.size()>0){
+                        Intent i=new Intent(MyWallet.this, CashTransfer.class);
+                        i.putExtra("AccountInfo", accounts.get(0));
+                        startActivity(i);
+                    }else{
+                        startActivity(new Intent(MyWallet.this, TransferType.class));
+                    }
                 }
-
-
             }
         });
     }

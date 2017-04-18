@@ -143,7 +143,7 @@ public class MyWalletCharge extends BaseFrameAct implements View.OnClickListener
             public void onClick(View view) {
                 String cash=rechargePrice.getText().toString().trim();
                 if(ActUtil.isCash(cash, MyWalletCharge.this)) {
-                    httpHandler.rechargeWallet(cash);
+                    httpHandler.rechargeWallet(cash, "1");
                 }
             }
         });
