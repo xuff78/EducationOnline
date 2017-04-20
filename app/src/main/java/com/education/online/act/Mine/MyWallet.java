@@ -90,7 +90,7 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                     if(accounts.size()>0){
                         Intent i=new Intent(MyWallet.this, CashTransfer.class);
                         i.putExtra("AccountInfo", accounts.get(0));
-                        startActivity(i);
+                        startActivityForResult(i, 0x10);
                     }else{
                         startActivity(new Intent(MyWallet.this, TransferType.class));
                     }

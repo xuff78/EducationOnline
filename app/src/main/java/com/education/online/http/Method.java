@@ -71,5 +71,7 @@ public class Method {
     public static final String payWallet= "payment/payment/wallet";
     public static final String transfer = "education/user/transfer";
     public static final String getUserAccount = "education/user/account";
+    public static final String unboundAccount = "education/user/unbound";
+    public static final String getTransferList = "education/user/transferList";
 
 }

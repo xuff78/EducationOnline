@@ -114,10 +114,11 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.rechargeWallet, paramMap, true);
 	}
 
-	public void transfer(String amount, String payee_code) {
+	public void transfer(String amount, String payee_code, String pay_pwd) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("amount", amount);
+		paramMap.put("pay_pwd", SHA.getSHA(pay_pwd));
 		paramMap.put("payee_code", payee_code);  //WX-微信, ALI-支付宝
 		requestPostEdu(Method.transfer, paramMap, true);
 	}
@@ -126,6 +127,21 @@ public class HttpHandler extends Handle {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		requestPostEdu(Method.getUserAccount, paramMap, true);
+	}
+
+	public void unboundAccount(String pay_pwd) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("pay_pwd", SHA.getSHA(pay_pwd));
+		requestPostEdu(Method.unboundAccount, paramMap, true);
+	}
+
+	public void getTransferList(int page) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
+		paramMap.put("page_size", "20");
+		paramMap.put("page", page+"");
+		requestPostEdu(Method.getTransferList, paramMap, false);
 	}
 
 	public void payWallet(String order_number,String pay_pwd) {
