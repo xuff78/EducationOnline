@@ -129,10 +129,11 @@ public class HttpHandler extends Handle {
 		requestPostEdu(Method.getUserAccount, paramMap, true);
 	}
 
-	public void unboundAccount(String pay_pwd) {
+	public void unboundAccount(String pay_pwd, String payee_code) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
 		paramMap.put("pay_pwd", SHA.getSHA(pay_pwd));
+		paramMap.put("payee_code", payee_code);
 		requestPostEdu(Method.unboundAccount, paramMap, true);
 	}
 

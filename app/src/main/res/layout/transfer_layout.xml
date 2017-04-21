@@ -9,7 +9,10 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         app:cardCornerRadius="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -36,8 +39,8 @@
                     android:layout_marginLeft="10dp"
                     android:id="@+id/typeIcon"
                     android:src="@mipmap/icon_share_wexin2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
 
                 <LinearLayout
                     android:layout_marginLeft="15dp"
@@ -60,6 +63,7 @@
                 android:inputType="numberDecimal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/shape_nocorner_lightgray"
                 style="@style/txt_black_14"
                 android:id="@+id/amountEdt"
@@ -81,10 +85,14 @@
     <android.support.v7.widget.CardView
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         app:cardCornerRadius="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
         </android.support.v7.widget.CardView>
 </LinearLayout>

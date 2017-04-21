@@ -86,14 +86,18 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                         walletBalance.setText(balance);
                     }
                 }else if(method.equals(Method.getUserAccount)){
-                    ArrayList<AccountInfo> accounts=JSON.parseObject(jsonData, new TypeReference<ArrayList<AccountInfo>>(){});
-                    if(accounts.size()>0){
-                        Intent i=new Intent(MyWallet.this, CashTransfer.class);
-                        i.putExtra("AccountInfo", accounts.get(0));
-                        startActivityForResult(i, 0x10);
-                    }else{
+                    if(jsonData!=null&&jsonData.length()>0) {
+                        ArrayList<AccountInfo> accounts = JSON.parseObject(jsonData, new TypeReference<ArrayList<AccountInfo>>() {
+                        });
+                        if (accounts.size() > 0) {
+                            Intent i = new Intent(MyWallet.this, CashTransfer.class);
+                            i.putExtra("AccountInfo", accounts.get(0));
+                            startActivityForResult(i, 0x10);
+                        } else {
+                            startActivity(new Intent(MyWallet.this, TransferType.class));
+                        }
+                    }else
                         startActivity(new Intent(MyWallet.this, TransferType.class));
-                    }
                 }
             }
         });

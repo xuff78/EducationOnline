@@ -15,24 +15,25 @@ import com.education.online.bean.AccountInfo;
 
 public class TransferType  extends BaseFrameAct implements View.OnClickListener{
 
-    private RelativeLayout modifypwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.editsettings);
+        setContentView(R.layout.select_transfer_type);
         _setHeaderTitle("选择提现方式");
         init();
     }
     public void init(){
-        modifypwd = (RelativeLayout) findViewById(R.id.modifypwd);
-        findViewById(R.id.aboutLayout).setOnClickListener(this);
+        findViewById(R.id.alipayPayLayout).setOnClickListener(this);
+        findViewById(R.id.wechatPayLayout).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.modifypwd:
+            case R.id.alipayPayLayout:
+                break;
+            case R.id.wechatPayLayout:
                 break;
         }
     }
