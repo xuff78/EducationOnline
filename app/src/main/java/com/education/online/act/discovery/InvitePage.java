@@ -44,7 +44,7 @@ public class InvitePage extends BaseFrameAct implements View.OnClickListener{
     private void initView() {
         ImageView iv=(ImageView)findViewById(R.id.qrcodeImg);
         try {
-            qrcode = ImageUtil.Create2DCode(InvitePage.this,"jffdslkfjs83293jksand");
+            qrcode = ImageUtil.Create2DCode(InvitePage.this,"http://www.longforlearn.com/download/longforlearn.apk");
             iv.setImageBitmap(qrcode);
         } catch (WriterException e) {
             e.printStackTrace();
