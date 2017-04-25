@@ -59,12 +59,12 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transfer_layout);
         _setHeaderTitle("提现");
-        _setRightHomeText("更换账号  ", new View.OnClickListener() {
+        _setRightHomeText("解除绑定  ", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(CashTransfer.this, WalletPay.class);
-                intent.putExtra("cost", amountEdt.getText().toString());
+                intent.putExtra("noHint", true);
                 startActivityForResult(intent, 0x20);
             }
         });
@@ -80,10 +80,10 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
         TextView accountTxt=(TextView)findViewById(R.id.accountTxt);
         findViewById(R.id.confirmBtn).setOnClickListener(this);
         if(info.getAccount_type().equals("ALI")) {
-            typeIcon.setImageResource(R.mipmap.icon_alipay);
+            typeIcon.setImageResource(R.mipmap.icon_pay_ali);
             typeTxt.setText(info.getAccount_name());
+            accountTxt.setVisibility(View.VISIBLE);
         }
-        accountTxt.setText(info.getAccount_no());
 
         recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
         layoutManager = new LinearLayoutManager(this);
@@ -101,7 +101,7 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
                 if(ActUtil.isCash(amountEdt.getText().toString(), this)) {
                     Intent intent = new Intent();
                     intent.setClass(CashTransfer.this, WalletPay.class);
-                    intent.putExtra("cost", amountEdt.getText().toString());
+                    intent.putExtra("transfer", amountEdt.getText().toString());
                     startActivityForResult(intent, 0x10);
                 }
                 break;
@@ -168,14 +168,16 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
                 if(method.equals(Method.getTransferList)){
                     onloading = false;
                     adapter.setLoadingHint("加载失败");
-                }
+                }else
+                    super.onFailure(method, jsonMessage, jsonData);
             }
             public void onHTTPException(String method, String jsonMessage) {
                 super.onHTTPException(method, jsonMessage);
                 if (method.equals(Method.getTransferList)) {
                     onloading = false;
                     adapter.setLoadingHint("加载失败");
-                }
+                }else
+                    super.onHTTPException(method, jsonMessage);
             }
         });
     }

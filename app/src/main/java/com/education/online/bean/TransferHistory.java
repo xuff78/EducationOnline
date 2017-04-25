@@ -14,6 +14,15 @@ public class TransferHistory {
     private String approver_info=""; // 审批意见
     private String payment_time=""; // 提现完成时间
     private String out_trade_sn=""; // 外部交易流水号
+    private String status_desc="";
+
+    public String getStatus_desc() {
+        return status_desc;
+    }
+
+    public void setStatus_desc(String status_desc) {
+        this.status_desc = status_desc;
+    }
 
     public String getCreate_at() {
         return create_at;

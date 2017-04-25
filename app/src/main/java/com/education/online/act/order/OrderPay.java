@@ -127,7 +127,7 @@ public class OrderPay extends BaseFrameAct implements View.OnClickListener, PayT
                 if(method.equals(Method.getPayment)){
 //                    final String sign_str= JsonUtil.getString(jsonData, "sign_str");
                     if(status==STATUS.AliPay) {
-                        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+                        EnvUtils.setEnv(EnvUtils.EnvEnum.ONLINE);
 //                    Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID);
 //                    String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
 //                    String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE);

@@ -108,6 +108,9 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode== Constant.refreshData){
             httpHandler.getWalletInfo(page_size,String.valueOf(page));
+        }else if(resultCode==0x23){
+            httpHandler.getWalletInfo(page_size,String.valueOf(page));
+            findViewById(R.id.tixianLayout).callOnClick();
         }
     }
 }

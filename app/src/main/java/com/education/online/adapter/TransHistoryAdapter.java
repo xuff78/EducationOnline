@@ -69,7 +69,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter <RecyclerView.View
             HistroyHolder fvh = (HistroyHolder) holder;
             TransferHistory walletLogBean = walletLogBeanList.get(position);
             fvh.balanceTxt.setText("￥"+walletLogBean.getAmount());
-            fvh.costTxt.setText(walletLogBean.getStatus());
+            fvh.costTxt.setText(walletLogBean.getStatus_desc());
             fvh.dateTxt.setText(walletLogBean.getCreate_at());
             fvh.courseName.setText("订单号： "+walletLogBean.getTransfer_sn());
             fvh.accountType.setText(walletLogBean.getPayment_name());

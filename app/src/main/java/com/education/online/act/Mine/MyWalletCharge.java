@@ -65,7 +65,7 @@ public class MyWalletCharge extends BaseFrameAct implements View.OnClickListener
                 }else if(method.equals(Method.getPayment)){
 
                     if(status==STATUS.AliPay) {
-                        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+                        EnvUtils.setEnv(EnvUtils.EnvEnum.ONLINE);
                         Runnable payRunnable = new Runnable() {
 
                             @Override

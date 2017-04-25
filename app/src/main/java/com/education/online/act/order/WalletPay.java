@@ -31,7 +31,7 @@ public class WalletPay extends BaseFrameAct {
 
     private String initPassword;
     private EditText[] textViews = new EditText[6];
-    private TextView textView1,costtextview;
+    private TextView textView1,costtextview, hintTxt;
     private LinearLayout passwordlayout;
     private View view1;
     private final int success = 0x10;
@@ -46,10 +46,19 @@ public class WalletPay extends BaseFrameAct {
         setContentView(R.layout.enter_pay_password);
         _setHeaderTitle("请输入支付密码");
         init();
+        if(getIntent().hasExtra("noHint")){
+            hintTxt.setVisibility(View.INVISIBLE);
+            costtextview.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void init() {
+        hintTxt = (TextView) findViewById(R.id.hintTxt);
         intent = getIntent();
+        if (intent.hasExtra("transfer")) {
+            cost = intent.getStringExtra("transfer");
+            hintTxt.setText("提现金额  ");
+        }
         if (intent.hasExtra("cost"))
             cost = intent.getStringExtra("cost");
         textViews[0] = (EditText) findViewById(R.id.pwd1);
@@ -60,8 +69,8 @@ public class WalletPay extends BaseFrameAct {
         textViews[5] = (EditText) findViewById(R.id.pwd6);
         textView1 = (TextView) findViewById(R.id.textview1);
         costtextview = (TextView) findViewById(R.id.cost);
-        if(!cost.isEmpty())
-        costtextview.setText("¥"+ActUtil.twoDecimal(cost));
+        if(cost!=null&&cost.length()>0)
+            costtextview.setText("¥"+ActUtil.twoDecimal(cost));
         view1 = findViewById(R.id.view1);
         passwordlayout = (LinearLayout) findViewById(R.id.passwordlayout);
         view1.setOnClickListener(new View.OnClickListener() {

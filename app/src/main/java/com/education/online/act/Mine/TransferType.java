@@ -1,5 +1,6 @@
 package com.education.online.act.Mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,8 @@ import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.order.OrderPay;
+import com.education.online.act.order.PaymentCompletePage;
 import com.education.online.bean.AccountInfo;
 import com.education.online.bean.PayResult;
 import com.education.online.http.CallBack;
@@ -21,6 +24,7 @@ import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.ToastUtils;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -84,7 +88,7 @@ public class TransferType  extends BaseFrameAct implements View.OnClickListener{
                 }else if(method.equals(Method.getPayment)){
 
                     if(status== STATUS.AliPay) {
-                        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+                        EnvUtils.setEnv(EnvUtils.EnvEnum.ONLINE);
                         Runnable payRunnable = new Runnable() {
 
                             @Override
@@ -149,6 +153,7 @@ public class TransferType  extends BaseFrameAct implements View.OnClickListener{
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(TransferType.this, "绑定成功", Toast.LENGTH_SHORT).show();
+                        setResult(0x23);
                         finish();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -159,4 +164,17 @@ public class TransferType  extends BaseFrameAct implements View.OnClickListener{
             }
         }
     };
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        int resultcode= SharedPreferencesUtil.getInt(this, "WXPayResult", -999);
+        if(resultcode==0){
+            SharedPreferencesUtil.setInt(this, "WXPayResult", -999);
+            Toast.makeText(TransferType.this, "绑定成功", Toast.LENGTH_SHORT).show();
+            setResult(0x23);
+            finish();
+        }
+    }
 }
