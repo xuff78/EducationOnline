@@ -29,6 +29,15 @@ public class CourseBean implements Serializable,Comparable<CourseBean>{
     private String courseware_end_date="";
     private String has_course_during_halfhour="";
     private String is_buy="";
+    private String usercode="";
+
+    public String getUsercode() {
+        return usercode;
+    }
+
+    public void setUsercode(String usercode) {
+        this.usercode = usercode;
+    }
 
     public String getIs_buy() {
         return is_buy;

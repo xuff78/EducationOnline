@@ -33,6 +33,7 @@ import com.education.online.util.JsonUtil;
 import com.education.online.util.ToastUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
     private LinearLayoutManager layoutManager;
     private List<TransferHistory> datalist=new ArrayList<>();
     private TransHistoryAdapter adapter;
+    private TextView walletBalance;
     private boolean onloading=false, complete=false;
 
     @Override
@@ -72,9 +74,11 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
         info= (AccountInfo) getIntent().getSerializableExtra("AccountInfo");
         init();
         handler.getTransferList(page);
+        handler.getWalletInfo("20","1");
     }
     public void init(){
         amountEdt=(EditText)findViewById(R.id.amountEdt);
+        walletBalance=(TextView)findViewById(R.id.walletBalance);
         ImageView typeIcon=(ImageView)findViewById(R.id.typeIcon);
         TextView typeTxt=(TextView)findViewById(R.id.typeTxt);
         TextView accountTxt=(TextView)findViewById(R.id.accountTxt);
@@ -160,6 +164,12 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
                     adapter.notifyDataSetChanged();
                     onloading=false;
                     page++;
+                }else if(method.equals(Method.getWalletInfo)){
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    if (!jsonObject.isNull("balance")){
+                        String balance = jsonObject.getString("balance");
+                        walletBalance.setText("￥"+balance);
+                    }
                 }
             }
 

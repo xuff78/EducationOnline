@@ -94,10 +94,10 @@ public class MyWallet extends BaseFrameAct implements View.OnClickListener{
                             i.putExtra("AccountInfo", accounts.get(0));
                             startActivityForResult(i, 0x10);
                         } else {
-                            startActivity(new Intent(MyWallet.this, TransferType.class));
+                            startActivityForResult(new Intent(MyWallet.this, TransferType.class), 0x11);
                         }
                     }else
-                        startActivity(new Intent(MyWallet.this, TransferType.class));
+                        startActivityForResult(new Intent(MyWallet.this, TransferType.class), 0x11);
                 }
             }
         });

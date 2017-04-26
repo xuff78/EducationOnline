@@ -7,19 +7,19 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="90dp">
         <com.education.online.view.LoadingImageView
             android:id="@+id/courseImg1"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="80dp" />
+            android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/imgMask1"
             android:background="@color/light_trans_black"
             android:padding="30dp"
             android:src="@mipmap/icon_video_play"
             android:layout_width="match_parent"
-            android:layout_height="80dp" />
+            android:layout_height="match_parent" />
     </RelativeLayout>
     <TextView
         android:layout_marginTop="10dp"

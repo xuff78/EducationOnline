@@ -76,7 +76,7 @@ public class HomepageCourse extends BaseFragment {
                     CourseBean delitem = adapter.getItem(which);
                     adapter.remove(which);
                     handler.deleteCourse(delitem.getCourse_id());
-//                    DialogUtil.showInfoDialog(getActivity(), "提示", "确认删除该项?", new DialogInterface.OnClickListener(){
+//                    DialogUtil.showConfirmDialog(getActivity(), "提示", "确认删除该项?", new DialogInterface.OnClickListener(){
 //                        @Override
 //                        public void onClick(DialogInterface dialogInterface, int i) {
 //                            dialogInterface.dismiss();

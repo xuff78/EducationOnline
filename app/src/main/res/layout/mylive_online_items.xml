@@ -13,7 +13,8 @@
 
         <ImageView
             android:id="@+id/CourseImage"
-            android:layout_width="70dp"
+            android:scaleType="centerCrop"
+            android:layout_width="120dp"
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_gravity="center_vertical" />
@@ -22,7 +23,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_toRightOf="@+id/CourseImageLayout"
-    android:layout_marginLeft="15dp"
+    android:layout_marginLeft="10dp"
     android:layout_height="100dp">
     <LinearLayout
         android:layout_centerVertical="true"
@@ -37,7 +38,7 @@
             android:maxLines="2"
             android:gravity="center_vertical"
             android:text="PHOTOSHOP基础工具机+唯美图片合成"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_below="@+id/CourseName"

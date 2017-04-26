@@ -16,6 +16,7 @@ import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -29,13 +30,14 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
     private Activity activity;
     private LayoutInflater inflater;
     private ImageLoader imageLoader;
+    private String myUsercode="";
 
     public OnlineCourseAdapter(Activity activity, ArrayList<CourseBean> onlineCourseArraryList ){
         this.activity = activity;
         this.onlineCourseBeanArrayList = onlineCourseArraryList;
         inflater = LayoutInflater.from(activity);
         imageLoader=ImageLoader.getInstance();
-
+        myUsercode= SharedPreferencesUtil.getUsercode(activity);
     }
 
     @Override
@@ -61,10 +63,12 @@ public class OnlineCourseAdapter extends RecyclerView.Adapter <RecyclerView.View
         CourseItemHolder courseItemHolder= (CourseItemHolder) holder;
         imageLoader.displayImage(ImageUtil.getImageUrl(course.getImg()),courseItemHolder.courseImage);
         courseItemHolder.courseName.setText(course.getCourse_name());
-        courseItemHolder.CourseTime.setText(course.getCourseware_date()+"开课");
+        courseItemHolder.CourseTime.setText(course.getCourseware_date()+" 开课");
         courseItemHolder.CoursePrice.setText(ActUtil.getPrice(course.getPrice()));
-        courseItemHolder.NumApplicant.setText(course.getFollow()+"已报名");
-        if(course.getIs_buy().equals("1")) {
+        courseItemHolder.NumApplicant.setText(course.getFollow()+" 人已报名");
+        if(myUsercode.equals(course.getUsercode())){
+            courseItemHolder.ApplicantCourse.setText("进入课程");
+        }else if(course.getIs_buy().equals("1")) {
             courseItemHolder.ApplicantCourse.setBackgroundResource(R.drawable.shape_grayline_with_corner);
             courseItemHolder.ApplicantCourse.setText("已报名");
             courseItemHolder.ApplicantCourse.setTextColor(Color.GRAY);
