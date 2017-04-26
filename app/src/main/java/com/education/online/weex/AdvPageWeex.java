@@ -1,5 +1,6 @@
 package com.education.online.weex;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +32,8 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weex_page);
 
+        Intent intent=getIntent();
+        String advert_id = intent.getStringExtra("advert_id");
         mContainer = (FrameLayout) findViewById(R.id.container);
 
         mWXSDKInstance = new WXSDKInstance(this);
@@ -43,6 +46,7 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
          */
         Map<String, Object> options = new HashMap<>();
         options.put(WXSDKInstance.BUNDLE_URL, TEST_URL);
+        options.put("advert_id", advert_id);
         mWXSDKInstance.renderByUrl("EducationOnline",TEST_URL,options,null, WXRenderStrategy.APPEND_ONCE);
     }
 
