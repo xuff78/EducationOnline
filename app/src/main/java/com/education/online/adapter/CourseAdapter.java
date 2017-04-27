@@ -121,7 +121,8 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (pos == 0) {
             final CourseHolder vh = (CourseHolder) holder;
             imageLoader.displayImage(ImageUtil.getImageUrl(courseDetailBean.getImg()), vh.courseImg,
-                    ImageUtil.getImageOption(R.mipmap.icon_download), new SimpleImageLoadingListener() {
+                    ImageUtil.getImageOption(R.mipmap.icon_download));
+                    /* , new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 //                            LogUtil.i("image", "load image  "+loadedImage.getByteCount());
@@ -133,7 +134,7 @@ public class CourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         public void onProgressUpdate(String imageUri, View view, int current, int total) {
                             ((LoadingImageView)vh.courseImg).setProgress(current, total);
                         }
-                    });
+                    });*/
             vh.courseName.setText(courseDetailBean.getCourse_name());
             vh.courseoldprice.setText(courseDetailBean.getOriginal_price());
             vh.courseoldprice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);

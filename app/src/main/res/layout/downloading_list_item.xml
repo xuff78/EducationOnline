@@ -6,7 +6,7 @@
         android:orientation="horizontal"
         android:background="#66ddff00"
         android:id="@+id/bottom_wrapper"
-        android:layout_width="90dp"
+        android:layout_width="80dp"
         android:weightSum="1"
         android:layout_height="match_parent">
         <!--What you want to show-->
@@ -14,7 +14,7 @@
             android:id="@+id/delBtn"
             android:background="@color/normal_red"
             android:gravity="center"
-            style="@style/txt_white_14"
+            style="@style/txt_white_16"
             android:text="删除"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

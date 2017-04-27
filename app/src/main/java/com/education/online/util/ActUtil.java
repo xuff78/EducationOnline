@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -103,6 +105,18 @@ public class ActUtil {
         }else{
             act.startActivity(intent);
         }
+    }
+
+    public static String getVersionCode(Context context) {
+        String version = "0";
+        try {
+            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            version = pi.versionCode + "";
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return version;
     }
 
     public static boolean canStartLive(String datestring) {

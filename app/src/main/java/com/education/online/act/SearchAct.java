@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.education.online.R;
 import com.education.online.http.HttpHandler;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
@@ -66,6 +67,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 typeTxt.setText(typeStrs[i]);
                 type=i;
+                popup.dismiss();
             }
         });
 
@@ -87,6 +89,10 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                             wordsStr=word;
                             SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);
                         }else{
+                            String[] words=wordsStr.split(":");
+                            if(words.length==5){
+                                wordsStr=wordsStr.substring(0, wordsStr.lastIndexOf(":")-1);
+                            }
                             wordsStr=word+":"+wordsStr;
                             SharedPreferencesUtil.setString(SearchAct.this, Constant.SearchWords, wordsStr);
                         }
@@ -158,6 +164,7 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
                 popup.showPopupWindow(typeLayout);
                 break;
             case R.id.cancelBtn:
+                KeyBoardCancle();
                 finish();
                 break;
             case R.id.clearBtn:

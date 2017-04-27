@@ -47,6 +47,7 @@ import com.education.online.util.OpenfileUtil;
 import com.education.online.util.SHA;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.ToastUtils;
 import com.education.online.util.VideoThumbnailLoader;
 import com.education.online.util.VideoUtil;
 import com.education.online.view.DownLoadDialog;
@@ -66,7 +67,7 @@ import io.vov.vitamio.widget.VideoView;
 public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.DownloadCallback{
 
     int currentPos = 0;
-    private LinearLayout addfavorite_layout, share_layout, download_layout;
+    private LinearLayout addfavorite_layout, share_layout, download_layout, dellayout;
     private TextView textaddfavorite, textshare, textdownload, textaddorbuy;
     private ImageView addfavorite, share, download, background;
     private View lastSelectedView = null, editlayout;
@@ -174,6 +175,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
                     if (my_usercode.equals(courseDetailBean.getUsercode())) {
                         editlayout.setVisibility(View.VISIBLE);
+                        dellayout.setVisibility(View.VISIBLE);
                         addfavorite_layout.setVisibility(View.GONE);
                         download_layout.setVisibility(View.GONE);
                         share_layout.setVisibility(View.GONE);
@@ -207,6 +209,9 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
                     else
                         Toast.makeText(VideoMainPage.this, "取消收藏成功！", Toast.LENGTH_SHORT).show();
+                }else if(method.equals(Method.deleteCourse)){
+                    ToastUtils.displayTextShort(VideoMainPage.this, "删除成功");
+                    finish();
                 }
 
                 //  DialogUtil.showInfoDailog(CourseMainPage.this, "提示", "发布课程成功!");
@@ -360,6 +365,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void initView() {
+
         bottomLayout=findViewById(R.id.bottomLayout);
         my_usercode = SharedPreferencesUtil.getUsercode(this);
         listener = new View.OnClickListener() {
@@ -484,11 +490,22 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         intent.putExtra(CourseDetailBean.Name, courseDetailBean);
                         startActivityForResult(intent, 0x13);
                         break;
+                    case R.id.dellayout:
+                        DialogUtil.showConfirmDialog(VideoMainPage.this, "提示", "确认删除该课程?", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                httpHandler.deleteCourse(courseDetailBean.getCourse_id());
+                            }
+                        });
+                        break;
                 }
 
             }
         };
 
+        dellayout = (LinearLayout) findViewById(R.id.dellayout);
+        dellayout.setOnClickListener(listener);
         mediaController= (MediaController) findViewById(R.id.mediaController);
         mediaController.setExpendListener(listener);
         imageLoader = ImageLoader.getInstance();

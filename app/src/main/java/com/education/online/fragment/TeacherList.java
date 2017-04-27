@@ -46,7 +46,11 @@ public class TeacherList extends CourseUpdate {
         if(isNew)
             onlineCourseBeanArrayList.clear();
         onlineCourseBeanArrayList.addAll(courses);
-        adapter.notifyDataSetChanged();
+        if(isNew) {
+            adapter=new TeacherAdapter(getActivity(), onlineCourseBeanArrayList);
+            teacherList.setAdapter(adapter);
+        }else
+            adapter.notifyDataSetChanged();
     }
 
     private void initView(View v) {

@@ -39,10 +39,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
     <View
         android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="1px" />
+
     <RelativeLayout
         android:id="@+id/degreeLayout"
         android:paddingLeft="20dp"
@@ -77,8 +79,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
     <View
         android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="1px" />
+
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+
+    <TextView
+        android:padding="20dp"
+        android:lineSpacingExtra="3dp"
+        android:text="通过基本资料认证和身份证认证后即可成为教师开始授课，认证越全面越容易获得学生认可"
+        style="@style/txt_gray_14" />
 </LinearLayout>

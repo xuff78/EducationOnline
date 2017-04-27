@@ -20,6 +20,7 @@ import com.education.online.download.ThreadInfo;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -110,6 +111,7 @@ public class DownloadingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
                     if(isDownloading){
                         binder.pauseDownload(threadInfo);
                     }else{
+                        ToastUtils.displayTextLong(act, "继续下载请稍后");
                         binder.startDownload(threadInfo, handler);
                     }
                     isDownloading=!isDownloading;

@@ -157,10 +157,15 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                 teacher.setAvatar(getIntent().getStringExtra("Avatar"));
             if(getIntent().hasExtra("Name"))
                 teacher.setName(getIntent().getStringExtra("Name"));
+
+            String myUsercode = SharedPreferencesUtil.getUsercode(this);
+            if(myUsercode.equals(usercode))
+                findViewById(R.id.bottomlayout).setVisibility(View.GONE);
         }else {
             usercode = SharedPreferencesUtil.getUsercode(this);
             findViewById(R.id.bottomlayout).setVisibility(View.GONE);
         }
+
         adapter=new TeacherMainAdapter(TeacherInformationPage.this, teacher, evaluations, TeacherInformationPage.this);
         recyclerViewList.setAdapter(adapter);
         handler.getUserInfo(usercode);

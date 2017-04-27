@@ -227,11 +227,11 @@ public class HomepageCourse extends BaseFragment {
             TextView NumApplicant = (TextView) v.findViewById(R.id.NumApplicant);
             NumApplicant.setText(course.getFollow()+"人已报名");
             CourseName.setText(CourseName.getText().toString()+course.getSubject_name());
-            if(edit){
-                delBtn.setVisibility(View.VISIBLE);
-            }else{
-                delBtn.setVisibility(View.GONE);
-            }
+//            if(edit){
+//                delBtn.setVisibility(View.VISIBLE);
+//            }else{
+//                delBtn.setVisibility(View.GONE);
+//            }
             return v;
         }
 

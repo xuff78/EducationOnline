@@ -13,6 +13,7 @@ public class Method {
     public static final String signin = "uc/user/signin";
     public static final String signToday = "uc/user/signInToday";
     public static final String getIntegral= "uc/user/integral";
+    public static final String checkVersion= "uc/sys/checkVersion";
 
     public static final String getSystemMessage = "education/user/message";
     public static final String getRecommentCourses = "education/homepage/interest";

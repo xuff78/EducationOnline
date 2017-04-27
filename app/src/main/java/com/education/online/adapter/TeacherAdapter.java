@@ -18,6 +18,7 @@ import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.OnlineCourseBean;
 import com.education.online.bean.TeacherWithCourse;
+import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -141,7 +142,7 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             TextView courseName= (TextView) v.findViewById(R.id.courseName);
             courseName.setText(courseBean.getCourse_name());
             TextView coursePrice= (TextView) v.findViewById(R.id.coursePrice);
-            coursePrice.setText(courseBean.getPrice());
+            coursePrice.setText(ActUtil.getPrice(courseBean.getPrice()));
             TextView buyerNum= (TextView) v.findViewById(R.id.buyerNum);
             buyerNum.setText(courseBean.getFollow()+"人在学习");
             v.setTag(courseBean);

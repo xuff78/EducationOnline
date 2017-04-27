@@ -367,6 +367,30 @@
                     android:text="编辑"
                     android:textSize="10sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:background="@color/whitesmoke"
+                android:id="@+id/dellayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_toRightOf="@+id/share"
+                    android:padding="5dp"
+                    android:src="@mipmap/icon_delcourse" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:gravity="center"
+                    android:text="删除"
+                    android:textSize="10sp" />
+            </LinearLayout>
         </LinearLayout>
 
 

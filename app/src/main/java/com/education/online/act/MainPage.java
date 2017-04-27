@@ -1,7 +1,9 @@
 package com.education.online.act;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -24,6 +27,7 @@ import com.education.online.act.login.LoginActivity;
 import com.education.online.act.teacher.AuthMenu;
 import com.education.online.bean.JsonMessage;
 import com.education.online.bean.SubjectBean;
+import com.education.online.bean.VersionBean;
 import com.education.online.fragment.DiscoveryPage;
 import com.education.online.fragment.HomePage;
 import com.education.online.fragment.OnlineCoursePage;
@@ -35,10 +39,12 @@ import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
+import com.googlecode.mp4parser.Version;
 
 import org.json.JSONException;
 
@@ -58,7 +64,31 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         handler = new HttpHandler(this, new CallBack(this) {
             @Override
             public void doSuccess(String method, String jsonData) throws JSONException {
+                if(method.equals(Method.checkVersion)){
+                    final VersionBean mBean = JSON.parseObject(jsonData, VersionBean.class);
+                    //0-不更新,1-建议更新,2-强制更新,3-系统维护
+                    if ("0".equals(mBean.getUpdate_type())){
 
+                    } else if ("1".equals(mBean.getUpdate_type())||"2".equals(mBean.getUpdate_type())) {
+                        DialogUtil.showConfirmDialog(MainPage.this, "新版本升级", mBean.getVersion_desc(),
+                                new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                        startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(mBean.getUrl())));
+                                    }
+                                });
+                    } else if ("3".equals(mBean.getUpdate_type())) {
+                        DialogUtil.showInfoDialog(MainPage.this, "提示","系统正在维护中，请稍后重试",
+                                new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                        finish();
+                                    }
+                                });
+                    }
+                }
             }
 
             @Override
@@ -109,6 +139,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             if (!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")) {
                 menuBtn5.setVisibility(View.GONE);
             }
+            handler.checkVersion(ActUtil.getVersionCode(this));
         }
     }
 

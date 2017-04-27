@@ -726,6 +726,13 @@ public class HttpHandler extends Handle {
 
 	}
 
+	public  void checkVersion(String version_code){
+		HashMap<String, String > paraMap =new HashMap<>();
+		paraMap.put("source","ANDROID");
+		paraMap.put("version_code",version_code);
+		requestPostUser(Method.checkVersion,paraMap,true);
+	}
+
 	public  void getPayment(String order_number, String pay_channel){
 		HashMap<String, String > paraMap =new HashMap<>();
 		paraMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));

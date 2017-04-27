@@ -169,7 +169,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="请上传举报内容截图，最多3张"/>
+        android:text="请上传评价图片，最多3张"/>
     <View
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

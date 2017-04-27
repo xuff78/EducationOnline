@@ -161,6 +161,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             searchEdt.setText(searchwords);
             searchEdt.setSelection(searchwords.length());
             courseFilter.setKey_word(searchwords);
+            typeTxt.setText(typeStrs[type]);
             if(type==1) {
                 addCourseListFragment(teacherList);
                 courseTypeLayout.setVisibility(View.GONE);
@@ -241,6 +242,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     type=i;
                     initFilter();
                     AllCate=true;
+                    isloadMore=false;
                     handler.getCourseList(courseFilter);
                     popup.dismiss();
                 }else
@@ -270,7 +272,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     searchWord=searchwords;
                     AllCate=false;
 
-                    menuFilterTxt1.setText(searchWord);
+                    if(type!=1)
+                        menuFilterTxt1.setText(searchWord);
                     handler.getCourseList(courseFilter);
                 }
                 return false;
@@ -320,7 +323,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 popup.showPopupWindow(typeLayout);
                 break;
             case R.id.cancelBtn:
-                finish();
+                onBackPressed();
                 break;
             case R.id.clearBtn:
                 break;

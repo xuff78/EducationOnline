@@ -28,6 +28,7 @@ import com.education.online.act.order.SubmitOrder;
 import com.education.online.act.pushlive.LiveCameraPage;
 import com.education.online.act.teacher.CourseBaseInfoModify;
 import com.education.online.adapter.CourseAdapter;
+import com.education.online.bean.CourseBean;
 import com.education.online.bean.CourseDetailBean;
 import com.education.online.bean.CourseExtm;
 import com.education.online.bean.EvaluateBean;
@@ -59,7 +60,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
     private LinearLayoutManager layoutManager;
     private CourseAdapter adapter;
     private List<EvaluateBean> evaluateList=new ArrayList<>();
-    private LinearLayout addfavorite_layout, share_layout, editlayout;
+    private LinearLayout addfavorite_layout, share_layout, editlayout, dellayout;
     private TextView textaddfavorite, textshare, textaddorbuy, header_title_tv;
     private ImageView addfavorite, share, roundBackBtn;
     private CourseDetailBean courseDetailBean=new CourseDetailBean();
@@ -100,6 +101,7 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                         textaddorbuy.setText("已结束");
                     }else if(intent.hasExtra("Edit")||my_usercode.equals(courseDetailBean.getUsercode())) {
                         editlayout.setVisibility(View.VISIBLE);
+                        dellayout.setVisibility(View.VISIBLE);
                         addfavorite_layout.setVisibility(View.GONE);
                         share_layout.setVisibility(View.GONE);
                         if(!intent.hasExtra("status")||intent.getStringExtra("status").equals("1")) {
@@ -185,6 +187,9 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                             }
                         }
                     });
+                }else if(method.equals(Method.deleteCourse)){
+                    ToastUtils.displayTextShort(CourseMainPage.this, "删除成功");
+                    finish();
                 }
             }
 
@@ -238,6 +243,8 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
         share_layout.setOnClickListener(this);
         editlayout = (LinearLayout) findViewById(R.id.editlayout);
         editlayout.setOnClickListener(this);
+        dellayout = (LinearLayout) findViewById(R.id.dellayout);
+        dellayout.setOnClickListener(this);
 
         share.setImageResource(R.mipmap.icon_telphone);
         textshare.setText("咨询");
@@ -325,6 +332,15 @@ public class CourseMainPage extends AppCompatActivity implements View.OnClickLis
                 Intent intent=new Intent(CourseMainPage.this, CourseBaseInfoModify.class);
                 intent.putExtra(CourseDetailBean.Name, courseDetailBean);
                 startActivityForResult(intent, 0x12);
+                break;
+            case R.id.dellayout:
+                DialogUtil.showConfirmDialog(CourseMainPage.this, "提示", "确认删除该课程?", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        httpHandler.deleteCourse(courseDetailBean.getCourse_id());
+                    }
+                });
                 break;
         }
     }

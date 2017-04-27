@@ -54,7 +54,7 @@
     <LinearLayout
         android:gravity="right|center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="50dp">
     <com.education.online.view.circularbtn.MorphingButton
         android:id="@+id/toolbarIconRight"
         android:layout_width="40dip"
