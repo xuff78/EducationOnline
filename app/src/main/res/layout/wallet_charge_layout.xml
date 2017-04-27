@@ -153,6 +153,7 @@
         android:text="立即支付"
         style="@style/txt_black_14" />
     <LinearLayout
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"

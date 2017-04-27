@@ -18,7 +18,7 @@ import rx.Observable;
 public interface UserHandler {
 
     @POST(Method.Login)
-    Observable<HttpResult<LoginInfo>> login(@Body RequestBody signStr);
+    Observable<HttpResult<String>> httpRequest(@Body RequestBody signStr);
 
     @FormUrlEncoded
     @POST(Method.Login)

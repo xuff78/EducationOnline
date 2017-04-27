@@ -50,6 +50,18 @@ public class RetrofitAPIManager {
         return userHandler;
     }
 
+    public static UserHandler getUserRetrofit(String url) {
+        if(userHandler==null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(jsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            userHandler = retrofit.create(UserHandler.class);
+        }
+        return userHandler;
+    }
+
     private static OkHttpClient mOkHttpClient =null;
 
     private static OkHttpClient genericClient(final Context con, final String API_Url_User) {
@@ -62,7 +74,6 @@ public class RetrofitAPIManager {
                             Request request = chain.request();
                             Request.Builder requestBuilder = request.newBuilder()
                                     .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                                    .addHeader("Accept-Encoding", "gzip, deflate")
                                     .addHeader("Connection", "keep-alive")
                                     .addHeader("Accept", "*/*")
                                     .addHeader("Cookie", "balabala");

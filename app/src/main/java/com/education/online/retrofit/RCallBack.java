@@ -2,6 +2,7 @@ package com.education.online.retrofit;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 
 import com.education.online.http.GlbsNet;
 import com.education.online.util.DialogUtil;
@@ -17,10 +18,10 @@ import rx.Subscription;
  */
 public abstract class RCallBack<T> extends Subscriber<HttpResult<T>> {
 
-    private Activity act;
+    private Context act;
     private Dialog dialog=null;
 
-    public RCallBack(Activity act){
+    public RCallBack(Context act){
         this.act=act;
     }
 

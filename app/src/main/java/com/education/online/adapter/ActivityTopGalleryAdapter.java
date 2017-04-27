@@ -81,8 +81,8 @@ public class ActivityTopGalleryAdapter extends PagerAdapter {
                     }
                 }else if(Integer.parseInt(details_count)>1){
                     intent.putExtra("advert_id",advertsBean.getAdvert_id());
-//                    intent.setClass(con,AdvPageWeex.class);
-                    intent.setClass(con,AdvertPage.class);
+                    intent.setClass(con,AdvPageWeex.class);
+//                    intent.setClass(con,AdvertPage.class);
                     con.startActivity(intent);
 
 

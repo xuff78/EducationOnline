@@ -16,6 +16,7 @@ import com.education.online.util.Constant;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.weex.ImageAdapter;
+import com.education.online.weex.WeexHttpModule;
 import com.education.online.weex.WeexUtilModule;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
@@ -74,7 +75,7 @@ public class EduApplication extends MultiDexApplication {
         InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
         WXSDKEngine.initialize(this, config);
         try {
-            WXSDKEngine.registerModule("wxmodule", WeexUtilModule.class);
+            WXSDKEngine.registerModule("httpevent", WeexHttpModule.class);
         } catch (WXException e) {
             e.printStackTrace();
         }

@@ -144,7 +144,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         _setHeaderGone();
         initView();
         type = getIntent().getIntExtra("Type", 0);
-        initFilter();
+        initFilter(true);
 //        AllCate=getIntent().getBooleanExtra("AllCate", false);
         if(getIntent().hasExtra(Constant.SearchSubject)){
             addCourseListFragment(onlinecoursePage);
@@ -179,16 +179,19 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         handler.getCourseList(courseFilter);
     }
 
-    private void initFilter() {
+    private void initFilter(boolean newFilter) {
         selectorFilter=new SelectorFilter();
         FilterAll filter=new FilterAll();
         ArrayList<FilterInfo> list=new ArrayList<>();
-        courseFilter=new CourseFilter();
+        if(newFilter)
+            courseFilter=new CourseFilter();
         String[] names=null;
         if (type == 0) {
             courseTypeLayout.setVisibility(View.VISIBLE);
             addCourseListFragment(onlinecoursePage);
             setFirstFilter(list);
+            courseFilter.setCourse_type("live");
+            courseFilter.setQuery_type("course");
             names=new String[]{"智能排序","人气最高","评价最高","价格最低"};
         } else {
             courseTypeLayout.setVisibility(View.GONE);
@@ -240,9 +243,11 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                 typeTxt.setText(typeStrs[i]);
                 if(type!=i) {
                     type=i;
-                    initFilter();
-                    AllCate=true;
+                    initFilter(false);
+//                    AllCate=true;
                     isloadMore=false;
+                    page=1;
+                    courseFilter.setPage("1");
                     handler.getCourseList(courseFilter);
                     popup.dismiss();
                 }else

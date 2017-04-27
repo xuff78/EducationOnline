@@ -23,7 +23,7 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
 
 
     //    private static String TEST_URL = "http://dotwe.org/raw/dist/6fe11640e8d25f2f98176e9643c08687.bundle.js";
-    private static String TEST_URL = "http://172.16.10.52:8080/src/build/main.js";
+    private static String TEST_URL = "http://106.75.91.154:8888/advpage.js";
     private WXSDKInstance mWXSDKInstance;
     private FrameLayout mContainer;
 

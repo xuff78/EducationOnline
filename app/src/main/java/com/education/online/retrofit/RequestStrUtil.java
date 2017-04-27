@@ -16,11 +16,8 @@ import okhttp3.RequestBody;
 
 public class RequestStrUtil {
 
-    public static RequestBody getLoginStr(Context mContext, String phone, String password){
-        HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("phone", phone);
-        paramMap.put("password", password);
-        String body= LeanSignatureUtil.sign(mContext, Constant.API_Url_User+ Method.Login, paramMap);
-        return RequestBody.create(null, body);
+    public static RequestBody getRequestBody(Context mContext, String url, HashMap<String, String> paramMap){
+        RequestBody body= LeanSignatureUtil.signOkhttp(mContext, url, paramMap);
+        return body;
     }
 }

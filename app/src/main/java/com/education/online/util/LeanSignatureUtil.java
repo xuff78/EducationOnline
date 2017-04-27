@@ -6,10 +6,16 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okio.BufferedSink;
 
 /**
  * Created by Administrator on 2016/10/8.
@@ -66,6 +72,61 @@ public class LeanSignatureUtil {
         String content= URLUtil.map2string(params);
         LogUtil.i("TestDemo", "content---->" + content);
         return content;
+    }
+
+    public static RequestBody signOkhttp(Context context, String url_api, Map<String, String> params) {
+        String url = url_api;
+        params.put("deviceid", getDeviceid(context));
+        params.put("imsi", getImsi(context));
+        params.put("imei", getImei(context));
+        params.put("ua", getUA(context));
+        params.put("nonce", UUID.randomUUID().toString());
+        params.put("timestamp", "" + System.currentTimeMillis() / 1000);
+
+        encode(params);
+        Map sortedParams = MapUtil.sort(params);
+        String paramString = URLUtil.map2string(sortedParams);
+
+        try {
+            LogUtil.i("TestDemo", "param1---->" + paramString);
+            String e = URLEncoder.encode(url.toLowerCase(), "utf-8") + URLEncoder.encode(paramString, "utf-8");
+            e = e.replaceAll("\\+", "%20");
+            e = e.replaceAll("\\!", "%21");
+            e = e.replaceAll("\\~", "%7E");
+            e = e.replaceAll("\\*", "%2A");
+
+            String app_secret = SharedPreferencesUtil.getString(context, "app_secret");
+            String signature = HmacSha.getSignature(e,app_secret);
+            signature = URLEncoder.encode(signature, "utf-8");
+
+
+            params.put("sign", signature);
+            LogUtil.i("sign", signature);
+            LogUtil.i("TestDemo", url + params.toString());
+
+            StringBuffer sb = new StringBuffer();
+            Iterator var14 = params.entrySet().iterator();
+
+            while(var14.hasNext()) {
+                Map.Entry entry = (Map.Entry)var14.next();
+                sb.append("&");
+                sb.append((String)entry.getKey());
+                sb.append("=");
+                sb.append((String)entry.getValue());
+            }
+
+            LogUtil.i("TestDemo", url + sb.toString().replaceFirst("&", "?"));
+        } catch (Throwable var15) {
+            LogUtil.e("GLBS.error", "获取signature失败", var15);
+        }
+
+        String content= URLUtil.map2string(params);
+        LogUtil.i("TestDemo", "content---->" + content);
+        FormBody.Builder formBody = new FormBody.Builder();
+        for (String name:params.keySet()) {
+            formBody.add(name, params.get(name));
+        }
+        return formBody.build();
     }
 
     public static void encode(final Map<String, String> params) {
