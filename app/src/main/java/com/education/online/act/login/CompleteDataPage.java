@@ -191,6 +191,7 @@ public class CompleteDataPage extends BaseFrameAct {
                     SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.NickName, user.getNickname());
                     SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserIdentity, user_identity);
                     SharedPreferencesUtil.setString(CompleteDataPage.this, Constant.UserInfo, jsonData);
+                    SharedPreferencesUtil.setUsercode(CompleteDataPage.this, user.getUsercode());
                     SharedPreferencesUtil.setSessionid(CompleteDataPage.this, sessionid);
                 }
                     Intent intent = new Intent(CompleteDataPage.this, FirstPage.class);
@@ -266,7 +267,7 @@ public class CompleteDataPage extends BaseFrameAct {
                 }
 
             }.start();
-        }else if(requestCode == 0x22){
+        }else if(requestCode == 0x22&&resultCode == RESULT_OK){
             File file = FileUtil.getFile(phoneTxtName + ".png", CompleteDataPage.this);
             Bitmap photo=null;
             if(data!=null) {

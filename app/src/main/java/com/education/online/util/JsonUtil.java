@@ -296,7 +296,7 @@ public class JsonUtil {
                 if (!item.isNull("img"))
                     questionInfoBean.setImg(item.getString("img"));
                 if (!item.isNull("integral"))
-                    questionInfoBean.setIntegral(item.getString("integral"));
+                    questionInfoBean.setIntegral(item.getInt("integral"));
                 if (!item.isNull("introduction"))
                     questionInfoBean.setIntroduction(item.getString("introduction"));
                 if (!item.isNull("is_finished"))

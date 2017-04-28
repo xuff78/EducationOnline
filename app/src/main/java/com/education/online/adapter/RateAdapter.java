@@ -78,16 +78,16 @@ public class RateAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
             vh.rateTxt.setText(average);
             vh.numTxt.setText("共"+total+"人评价");
             vh.ratingBar.setStar(Float.valueOf(average));
-            vh.progress1.setProgress(e1);
-            vh.rate5Txt.setText(e1+"%");
-            vh.progress2.setProgress(e2);
-            vh.rate4Txt.setText(e2+"%");
+            vh.progress1.setProgress(e5);
+            vh.rate5Txt.setText(e5+"%");
+            vh.progress2.setProgress(e4);
+            vh.rate4Txt.setText(e4+"%");
             vh.progress3.setProgress(e3);
             vh.rate3Txt.setText(e3+"%");
-            vh.progress4.setProgress(e4);
-            vh.rate2Txt.setText(e4+"%");
-            vh.progress5.setProgress(e5);
-            vh.rate1Txt.setText(e5+"%");
+            vh.progress4.setProgress(e2);
+            vh.rate2Txt.setText(e2+"%");
+            vh.progress5.setProgress(e1);
+            vh.rate1Txt.setText(e1+"%");
         }else if(pos==1){
             MenuHolder vh = (MenuHolder) holder;
             for (int i=0;i<vh.txts.size();i++){

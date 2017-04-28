@@ -106,6 +106,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
         if(getIntent().hasExtra("Login")) {
             SharedPreferencesUtil.setSessionid(this, SharedPreferencesUtil.FAILURE_STRING);
+            SharedPreferencesUtil.setUsercode(this, SharedPreferencesUtil.FAILURE_STRING);
             startActivity(new Intent(MainPage.this, FirstPage.class));
             finish();
         }else if(getIntent().hasExtra("Exit"))

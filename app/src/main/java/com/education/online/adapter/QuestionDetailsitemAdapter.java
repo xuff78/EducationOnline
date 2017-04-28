@@ -95,8 +95,10 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
 
             vh.isadopted.setTag(answerInfoBean.getAnswer_id());
             if (my_usercode.equals(questionInfoBean.getUsercode())) {//是我的问题
-
-                vh.isadopted.setOnClickListener(listener);
+                if (!my_usercode.equals(answerInfoBean.getUsercode())) {//是我的回答
+                    vh.isadopted.setOnClickListener(listener);
+                }else
+                    vh.isadopted.setVisibility(View.INVISIBLE);
             }else{
                 vh.isadopted.setVisibility(View.INVISIBLE);
             }

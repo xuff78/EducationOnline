@@ -107,7 +107,7 @@ public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClick
                 vh.answerNum.setText("问题已解决");
             vh.questiondetail.setText(questionInfoBean.getIntroduction());
             vh.time.setText(questionInfoBean.getCreated_at());
-
+            vh.integrayTxt.setText(questionInfoBean.getIntegral()+"学分");
 
 
         }
@@ -132,7 +132,7 @@ public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClick
     public class AnswerHolder extends RecyclerView.ViewHolder{
 
         ImageView headIcon, questionpicture;
-        TextView name, time,answerNum,design, questiondetail;
+        TextView name, time,answerNum,design, questiondetail, integrayTxt;
         public AnswerHolder(View itemView, int viewType) {
             super(itemView);
             headIcon = (ImageView) itemView.findViewById(R.id.headIcon);
@@ -142,6 +142,7 @@ public class AnswersAdapter extends RecyclerView.Adapter implements View.OnClick
             answerNum = (TextView) itemView.findViewById(R.id.answerNum);
             design= (TextView) itemView.findViewById(R.id.design);
             questiondetail = (TextView) itemView.findViewById(R.id.questiondetail);
+            integrayTxt = (TextView) itemView.findViewById(R.id.integrayTxt);
         }
     }
 

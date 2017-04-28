@@ -142,7 +142,8 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
         }
         LinearLayout.LayoutParams llprecent=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(this, 40));
         LinearLayout.LayoutParams llpline=new LinearLayout.LayoutParams(-1, 1);
-        for(int i=0;i<words.length;i++){
+        int itemnum=words.length>5?5:words.length;
+        for(int i=0;i<itemnum;i++){
             TextView txt=new TextView(this);
             txt.setTextSize(14);
             txt.setGravity(Gravity.CENTER_VERTICAL);

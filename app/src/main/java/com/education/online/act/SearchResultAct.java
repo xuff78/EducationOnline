@@ -151,7 +151,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
             String subject_id = getIntent().getStringExtra(Constant.SearchSubject);
             courseFilter.setSubject_ids(subject_id);
             ((SelectorPage)selectorPage).setLastSelection(subject_id);
-            menuFilterTxt1.setText(getIntent().getStringExtra(Constant.SearchWords));
+//            menuFilterTxt1.setText(getIntent().getStringExtra(Constant.SearchWords));
             if(getIntent().hasExtra(Constant.SearchCate)){
                 ((SelectorPage)selectorPage).setLastCate(getIntent().getStringExtra(Constant.SearchCate));
             }
@@ -277,8 +277,8 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
                     searchWord=searchwords;
                     AllCate=false;
 
-                    if(type!=1)
-                        menuFilterTxt1.setText(searchWord);
+//                    if(type!=1)
+//                        menuFilterTxt1.setText(searchWord);
                     handler.getCourseList(courseFilter);
                 }
                 return false;
@@ -438,7 +438,7 @@ public class SearchResultAct extends BaseFrameAct implements View.OnClickListene
         isloadMore=false;
         courseFilter.setPage(String.valueOf(page));
         handler.getCourseList(courseFilter);
-        menuFilterTxt1.setText(subject.getSubject_name());
+//        menuFilterTxt1.setText(subject.getSubject_name());
     }
 
     @Override

@@ -267,7 +267,7 @@ public class UserInfoEdit extends BaseFrameAct {
                 }
 
             }.start();
-        }else if(requestCode == 0x22){
+        }else if(requestCode == 0x22&&resultCode == RESULT_OK){
             File file = FileUtil.getFile(phoneTxtName + ".png", UserInfoEdit.this);
             Bitmap photo=null;
             if(data!=null) {

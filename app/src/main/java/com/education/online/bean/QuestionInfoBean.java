@@ -15,7 +15,7 @@ public class QuestionInfoBean implements Serializable{
     private String user_name ="" ;
     private String avatar  ="" ;
     private String usercode  ="" ;
-    private String integral   ="" ;
+    private int integral = 0;
     private String subject_id  ="" ;
     private String subject_name  ="" ;
     private String answer_count ="" ;
@@ -93,11 +93,11 @@ public class QuestionInfoBean implements Serializable{
         this.usercode = usercode;
     }
 
-    public String getIntegral() {
+    public int getIntegral() {
         return integral;
     }
 
-    public void setIntegral(String integral) {
+    public void setIntegral(int integral) {
         this.integral = integral;
     }
 

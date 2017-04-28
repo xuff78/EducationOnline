@@ -103,10 +103,12 @@ public class MessageMain extends BaseFrameAct implements View.OnClickListener{
 
                     @Override
                     public void done(List<AVIMConversation> list, AVIMException e) {
-                        for (AVIMConversation con : list) {
-                            ChatManager.getInstance().getRoomsTable().insertRoom(con.getConversationId());
+                        if(list!=null) {
+                            for (AVIMConversation con : list) {
+                                ChatManager.getInstance().getRoomsTable().insertRoom(con.getConversationId());
+                            }
+                            updateConversationList();
                         }
-                        updateConversationList();
                     }
                 });
             }
