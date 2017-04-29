@@ -1,5 +1,6 @@
 package com.education.online.act.order;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +11,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
 import com.education.online.act.BaseFrameAct;
+import com.education.online.act.Mine.MyEvaluation;
+import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.adapter.InterestingAdapter;
 import com.education.online.bean.CourseDetailBean;
+import com.education.online.bean.JsonMessage;
 import com.education.online.bean.OrderDetailBean;
 import com.education.online.bean.SubjectBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
+import com.education.online.util.DialogUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.JsonUtil;
 import com.education.online.util.ToastUtils;
@@ -58,6 +63,23 @@ public class SubmitOrder extends BaseFrameAct implements View.OnClickListener {
                     }
 
                 }
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage, String json) {
+                if(method.equals(Method.submitOrder)) {
+                    if (jsonMessage.getCode().equals("-300002")){
+                        DialogUtil.showConfirmDialog(SubmitOrder.this, jsonMessage.getCode(), jsonMessage.getMsg(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                startActivity(new Intent(SubmitOrder.this, MyOrderUser.class));
+                            }
+                        });
+                        return;
+                    }
+                }
+                super.onFailure(method, jsonMessage, json);
             }
         });
     }

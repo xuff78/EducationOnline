@@ -181,7 +181,7 @@ public class TeacherAuthIdentity extends BaseFrameAct implements View.OnClickLis
                         progressDialog.dismiss();
                         String url = result.substring(1);
                         LogUtil.d("validate", url);
-                        Toast.makeText(TeacherAuthIdentity.this,"上传成功！",Toast.LENGTH_SHORT);
+                        Toast.makeText(TeacherAuthIdentity.this,"上传成功！",Toast.LENGTH_SHORT).show();
                         if(idImgType==1){
                             pic1=url;
                             imgAdd1.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));

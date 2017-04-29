@@ -8,6 +8,8 @@
     <TextView
         android:id="@+id/courseType"
         android:text="直播课"
+        android:gravity="center"
+        android:layout_width="55dp"
         android:layout_marginTop="2dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
@@ -23,6 +25,7 @@
     <TextView
         android:id="@+id/coursePrice"
         android:layout_marginTop="6dp"
+        android:layout_marginLeft="65dp"
         android:text="免费"
         android:layout_below="@+id/courseType"
         android:textColor="@color/dark_orange"

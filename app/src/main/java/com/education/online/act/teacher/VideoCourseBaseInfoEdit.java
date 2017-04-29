@@ -434,7 +434,8 @@ public class VideoCourseBaseInfoEdit extends BaseFrameAct {
                     View childView = listView.getChildAt(getPos());
                     if (childView != null) {
                         ProgressBar progressBar = (ProgressBar) childView.getTag(R.id.tag_progress_value1);
-                        progressBar.setProgress(100);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        childView.findViewById(R.id.uploadHint).setVisibility(View.VISIBLE);
                         LogUtil.i(TAG, "upload complete!! result: " + result);
                         String url = "";
                         try {

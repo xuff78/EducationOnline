@@ -14,12 +14,14 @@ import com.education.online.act.BaseFrameAct;
 import com.education.online.act.order.OrderPay;
 import com.education.online.adapter.TeacherOrderAdapter;
 import com.education.online.adapter.UserOrderAdapter;
+import com.education.online.bean.JsonMessage;
 import com.education.online.bean.OrderDetailBean;
 import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
 import com.education.online.http.Method;
 import com.education.online.inter.AdapterCallback;
 import com.education.online.inter.SimpleAdapterCallback;
+import com.education.online.util.Constant;
 import com.education.online.util.JsonUtil;
 
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class MyOrderUser extends BaseFrameAct implements View.OnClickListener, S
     private String course_type=null;
     private int page=1;
     private UserOrderAdapter adapter;
+    private LinearLayoutManager layoutManager;
+    private boolean onloading=false, complete=false;
     private List<OrderDetailBean> orders=new ArrayList<>();
 
     private void initHandler() {
@@ -47,17 +51,33 @@ public class MyOrderUser extends BaseFrameAct implements View.OnClickListener, S
                     String orderInfo= JsonUtil.getString(jsonData, "order_info");
                     List<OrderDetailBean> addOrders= JSON.parseObject(orderInfo, new TypeReference<List<OrderDetailBean>>(){});
                     orders.addAll(addOrders);
+                    int totalpage= JsonUtil.getJsonInt(jsonData, "page_total");
+                    if(totalpage==page){
+                        complete=true;
+                    }else
+                        page++;
                     if(page==1){
                         recyclerList.setAdapter(adapter);
                     }else {
                         adapter.notifyDataSetChanged();
                     }
-                    page++;
+                    onloading=false;
                 }else if(method.equals(Method.getOrderDetail)){
                     Intent i=new Intent(MyOrderUser.this, UserOrderDetail.class);
                     i.putExtra("jsonData", jsonData);
                     startActivity(i);
                 }
+            }
+
+            @Override
+            public void onFailure(String method, JsonMessage jsonMessage, String jsonData) {
+                super.onFailure(method, jsonMessage, jsonData);
+                onloading = false;
+            }
+
+            public void onHTTPException(String method, String jsonMessage) {
+                super.onHTTPException(method, jsonMessage);
+                onloading = false;
             }
         });
     }
@@ -70,6 +90,7 @@ public class MyOrderUser extends BaseFrameAct implements View.OnClickListener, S
         _setHeaderTitle("我的订单");
         initHandler();
         initView();
+        onloading=true;
         handler.getOrderList(course_type, page, status);
     }
 
@@ -86,11 +107,12 @@ public class MyOrderUser extends BaseFrameAct implements View.OnClickListener, S
         statusToComment.setOnClickListener(this);
 
         recyclerList=(RecyclerView)findViewById(R.id.recyclerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerList.setLayoutManager(layoutManager);
         adapter=new UserOrderAdapter(this, orders, MyOrderUser.this);
         recyclerList.setAdapter(adapter);
+        recyclerList.addOnScrollListener(recyclerListener);
     }
 
     @Override
@@ -123,5 +145,42 @@ public class MyOrderUser extends BaseFrameAct implements View.OnClickListener, S
     @Override
     public void onClick(View v, int i) {
         handler.getOrderDetail(orders.get(i).getOrder_number());
+    }
+
+    RecyclerView.OnScrollListener recyclerListener=new RecyclerView.OnScrollListener() {
+
+        int lastVisibleItem=0;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+//            LogUtil.i("test", "listScrollY: "+listScrollY);
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(adapter!=null)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    if(!onloading){
+                        if(!complete){
+                            onloading = true;
+                            handler.getOrderList(course_type, page, status);
+                        }
+                    }
+                }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(status!=null&&status.equals("no_evaluate")){
+            page=1;
+            handler.getOrderList(course_type, page, status);
+        }
+
     }
 }

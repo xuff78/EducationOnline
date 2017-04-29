@@ -131,7 +131,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
         }
         teacherName.setText(teacher.getName());
         mTitle.setText(teacher.getName());
-        teacherTitles.setText(teacher.getSpecialty());
+        teacherTitles.setText(teacher.getIntroduction());
         teachingExperience.setText(teacher.getWork_time()+"年教龄");
 
         if(teacher.getIs_ext_validate().equals("1")&&teacher.getIs_id_validate().equals("1"))
@@ -140,7 +140,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
             identityConfirmed.setText("未认证");
         fansNum.setText(teacher.getAttention_count());
         studentNum.setText(teacher.getStudent_count());
-        praisePercent.setText(teacher.getGood_evaluate_ratio());
+        praisePercent.setText((int)(Float.valueOf(teacher.getAverage())/5*100)+"%");
     }
 
     @Override

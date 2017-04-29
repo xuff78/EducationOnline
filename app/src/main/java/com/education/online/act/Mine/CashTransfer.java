@@ -163,7 +163,6 @@ public class CashTransfer extends BaseFrameAct implements View.OnClickListener{
                         page++;
                     adapter.notifyDataSetChanged();
                     onloading=false;
-                    page++;
                 }else if(method.equals(Method.getWalletInfo)){
                     JSONObject jsonObject = new JSONObject(jsonData);
                     if (!jsonObject.isNull("balance")){

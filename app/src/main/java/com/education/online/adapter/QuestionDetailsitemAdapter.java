@@ -108,7 +108,7 @@ public class QuestionDetailsitemAdapter extends RecyclerView.Adapter {
             {
                 vh.isadopted.setClickable(false);
                 vh.isadopted.setVisibility(View.INVISIBLE);
-                if (answerInfoBean.getIs_correct().equals("-1")) {
+                if (answerInfoBean.getIs_correct().equals("1")) {
                     vh.isadopted.setText("已采纳");
                     vh.isadopted.setVisibility(View.VISIBLE);
                 } //else {

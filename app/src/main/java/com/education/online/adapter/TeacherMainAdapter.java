@@ -143,7 +143,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 footer.setGravity(Gravity.CENTER);
                 footer.setTextColor(act.getResources().getColor(R.color.normal_gray));
                 footer.setTextSize(14);
-                footer.setText("全部加载");
+                footer.setText("");
                 vh = new FooterViewHolder(footer);
                 break;
         }
@@ -191,7 +191,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     identityDetail+="单位认证 ";
                 vh.teacherIdentify.setText(identityDetail);
                 vh.teacherMarks.setText(teacherBean.getTags());
-                vh.teacherSelfIntro.setText(teacherBean.getIntroduction());
+                vh.teacherSelfIntro.setText(teacherBean.getAbout_teacher());
                 vh.teacherExperience.setText(teacherBean.getExperience());
             }else if(i==2){
                 CourseHolder vh = (CourseHolder) holder;

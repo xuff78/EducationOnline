@@ -32,6 +32,7 @@
             android:textStyle="bold"/>
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/back_home_imagebtn"
             android:layout_width="45dip"
             android:layout_height="45dip"

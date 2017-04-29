@@ -184,6 +184,7 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
                     @Override
                     public void onSuccess(String result) {
                         progressDialog.dismiss();
+                        Toast.makeText(TeacherAuthOthers.this,"上传成功！",Toast.LENGTH_SHORT).show();
                         addImage(result.substring(1));
                     }
 
@@ -201,7 +202,6 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
     private void addImage(final String imgUrl) {
         LogUtil.d("validate", imgUrl);
         imgList.add(imgUrl);
-        Toast.makeText(TeacherAuthOthers.this,"上传成功！",Toast.LENGTH_SHORT);
         final View v= LayoutInflater.from(this).inflate(R.layout.addimg_item_layout, null);
         ImageView uploadImg= (ImageView) v.findViewById(R.id.uploadImg);
         imageLoader.displayImage(ImageUtil.getImageUrl(imgUrl), uploadImg);

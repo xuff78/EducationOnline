@@ -2,11 +2,15 @@ package com.education.online.http;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import com.education.online.act.FirstPage;
 import com.education.online.act.MainPage;
+import com.education.online.act.Mine.MyOrderUser;
 import com.education.online.act.login.LoginActivity;
+import com.education.online.act.order.GetVeriCode;
+import com.education.online.act.order.SubmitOrder;
 import com.education.online.bean.JsonMessage;
 import com.education.online.util.DialogUtil;
 import com.education.online.util.JsonUtil;
@@ -50,7 +54,15 @@ public class CallBack {
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				i.putExtra("Login", true);
 				mContext.startActivity(i);
-			} else {
+			} else if (msg.getCode().equals("-232000")){
+				DialogUtil.showConfirmDialog(mContext, msg.getCode(), msg.getMsg(), new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						mContext.startActivity(new Intent(mContext, GetVeriCode.class));
+					}
+				});
+			}else{
 				onFailure(method, msg, JsonUtil.getJsonData(jsonMessage));
 			}
 		}

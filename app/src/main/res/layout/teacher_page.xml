@@ -43,7 +43,7 @@
             android:layout_below="@+id/nameTxt"
             android:layout_marginTop="8dp"
             android:id="@+id/descTxt"
-            android:text="什么鬼"
+            android:text="未认证"
             style="@style/txt_white_12" />
         <LinearLayout
             android:gravity="center"

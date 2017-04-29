@@ -380,7 +380,7 @@ public class HttpHandler extends Handle {
 	public void getValidateView() {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("sessionid",SharedPreferencesUtil.getSessionid(mContext));
-		requestPostEdu(Method.getValidateView, paramMap, true);
+		requestPostEdu(Method.getValidateView, paramMap, false);
 	}
 
 	public void getValidateViewNoDialog() {

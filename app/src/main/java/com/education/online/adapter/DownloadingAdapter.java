@@ -20,6 +20,7 @@ import com.education.online.download.ThreadInfo;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -85,6 +86,7 @@ public class DownloadingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
         LinearLayout itemLayout;
         boolean isDownloading=false;
         private ThreadInfo threadInfo=null;
+        boolean opening=false;
 
         public DirectoryHolder(View v, int pos) {
             super(v);
@@ -92,6 +94,39 @@ public class DownloadingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
             progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
             swipeLayout = (SwipeLayout) v.findViewById(R.id.swipeLayout);
             swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+            swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+                    opening=true;
+                    LogUtil.i("SwipeLayout", "opening");
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onClose(SwipeLayout layout) {
+                    LogUtil.i("SwipeLayout", "closed");
+                    opening=false;
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+                }
+            });
             courseName = (TextView) v.findViewById(R.id.courseName);
             courseSubName = (TextView) v.findViewById(R.id.courseSubName);
             progressInfo = (TextView) v.findViewById(R.id.progressInfo);
@@ -148,8 +183,10 @@ public class DownloadingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
                         downloadIcon.setImageResource(R.mipmap.icon_video_stop);
                         break;
                     case Constant.updateDownload:
-                        long finished=msg.getData().getLong("finished");
-                        setProgressInfo(finished);
+                        if(!opening) {
+                            long finished = msg.getData().getLong("finished");
+                            setProgressInfo(finished);
+                        }
                         break;
                 }
             }

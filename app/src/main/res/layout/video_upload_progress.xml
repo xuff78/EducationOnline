@@ -6,61 +6,74 @@
     android:paddingTop="10dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/videoImage"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
-    <EditText
-        android:layout_marginLeft="10dp"
-       android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/videoImage"
-        android:hint="请输入资源名称"
-        android:id="@+id/resourseName"
-        android:textSize="10sp"
-        android:textColor="@color/what_gray"
-        android:background="@null"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content" />
 
-    <ProgressBar
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:visibility="visible"
-        android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@+id/open"
-        android:layout_centerVertical="true"
-        android:progress="0"
-        android:max="100"
-        android:id="@+id/progress"
-        android:layout_toRightOf="@id/resourseName"
-        android:layout_width="60dp"
-        android:layout_height="10dp"
-        android:maxWidth="60dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/videoImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <EditText
+            android:layout_marginLeft="10dp"
+           android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/videoImage"
+            android:hint="请输入资源名称"
+            android:id="@+id/resourseName"
+            android:textSize="10sp"
+            android:textColor="@color/what_gray"
+            android:background="@null"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:padding="5dp"
-        android:layout_toLeftOf="@+id/delete"
-        android:id="@+id/open"
-        android:layout_centerVertical="true"
-        android:layout_width="40dp"
-        android:text="打开"
-        android:textSize="12sp"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:padding="5dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/delete"
-        android:layout_centerVertical="true"
-        android:layout_width="40dp"
-        android:text="删除"
-        android:textSize="12sp"
-        android:layout_height="wrap_content" />
+        <ProgressBar
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/open"
+            android:layout_centerVertical="true"
+            android:progress="0"
+            android:max="100"
+            android:id="@+id/progress"
+            android:layout_toRightOf="@id/resourseName"
+            android:layout_width="60dp"
+            android:layout_height="10dp"
+            android:maxWidth="60dp"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/uploadHint"
+            android:visibility="invisible"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/open"
+            android:layout_toRightOf="@id/resourseName"
+            android:text="上传成功"
+            style="@style/txt_black_12"
+            android:textSize="10sp"
+            android:layout_width="60dp" />
 
-</RelativeLayout>
+        <TextView
+            android:padding="5dp"
+            android:layout_toLeftOf="@+id/delete"
+            android:id="@+id/open"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:text="打开"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:padding="5dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/delete"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:text="删除"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

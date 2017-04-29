@@ -170,6 +170,7 @@ public class Comment extends BaseFrameAct implements View.OnClickListener, Ratin
                 }else if(method.equals(Method.evaluate)) {
 
                     Toast.makeText(Comment.this, "评论成功", Toast.LENGTH_SHORT).show();
+                    setResult(Constant.refreshData);
                     finish();
                 }
             }

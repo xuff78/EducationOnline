@@ -22,6 +22,7 @@ import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.act.teacher.TeacherOrderList;
 import com.education.online.bean.CategoryBean;
 import com.education.online.bean.LoginInfo;
+import com.education.online.bean.TeacherAuth;
 import com.education.online.bean.UserInfo;
 import com.education.online.fragment.BaseFragment;
 import com.education.online.http.CallBack;
@@ -31,6 +32,7 @@ import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.SharedPreferencesUtil;
+import com.education.online.util.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
@@ -44,6 +46,8 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
 
     private ImageLoader imageLoader;
     HttpHandler handler;
+    private String jsonData=null;
+    TextView descTxt;
 
     private void initHandler() {
         handler = new HttpHandler(getActivity(), new CallBack(getActivity()) {
@@ -51,9 +55,12 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
             public void doSuccess(String method, String jsonData) throws JSONException {
                 super.doSuccess(method, jsonData);
                 if(method.equals(Method.getValidateView)){
-                    Intent i=new Intent(getActivity(), AuthMenu.class);
-                    i.putExtra("jsonData", jsonData);
-                    startActivity(i);
+                    TeacherPage.this.jsonData=jsonData;
+                    TeacherAuth auth=JSON.parseObject(jsonData, TeacherAuth.class);
+                    if(auth.getIs_id_validate().equals("1")&&auth.getIs_ext_validate().equals("1"))
+                        descTxt.setText("已认证");
+                    else
+                        descTxt.setText("未认证");
                 }else if(method.equals(Method.updateTeacher)){
 
                 }
@@ -68,6 +75,7 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
         imageLoader=ImageLoader.getInstance();
         initHandler();
         initView(view);
+        handler.getValidateView();
         return view;
     }
 
@@ -85,12 +93,8 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
         imageLoader.displayImage(ImageUtil.getImageUrl(SharedPreferencesUtil.getString(getActivity(), Constant.Avatar)), teacherImg);
         TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt);
         nameTxt.setText(user.getUsername());
-        TextView descTxt= (TextView) v.findViewById(R.id.descTxt);
+        descTxt= (TextView) v.findViewById(R.id.descTxt);
 
-        if(user.getIs_validate().equals("1"))
-            descTxt.setText("已认证");
-        else
-            descTxt.setText("未认证");
         TextView sexTxt= (TextView) v.findViewById(R.id.sexTxt);
         if(user.getGender().equals("1")){
             sexTxt.setText("男");
@@ -110,7 +114,12 @@ public class TeacherPage extends BaseFragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), TeacherOrderList.class));
                 break;
             case R.id.authLayout:
-                handler.getValidateView();
+                if(jsonData!=null) {
+                    Intent i = new Intent(getActivity(), AuthMenu.class);
+                    i.putExtra("jsonData", jsonData);
+                    startActivity(i);
+                }else
+                    ToastUtils.displayTextLong(getActivity(), "请稍后");
                 break;
             case R.id.commentLayout:
                 startActivity(new Intent(getActivity(), MyRatePage.class));
