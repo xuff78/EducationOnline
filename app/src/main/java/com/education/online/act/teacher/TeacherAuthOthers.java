@@ -32,6 +32,7 @@ import com.education.online.util.LogUtil;
 import com.education.online.util.ToastUtils;
 import com.education.online.view.SelectPicDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.json.JSONException;
 
@@ -177,15 +178,14 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
             // TODO Auto-generated method stub
             super.handleMessage(msg);
             final File file = FileUtil.getFile(phoneTxtName + ".png", TeacherAuthOthers.this);
-            progressDialog.dismiss();
             if (file.exists()) {
                 new UploadTask(new UploadTask.UploadCallBack() {
 
                     @Override
                     public void onSuccess(String result) {
-                        progressDialog.dismiss();
                         Toast.makeText(TeacherAuthOthers.this,"上传成功！",Toast.LENGTH_SHORT).show();
                         addImage(result.substring(1));
+                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -195,7 +195,8 @@ public class TeacherAuthOthers  extends BaseFrameAct implements View.OnClickList
                         // mFaceImagePath.delete();
                     }
                 }).execute(file, "validate/"+phoneTxtName + ".png");
-            }
+            }else
+                progressDialog.dismiss();
         }
     };
 

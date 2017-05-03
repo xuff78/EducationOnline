@@ -2,6 +2,7 @@ package com.education.online.adapter;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,10 +31,9 @@ public class InterestingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
 
     private Activity activity;
     private LayoutInflater inflater;
-    private int listType=0;
     private LinkedHashMap<String, SubjectBean> interest=new LinkedHashMap<>();
     private ArrayList<SubjectBean> cates=new ArrayList<>();
-    private int itemWidth=0, itemHeight=0;
+    private int itemHeight=0;
     private LinearLayout.LayoutParams llp;
 
     public LinkedHashMap<String, SubjectBean> getInterest() {
@@ -61,7 +61,7 @@ public class InterestingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
             }
         }
         int itemWidth = (ScreenUtil.getWidth(activity)- ImageUtil.dip2px(activity,90))/4;
-        int itemHeight = ImageUtil.dip2px(activity,30);
+        itemHeight = ImageUtil.dip2px(activity,30);
         llp=new LinearLayout.LayoutParams(itemWidth, itemHeight);
         llp.rightMargin=ImageUtil.dip2px(activity, 15);
 
@@ -91,19 +91,32 @@ public class InterestingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
             vh.titleName.setText("我的兴趣");
             LinearLayout linelayout=new LinearLayout(activity);
             linelayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams llp2=new LinearLayout.LayoutParams(-2, itemHeight);
+            llp2.rightMargin=ImageUtil.dip2px(activity, 10);
+            int imglenght=ImageUtil.dip2px(activity, 8);
+            LinearLayout.LayoutParams llpimg=new LinearLayout.LayoutParams(imglenght, imglenght);
+            llpimg.leftMargin=imglenght;
             int itemNum=0;
             for(String key:interest.keySet()){
                 SubjectBean bean=interest.get(key);
+                LinearLayout layout=new LinearLayout(activity);
+                layout.setPadding(llp2.rightMargin, 0, llp2.rightMargin, 0);
+                layout.setGravity(Gravity.CENTER_VERTICAL);
+                layout.setOrientation(LinearLayout.HORIZONTAL);
+                layout.setBackgroundResource(R.drawable.shape_blueline_with_corner);
                 TextView txt=new TextView(activity);
                 txt.setTextSize(13);
                 txt.setGravity(Gravity.CENTER);
                 txt.setTextColor(activity.getResources().getColor(R.color.normal_blue));
-                txt.setBackgroundResource(R.drawable.shape_blueline_with_corner);
                 txt.setText(bean.getSubject_name());
                 txt.setTag(bean);
                 txt.setOnClickListener(listener);
-                linelayout.addView(txt, llp);
-                if(itemNum%4==3||itemNum==interest.size()-1){
+                layout.addView(txt);
+                ImageView img=new ImageView(activity);
+                img.setImageResource(R.mipmap.icon_cancel);
+                layout.addView(img, llpimg);
+                linelayout.addView(layout, llp2);
+                if(itemNum%3==2||itemNum==interest.size()-1){
                     vh.interestingLayout.addView(linelayout);
                     linelayout=new LinearLayout(activity);
                     linelayout.setPadding(0, llp.rightMargin,0,0);

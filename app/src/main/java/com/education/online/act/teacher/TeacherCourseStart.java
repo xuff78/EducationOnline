@@ -72,7 +72,7 @@ public class TeacherCourseStart extends BaseFrameAct implements View.OnClickList
         filter=new CourseFilter();
         filter.setCourse_type(null);
         filter.setUsercode(SharedPreferencesUtil.getUsercode(this));
-        filter.setSort("sort_order");
+//        filter.setSort("sort_order");
         filter.setCourse_validate_status(null);
     }
 

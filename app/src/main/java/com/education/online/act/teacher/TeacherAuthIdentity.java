@@ -172,13 +172,11 @@ public class TeacherAuthIdentity extends BaseFrameAct implements View.OnClickLis
             // TODO Auto-generated method stub
             super.handleMessage(msg);
             final File file = FileUtil.getFile(phoneTxtName + ".png", TeacherAuthIdentity.this);
-            progressDialog.dismiss();
             if (file.exists()) {
                 new UploadTask(new UploadTask.UploadCallBack() {
 
                     @Override
                     public void onSuccess(String result) {
-                        progressDialog.dismiss();
                         String url = result.substring(1);
                         LogUtil.d("validate", url);
                         Toast.makeText(TeacherAuthIdentity.this,"上传成功！",Toast.LENGTH_SHORT).show();
@@ -189,6 +187,7 @@ public class TeacherAuthIdentity extends BaseFrameAct implements View.OnClickLis
                             pic2=url;
                             imgAdd2.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
+                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -198,7 +197,8 @@ public class TeacherAuthIdentity extends BaseFrameAct implements View.OnClickLis
                         // mFaceImagePath.delete();
                     }
                 }).execute(file, "validate/"+phoneTxtName + ".png");
-            }
+            }else
+                progressDialog.dismiss();
         }
     };
 }

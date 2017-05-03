@@ -17,7 +17,7 @@
         android:layout_height="45dp">
         <TextView
             android:id="@+id/submitCourseBtn"
-            android:text="添加到我的兴趣"
+            android:text="保存我的兴趣"
             android:gravity="center"
             android:background="@drawable/shape_normalredline_with_corner"
             style="@style/txt_white_14"
