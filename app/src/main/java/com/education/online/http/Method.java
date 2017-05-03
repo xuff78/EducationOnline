@@ -39,6 +39,7 @@ public class Method {
     public static final String getCourseCollections = "education/user/collections";
     public static final String submitEvaluateReply = "education/course/evaluateReply";
     public static final String editCourse = "education/course/alter";
+    public static final String getHotWord = "education/subject/hot";
 
     public static final String submitOrder = "education/order/save";
     public static final String getOrderDetail = "education/order/view";

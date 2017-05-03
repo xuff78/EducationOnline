@@ -112,7 +112,7 @@ public class TeacherAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
                             courseLayout.setLayoutParams(llp);
                             isExpand=false;
                         }else{
-                            arrowIcon.setBackgroundResource(R.mipmap.arrow_down_gray);
+                            arrowIcon.setBackgroundResource(R.mipmap.arrow_up_gray);
                             LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(-1, ImageUtil.dip2px(activity, 60)*teacher.getCourse_detail().size());
                             courseLayout.setLayoutParams(llp);
                             isExpand=true;

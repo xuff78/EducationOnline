@@ -51,7 +51,7 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private TeacherBean teacherBean;
     private ImageLoader imageLoader;
     private List<EvaluateBean> evaluations=new ArrayList<>();
-    private String totalcomment="";
+    private int totalcomment=0;
     private EvaluateCallback callback;
     private float average=0f;
 
@@ -275,6 +275,10 @@ public class TeacherMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void setAverage(String average) {
         this.average = Float.valueOf(average);
+    }
+
+    public void setTotalEvalute(int totalEvalute) {
+        this.totalcomment = totalEvalute;
     }
 
 

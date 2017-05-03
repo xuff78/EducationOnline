@@ -18,11 +18,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
+import com.education.online.act.Mine.MyOrderUser;
+import com.education.online.act.Mine.UserOrderDetail;
+import com.education.online.bean.HotWord;
+import com.education.online.bean.JsonMessage;
+import com.education.online.bean.OrderDetailBean;
+import com.education.online.http.CallBack;
 import com.education.online.http.HttpHandler;
+import com.education.online.http.Method;
 import com.education.online.util.ActUtil;
 import com.education.online.util.Constant;
 import com.education.online.util.ImageUtil;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
@@ -31,6 +41,7 @@ import com.education.online.view.AutoFitLinearLayout;
 import com.education.online.view.MenuPopup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/17.
@@ -55,7 +66,8 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
             getWindow().setExitTransition(new Fade().setDuration(500));
         }
         setContentView(R.layout.search_act);
-
+        initHandler();
+        handler.getHotWord();
         _setHeaderGone();
         initView();
         initRecentLayout();
@@ -105,29 +117,6 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
         mostKeywordsLayout= (LinearLayout) findViewById(R.id.mostKeywordsLayout);
         recentKeywordsLayout= (LinearLayout) findViewById(R.id.recentKeywordsLayout);
         findViewById(R.id.clearBtn).setOnClickListener(this);
-
-        int itemWidth = (ScreenUtil.getWidth(this)- ImageUtil.dip2px(this,90))/4;
-        int itemHeight = ImageUtil.dip2px(this,30);
-        LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(itemWidth, itemHeight);
-        llp.rightMargin=ImageUtil.dip2px(this, 15);
-        LinearLayout linelayout=new LinearLayout(this);
-        int size=6;
-        for(int i=0;i<size;i++){
-            TextView txt=new TextView(this);
-            txt.setTextSize(13);
-            txt.setGravity(Gravity.CENTER);
-            txt.setBackgroundResource(R.drawable.shape_corner_blackline);
-            txt.setTextColor(Color.GRAY);
-            txt.setText("测试");
-            txt.setTag("测试");
-            txt.setOnClickListener(this);
-            linelayout.addView(txt, llp);
-            if(i%4==3||i==size-1){
-                mostKeywordsLayout.addView(linelayout);
-                linelayout=new LinearLayout(this);
-                linelayout.setPadding(0, llp.rightMargin,0,0);
-            }
-        }
     }
 
     private void initRecentLayout(){
@@ -191,5 +180,38 @@ public class SearchAct extends BaseFrameAct implements View.OnClickListener{
         }else{
             startActivity(i);
         }
+    }
+
+    private void initHandler() {
+        handler = new HttpHandler(this, new CallBack(this) {
+            @Override
+            public void doSuccess(String method, String jsonData){
+                if(method.equals(Method.getHotWord)){
+                    List<HotWord> words= JSON.parseObject(jsonData, new TypeReference<List<HotWord>>(){});
+                    int itemWidth = (ScreenUtil.getWidth(SearchAct.this)- ImageUtil.dip2px(SearchAct.this,90))/4;
+                    int itemHeight = ImageUtil.dip2px(SearchAct.this,30);
+                    LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(itemWidth, itemHeight);
+                    llp.rightMargin=ImageUtil.dip2px(SearchAct.this, 15);
+                    LinearLayout linelayout=new LinearLayout(SearchAct.this);
+                    for(int i=0;i<words.size();i++){
+                        String word=words.get(i).getSubject_name();
+                        TextView txt=new TextView(SearchAct.this);
+                        txt.setTextSize(13);
+                        txt.setGravity(Gravity.CENTER);
+                        txt.setBackgroundResource(R.drawable.shape_corner_blackline);
+                        txt.setTextColor(Color.GRAY);
+                        txt.setText(word);
+                        txt.setTag(word);
+                        txt.setOnClickListener(SearchAct.this);
+                        linelayout.addView(txt, llp);
+                        if(i%4==3||i==words.size()-1){
+                            mostKeywordsLayout.addView(linelayout);
+                            linelayout=new LinearLayout(SearchAct.this);
+                            linelayout.setPadding(0, llp.rightMargin,0,0);
+                        }
+                    }
+                }
+            }
+        });
     }
 }

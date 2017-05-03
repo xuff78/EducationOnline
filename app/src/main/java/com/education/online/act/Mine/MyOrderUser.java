@@ -179,6 +179,7 @@ public class MyOrderUser extends BaseFrameAct implements View.OnClickListener, S
         super.onResume();
         if(status!=null&&status.equals("no_evaluate")){
             page=1;
+            orders.clear();
             handler.getOrderList(course_type, page, status);
         }
 

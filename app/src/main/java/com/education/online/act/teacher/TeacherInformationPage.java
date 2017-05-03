@@ -104,6 +104,7 @@ public class TeacherInformationPage extends BaseFrameAct implements TeacherMainA
                     String info= JsonUtil.getString(jsonData, "evaluate_details");
                     EvaluatePage page=JSON.parseObject(info, EvaluatePage.class);
                     evaluations.addAll(page.getEvaluate());
+                    adapter.setTotalEvalute(page.getTotal());
                     adapter.notifyDataSetChanged();
                 }else if(method.equals(Method.addAttention)){
                     if(teacher.getIs_attention().equals("0")) {
