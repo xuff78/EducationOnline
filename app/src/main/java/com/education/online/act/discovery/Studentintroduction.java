@@ -105,7 +105,7 @@ public class Studentintroduction extends SwipeBackActivity implements View.OnCli
         imageLoader.displayImage(ImageUtil.getImageUrl(teacherInfo.getAvatar()), teacherImg);
         TextView nameTxt= (TextView) findViewById(R.id.nameTxt);
         findViewById(R.id.roundLeftBack).setOnClickListener(this);
-        nameTxt.setText(teacherInfo.getName());
+        nameTxt.setText(teacherInfo.getNickname());
         TextView sexTxt= (TextView) findViewById(R.id.sexTxt);
         if(teacherInfo.getGender().equals("1")){
             sexTxt.setText("男");
@@ -119,7 +119,7 @@ public class Studentintroduction extends SwipeBackActivity implements View.OnCli
         TextView fansNum= (TextView) findViewById(R.id.fansNum);
         fansNum.setText(teacherInfo.getAttention_count());
         TextView nickName= (TextView) findViewById(R.id.nickName);
-        nickName.setText(teacherInfo.getName());
+        nickName.setText(teacherInfo.getNickname());
         TextView sexType= (TextView) findViewById(R.id.sexType);
         if(teacherInfo.getGender().equals("1")){
             sexType.setText("男");

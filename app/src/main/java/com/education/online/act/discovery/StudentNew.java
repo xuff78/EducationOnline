@@ -164,7 +164,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         imageLoader.displayImage(ImageUtil.getImageUrl(teacherInfo.getAvatar()), teacherImg);
         TextView nameTxt= (TextView) findViewById(R.id.nameTxt);
         findViewById(R.id.roundLeftBack).setOnClickListener(this);
-        nameTxt.setText(teacherInfo.getName());
+        nameTxt.setText(teacherInfo.getNickname());
         TextView sexTxt= (TextView) findViewById(R.id.sexTxt);
         if(teacherInfo.getGender().equals("1")){
             sexTxt.setText("男");
@@ -178,7 +178,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
         TextView fansNum= (TextView) findViewById(R.id.fansNum);
         fansNum.setText(teacherInfo.getAttention_count());
         TextView nickName= (TextView) findViewById(R.id.nickName);
-        nickName.setText(teacherInfo.getName());
+        nickName.setText(teacherInfo.getNickname());
         TextView sexType= (TextView) findViewById(R.id.sexType);
         if(teacherInfo.getGender().equals("1")){
             sexType.setText("男");
@@ -204,11 +204,11 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
             case R.id.toChatBtn:
                 LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
                 user.put("avatar", ImageUtil.getImageUrl(teacherInfo.getAvatar()));
-                user.put("username", teacherInfo.getName());
+                user.put("username", teacherInfo.getNickname());
                 user.put("user_type ", teacherInfo.getUser_type());
                 user.setObjectId(teacherInfo.getUsercode());
                 AVUserCacheUtils.cacheUser(user.getObjectId(), user);
-                ActUtil.goChat(teacherInfo.getUsercode(), StudentNew.this, teacherInfo.getName());
+                ActUtil.goChat(teacherInfo.getUsercode(), StudentNew.this, teacherInfo.getNickname());
 //                startActivity(new Intent(StudentNew.this, ChatPage.class));
                 break;
             case R.id.myQrcode:
@@ -247,7 +247,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
             ImageView teacherImg= (ImageView) v.findViewById(R.id.teacherImg2);
             imageLoader.displayImage(ImageUtil.getImageUrl(teacherInfo.getAvatar()), teacherImg);
             TextView nameTxt= (TextView) v.findViewById(R.id.nameTxt2);
-            nameTxt.setText(teacherInfo.getName());
+            nameTxt.setText(teacherInfo.getNickname());
             TextView sexTxt= (TextView) v.findViewById(R.id.sexTxt2);
             if(teacherInfo.getGender().equals("1")){
                 sexTxt.setText("男");
@@ -257,7 +257,7 @@ public class StudentNew extends AppCompatActivity implements View.OnClickListene
             TextView descTxt= (TextView) v.findViewById(R.id.descTxt2);
             descTxt.setText(teacherInfo.getIntroduction());
             TextView nickName= (TextView) v.findViewById(R.id.nickName2);
-            nickName.setText(teacherInfo.getName());
+            nickName.setText(teacherInfo.getNickname());
             TextView sexType= (TextView) v.findViewById(R.id.sexType2);
             if(teacherInfo.getGender().equals("1")){
                 sexType.setText("男");

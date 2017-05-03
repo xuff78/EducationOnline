@@ -14,6 +14,7 @@ public class TeacherBean implements Serializable{
 
     private String usercode = "";  //用户代码
     private String user_type = "";  // 1-学生 2-教师
+    private String nickname = "";  // 姓名
     private String name = "";  // 姓名
     private String gender = "";  // 性别 1-男 2-女
     private String avatar = "";  // 头像地址
@@ -44,6 +45,14 @@ public class TeacherBean implements Serializable{
     private String to_attention_count="";
     private String interest_info="";
     private String average="";
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public String getEvaluate_count() {
         return evaluate_count;
