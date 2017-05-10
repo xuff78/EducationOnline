@@ -1,6 +1,7 @@
 package com.education.online.act.Mine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
         privacy= (RelativeLayout) findViewById(R.id.privacy);
         downloadsetting = (RelativeLayout) findViewById(R.id.downloadsetting);
         servicenum = (RelativeLayout) findViewById(R.id.servicenum);
+        servicenum.setOnClickListener(this);
         contactus  = (RelativeLayout) findViewById(R.id.contactus);
         servicephone= (TextView) findViewById(R.id.servicephone);
         exitlogin= (TextView) findViewById(R.id.exitlogin);
@@ -54,7 +56,10 @@ public class Settings extends BaseFrameAct implements View.OnClickListener{
                 startActivity(new Intent(this, SettingDownload.class));
             break;
             case R.id.servicenum:
-            break;
+                Intent intent2 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+servicephone.getText().toString().replace("-", "")));
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+                break;
             case R.id.contactus:
             break;
             case R.id.exitlogin:

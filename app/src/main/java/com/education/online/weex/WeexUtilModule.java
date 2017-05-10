@@ -6,13 +6,19 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
 import com.education.online.act.login.LoginActivity;
+import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.http.Method;
 import com.education.online.retrofit.RetrofitAPIManager;
 import com.education.online.util.Constant;
 import com.education.online.util.SharedPreferencesUtil;
 import com.taobao.weex.common.WXModule;
 import com.taobao.weex.common.WXModuleAnno;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -60,4 +66,49 @@ public class WeexUtilModule extends WXModule {
             ((Activity) mWXSDKInstance.getContext()).finish();
         }
     }
+
+    @WXModuleAnno(moduleMethod = true,runOnUIThread = true)
+    public void toCourseDetailPage(String jsonData) {
+        String id=null;
+        int type=-1;
+        try {
+            JSONObject obj=new JSONObject(jsonData);
+            if(!obj.isNull("advert_id"))
+                id=obj.getString("advert_id");
+            if(!obj.isNull("type"))
+                type=obj.getInt("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Class clasz=null;
+        switch (type){
+            case 3:
+                clasz=CourseMainPage.class;
+                break;
+            case 1:
+            case 2:
+                clasz=VideoMainPage.class;
+                break;
+        }
+        Intent intent = new Intent(mWXSDKInstance.getContext(), clasz);
+        intent.putExtra("course_id", id);
+        mWXSDKInstance.getContext().startActivity(intent);
+    }
+
+    @WXModuleAnno(moduleMethod = true,runOnUIThread = true)
+    public void toTeacherDetailPage(String jsonData) {
+        String id="";
+        try {
+            JSONObject obj=new JSONObject(jsonData);
+            if(!obj.isNull("usercode"))
+                id=obj.getString("usercode");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(mWXSDKInstance.getContext(), TeacherInformationPage.class);
+        intent.putExtra(Constant.UserCode,id);
+        mWXSDKInstance.getContext().startActivity(intent);
+    }
+
+
 }

@@ -77,10 +77,13 @@ public class UserOrderAdapter extends RecyclerView.Adapter <RecyclerView.ViewHol
         if(bean.getState().equals("2")){
             if(bean.getIs_evaluate().equals("0"))
                 courseHolder.addEvaluate.setVisibility(View.VISIBLE);
+            else
+                courseHolder.addEvaluate.setVisibility(View.GONE);
         }else if(bean.getState().equals("1")){
             courseHolder.addEvaluate.setVisibility(View.VISIBLE);
             courseHolder.addEvaluate.setText("去支付");
-        }
+        }else
+            courseHolder.addEvaluate.setVisibility(View.GONE);
     }
 
     @Override

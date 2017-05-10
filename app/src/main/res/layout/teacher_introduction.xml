@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="10dp"
         android:background="@color/whitesmoke" />
 
     <View
@@ -31,16 +31,16 @@
             android:id="@+id/teacherpotrait"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:src="@mipmap/icon_head" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -97,7 +97,7 @@
         android:background="@color/light_gray" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="10dp"
         android:background="@color/whitesmoke" />
     <View
         android:layout_width="match_parent"

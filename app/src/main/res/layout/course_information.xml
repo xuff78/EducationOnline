@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="20dp">
+    android:orientation="vertical">
 
     <com.education.online.view.LoadingImageView
         android:id="@+id/courseImg"
         android:layout_width="match_parent"
-        android:layout_height="245dp"
+        android:layout_height="210dp"
         android:scaleType="centerCrop"
         android:transitionName="course_img" />
 
@@ -19,9 +18,11 @@
         android:layout_below="@+id/courseName"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textSize="13sp" />
+        android:textStyle="bold"
+        android:textSize="15sp" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center"
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="25dp"
@@ -80,7 +81,7 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/studentNum"
@@ -118,7 +119,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:src="@mipmap/icon_comment" />
 
             <TextView
@@ -149,7 +150,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:src="@mipmap/icon_watch" />
 
             <TextView
@@ -162,7 +163,7 @@
                 android:id="@+id/totalSerial"
                 style="@style/txt_gray_12"
 
-                android:layout_marginTop="3dp" />
+                android:layout_marginTop="2dp" />
         </LinearLayout>
     </LinearLayout>
 

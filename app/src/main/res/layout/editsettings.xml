@@ -42,12 +42,14 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/privacy"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
 
         <TextView
+            android:visibility="gone"
             android:textColor="@color/what_gray"
             android:id="@+id/text2"
             android:layout_width="wrap_content"
@@ -136,7 +138,7 @@
 
         <TextView
             android:layout_centerVertical="true"
-            android:text="18732317261"
+            android:text="020-32169053"
             android:id="@+id/servicephone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -146,11 +148,13 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="18dp"
         android:background="@color/light_gray" />
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/contactus"
         android:layout_width="match_parent"
         android:layout_height="50dp"

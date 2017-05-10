@@ -29,7 +29,7 @@
                 android:layout_centerVertical="true"
                 android:id="@+id/subjectName"
                 android:text="直播（12）"
-                style="@style/txt_gray_14" />
+                style="@style/txt_black_16" />
             <View
                 android:layout_toLeftOf="@+id/mornBtn"
                 android:background="@color/light_gray"

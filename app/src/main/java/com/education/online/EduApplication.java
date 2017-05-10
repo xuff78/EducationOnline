@@ -76,6 +76,7 @@ public class EduApplication extends MultiDexApplication {
         WXSDKEngine.initialize(this, config);
         try {
             WXSDKEngine.registerModule("httpevent", WeexHttpModule.class);
+            WXSDKEngine.registerModule("pageevent", WeexUtilModule.class);
         } catch (WXException e) {
             e.printStackTrace();
         }

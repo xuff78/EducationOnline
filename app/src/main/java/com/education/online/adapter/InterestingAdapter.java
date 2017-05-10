@@ -172,15 +172,32 @@ public class InterestingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
             SubjectBean bean= (SubjectBean) view.getTag();
             if(bean.isSelected()){
                 bean.setSelected(false);
+                modifyItemStatus(false, bean.getSubject_id());
                 interest.remove(bean.getSubject_id());
                 notifyDataSetChanged();
             }else {
                 bean.setSelected(true);
+                modifyItemStatus(true, bean.getSubject_id());
                 interest.put(bean.getSubject_id(), bean);
                 notifyDataSetChanged();
             }
         }
     };
+
+    private void modifyItemStatus(boolean checked, String id) {
+
+        for(int k=0;k<cates.size();k++) {
+            SubjectBean subject = cates.get(k);
+            for (int i = 0; i < subject.getChild_subject().size(); i++) {
+                SubjectBean sublist = subject.getChild_subject().get(i);
+                for (int j = 0; j < sublist.getChild_subject_details().size(); j++) {
+                    SubjectBean detail=sublist.getChild_subject_details().get(j);
+                    if(detail.getSubject_id().equals(id))
+                        detail.setSelected(checked);
+                }
+            }
+        }
+    }
 
     @Override
     public int getItemCount() {

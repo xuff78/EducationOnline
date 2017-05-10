@@ -68,22 +68,24 @@
         android:background="@color/whitesmoke"
         android:text="第一步：上传手持身份证照片"
         style="@style/txt_gray_14" />
+
     <LinearLayout
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="110dp">
         <ImageView
-            android:background="@color/whitesmoke"
-            android:layout_width="100dp"
-            android:layout_height="80dp" />
+            android:src="@mipmap/bg_tc_auth_exm1"
+            android:layout_width="120dp"
+            android:layout_height="90dp" />
         <ImageView
             android:id="@+id/imgAdd1"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="40dp"
             android:src="@mipmap/icon_pic_add"
-            android:layout_width="100dp"
-            android:layout_height="80dp" />
+            android:layout_width="120dp"
+            android:layout_height="90dp" />
     </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:paddingLeft="25dp"
@@ -99,14 +101,14 @@
         android:layout_width="match_parent"
         android:layout_height="110dp">
         <ImageView
-            android:background="@color/whitesmoke"
-            android:layout_width="100dp"
-            android:layout_height="80dp" />
+            android:src="@mipmap/bg_tc_auth_exm2"
+            android:layout_width="120dp"
+            android:layout_height="90dp" />
         <ImageView
             android:id="@+id/imgAdd2"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="40dp"
             android:src="@mipmap/icon_pic_add"
-            android:layout_width="100dp"
-            android:layout_height="80dp" />
+            android:layout_width="120dp"
+            android:layout_height="90dp" />
     </LinearLayout>
 </LinearLayout>

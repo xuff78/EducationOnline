@@ -48,6 +48,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/teleconsulting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,6 +86,7 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
