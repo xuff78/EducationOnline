@@ -61,10 +61,11 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import io.vov.vitamio.MediaPlayer;
+import io.vov.vitamio.MediaPlayer.OnInfoListener;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
-public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.DownloadCallback{
+public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.DownloadCallback, OnInfoListener {
 
     int currentPos = 0;
     private LinearLayout addfavorite_layout, share_layout, download_layout, dellayout;
@@ -291,7 +292,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                 payBtn.setClickable(true);
                 //       upVideoView.pause();
                 upVideoView.setVisibility(View.VISIBLE);
-//                upVideoView.setBufferSize(1024*1024*10);
                 if (courseDetailBean.getIs_buy().equals("1")||my_usercode.equals(courseDetailBean.getUsercode())) {
                     upVideoView.stopPlayback();
 
@@ -469,7 +469,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                         if(!upVideoView.isFullState) {
                             relativelayout1.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
                             upVideoView.fullScreen(VideoMainPage.this);
-                            upVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);
+                            upVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_ORIGIN, 0);
                         }else{
                             int width = ScreenUtil.getWidth(VideoMainPage.this);
                             int height = (int) (((float) width) * 9 / 16);
@@ -552,6 +552,18 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
 
         videoMask = (ImageView) findViewById(R.id.videoMask);
         upVideoView = (VideoView) findViewById(R.id.upVideoView);
+        upVideoView.setMediaController(mediaController);
+        upVideoView.setBufferSize(1024*1024*5);
+//        upVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_ORIGIN, 0);
+        upVideoView.setOnInfoListener(this);
+        upVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                // optional need Vitamio 4.0
+                mediaPlayer.setPlaybackSpeed(1.0f);
+                upVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_FIT_PARENT, 0);
+            }
+        });
 //        upVideoView.setAspectRatio(IRenderView.AR_ASPECT_FIT_PARENT);
         int width = ScreenUtil.getWidth(this);
         int height = (int) (((float) width) * 9 / 16);
@@ -581,15 +593,17 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     }
 
     private void playVideo() {
-        upVideoView.setMediaController(mediaController);
         if(files.get(openFilePos).getStatus()==3){
             path = DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName();
-        }
+            upVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_HIGH);
+        }else
+            upVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_LOW);
         upVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                upVideoView.seekTo(0);
-                upVideoView.pause();
+                upVideoView.stopPlayback();
+                upVideoView.openVideo();
+//                upVideoView.pause();
             }
         });
         upVideoView.setVideoPath(path);
@@ -627,6 +641,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             bottomLayout.setVisibility(View.GONE);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             bottomLayout.setVisibility(View.VISIBLE);
+            upVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_FIT_PARENT, 0);
         }
         super.onConfigurationChanged(newConfig);
     }
@@ -723,5 +738,22 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
         if(resultCode==0x22){
             httpHandler.getCourseDetail(course_id);
         }
+    }
+
+    @Override
+    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+        switch (what) {
+            case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                if (upVideoView.isPlaying()) {
+                    upVideoView.pause();
+                }
+                break;
+            case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                upVideoView.start();
+                break;
+            case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
+                break;
+        }
+        return true;
     }
 }

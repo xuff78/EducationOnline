@@ -430,6 +430,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mMediaPlayer.setDataSource(mContext, mUri, mHeaders);
       mMediaPlayer.setDisplay(mSurfaceHolder);
       mMediaPlayer.setBufferSize(mBufSize);
+      mMediaPlayer.setPlaybackSpeed(1);
       mMediaPlayer.setVideoChroma(mVideoChroma == MediaPlayer.VIDEOCHROMA_RGB565 ? MediaPlayer.VIDEOCHROMA_RGB565 : MediaPlayer.VIDEOCHROMA_RGBA);
       mMediaPlayer.setScreenOnWhilePlaying(true);
       mMediaPlayer.prepareAsync();

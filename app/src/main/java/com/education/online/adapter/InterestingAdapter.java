@@ -157,7 +157,7 @@ public class InterestingAdapter extends RecyclerView.Adapter <RecyclerView.ViewH
                     itemNum++;
                 }
             }
-            if (itemNum % 4 != 3)
+            if (itemNum % 4 != 0)
                 vh.interestingLayout.addView(linelayout);
             if(itemNum==0){
                 vh.itemView.setLayoutParams(new RecyclerView.LayoutParams(-1, 0));

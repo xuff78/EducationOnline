@@ -12,11 +12,10 @@ import com.education.online.R;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.login.RegisterPage1;
 import com.education.online.util.ActUtil;
-import com.education.online.util.Constant;
 import com.education.online.util.ScreenUtil;
 import com.education.online.util.SharedPreferencesUtil;
 
-import io.vov.vitamio.LibsChecker;
+//import io.vov.vitamio.LibsChecker;
 
 /**
  * Created by Administrator on 2016/8/11.
@@ -43,8 +42,8 @@ public class FirstPage extends BaseFrameAct implements View.OnClickListener {
         ActUtil.initData(this);
         ScreenUtil.logScreenSize(this);
 
-        if (!LibsChecker.checkVitamioLibs(this))
-            return;
+//        if (!LibsChecker.checkVitamioLibs(this))
+//            return;
     }
 
     @Override

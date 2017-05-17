@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
                 <ImageView
+                    android:visibility="invisible"
                     android:layout_marginTop="50dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@mipmap/icon_temp_logo"

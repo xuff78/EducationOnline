@@ -229,6 +229,7 @@ public class UserInfoEdit extends BaseFrameAct {
         intent.putExtra("outputY", 350);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
+        intent.putExtra("return-data", true);
         startActivityForResult(intent, 0x22);
     }
 
@@ -240,6 +241,7 @@ public class UserInfoEdit extends BaseFrameAct {
                 requestCode == SelectPicDialog.SELECT_PIC_BY_PICK_PHOTO)) {
 
             progressDialog= ProgressDialog.show(this, "", "处理中。。");
+            progressDialog.show();
             final String picPath = SelectPicDialog.doPhoto(this, requestCode, data);
             Log.i("Upload", "最终选择的图片=" + picPath);
             if(picPath==null) {
@@ -280,7 +282,9 @@ public class UserInfoEdit extends BaseFrameAct {
                 photo = BitmapFactory.decodeFile(SelectPicDialog.getPath(this, Uri.parse(path)));
             }
             if(photo!=null) {
-//                progressDialog.show();
+                progressDialog= ProgressDialog.show(this, "", "上传中。。");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 final Bitmap output = ImageUtil.createCircleImage(photo, Math.min(photo.getHeight(), photo.getWidth()));
                 FileUtil.saveBitmap(output, phoneTxtName, UserInfoEdit.this, 100);
                 headIcon.setImageBitmap(output);

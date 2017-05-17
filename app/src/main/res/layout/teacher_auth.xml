@@ -9,9 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/titleTxt1"
             android:text="身份证"
             android:layout_centerVertical="true"
             style="@style/txt_gray_14" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/titleTxt1"
+            android:layout_alignBottom="@+id/titleTxt1"
+            android:text="(必填项)"
+            style="@style/txt_gray_12" />
         <TextView
             android:id="@+id/idStatus"
             android:text="上传"
