@@ -100,6 +100,7 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
     private EvaluateListBean evaluateListBean = new EvaluateListBean();
     private int openFilePos=-1;
     public  ArrayList<ThreadInfo> files=new ArrayList<>();
+    private String type = "";
 
     private String course_id;
     private boolean flag = false;
@@ -160,10 +161,30 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
                             } else if (intent.getStringExtra("status").equals("2")) {
                                 textaddorbuy.setText("已拒绝");
                             }
+                            textaddorbuy.setOnClickListener(null);
                         }else {
                             textaddorbuy.setText("继续学习");
+                            textaddorbuy.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (type == "video") {
+                                        if (video_play.isShown())
+                                            if (ActUtil.isWifi(VideoMainPage.this)) {
+                                                playVideo();
+                                            }else{
+                                                DialogUtil.showConfirmDialog(VideoMainPage.this, "提示", "正在使用流量，是否继续？", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        warnVideo=true;
+                                                        dialogInterface.dismiss();
+                                                        playVideo();
+                                                    }
+                                                });
+                                            }
+                                    }
+                                }
+                            });
                         }
-                        textaddorbuy.setOnClickListener(null);
 //                        video_play.setVisibility(View.VISIBLE);
 //                        video_play.setClickable(false);
                         paytips.setVisibility(View.INVISIBLE);
@@ -277,7 +298,6 @@ public class VideoMainPage extends BaseFrameAct implements DownLoadDialog.Downlo
             File file = new File(DownloadService.DOWNLOAD_PATH+files.get(openFilePos).getFileName());
             FileUtil.openFile(this, file);
         }else if (relativepath.length() > 0){
-            String type = "";
             type = OpenfileUtil.getFiletype(relativepath);
             if (type == "image") {
                 if (upVideoView.isPlaying()) {

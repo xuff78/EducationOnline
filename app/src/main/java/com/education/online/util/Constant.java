@@ -7,14 +7,14 @@ import android.os.Environment;
  */
 public class Constant {
 
-    public static final String API_Url_User="http://106.75.5.58:43320/";
-    public static final String API_Url_Service="http://106.75.5.58:43330/";
-    public static final String API_Url_Payment="http://106.75.5.58:44330/";
+//    public static final String API_Url_User="http://106.75.5.58:43320/";
+//    public static final String API_Url_Service="http://106.75.5.58:43330/";
+//    public static final String API_Url_Payment="http://106.75.5.58:44330/";
 
     //生产
-//    public static final String API_Url_User="http://106.75.91.154:43320/";
-//    public static final String API_Url_Service="http://106.75.91.154:43330/";
-//    public static final String API_Url_Payment="http://106.75.91.154:44330/";
+    public static final String API_Url_User="http://106.75.91.154:43320/";
+    public static final String API_Url_Service="http://106.75.91.154:43330/";
+    public static final String API_Url_Payment="http://106.75.91.154:44330/";
 
 
 
