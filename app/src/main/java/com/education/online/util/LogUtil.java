@@ -20,7 +20,7 @@ public class LogUtil {
 	 * open:true<br>
 	 * close:false<br>                                   
 	 */
-	public static boolean logIsOpen = false ;
+	public static boolean logIsOpen = true ;
 
 	public static boolean exceptionLogIsOpne = false;
 

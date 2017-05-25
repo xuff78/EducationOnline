@@ -51,7 +51,7 @@ import java.util.Collection;
 /**
  * Created by Administrator on 2016/8/16.
  */
-public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class HomePage extends BaseFragment{
 
     private RecyclerView recyclerList;
     private HttpHandler handler;
@@ -266,9 +266,4 @@ public class HomePage extends BaseFragment implements SwipeRefreshLayout.OnRefre
             }
         }
     };
-
-    @Override
-    public void onRefresh() {
-        handler.getHomepage();
-    }
 }

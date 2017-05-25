@@ -44,6 +44,7 @@ import com.education.online.util.ImageUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.util.StatusBarCompat;
+import com.education.online.weex.HomePageWeex;
 import com.googlecode.mp4parser.Version;
 
 import org.json.JSONException;
@@ -52,7 +53,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
     private int pressPos = 0;
     private View menuBtn1, menuBtn2, menuBtn3, menuBtn4, menuBtn5;
-    private HomePage home=new HomePage();
+    private HomePageWeex home=new HomePageWeex();
     private SelectorPage selectorPage=new SelectorPage();
     private TeacherPage teacherPage = new TeacherPage();
     private MyCenterMain centerMain=new MyCenterMain();
