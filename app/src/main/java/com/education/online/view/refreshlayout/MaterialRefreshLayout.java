@@ -436,21 +436,22 @@ public class MaterialRefreshLayout extends FrameLayout {
      * scroll up. Override this if the child view is a custom view.
      */
     public boolean canChildScrollUp() {
-        if (mChildView == null) {
-            return false;
-        }
-        if (Build.VERSION.SDK_INT < 14) {
-            if (mChildView instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) mChildView;
-                return absListView.getChildCount() > 0
-                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
-                        .getTop() < absListView.getPaddingTop());
-            } else {
-                return ViewCompat.canScrollVertically(mChildView, -1) || mChildView.getScrollY() > 0;
-            }
-        } else {
-            return ViewCompat.canScrollVertically(mChildView, -1);
-        }
+        return refreshListener.canScroll();
+//        if (mChildView == null) {
+//            return false;
+//        }
+//        if (Build.VERSION.SDK_INT < 14) {
+//            if (mChildView instanceof AbsListView) {
+//                final AbsListView absListView = (AbsListView) mChildView;
+//                return absListView.getChildCount() > 0
+//                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
+//                        .getTop() < absListView.getPaddingTop());
+//            } else {
+//                return ViewCompat.canScrollVertically(mChildView, -1) || mChildView.getScrollY() > 0;
+//            }
+//        } else {
+//            return ViewCompat.canScrollVertically(mChildView, -1);
+//        }
     }
 
     public boolean canChildScrollDown() {

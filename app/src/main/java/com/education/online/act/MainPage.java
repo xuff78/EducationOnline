@@ -62,7 +62,6 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private DiscoveryPage discoveryPage=new DiscoveryPage();
     private View lastSelectedView=null;
     private HttpHandler handler;
-    public float ScrollY=0;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -275,7 +274,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
         super.onDestroy();
     }
 
-    public void onEvent(float eventY) {
-        ScrollY=eventY;
+    public void onEvent(Float eventY) {
+        home.setScrollY(eventY);
     }
 }

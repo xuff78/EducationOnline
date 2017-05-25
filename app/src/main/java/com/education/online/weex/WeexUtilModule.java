@@ -12,6 +12,7 @@ import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.http.Method;
 import com.education.online.retrofit.RetrofitAPIManager;
 import com.education.online.util.Constant;
+import com.education.online.util.JsonUtil;
 import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.taobao.weex.common.WXModule;
@@ -20,6 +21,8 @@ import com.taobao.weex.common.WXModuleAnno;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import rx.Subscription;
@@ -113,9 +116,9 @@ public class WeexUtilModule extends WXModule {
     }
 
     @WXModuleAnno
-    public void setScrollY(String jsonData) {
-        LogUtil.i("Scroller", jsonData);
-//        EventBus.getDefault().post(y);
+    public void setScrollY(Map<String, Float> map) {
+        LogUtil.i("Scroller", String.valueOf(map.get("scrollY")));
+        EventBus.getDefault().post(map.get("scrollY"));
     }
 
 }

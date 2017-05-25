@@ -38,12 +38,16 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
 
     //    private static String TEST_URL = "http://dotwe.org/raw/dist/6fe11640e8d25f2f98176e9643c08687.bundle.js";
 //    private static String TEST_URL = "http://106.75.91.154:8899/advpage.js";
-    private static String TEST_URL = "http://172.16.10.66:8080/dist/HomePage.js";
+    private static String TEST_URL = "http://192.168.199.233:8080/dist/HomePage.js";
+//    private static String TEST_URL = "http://172.16.10.66:8080/dist/HomePage.js";
     private WXSDKInstance mWXSDKInstance;
     private FrameLayout mContainer;
     private MorphingButton.Params paramStart, paramEnd;
     private MorphingButton toolbarIconRight;
     private MaterialRefreshLayout mSwipeLayout;
+    public float ScrollY=0;
+    private View headerLayout;
+    private boolean btnRound=true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +73,11 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
                 mSwipeLayout.finishRefresh();
+            }
+
+            @Override
+            public boolean canScroll() {
+                return ScrollY<-1;
             }
 
             @Override
@@ -113,6 +122,26 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
                     }
                 });
         toolbarIconRight.morph(paramStart);
+        headerLayout=v.findViewById(R.id.headerLayout);
+        headerLayout.setAlpha(0);
+    }
+
+    public void setScrollY(float eventY){
+        ScrollY=eventY;
+        float alpha=Math.abs(ScrollY)/355;
+        headerLayout.setAlpha(alpha);
+        if(alpha>1){
+            if(btnRound) {
+                toolbarIconRight.morph(paramEnd);
+                btnRound=false;
+            }
+        }else{
+            if(!btnRound) {
+                toolbarIconRight.morph(paramStart);
+                toolbarIconRight.setText("");
+                btnRound=true;
+            }
+        }
     }
 
     @Override

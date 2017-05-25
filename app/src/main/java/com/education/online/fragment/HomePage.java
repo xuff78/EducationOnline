@@ -166,6 +166,11 @@ public class HomePage extends BaseFragment{
             }
 
             @Override
+            public boolean canScroll() {
+                return false;
+            }
+
+            @Override
             public void onfinish() {
 
             }
