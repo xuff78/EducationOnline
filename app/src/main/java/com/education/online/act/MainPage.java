@@ -49,6 +49,8 @@ import com.googlecode.mp4parser.Version;
 
 import org.json.JSONException;
 
+import de.greenrobot.event.EventBus;
+
 public class MainPage extends BaseFrameAct implements View.OnClickListener{
 
     private int pressPos = 0;
@@ -60,6 +62,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private DiscoveryPage discoveryPage=new DiscoveryPage();
     private View lastSelectedView=null;
     private HttpHandler handler;
+    public float ScrollY=0;
 
     private void initHandler() {
         handler = new HttpHandler(this, new CallBack(this) {
@@ -146,6 +149,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         menuBtn1=findViewById(R.id.menuBtn1);
         menuBtn1.setOnClickListener(this);
         menuBtn2=findViewById(R.id.menuBtn2);
@@ -263,5 +267,15 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             intent.addCategory(Intent.CATEGORY_HOME);
             startActivity(intent);
 //        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    public void onEvent(float eventY) {
+        ScrollY=eventY;
     }
 }

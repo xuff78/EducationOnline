@@ -12,6 +12,7 @@ import com.education.online.act.teacher.TeacherInformationPage;
 import com.education.online.http.Method;
 import com.education.online.retrofit.RetrofitAPIManager;
 import com.education.online.util.Constant;
+import com.education.online.util.LogUtil;
 import com.education.online.util.SharedPreferencesUtil;
 import com.taobao.weex.common.WXModule;
 import com.taobao.weex.common.WXModuleAnno;
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.greenrobot.event.EventBus;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -110,5 +112,10 @@ public class WeexUtilModule extends WXModule {
         mWXSDKInstance.getContext().startActivity(intent);
     }
 
+    @WXModuleAnno
+    public void setScrollY(String jsonData) {
+        LogUtil.i("Scroller", jsonData);
+//        EventBus.getDefault().post(y);
+    }
 
 }
