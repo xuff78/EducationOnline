@@ -1,14 +1,18 @@
 package com.education.online.weex;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
 import com.education.online.act.CourseMainPage;
+import com.education.online.act.MainPage;
+import com.education.online.act.SearchResultAct;
 import com.education.online.act.VideoMainPage;
 import com.education.online.act.login.LoginActivity;
 import com.education.online.act.teacher.TeacherInformationPage;
+import com.education.online.act.video.LiveTelecast;
 import com.education.online.http.Method;
 import com.education.online.retrofit.RetrofitAPIManager;
 import com.education.online.util.Constant;
@@ -119,6 +123,42 @@ public class WeexUtilModule extends WXModule {
     public void setScrollY(Map<String, Float> map) {
         LogUtil.i("Scroller", String.valueOf(map.get("scrollY")));
         EventBus.getDefault().post(map.get("scrollY"));
+    }
+
+    @WXModuleAnno
+    public void searchSubject(Map<String, String> map) {
+        LogUtil.i("Scroller", String.valueOf(map.get("scrollY")));
+        Intent i = new Intent(mWXSDKInstance.getContext(), SearchResultAct.class);
+        String ids=map.get("child_subject_ids");
+        if(ids.length()==0)
+            ids="-1";
+        i.putExtra(Constant.SearchSubject, ids);
+        i.putExtra(Constant.SearchCate, map.get("subject_id"));
+        i.putExtra(Constant.SearchWords, map.get("subject_name"));
+        if(ids.equals("-1")&&map.get("subject_id").equals("-1")){
+            ((MainPage)mWXSDKInstance.getContext()).toSubjectList();
+        }else
+            mWXSDKInstance.getContext().startActivity(i);
+    }
+
+    @WXModuleAnno
+    public void moreCourse(Map<String, Integer> map) {
+        Context act=mWXSDKInstance.getContext();
+        switch (map.get("pos")){
+            case 1:
+                Intent i = new Intent(act, SearchResultAct.class);
+                i.putExtra(Constant.TypeCourse, "courseware");
+                act.startActivity(i);
+                break;
+            case 2:
+                Intent i2 = new Intent(act, SearchResultAct.class);
+                i2.putExtra(Constant.TypeCourse, "coursevideo");
+                act.startActivity(i2);
+                break;
+            case 3:
+                act.startActivity(new Intent(act, LiveTelecast.class));
+                break;
+        }
     }
 
 }

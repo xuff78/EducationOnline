@@ -3,6 +3,7 @@ package com.education.online.weex;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,13 +19,16 @@ import com.education.online.fragment.BaseFragment;
 import com.education.online.util.ActUtil;
 import com.education.online.util.ImageUtil;
 import com.education.online.util.ScreenUtil;
+import com.education.online.util.SharedPreferencesUtil;
 import com.education.online.view.circularbtn.MorphingAnimation;
 import com.education.online.view.circularbtn.MorphingButton;
 import com.education.online.view.refreshlayout.MaterialRefreshLayout;
 import com.education.online.view.refreshlayout.MaterialRefreshListener;
 import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.common.Constants;
 import com.taobao.weex.common.WXRenderStrategy;
+import com.taobao.weex.ui.component.WXComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +42,8 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
 
     //    private static String TEST_URL = "http://dotwe.org/raw/dist/6fe11640e8d25f2f98176e9643c08687.bundle.js";
 //    private static String TEST_URL = "http://106.75.91.154:8899/advpage.js";
-    private static String TEST_URL = "http://192.168.199.233:8080/dist/HomePage.js";
-//    private static String TEST_URL = "http://172.16.10.66:8080/dist/HomePage.js";
+//    private static String TEST_URL = "http://192.168.199.233:8080/dist/HomePage.js";
+    private static String TEST_URL = "http://172.16.10.66:8080/dist/HomePage.js";
     private WXSDKInstance mWXSDKInstance;
     private FrameLayout mContainer;
     private MorphingButton.Params paramStart, paramEnd;
@@ -61,6 +65,7 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
         mWXSDKInstance.registerRenderListener(this);
         Map<String, Object> options = new HashMap<>();
         options.put(WXSDKInstance.BUNDLE_URL, TEST_URL);
+        options.put("sessionid", SharedPreferencesUtil.getSessionid(getActivity()));
         mWXSDKInstance.renderByUrl("EducationOnline",TEST_URL,options,null, WXRenderStrategy.APPEND_ONCE);
         return view;
     }
@@ -72,12 +77,19 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
         mSwipeLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
-                mSwipeLayout.finishRefresh();
+                Map<String,Object> params=new HashMap<>();
+                mWXSDKInstance.fireGlobalEventCallback("refreshHomePage",params);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeLayout.finishRefresh();
+                    }
+                },800);
             }
 
             @Override
             public boolean canScroll() {
-                return ScrollY<-1;
+                return ScrollY<-5;
             }
 
             @Override
