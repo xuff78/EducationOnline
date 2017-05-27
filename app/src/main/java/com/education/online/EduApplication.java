@@ -19,6 +19,7 @@ import com.education.online.weex.ImageAdapter;
 import com.education.online.weex.WeexHttpModule;
 import com.education.online.weex.WeexUtilModule;
 import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
 
@@ -74,12 +75,19 @@ public class EduApplication extends MultiDexApplication {
 
         InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
         WXSDKEngine.initialize(this, config);
+//        initDebugEnvironment(true ,false, "172.16.10.66");
         try {
-            WXSDKEngine.registerModule("httpevent", WeexHttpModule.class);
-            WXSDKEngine.registerModule("pageevent", WeexUtilModule.class);
+            WXSDKEngine.registerModule("httpevent", WeexHttpModule.class, true);
+            WXSDKEngine.registerModule("pageevent", WeexUtilModule.class, true);
         } catch (WXException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initDebugEnvironment(boolean connectable, boolean debuggable, String host) {
+            WXEnvironment.sDebugServerConnectable = connectable;
+            WXEnvironment.sRemoteDebugMode = debuggable;
+            WXEnvironment.sRemoteDebugProxyUrl = "ws://" + host + ":8088/debugProxy/native";
     }
 
     public void openStrictMode() {
