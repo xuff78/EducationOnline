@@ -1,13 +1,16 @@
 package com.education.online.weex;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.education.online.R;
+import com.education.online.util.LogUtil;
 import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
@@ -23,18 +26,19 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
 
 
     //    private static String TEST_URL = "http://dotwe.org/raw/dist/6fe11640e8d25f2f98176e9643c08687.bundle.js";
-    private static String TEST_URL = "http://106.75.91.154:8899/advpage.js";
-//    private static String TEST_URL = "http://172.16.10.66:8080/dist/advpage.js";
+//    private static String TEST_URL = "http://106.75.91.154:8899";
+    private String httpUrlHeader = "http://172.16.10.66:8080/dist";
+    private String defaultUrl = "/advpage.js";
     private WXSDKInstance mWXSDKInstance;
     private FrameLayout mContainer;
+    private Uri mUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weex_page);
 
-        Intent intent=getIntent();
-        String advert_id = intent.getStringExtra("advert_id");
+        String advert_id = getIntent().getStringExtra("advert_id");
         mContainer = (FrameLayout) findViewById(R.id.container);
 
         mWXSDKInstance = new WXSDKInstance(this);
@@ -46,9 +50,13 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
          * flag:渲染策略。WXRenderStrategy.APPEND_ASYNC:异步策略先返回外层View，其他View渲染完成后调用onRenderSuccess。WXRenderStrategy.APPEND_ONCE 所有控件渲染完后后一次性返回。
          */
         Map<String, Object> options = new HashMap<>();
-        options.put(WXSDKInstance.BUNDLE_URL, TEST_URL);
         options.put("advert_id", advert_id);
-        mWXSDKInstance.renderByUrl("EducationOnline",TEST_URL,options,null, WXRenderStrategy.APPEND_ONCE);
+        if(getIntent().hasExtra("WeexData"))
+            options=strToMap(getIntent().getStringExtra("WeexData"));
+        if(getIntent().hasExtra("WeexUrl"))
+            defaultUrl=getIntent().getStringExtra("WeexUrl");
+        options.put(WXSDKInstance.BUNDLE_URL, httpUrlHeader+defaultUrl);
+        mWXSDKInstance.renderByUrl("EducationOnline",httpUrlHeader+defaultUrl,options,null, WXRenderStrategy.APPEND_ONCE);
     }
 
     @Override
@@ -112,5 +120,32 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
     @Override
     public void onException(WXSDKInstance instance, String errCode, String msg) {
 
+    }
+
+    public Map<String, Object> strToMap(String mapStr) {
+        String str1 = mapStr.replaceAll("\\{|\\}", "");//singInfo是一个map  toString后的字符串。
+        String str2 = str1.replaceAll(" ", "");
+        String str3 = str2.replaceAll(",", "&");
+
+
+        Map<String, Object> map = null;
+        if ((null != str3) && (!"".equals(str3.trim())))
+        {
+            String[] resArray = str3.split("&");
+            if (0 != resArray.length)
+            {
+                map = new HashMap(resArray.length);
+                for (String arrayStr : resArray) {
+                    if ((null != arrayStr) && (!"".equals(arrayStr.trim())))
+                    {
+                        int index = arrayStr.indexOf("=");
+                        if (-1 != index) {
+                            map.put(arrayStr.substring(0, index), arrayStr.substring(index + 1));
+                        }
+                    }
+                }
+            }
+        }
+        return map;
     }
 }

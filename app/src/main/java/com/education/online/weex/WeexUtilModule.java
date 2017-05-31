@@ -120,6 +120,14 @@ public class WeexUtilModule extends WXModule {
     }
 
     @WXModuleAnno
+    public void toWeexPage(String url, Map<String, Object> map) {
+        Intent intent = new Intent(mWXSDKInstance.getContext(), AdvPageWeex.class);
+        intent.putExtra("WeexData", map.toString());
+        intent.putExtra("WeexUrl", url+".js");
+        mWXSDKInstance.getContext().startActivity(intent);
+    }
+
+    @WXModuleAnno
     public void setScrollY(Map<String, Float> map) {
         LogUtil.i("Scroller", String.valueOf(map.get("scrollY")));
         EventBus.getDefault().post(map.get("scrollY"));
