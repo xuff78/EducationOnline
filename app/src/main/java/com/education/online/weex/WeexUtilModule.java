@@ -123,7 +123,7 @@ public class WeexUtilModule extends WXModule {
     public void toWeexPage(String url, Map<String, Object> map) {
         Intent intent = new Intent(mWXSDKInstance.getContext(), AdvPageWeex.class);
         intent.putExtra("WeexData", map.toString());
-        intent.putExtra("WeexUrl", url+".js");
+        intent.putExtra("WeexUrl", url);
         mWXSDKInstance.getContext().startActivity(intent);
     }
 

@@ -27,8 +27,7 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
 
     //    private static String TEST_URL = "http://dotwe.org/raw/dist/6fe11640e8d25f2f98176e9643c08687.bundle.js";
 //    private static String TEST_URL = "http://106.75.91.154:8899";
-    private String httpUrlHeader = "http://172.16.10.66:8080/dist";
-    private String defaultUrl = "/advpage.js";
+    private String defaultUrl = "http://172.16.10.66:8080/dist/advpage.js";
     private WXSDKInstance mWXSDKInstance;
     private FrameLayout mContainer;
     private Uri mUri;
@@ -55,8 +54,8 @@ public class AdvPageWeex extends AppCompatActivity implements IWXRenderListener 
             options=strToMap(getIntent().getStringExtra("WeexData"));
         if(getIntent().hasExtra("WeexUrl"))
             defaultUrl=getIntent().getStringExtra("WeexUrl");
-        options.put(WXSDKInstance.BUNDLE_URL, httpUrlHeader+defaultUrl);
-        mWXSDKInstance.renderByUrl("EducationOnline",httpUrlHeader+defaultUrl,options,null, WXRenderStrategy.APPEND_ONCE);
+        options.put(WXSDKInstance.BUNDLE_URL, defaultUrl);
+        mWXSDKInstance.renderByUrl("EducationOnline",defaultUrl,options,null, WXRenderStrategy.APPEND_ONCE);
     }
 
     @Override
