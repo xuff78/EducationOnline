@@ -41,9 +41,11 @@ public class HomePageWeex extends BaseFragment implements IWXRenderListener {
 
 
     //    private static String TEST_URL = "http://dotwe.org/raw/dist/6fe11640e8d25f2f98176e9643c08687.bundle.js";
-//    private static String TEST_URL = "http://106.75.91.154:8899/advpage.js";
+//    private static String TEST_URL = "http://106.75.91.154:8899/HomePage.js"; //生产
+    private static String TEST_URL = "http://106.75.91.154:8900/HomePage.js"; //测试
+//    private static String TEST_URL = "http://106.75.5.58:8899/advpage.js";
 //    private static String TEST_URL = "http://192.168.199.233:8080/dist/HomePage.js";
-    private static String TEST_URL = "http://172.16.10.66:8080/dist/HomePage.js";
+//    private static String TEST_URL = "http://172.16.10.87:8080/dist/HomePage.js";
     private WXSDKInstance mWXSDKInstance;
     private FrameLayout mContainer;
     private MorphingButton.Params paramStart, paramEnd;

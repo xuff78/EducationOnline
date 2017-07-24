@@ -138,6 +138,7 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
                     startActivity(i);
                 }
             });
+            addFragment();
             changePage(home);
             initLocation();
             if (!SharedPreferencesUtil.getString(this, Constant.UserIdentity).equals("2")) {
@@ -145,6 +146,22 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
             }
             handler.checkVersion(ActUtil.getVersionCode(this));
         }
+    }
+
+    private void addFragment() {
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.add(R.id.fragment_frame, selectorPage);
+        ft.hide(selectorPage);
+        ft.add(R.id.fragment_frame, discoveryPage);
+        ft.hide(discoveryPage);
+        ft.add(R.id.fragment_frame, centerMain);
+        ft.hide(centerMain);
+        ft.add(R.id.fragment_frame, teacherPage);
+        ft.hide(teacherPage);
+        ft.add(R.id.fragment_frame, home);
+        ft.commit();
+        currentFrg=home;
     }
 
     private void initView() {
@@ -170,8 +187,10 @@ public class MainPage extends BaseFrameAct implements View.OnClickListener{
     private void changePage(Fragment frg){
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-        ft.replace(R.id.fragment_frame, frg);
+        ft.hide(currentFrg);
+        ft.show(frg);
         ft.commit();
+        currentFrg=frg;
     }
 
     @Override

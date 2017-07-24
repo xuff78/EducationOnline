@@ -60,14 +60,16 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
         setContentView(R.layout.teacher_homepage);
 
         _setHeaderTitle("主页编辑");
-        _setRightHome(R.mipmap.teacher_home_edit, new View.OnClickListener() {
+        _setRightHome(R.mipmap.icon_teacher_menu_edit, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isEdit=!isEdit;
-                if(isEdit)
-                    homeBtn.setImageResource(R.mipmap.icon_teacher_menu_edit);
-                else
-                    homeBtn.setImageResource(R.mipmap.teacher_home_done);
+                if(lastSelectedPosition!=2) {
+                    isEdit = !isEdit;
+                    if (isEdit)
+                        homeBtn.setImageResource(R.mipmap.teacher_home_done);
+                    else
+                        homeBtn.setImageResource(R.mipmap.icon_teacher_menu_edit);
+                }
                 switch (lastSelectedPosition){
                     case 0:
                         homepageImg.setEdit();
@@ -141,6 +143,8 @@ public class TeacherHomePage extends BaseFrameAct implements View.OnClickListene
                     openFragment(R.id.frgframe, homepageVideo);
                     break;
                 case R.id.comments:
+                    isEdit=true;
+                    homeBtn.setImageResource(R.mipmap.teacher_home_done);
                     lastSelectedPosition=2;
                     textcomments.setTextColor(getResources().getColor(R.color.dark_orange));
                     viewcomments.setVisibility(View.VISIBLE);

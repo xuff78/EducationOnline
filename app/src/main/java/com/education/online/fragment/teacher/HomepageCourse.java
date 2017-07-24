@@ -53,7 +53,6 @@ public class HomepageCourse extends BaseFragment {
     private ArrayList<CourseBean> items=new ArrayList<>();
     private ArrayList<CourseBean> tempitems=new ArrayList<>();
     private DragListAdapter adapter;
-    private boolean edit=false;
     private CourseBean delitem;
     private ImageLoader imageLoader;
     private DragSortListView.DropListener onDrop =
@@ -93,7 +92,6 @@ public class HomepageCourse extends BaseFragment {
 
         imageLoader=ImageLoader.getInstance();
         initView(view);
-        edit=false;
         if(items.size()==0) {
             initHandler();
             CourseFilter filter=new CourseFilter();
@@ -111,7 +109,6 @@ public class HomepageCourse extends BaseFragment {
     }
 
     public void setEdit(){
-        if(edit){
             String ids="";
             for (int i=0;i<adapter.getCount();i++){
                 CourseBean bean=adapter.getItem(i);
@@ -122,10 +119,6 @@ public class HomepageCourse extends BaseFragment {
 //            else
 //                handler.updateSortList(ids);
             LogUtil.i("test", "finishEdit!!");
-        }else {
-            edit=true;
-            adapter.notifyDataSetChanged();
-        }
     }
 
     private void initView(View v) {
@@ -135,9 +128,9 @@ public class HomepageCourse extends BaseFragment {
         dragList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(!edit){
-                    setEdit();
-                }
+//                if(!edit){
+//                    setEdit();
+//                }
                 return false;
             }
         });
@@ -156,7 +149,7 @@ public class HomepageCourse extends BaseFragment {
                     tempitems.clear();
                     tempitems.addAll(items);
                 }else if(method.equals(Method.updateSortList)){
-                    edit=false;
+//                    edit=false;
                     tempitems.clear();
                     tempitems.addAll(items);
                     adapter.notifyDataSetChanged();
@@ -179,9 +172,9 @@ public class HomepageCourse extends BaseFragment {
         }
 
         public void changeStatus(boolean status){
-            if(edit!=status){
-                setEdit();
-            }
+//            if(edit!=status){
+//                setEdit();
+//            }
         }
 
         public void remove(int arg0) {//删除指定位置的item

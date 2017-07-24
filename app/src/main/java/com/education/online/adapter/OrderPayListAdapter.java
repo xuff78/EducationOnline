@@ -100,6 +100,7 @@ public class OrderPayListAdapter extends RecyclerView.Adapter <RecyclerView.View
             ivh.totalPrice.setText("总价: "+ActUtil.twoDecimal(msg.getOriginal_price()));
             ivh.payPrice.setText(ActUtil.twoDecimal(msg.getPrice()));
             ivh.teacherName.setText(msg.getUser_name());
+            ivh.courseName.setText(msg.getCourse_name());
         }
 
 
@@ -107,7 +108,7 @@ public class OrderPayListAdapter extends RecyclerView.Adapter <RecyclerView.View
 
     public class OrderItem extends RecyclerView.ViewHolder{
         ImageView headIcon;
-        TextView orderId, orderStatus, courseNum, orderTime, totalPrice, payPrice, teacherName;
+        TextView orderId, orderStatus, courseNum, orderTime, totalPrice, payPrice, teacherName, courseName;
         public OrderItem(View v, final int position)
         {
             super(v);
@@ -118,6 +119,7 @@ public class OrderPayListAdapter extends RecyclerView.Adapter <RecyclerView.View
             orderTime = (TextView) v.findViewById(R.id.orderTime);
             totalPrice = (TextView) v.findViewById(R.id.totalPrice);
             teacherName = (TextView) v.findViewById(R.id.teacherName);
+            courseName = (TextView) v.findViewById(R.id.courseName);
             payPrice = (TextView) v.findViewById(R.id.payPrice);
             View totalk=v.findViewById(R.id.totalk);
             totalk.setTag(position);
