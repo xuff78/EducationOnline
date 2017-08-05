@@ -120,8 +120,10 @@ public class ConversationItemHolder extends CommonViewHolder {
       public void doSuccess(String method, String jsonData) throws JSONException {
         super.doSuccess(method, jsonData);
         if(method.equals(Method.getUserInfo)){
-          UserInfo userinfo= JSON.parseObject(jsonData, UserInfo.class);
-
+          UserInfo userinfo= new UserInfo();
+          if(jsonData!=null&&jsonData.length()>0){
+            userinfo= JSON.parseObject(jsonData, UserInfo.class);
+          }
           LeanchatUser user = AVUser.newAVUser(LeanchatUser.class, null);
           user.put("avatar", ImageUtil.getImageUrl(userinfo.getAvatar()));
           user.put("username", userinfo.getNickname());

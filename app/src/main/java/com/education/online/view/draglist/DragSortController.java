@@ -392,7 +392,7 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
                 long dis=getMoveDistance((int)x, (int)y);
                 if(dis<20) {
                     mHitPos = temHitPos;
-                    mDslv.getOnItemLongClickListener().onItemLongClick(null, null,  0, 0);
+//                    mDslv.getOnItemLongClickListener().onItemLongClick(null, null,  0, 0);
                     mDslv.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     if (mHitPos != MISS && mDragInitMode == ON_DOWN) {
                         startDrag(mHitPos, (int) x - mItemX, (int) y - mItemY);

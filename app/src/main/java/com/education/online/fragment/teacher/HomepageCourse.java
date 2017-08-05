@@ -2,6 +2,7 @@ package com.education.online.fragment.teacher;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.education.online.R;
+import com.education.online.act.CourseMainPage;
+import com.education.online.act.VideoMainPage;
 import com.education.online.adapter.TeacherImgAdapter;
 import com.education.online.bean.CourseBean;
 import com.education.online.bean.CourseFilter;
@@ -125,13 +128,19 @@ public class HomepageCourse extends BaseFragment {
         dragList = (DragSortListView) v.findViewById(R.id.dragList);
         dragList.setDropListener(onDrop);
         dragList.setRemoveListener(onRemove);
-        dragList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        dragList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                if(!edit){
-//                    setEdit();
-//                }
-                return false;
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CourseBean course= (CourseBean) view.getTag();
+                Intent intent=new Intent();
+                if(course.getCourse_type().equals("3"))
+                    intent.setClass(getActivity(), CourseMainPage.class);
+                else
+                    intent.setClass(getActivity(), VideoMainPage.class);
+                intent.putExtra("course_name", course.getCourse_name());
+                intent.putExtra("course_img", course.getImg());
+                intent.putExtra("course_id", course.getCourse_id());
+                startActivity(intent);
             }
         });
     }
@@ -225,6 +234,7 @@ public class HomepageCourse extends BaseFragment {
 //            }else{
 //                delBtn.setVisibility(View.GONE);
 //            }
+            v.setTag(course);
             return v;
         }
 
